@@ -72,7 +72,7 @@ main() {
   printf "  99]${GN} Display System Information                      ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
   Prompt_func
-  
+  printf "   ----> "
 # Read user input and display the appropriate submenu
 read -r choice
   printf "  ${LB}\\n"
@@ -99,7 +99,7 @@ if [[ ${choice} == 4 ]]; then
     printf "${YW}      You chose Pwnagotchi. \\n "
     clear
 #    Pwnagotchi_menu
-    bash ${scripts_dir}install-pwnagotchi.rough.sh
+    bash ${scripts_dir}install-backup_pwn-script.sh
 fi
 if [[ ${choice} == 99 ]]; then  
     printf "${YW}      You chose System Information. \\n "
