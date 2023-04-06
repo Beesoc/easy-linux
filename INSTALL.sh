@@ -119,6 +119,7 @@ printf "${WT} \\n"
   read -r -n1 -s -t 60
 folder_exists_func
 install_func  
+sudo chmod a+x ./*.sh
 }
 
 main

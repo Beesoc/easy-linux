@@ -37,8 +37,8 @@ Prompt_func() {
         prompt_symbol=💀
     fi
 
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
-printf "${GN}└─"${CY}"${prompt_symbol} ${CY}\\n"
+printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${prompt_color}${PWD}${GN}]\\n"
+printf "${GN}└─${CY} $ ${CY}\\n"
 
 }
 
