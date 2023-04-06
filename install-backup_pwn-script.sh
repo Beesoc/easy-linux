@@ -20,7 +20,7 @@ set -e
 
 gotcha_mac="12:B3:F4:47:58:B7"
 sniffer_mac="32:0d:24:a0:cd:0c"
-FuckThatSh1t_mac="33:33:33:33:33:33"
+FuckThatSh1t_mac="e6:de:26:9c:18:41"
 scripts_dir=$HOME/scripts
 larry_host=lepotato
 cory_host=updates
@@ -48,7 +48,7 @@ ${GN}└──${CY}$
 fi
 }
 
-hostname=$hostname
+hostname=$(hostname)
 user=$USER
 pwnagotchi=""
 Banner_func() {

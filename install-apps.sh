@@ -136,7 +136,7 @@ Banner_func
     printf "${OG}  \\n"
     printf "      Installing some of my favorite [ Aptitude, ncdu, htop, git ] and ${WT}known \\n"
     printf "  required${OG} [ ${WT}python3-pip, python3-numpy ${OG}] apps.\\n ${GN}"
-      sudo apt install -y aptitude ncdu git ncdu geany geany-plugins htop aircrack-ng airmon-ng;
+      sudo apt install -y aptitude ncdu git ncdu geany geany-plugins htop aircrack-ng airmon-ng makepasswd;
     printf "  \\n" 
       printf "${OG}Installing additional nano lints.${NC}\\n"
   if [ -d $install_compiled ]; then
