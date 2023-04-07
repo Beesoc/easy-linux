@@ -91,4 +91,4 @@ upload_func
 }
 main
 clear
-bash /opt/easy-linux-loader/menu-master.sh
+bash /opt/easy-linux/install-master.sh
