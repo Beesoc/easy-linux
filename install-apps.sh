@@ -1,6 +1,5 @@
 #!/bin/bash
 #
-#
 set -e
 #
 clear
@@ -12,11 +11,8 @@ clear
 #OG='\e[1;93m'
 #NC='\e[0m'
 #
-  if [ ! -d $HOME/scripts ]; then
-        mkdir ~/scripts;
-        scripts_dir=${$(HOME)/scripts}
-  fi
-  
+source ./.envrc
+
 Prompt_func() {
     prompt_symbol=㉿
     prompt_color=${GN}
@@ -29,8 +25,8 @@ Prompt_func() {
         prompt_symbol=💀
     fi
 
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${prompt_color}${PWD}${GN}]\\n"
-printf "${GN}└─${CY} $ ${CY}\\n"
+printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOST${GN})-[${prompt_color}${PWD}${GN}]\\n"
+printf "${GN}└─${CY}$ ${CY}\\n"
 
 }
 
@@ -46,57 +42,48 @@ ${OGH}▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀�
     ▄████▄${BK}╗   ${OGG}▄█▄${BK}╗    ${OGG}▄███▄${BK}╗ ${OGG}█▄${BK}╗   ${OGG}▄█${BK}╗   ${OGG}▄█${BK}╗    ${OGG}▄█${BK}╗ ${OGG}▄█${BK}╗  ${OGG}█▄${BK}╗ ${OGG}▄█${BK}╗  ${OGG}▄█${BK}╗ ${OGG}██▄${BK}╗  ${OGG}▄██${BK}╗ ${GN}  
     ██${BK}╔═══╝  ${GN}██${BK}║${GN}██${BK}╗  ${GN}██${BK}╔═══╝  ${GN}██${BK}╗ ${GN}██${BK}╔╝   ${GN}██${BK}║    ${GN}██${BK}║ "${GN}"██▄${BK}╗ ${GN}██${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▀██▄██▀${BK}╝${GN}    
     █████${BK}╗  ${GN}███▀███${BK}╗  ${GN}▀███▄${BK}╗   ${GN}████${BK}╔╝    ${GN}██${BK}║    ${GN}██${BK}║ ${GN}████▄██${BK}║ "${GN}"██${BK}║  ${GN}██${BK}║    ${GN}███${BK}║${GN}      
-    ██${BK}╔══╝  ${GN}██${BK}║  ${GN}██${BK}║   ╚══${GN}██${BK}║   ${GN}██${BK}╔╝     ${GN}██${BK}║    ${GN}██${BK}║ ${GN}██${BK}║${GN}▀███${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▄██▀██▄${BK}╗    ${WT}
-    ▀████▀${BK}╝ ${WT}██${BK}║  ${WT}██${BK}║  ${WT}▀███▀${BK}╝    ${WT}██${BK}║      ${WT}▀████${BK}╗ ${WT}██${BK}║ ${WT}██${BK}║  ${WT}██${BK}║  ${WT}▀███▀${BK}╝  ${WT}██▀${BK}╝  ${WT}▀██${BK}╗   ${BK}
-     ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝   ${OGH}
+    ██${BK}╔══╝  ${GN}██${BK}║  ${GN}██${BK}║   ╚══${GN}██${BK}║   ${GN}██${BK}╔╝     ${GN}██${BK}║    ${GN}██${BK}║ ${GN}██${BK}║${GN}▀███${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▄██▀██▄${BK}╗    ${OGG}
+    ▀████▀${BK}╝ ${OGG}██${BK}║  ${OGG}██${BK}║  ${OGG}▀███▀${BK}╝    ${OGG}██${BK}║      ${OGG}▀████${BK}╗ ${OGG}██${BK}║ ${OGG}██${BK}║  ${OGG}██${BK}║  ${OGG}▀███▀${BK}╝  ${OGG}██▀${BK}╝  ${OGG}▀██${BK}╗   ${BK}
+     ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝   ${NC}${BK}
 ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\\n"
 printf "${NC}"
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
   #
 }
-install_compiled="${HOME}/compiled"
-install_keyrings="/etc/apt/keyrings"
-options=("Hacking Tool" "Docker Desktop" "Blah" "Main Menu" "Exit")
+#install_compiled="${HOME}/compiled"
+#install_keyrings="/etc/apt/keyrings"
 #
-main() {
-clear
-Banner_func
-printf "  ${OG}First, we will $(WT)update/upgrade ${OG}all packages. Press ${WT}any ${CY}key to continue\\n"
-printf "  \\n${RED}Press [ctrl+c] to exit script.${NC}\\n${CY}"
-  read -r -n1 -s -t 30
-    sudo apt update && sudo apt upgrade -y
-}
+
 
 hacking_tool_func() {
 printf "Installing Hacking Tool...${NC}\n"
   if [[ -d ${install_compiled} ]]; then
-        printf " \n";
-          cd compiled
-          break
-        fi
-        printf "  \n";
+        printf " \\n  ";
+          cd ${install_compiled}
+  fi
+        printf "  \n  ";
     if [[ ! -d ${install_compiled} ]]; then      
-          mkdir ~/compiled 
-          cd compiled
+          mkdir ${install_compiled} 
+          cd ${install_compiled}
      else
-       printf "Invalid Selection"
+       printf "  Invalid Selection"
      fi  
   sudo git clone https://github.com/Z4nzu/hackingtool.git
   cd hackingtool
   sudo pip3 install -r requirements.txt
   bash install.sh
-}#
+}
 #
 
 docker_func() {
-printf "${OG}install docker requirements, but first...\n"
-printf "General maintenance: sudo apt --fix-broken install -y${NC}\n"
-  sudo apt --fix-broken install -y
+printf "  ${OG}install docker requirements, but first...\\n"
+printf "  General maintenance: sudo apt --fix-broken install -y${NC}\\n"
+  sudo apt --fix-broken install -y > /dev/null
   sudo apt install -y docker docker-compose wmdocker python3-dockerpty docker.io uidmap rootlesskit golang-github-rootless-containers-rootlesskit-dev containerd runc tini cgroupfs-mount needrestart golang-github-gofrs-flock-dev golang-github-gorilla-mux-dev golang-github-insomniacslk-dhcp-dev golang-github-moby-sys-dev golang-github-sirupsen-logrus-dev golang-golang-x-sys-dev libsubid4
-  sudo apt --fix-broken install -y
-  printf "${OG}Install Docker-desktop requirements QEMU${NC}\n"
+  sudo apt --fix-broken install -y > /dev/null
+  printf "  ${OG}Install Docker-desktop requirements QEMU${NC}\\n"
   sudo apt install -y qemu-system-x86
-  printf "${OG}Installing kernel modules for kvm_intel and add kvm to your Groups.${NC}\n"
+  printf "  ${OG}Installing kernel modules for kvm_intel and add kvm to your Groups.${NC} \\n"
   sudo modprobe kvm_intel
   sudo usermod -aG kvm $USER 
   sudo usermod -aG kvm root
@@ -105,15 +92,16 @@ printf "General maintenance: sudo apt --fix-broken install -y${NC}\n"
   rm -r $HOME/.docker/desktop
   sudo rm /usr/local/bin/com.docker.cli
   sudo apt remove -y docker-desktop
-  sudo apt --fix-broken install -y
+  sudo apt --fix-broken install -y > /dev/null
   sudo apt install -y gnome-terminal locate plocate
-  sudo docker completion bash && docker completion zsh
-  printf "${OG}Grab docker's key and install docker-ce.${NC}\n"
+  sudo docker completion bash
+  sudo docker completion zsh
+  printf "${OG}Grab docker's key and install docker-ce.${NC}\\n"
   sudo apt install -y ca-certificates curl gnupg lsb-release
   if [ -d $install_keyrings ]; then
-        printf " \n";
+        printf " \\n";
           cd $install_keyrings
-        printf "  \n";
+        printf " \\n";
         else
           mkdir /etc/apt/keyrings
         fi
@@ -127,32 +115,33 @@ echo \
   curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
   sudo apt-get update
   sudo apt-get install docker-ce docker-ce-cli containerd.io pass
-printf  "${OG}Install Docker Desktop${NC}\n"
+printf  "  ${OG}Install Docker Desktop${NC}\\n"
   wget https://desktop.docker.com/linux/main/amd64/docker-desktop-4.17.0-amd64.deb
   sudo dpkg -i ./docker-desktop-4.17.0-amd64.deb
   sudo /opt/docker-desktop/bin/com.docker.admin completion bash
   sudo /opt/docker-desktop/bin/com.docker.admin completion zsh
-  sudo apt --fix-broken install -y
+  sudo apt --fix-broken install -y > /dev/null
   sudo apt autoremove -y
   systemctl --user start docker-desktop
 }
 standard_apps_func() {
   clear
 Banner_func
-    printf "${OG}  \\n"
-    printf "      Installing some of my favorite [ Aptitude, ncdu, htop, git ] and ${WT}known \\n"
-    printf "  required${OG} [ ${WT}python3-pip, python3-numpy ${OG}] apps.\\n ${GN}"
-      sudo apt install -y aptitude ncdu git ncdu geany geany-plugins htop aircrack-ng airmon-ng makepasswd;
-    printf "  \\n" 
-      printf "${OG}Installing additional nano lints.${NC}\\n"
+    printf "${CY}  \\n"
+    printf "    Installing some of my favorite [ ${WT}Aptitude, ncdu, htop, git ${CY}] and ${WT}known \\n"
+    printf "    required${CY} [ ${WT}python3-pip, python3-numpy ${CY}] apps.\\n ${GN}  "
+      sudo apt install -y direnv aptitude ncdu git ncdu geany geany-plugins htop aircrack-ng makepasswd;
+    printf "  \\n  " 
+      printf "${OG}Installing additional nano lints.${NC}  \\n"
   if [ -d $install_compiled ]; then
-        printf " \\n";
-          cd compiled
-        echo "  \\n";
+        printf " \\n ";
+          cd ${install_compiled}
+        printf " \\n ";
         else
-          mkdir ~/compiled
-          cd compiled
-        fi
+          mkdir ${install_compiled}
+          cd ${install_compiled}
+   fi
+          mkdir ${install_compiled}/nano
           git clone https://github.com/scopatz/nanorc.git
           cd nanorc
           sudo cp *.nanorc /usr/share/nano
@@ -162,41 +151,42 @@ Banner_func
 install_apps_func() {
 clear
 Banner_func
-printf "  ${OG}Select which app you would like to install.\\n" 
+
+#read -p "  Select which app you would like to install. ---->  " select_app 
+printf "Select app:  "
 
 select option in "${options[@]}"; do
     case ${option} in
         "Hacking Tool")
             clear
             Banner_func
-            printf " ${OG}\\nInstalling Hacking Tool\\n"
+            printf "  ${OG}\\nInstalling Hacking Tool\\n"
             hacking_tool_func
             ;;
         "Docker Desktop")
             clear
             Banner_func
-            printf " ${OG}\\nInstalling Docker Desktop\\n"
+            printf "  ${OG}\\nInstalling Docker Desktop\\n"
             docker_func
             ;;
         "Blah")
             clear
             Banner_func
-            printf " ${OG}\\nBlah\\n"
-            echo "${GN}You selected SBlah\\n"
-            break
+            printf "  ${OG}\\nBlah\\n"
+            printf "${GN}You selected SBlah\\n"
             ;;
          "Main Menu")
             clear
 			bash ${scripts_dir}/install-master.sh
-            echo "${OG}You selected Main Menu\\n${CY}"
+            printf "    ${OG}You selected Main Menu\\n${CY}"
             ;;
           "Exit")
           clear
-            echo "${RED}You selected Exit${OG}\\n"
+            printf "    ${RED}You selected Exit${OG}\\n"
 			exit 1
             ;;
         *)
-            echo "${RED}Invalid option\\n${CY}"
+            printf "    ${RED}Invalid option\\n${CY}"
             ;;
     esac
 done
@@ -235,35 +225,43 @@ exit
   ngrok config add-authtoken 2NfhLccABPQaLZEPIQ2BHoqMEi1_HtwCjRDobFehPbTDohMW
 }
 
-main
+main() {
+  if [[ ! -d ${scripts_dir} ]]; then
+        mkdir ${scripts_dir};   
+  fi   
+clear
+Banner_func
+printf "  ${OG}First, we will ${WT} update/upgrade ${OG}all packages. Press ${WT}any ${CY}key to continue \\n"
+printf "  \\n${RED}Press [ctrl+c] to exit script.${NC}\\n ${CY} ----> """
+  read -r -n1 -s -t 30
+    sudo apt update && sudo apt upgrade -y
 standard_apps_func
 install_apps_func
 hacking_tool_func
 docker_func
- if [[  $(hostname) = "updates" ]]; then
+ if [[  $(HOST) = "updates" ]]; then
         personal_func
-    else
-        break
  fi
   clear
-  printf "                        ${YW}Summary of changes made by this script.${WT}   \n  " 
-  printf "                   [ Update/Upgrade all packages ].....${GN}[✔] Successfully Installed [✔]${WT}\n";
-  printf "                           [ Install HackingTool ].....${GN}[✔] Successfully Installed [✔]${WT}\n";
-  printf "                   [ Docker Desktop Dependencies ].....${GN}[✔] Successfully Installed [✔]${WT}\n";
-  printf "                        [ Install Docker Desktop ].....${GN}[✔] Successfully Installed [✔]${WT}\n";
-  printf "                 [ Install Additional Nano Lints ].....${GN}[✔] Successfully Installed [✔]${WT}\n";
-printf "  Press M to return to the Main Menu."
+  printf "                        ${YW}Summary of changes made by this script.${WT}   \\n  " 
+  printf "                   [ Update/Upgrade all packages ].....${GN}[✔] Successfully Installed [✔]${WT}\\n";
+  printf "                           [ Install HackingTool ].....${GN}[✔] Successfully Installed [✔]${WT}\\n";
+  printf "                   [ Docker Desktop Dependencies ].....${GN}[✔] Successfully Installed [✔]${WT}\\n";
+  printf "                        [ Install Docker Desktop ].....${GN}[✔] Successfully Installed [✔]${WT}\\n";
+  printf "                 [ Install Additional Nano Lints ].....${GN}[✔] Successfully Installed [✔]${WT}\\n";
+printf "  Press M to return to the Main Menu.${CY}\\n  ---->"
 read -r menu_choice
- if [[  ${menu_choice} = "m" ]]||[[  ${menu_choice} = "M" ]]; then
+ if [[ ${menu_choice} = "m" ]] || [[  ${menu_choice} = "M" ]]; then
         printf " \\n";
-        bash "$(HOME)"/scripts/install-master.sh
-        break
+        bash ${scripts_dir}/install-master.sh
         else
-          printf " Invalid Selection"
+          printf "${RED}  Invalid Selection"
 fi
- if [[  $(hostname) = "updates" ]]; then
+ if [[ $HOST = updates ]]; then
         personal_func
         else
-        bash "$(HOME)"/scripts/install-master.sh
+        bash ${scripts_dir}/install-master.sh
         fi
-    
+}
+
+main

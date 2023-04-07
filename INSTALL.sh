@@ -22,6 +22,7 @@ set -e
 #NC='\e[0m'
 #
 #scripts_dir=/$HOME/easy-linux
+source .envrc
 
 Prompt_func() {
     prompt_symbol=㉿
@@ -35,7 +36,7 @@ Prompt_func() {
         prompt_symbol=💀
     fi
 
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
+printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOST${GN})-[${YW}${PWD}${GN}]\\n"
 printf "${GN}└─"${CY}"> ${CY}\\n"
 
 }
@@ -70,7 +71,7 @@ elif [[ -d ${scripts_dir} ]]; then
   printf "${CY}     Installation directory, ${WT}${scripts_dir}${CY}, already exists. ${OG}Overwrite?  ${WT}\\n "
     printf "${NC}\\n     NOTE: ${CY}If you have ${WT}NOT manually customized ${CY}any scripts, you ahould ${WT}always \\n"
     printf "     answer yes ${CY}to this question.\\n\\n"
-    printf "${GN}     ---->${OG}"
+    printf "${CY}    ---->${OG}"
 else
     printf "      Invalid Selection\\n"
 fi
@@ -80,8 +81,9 @@ install_func() {
 clear
         Banner_func
         Prompt_func
-        printf " ${WT}  ----> "
+printf " ${CY} Default install location is ${WT}$scripts_dir${CY}."
     read -p "   Should I overwrite and install to default location? [Y/N]  " install
+        printf " ${CY}   ---->  "
         if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
             printf "${RED}     You chose not to install. Quiting application"
             exit 1
