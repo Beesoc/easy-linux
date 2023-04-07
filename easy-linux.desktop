@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Beesoc's Easy Linux Loader
+Comment=Bash menu system to easily launch apps and services
+Exec=$HOME/easy-linux/install-master.sh
+Icon=xchat
+Terminal=true
+Type=Application
+Categories=Network;Utilities;
+StartupNotify=true
+X-Desktop-File-Install-Version=0.19

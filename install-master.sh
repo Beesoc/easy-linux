@@ -8,20 +8,20 @@
 # * Displays a main menu with four options: Hacking, Customize, Downloads, and Pwnagotchi. The user can select an option 
 #   by typing the corresponding number.
 #
-BK='\e[1;30m'
-RED='\e[1;31m'
-GN='\e[1;32m'
-YW='\e[1;33m'
-BL='\e[1;34m'
-PL='\e[1;35m'
-CY='\e[1;36m'
-WT='\e[1;37m'
-OG='\e[1;93m'
-UK='\e[0;38m'
-BG='\e[0;44m'
-NC='\e[0m'
+#BK='\e[1;30m'
+#RED='\e[1;31m'
+#GN='\e[1;32m'
+#YW='\e[1;33m'
+#BL='\e[1;34m'
+#PL='\e[1;35m'
+#CY='\e[1;36m'
+#WT='\e[1;37m'
+#OG='\e[1;93m'
+#UK='\e[0;38m'
+#BG='\e[0;44m'
+#NC='\e[0m'
 #
-scripts_dir=${HOME}/scripts
+#scripts_dir=${HOME}/scripts
 
 #printf "${BG}"
 

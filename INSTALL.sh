@@ -1,28 +1,27 @@
 #!/bin/bash
 # 
 # Installer script for Beesoc's Easy Linux Loader.
+set -e
 #     define colors
-BK='\e[0;44;30m'
-RED='\e[1;31m'
-GN='\e[1;32m'
-YW='\e[1;33m'
-BL='\e[1;34m'
-PL='\e[1;35m'
-CY='\e[1;36m'
-WT='\e[1;37m'
-WTU='\e[4;37m'
-OG='\e[1;93m'
-OGU='\e[1;93m'
-OGF='\e[0;33;44m'
-OGG='\e[0;32;44m'
-OGH='\e[0;30;44m'
-UK='\e[0;38m'
-BG='\e[0;44m'
-NC='\e[0m'
+#BK='\e[0;44;30m'
+#RED='\e[1;31m'
+#GN='\e[1;32m'
+#YW='\e[1;33m'
+#BL='\e[1;34m'
+#PL='\e[1;35m'
+#CY='\e[1;36m'
+#WT='\e[1;37m'
+#WTU='\e[4;37m'
+#OG='\e[1;93m'
+#OGU='\e[1;93m'
+#OGF='\e[0;33;44m'
+#OGG='\e[0;32;44m'
+#OGH='\e[0;30;44m'
+#UK='\e[0;38m'
+#BG='\e[0;44m'
+#NC='\e[0m'
 #
-scripts_dir=/opt/easy-linux-loader
-
-#printf "${BG}"
+#scripts_dir=/$HOME/easy-linux
 
 Prompt_func() {
     prompt_symbol=㉿
@@ -81,7 +80,7 @@ install_func() {
 clear
         Banner_func
         Prompt_func
-        printf " ${WT} "
+        printf " ${WT}  ----> "
     read -p "   Should I overwrite and install to default location? [Y/N]  " install
         if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
             printf "${RED}     You chose not to install. Quiting application"
@@ -114,8 +113,10 @@ clear
 Banner_func
 printf "\\n${OG}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
 printf "\\n${CY}Press ${WT}any ${CY}key to continue.                                 Press ${RED}[ctrl+c] ${CY}to cancel\\n"
+
+sudo apt install -y direnv > /dev/null
 #printf "${WT}\\n   -->"
-printf "${WT} \\n"
+printf "${WT} \\n ----> "
   read -r -n1 -s -t 60
 folder_exists_func
 install_func  
@@ -123,3 +124,4 @@ sudo chmod a+x ./*.sh
 }
 
 main
+direnv allow
