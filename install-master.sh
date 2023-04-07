@@ -72,6 +72,8 @@ main() {
   printf " ${OG} \\n"
   printf "  99]${GN} Display System Information                      ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
+  echo export ORIGINAL_USER=$USER > .envrc
+  direnv allow
   Prompt_func
   printf "${CY}   ----> "
 # Read user input and display the appropriate submenu

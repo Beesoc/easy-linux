@@ -148,6 +148,23 @@ Banner_func
           sudo cp ./shellcheck.sh /usr/bin
           sudo rm -r ~/compiled/nanorc/
 }
+
+webmin_func() {
+cd ~/compiled
+curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh 
+sudo chmod a+x ./setup-repos.sh
+printf "Select Y to install the webmin repos in the next step"
+sleep 1
+printf "..3.."
+sleep 1
+printf "..2.."
+sleep 1
+printf "..1..\\n  ----> " 
+sudo ./setup-repos.sh
+sudo apt update
+sudo apt install -y webmin
+printf "Webmin install complete. Access at http://localhost:10000"
+}
 install_apps_func() {
 clear
 Banner_func
@@ -169,11 +186,11 @@ select option in "${options[@]}"; do
             printf "  ${OG}\\nInstalling Docker Desktop\\n"
             docker_func
             ;;
-        "Blah")
+        "Webmin")
             clear
             Banner_func
-            printf "  ${OG}\\nBlah\\n"
-            printf "${GN}You selected SBlah\\n"
+            webmin_func
+            printf "${GN}Installing Webmin\\n"
             ;;
          "Main Menu")
             clear

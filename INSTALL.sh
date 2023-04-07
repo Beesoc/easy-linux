@@ -1,26 +1,6 @@
 #!/bin/bash
 # 
 # Installer script for Beesoc's Easy Linux Loader.
-#     define colors
-BK='\e[0;44;30m'
-RED='\e[1;31m'
-GN='\e[1;32m'
-YW='\e[1;33m'
-BL='\e[1;34m'
-PL='\e[1;35m'
-CY='\e[1;36m'
-WT='\e[1;37m'
-WTU='\e[4;37m'
-OG='\e[1;93m'
-OGU='\e[1;93m'
-OGF='\e[0;33;44m'
-OGG='\e[0;32;44m'
-OGH='\e[0;30;44m'
-UK='\e[0;38m'
-BG='\e[0;44m'
-NC='\e[0m'
-#
-scripts_dir=/opt/easy-linux-loader
 source .envrc
 #printf "${BG}"
 
@@ -81,7 +61,7 @@ install_func() {
 clear
         Banner_func
         Prompt_func
-        printf "  Default install loation is ${WT}${scripts_dir} "
+        printf "  Default install loation is ${WT}${scripts_dir} \\n  "
     read -p "   Should I install to the default location? [Y/N]  " install
         if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
             printf "${RED}     You chose not to install. Quiting application"
@@ -114,6 +94,8 @@ clear
 Banner_func
 printf "\\n${OG}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
 printf "\\n${CY}Press ${WT}any ${CY}key to continue.                                 Press ${RED}[ctrl+c] ${CY}to cancel\\n"
+echo export ORIGINAL_USER=$USER > .envrc
+direnv allow
 sudo apt install -y direnv > /dev/null
 #printf "${WT}\\n   -->"
 printf "${WT} \\n  ---->"
@@ -121,6 +103,8 @@ printf "${WT} \\n  ---->"
 folder_exists_func
 install_func  
 sudo cp README.md ${scripts_dir}/
+sudo cp LICENSE ${scripts_dir}/
+sudo cp .envrc ${scripts_dir}/
 sudo cp *.desktop /usr/share/applications/
 sudo chmod a+x ./*.sh
 }
