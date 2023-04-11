@@ -3,7 +3,7 @@
 #
 # TODO: Get Mikes laptop hostname and FuckThatSh1t Mac address for this script
 #
-set -euo pipefail
+#set -euo pipefail
 
 #################################################  Begin User Options  #########
 set -e
@@ -12,7 +12,7 @@ FuckThatSh1t_mac="33:33:33:33:33:33"
 mike_host=TODO
 ###################################################  End User Options  #########
  
-source=
+source=./.envrc
 options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
 
 mac_address=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
@@ -95,10 +95,9 @@ if [[ $(hostname) = ${cory_host} ]]; then
               read -r -n1 -s -t 60  
     # Unknown device connected, Override or setup new 
               read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
-              printf "${CY}    You entered ${WT}${pwnagotchi}${CY}.  Press ${WT}any ${CY}key to continue\\n"
-                     read -r -n1 -s -t 30  
+              printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
 fi
-printf  "Your info:  $USER working on ${pwnagotchi}, plugged into $hostname.\\n"
+printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$hostname${CY}.\\n"
 }
 #if [[ ${pwnagotchi_mac} != ${pwnagotchi_host} ]]; then
 #    printf "${RED} [!!!] Automatic Pwnagotchi detection failed! Fatal Error.\\n "
@@ -119,37 +118,36 @@ ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
   elif [[ ! -e /root/.ssh/id_rsa.pub ]]; then
     printf "${YW}SSH key was not found.  Press ${WT}any ${YW}key to generate keys.  ${GN}Accept the default suggestions.\\n  "
         read -r -n1 -s -t 60
-        ssh-keygen
+        sudo ssh-keygen
   elif
     [[ -e ~/.ssh/id_rsa.pub ]]; then
       printf "${CY}SSH key was found.  Proceeding.\\n"
   else
       printf "Invalid selection, try again."
   fi
-  printf "  ${CY}Now I'll copy SSH key to Pwnagotchi. Password is ${WT}'[uB2Aj3j'$'HcgNWP]'${CY}.\\n"
+  printf "  ${CY}Now I will copy SSH key to Pwnagotchi. Password is ${WT}[uB2Aj3j$HcgNWP${CY}.\\n"
   printf "  If new, password is ${WT}[raspberry]${CY}.\\n" 
-  printf "  You may be prompted to accept fingerprint next & will be asked for $(WT)${pwnagotchi} ${CY}password. \
-  Press ${WT}any ${CY}key to continue.\\n"
+  printf "  You may be prompted to accept fingerprint next & will be asked for $(WT)${pwnagotchi} ${CY}password.\\n"
+  printf "  Press ${WT}any ${CY}key to continue.\\n"
         read -r -n1 -s -t 60
     ssh-copy-id -p 22 -i ~/.ssh/id_rsa.pub pi@10.0.0.2  
     sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2  
-  ssh -p 22 pi@10.0.0.2
+    ssh -p 22 pi@10.0.0.2
 }
 udev_func() {
-if [[ ! -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
- sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"=="usb*", ENV"{MAC_ADDRESS}"=="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/install-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
- sudo udevadm control --reload-rules
-
- fi
-if [[ -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
-  printf "Its there.  yeah."
-fi 
+  if [[ ! -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
+     sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"=="usb*", ENV"{MAC_ADDRESS}"=="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/install-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
+     sudo udevadm control --reload-rules
+  fi
+  if [[ -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
+     printf "Its there.  yeah."
+  fi 
 }
 backup_func() {
 
 # Backup files from backup server to remote computers
 
-printf "\\n  ${CY}You are about to backup ${WT}${pwnagotchi}:\\n"
+  printf "\\n  ${CY}You are about to backup ${WT}${pwnagotchi}:\\n"
   printf "  ${CY}Common files [all Pwnagotchis share them]: ${OG}\\n"
 
     rsync -avz --rsync-path="sudo rsync" -e ssh --update --human-readable --mkpath --super --sparse --itemize-changes --executability --copy-links --progress --verbose --relative --exclude=".cache" --exclude=".thumbnails" --exclude=".local/share/Trash" pi@10.0.0.2:/home	 pi@10.0.0.2:/etc/pwnagotchi    pi@10.0.0.2:/root/ 	         pi@10.0.0.2:/root/handshakes    pi@10.0.0.2:/etc/ssh/        pi@10.0.0.2:/etc/nanorc        pi@10.0.0.2:/etc/logrotate   pi@10.0.0.2:/etc/sysctl.conf    pi@10.0.0.2:/usr/local/share/bettercap/caplets              pi@10.0.0.2:/etc/rc.local    pi@10.0.0.2:/etc/motd           pi@10.0.0.2:/etc/timezone    pi@10.0.0.2:/etc/wgetrc        "${backup_dir}/test"
@@ -174,11 +172,7 @@ restore_func() {
 printf "\\n  ${CY}You are about to restore ${WT}${pwnagotchi}:\\n"
   printf "  ${CY}Common files [all Pwnagotchis share them]: ${OG}\\n"
 
-
-#!/bin/bash
-
 # Define the backup directory where the files were saved
-backup_dir="/opt/backup/test"
 
 # Restore files to their original locations
 rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --sparse \
@@ -213,14 +207,30 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
 
 
 }
+
+ usb_func() {
+ usb_count=$(sudo ifconfig | grep -c "usb")
+ 
+Banner_func
+if [[ "${usb_count}" -eq 0 ]]; then
+    printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
+    printf "    Please connect the USB cable to your Pwnagotchi and try again."
+    exit 1
+else
+    # If there are multiple wireless interfaces, prompt the user to select one
+    printf "   \\n" 
+    printf "${OG}    USB network adapter detected.  Continuing... \\n" 
+fi
+}
+
 #
 main() {
 clear
 Banner_func
 Prompt_func
 printf " ${OG}\\n                 Welcome to the Pwnagotchi hub\\n"
+usb_func
 select_pwn_func
-
 select option in "${options[@]}"; do
     case ${option} in
         "Backup")
@@ -231,7 +241,7 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             if [[ ${pwnagotchi} == "" ]]; then
                 select_pwn_func
             else
-                printf "${pwnagotchi}: Proceeding"
+                printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
             fi
             ssh_func
 			backup_func
@@ -246,7 +256,7 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             if [[ ${pwnagotchi} == "" ]]; then
                 select_pwn_func
             else
-                printf "${pwnagotchi}: Proceeding"
+                printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
             fi            
             ssh_func
 			restore_func
@@ -256,12 +266,18 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
         "Maintenance")
             clear
             Banner_func
-            printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
-            printf "${GN}You selected Maintenance\\n"
+        printf "       ${CY}\\nWelcome to the Pwnagotchi hub\\n"
+        printf "   ${GN}You selected Maintenance.  ${YW}[!!!] ${}CYThis menu is coming soon. You can continue\\n"
+    printf "\\n   but know that you may experience bugs or other weird shit.  ${GN}You\\n"
+    printf "\\n   have been warned. ${YW}[!!!]\\n" 
+    printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
+      read -r -n1 -s -t 60
+      clear
+      Banner_func
             if [[ ${pwnagotchi} == "" ]]; then
                 select_pwn_func
             else
-                printf "${pwnagotchi}: Proceeding"
+                printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
             fi
             ssh_func
 			maint_func
@@ -270,17 +286,16 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             ;;
          "Main Menu")
             clear
-			bash ${scripts_dir}/install-master.sh
-			break
+			bash ./install-master.sh
             printf "${OG}You selected Main Menu\\n${CY}"
             ;;
           "Exit")
           clear
-            printf "${RED}You selected Exit${OG}\\n"
+            printf "    ${RED}You selected Exit${OG}\\n"
 			exit 1
             ;;
         *)
-            printf"${RED}Invalid option\\n${CY}"
+            printf"     ${RED}Invalid option\\n${CY}"
             ;;
     esac
 done
