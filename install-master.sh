@@ -101,7 +101,7 @@ if [[ ${choice} == 4 ]]; then
     printf "${YW}      You chose Pwnagotchi. \\n "
     clear
 #    Pwnagotchi_menu
-    bash ./install-backup_pwn_script.sh
+    bash ./install-backup_pwn-script.sh
 fi
 if [[ ${choice} == 99 ]]; then  
     printf "${YW}      You chose System Information. \\n "

@@ -13,10 +13,14 @@ mike_host=TODO
 ###################################################  End User Options  #########
  
 source=./.envrc
+hostname=$HOSTNAME
+clear
+printf "\\n${WT}\\n\\n                               IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
+printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
+      read -r -n1 -s -t 60
+clear
 options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
 
-mac_address=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-# $(ifconfig usb0 | grep -oE '([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}')
 printf "${CY}"
 
 Prompt_func() {
@@ -64,32 +68,32 @@ pwnagotchi_host=""
 
 if [[ ${mac_address} == "${gotcha_mac}" ]]; then
     # Gotcha is connected, run backup for Gotcha
-    pwnagotchi_mac="Gotcha"
+    pwnagotchi="Gotcha"
 elif [[ ${mac_address} == "${sniffer_mac}" ]]; then
     # Sniffer is connected, run backup for Sniffer
-    pwnagotchi_mac="Sniffer"
+    pwnagotchi="Sniffer"
 elif [[ ${mac_address} == "${FuckThatSh1t_mac}" ]]; then
     # FuckThatSh1t is connected, run backup for FuckThatSh1t
-    pwnagotchi_mac="FuckThatSh1t"
+    pwnagotchi="FuckThatSh1t"
 fi
 
 if [[ ${USER} == "beesoc" ]]; then
     # Gotcha is connected, run backup for Gotcha
-    pwnagotchi_mac="Gotcha"
+    pwnagotchi="Gotcha"
   elif [[ ${USER} == "larry" ]]; then
     # Sniffer is connected, run backup for Sniffer
-    pwnagotchi_mac="Sniffer"
+    pwnagotchi="Sniffer"
   else 
     # FuckThatSh1t is connected, run backup for FuckThatSh1t
-    pwnagotchi_mac="FuckThatSh1t"
+    pwnagotchi="FuckThatSh1t"
 fi
 
-if [[ $(hostname) = ${cory_host} ]]; then
-   pwnagotchi_host=Gotcha
-  elif [[ $(hostname) = ${larry_host} ]]; then
-   pwnagotchi_host=Sniffer
-  elif [[ $(hostname) = ${mike_host} ]]; then
-   pwnagotchi_host=FuckThatSh1t
+if [[ $HOSTNAME = ${cory_host} ]]; then
+   pwnagotchi=Gotcha
+  elif [[ $HOSTNAME = ${larry_host} ]]; then
+   pwnagotchi=Sniffer
+  elif [[ $HOSTNAME = ${mike_host} ]]; then
+   pwnagotchi=FuckThatSh1t
   else
     printf "\\n${CY}Unable to determine Pwnagotchi.automatically.  Press ${WT}any ${CY}key to override.\\n"
               read -r -n1 -s -t 60  
@@ -97,7 +101,7 @@ if [[ $(hostname) = ${cory_host} ]]; then
               read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
               printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
 fi
-printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$hostname${CY}.\\n"
+printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOSTNAME${CY}.\\n"
 }
 #if [[ ${pwnagotchi_mac} != ${pwnagotchi_host} ]]; then
 #    printf "${RED} [!!!] Automatic Pwnagotchi detection failed! Fatal Error.\\n "
@@ -118,9 +122,11 @@ ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
   elif [[ ! -e /root/.ssh/id_rsa.pub ]]; then
     printf "${YW}SSH key was not found.  Press ${WT}any ${YW}key to generate keys.  ${GN}Accept the default suggestions.\\n  "
         read -r -n1 -s -t 60
+    printf "  If there was a .ssh folder in your HOME directory, it has been backed up to .ssh2."
+    sudo cp -r $HOME/.ssh .ssh2
         sudo ssh-keygen
   elif
-    [[ -e ~/.ssh/id_rsa.pub ]]; then
+    [[ -e $HOME/.ssh/id_rsa.pub ]]; then
       printf "${CY}SSH key was found.  Proceeding.\\n"
   else
       printf "Invalid selection, try again."
@@ -211,14 +217,15 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
  usb_func() {
  usb_count=$(sudo ifconfig | grep -c "usb")
  
-Banner_func
 if [[ "${usb_count}" -eq 0 ]]; then
     printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
     printf "    Please connect the USB cable to your Pwnagotchi and try again."
     exit 1
 else
-    # If there are multiple wireless interfaces, prompt the user to select one
+    # Continue if usb0 adapter is detected.
     printf "   \\n" 
+    mac_address=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+# $(ifconfig usb0 | grep -oE '([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}')
     printf "${OG}    USB network adapter detected.  Continuing... \\n" 
 fi
 }
@@ -228,7 +235,7 @@ main() {
 clear
 Banner_func
 Prompt_func
-printf " ${OG}\\n                 Welcome to the Pwnagotchi hub\\n"
+printf " ${OG}\\n                    Welcome to the Pwnagotchi hub\\n"
 usb_func
 select_pwn_func
 select option in "${options[@]}"; do
