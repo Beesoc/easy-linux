@@ -1,9 +1,29 @@
 #!/bin/bash
 # 
 # Installer script for Beesoc's Easy Linux Loader.
-source .envrc
+#     define colors
+#
+scripts_dir=/opt/easy-linux-loader
+source=./.envrc
 #printf "${BG}"
 
+
+
+install_func() { 
+clear
+        Banner_func
+        Prompt_func
+        printf " ${WT} "
+    read -p "   Should I overwrite and install to default location? [Y/N]  " install
+        if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
+            printf "${RED}     You chose not to install. Quiting application"
+            exit 1
+        elif [[ ${install} == "y" ]] || [[ ${install} == "Y" ]]; then
+# add zip files to archive with:
+#  sudo zip -rvq -T -9 INSTALL.zip *.sh  
+
+#            if [[ ! command -v unzip &> /dev/null ]]; then
+#                printf Prompt_func() {
 Prompt_func() {
     prompt_symbol=㉿
     prompt_color=${GN}
@@ -16,7 +36,7 @@ Prompt_func() {
         prompt_symbol=💀
     fi
 
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOST${GN})-[${YW}${PWD}${GN}]\\n"
+printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
 printf "${GN}└─"${CY}"> ${CY}\\n"
 
 }
@@ -51,27 +71,11 @@ elif [[ -d ${scripts_dir} ]]; then
   printf "${CY}     Installation directory, ${WT}${scripts_dir}${CY}, already exists. ${OG}Overwrite?  ${WT}\\n "
     printf "${NC}\\n     NOTE: ${CY}If you have ${WT}NOT manually customized ${CY}any scripts, you ahould ${WT}always \\n"
     printf "     answer yes ${CY}to this question.\\n\\n"
-    printf "${CY}    ---->${OG}"
+    printf "${GN}     ---->${OG}"
 else
     printf "      Invalid Selection\\n"
 fi
-}
-
-install_func() { 
-clear
-        Banner_func
-        Prompt_func
-        printf "  Default install loation is ${WT}${scripts_dir} \\n  "
-    read -p "   Should I install to the default location? [Y/N]  " install
-        if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
-            printf "${RED}     You chose not to install. Quiting application"
-            exit 1
-        elif [[ ${install} == "y" ]] || [[ ${install} == "Y" ]]; then
-# add zip files to archive with:
-#  sudo zip -rvq -T -9 INSTALL.zip *.sh  
-
-#            if [[ ! command -v unzip &> /dev/null ]]; then
-#                printf "Unzip could not be found...Installing...\\n"
+}"Unzip could not be found...Installing...\\n"
 #                sudo apt install -y zip unzip
  
             command -v unzip >/dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed.  Installing."; sudo apt install -y unzip; }
@@ -80,10 +84,11 @@ clear
 #                printf "Unzip found...Continuing...\\n"
 #            fi
 
-           printf "${CY}Unzipping archives\\n"
+           printf "${CY}Unzipping files into ${scripts_dir}\\n"
             sudo unzip -o *.zip
               sudo cp *.sh ${scripts_dir}
               sudo chmod a+x *.sh
+              sudo chown -vR 1000:1000 ${scripts_dir}
         else
             printf "     Invalid selection\\n"
         fi
@@ -94,20 +99,11 @@ clear
 Banner_func
 printf "\\n${OG}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
 printf "\\n${CY}Press ${WT}any ${CY}key to continue.                                 Press ${RED}[ctrl+c] ${CY}to cancel\\n"
-echo export ORIGINAL_USER=$USER > .envrc
-direnv allow
-sudo apt install -y direnv > /dev/null
 #printf "${WT}\\n   -->"
-printf "${WT} \\n  ---->"
+printf "${WT} \\n"
   read -r -n1 -s -t 60
 folder_exists_func
 install_func  
-sudo cp README.md ${scripts_dir}/
-sudo cp LICENSE ${scripts_dir}/
-sudo cp .envrc ${scripts_dir}/
-sudo cp *.desktop /usr/share/applications/
-sudo chmod a+x ./*.sh
 }
 
 main
-direnv allow
