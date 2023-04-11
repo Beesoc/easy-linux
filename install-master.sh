@@ -66,7 +66,7 @@ read -r choice
 #  printf "  ${LB}\\n"
 if [[ ${choice} == 1 ]]; then  
     clear
-    printf "${YW}      You chose Hacking. [!!!]This menu is coming soon. You can continue\\n"
+    printf "${YW}\\n\\n           You chose Hacking. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
@@ -77,7 +77,7 @@ bash /${scripts_dir}/install-hacking.sh
 fi
 if [[ ${choice} == 2 ]]; then  
     clear
-    printf "${YW}      You chose Customize. [!!!]This menu is coming soon. You can continue\\n"
+    printf "${YW}\\n\\n           You chose Customize. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
@@ -88,7 +88,7 @@ if [[ ${choice} == 2 ]]; then
 fi
 if [[ ${choice} == 3 ]]; then  
     clear
-    printf "${YW}      You chose Downloads. [!!!]This menu is coming soon. You can continue\\n"
+    printf "${YW}\\n\\n           You chose Downloads. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
