@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 #
+source ./.envrc
 set -e
 #
 clear
@@ -42,7 +43,7 @@ printf "${NC}${CY}"
   #
 }
 #
-source ./.envrc
+
   if [ ! -d $HOME/scripts ]; then
         mkdir ~/scripts;
         scripts_dir=${$(HOME)/scripts}
@@ -52,14 +53,82 @@ install_compiled="${HOME}/compiled"
 install_keyrings="/etc/apt/keyrings"
 options=("Hacking Tool" "Docker Desktop" "Blah" "Main Menu" "Exit")
 #
-main() {main() {
+main() {
 
 clear
 Banner_func
 printf "  ${OG}First, we will $(WT)update/upgrade ${OG}all packages. Press ${WT}any ${CY}key to continue\\n"
 printf "  \\n${RED}Press [ctrl+c] to exit script.${NC}\\n${CY}"
+# TODO: don't run upgrade on pwnagotchi!
   read -r -n1 -s -t 30
     sudo apt update && sudo apt upgrade -y
+ printf "                       ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
+  printf "  ${OG} 1] ${GN}Docker Desktop${OG}                      3] ${GN}Downloads \\n${WT}\\n"
+  printf "  ${OG} 2] ${GN}Hacking Tool${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
+  printf " ${OG} \\n"
+  printf "  99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
+  printf " \\n"
+  Prompt_func
+  printf "  ---->"
+# Read user input and display the appropriate submenu
+read -r choice
+  printf "  ${LB}\\n"
+#  printf "  ${LB}\\n"
+if [[ ${choice} == 1 ]]; then  
+    clear
+    Banner_func
+    printf "${YW}\\n\\n           You chose Docker Desktop. Highly recommended. Docker runs apps in\\n\\n      "
+    printf "\\n           virtual containers. This eliminates problems with dependencies and corrupt\\n\\n      "
+    printf "\\n           installations.\\n" 
+    Prompt_func
+    printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
+      read -r -n1 -s -t 60
+      clear
+      docker_func
+      #    Hacking_menu
+if [[ ${choice} == 2 ]]; then  
+    clear
+    printf "${YW}\\n\\n           You chose Hacking Tool. Download and use the hacking tool featured\\n"
+    printf "\\n           in Mr. Robot. This tool has MANY tools built into it.  This is a definite \\n"
+    printf "\\n           must install.\\n" 
+    printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
+      read -r -n1 -s -t 60
+      clear
+      hacking_tool_func
+#    Customize_menu
+    bash /${scripts_dir}/install-customize.sh
+fi
+if [[ ${choice} == 3 ]]; then  
+    clear
+    printf "${YW}\\n\\n           You chose Downloads. [!!!]This menu is coming soon. You can continue\\n"
+    printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
+    printf "\\n           have been warned. [!!!]\\n" 
+    printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
+      read -r -n1 -s -t 60
+      clear
+      #    Download_menu
+    bash ${scripts_dir}install-download.sh
+fi
+if [[ ${choice} == 4 ]]; then  
+    printf "${YW}      You chose Pwnagotchi. \\n "
+    clear
+#    Pwnagotchi_menu
+    bash ./install-backup_pwn-script.sh
+fi
+if [[ ${choice} == 99 ]]; then  
+    printf "${YW}      You chose System Information. \\n "
+    clear
+#    Sysinfo_menu
+    Banner_func
+    printf "Show sys info"
+fi
+if [[ ${choice} == 0 ]]; then  
+#    Exit_menu
+    clear
+    Banner_func
+    printf "${RED}0. [✘] Exit tool [✘]${NC} \\n"
+    exit 1
+fi
 }
 
 hacking_tool_func() {
