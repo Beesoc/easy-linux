@@ -58,7 +58,8 @@ main() {
 clear
 Banner_func
 printf "  ${OG}First, we will $(WT)update/upgrade ${OG}all packages. Press ${WT}any ${CY}key to continue\\n"
-printf "  \\n${RED}Press [ctrl+c] to exit script.${NC}\\n${CY}"
+printf "        ${YW}[!!!] ${CY}DONT UPDATE/UPGRADE A PWNAGOTCHI ${YW}[!!!]${NC}"
+printf "  If you are using a Pwnagotchi, enter P to continue.{NC}\\n${CY}"
 # TODO: don't run upgrade on pwnagotchi!
   read -r -n1 -s -t 30
     sudo apt update && sudo apt upgrade -y
