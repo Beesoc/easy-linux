@@ -9,38 +9,22 @@
 #   by typing the corresponding number.
 #
 #printf "${BG}"
-source=./.envrc
-source=./support/banner_func.sh
+source .envrc
 
-Prompt_func() {
-    prompt_symbol=㉿
-    prompt_color=${GN}
-    info_color=${BL}
-    if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
-#        prompt_color='\[\033[;94m\]'
-        prompt_color=${GN}
-        info_color=${RED}
-        # Skull emoji for root terminal
-        prompt_symbol=💀
-    fi
+source support/prompt.sh
 
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
-printf "${GN}└─"${CY}"> ${CY}\\n"
-}
-
-Banner_func
 
 main() {
 # Display the main menu
   clear
-  Banner_func
+  source support/Banner_func.sh
   printf "                       ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
   printf "  ${OG} 1] ${GN}Hacking${OG}                         3] ${GN}Downloads \\n${WT}\\n"
   printf "  ${OG} 2] ${GN}Customize${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
   printf " ${OG} \\n"
   printf "  99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
-  Prompt_func
+  source support/Prompt_func.sh
   printf "  ---->"
 # Read user input and display the appropriate submenu
 read -r choice
@@ -89,13 +73,13 @@ if [[ ${choice} == 99 ]]; then
     printf "${YW}      You chose System Information. \\n "
     clear
 #    Sysinfo_menu
-    Banner_func
+    
     printf "Show sys info"
 fi
 if [[ ${choice} == 0 ]]; then  
 #    Exit_menu
     clear
-    Banner_func
+    source support/Banner_func.sh
     printf "${RED}0. [✘] Exit tool [✘]${NC} \\n"
     exit 1
 fi
