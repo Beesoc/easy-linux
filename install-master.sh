@@ -19,7 +19,7 @@ main() {
   clear
   source support/Banner_func.sh
   printf "                       ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
-  printf "  ${OG} 1] ${GN}Hacking${OG}                         3] ${GN}Downloads \\n${WT}\\n"
+  printf "  ${OG} 1] ${GN}Hacking${OG}                         3] ${GN}Apps and Downloads \\n${WT}\\n"
   printf "  ${OG} 2] ${GN}Customize${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
   printf " ${OG} \\n"
   printf "  99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
@@ -54,14 +54,14 @@ if [[ ${choice} == 2 ]]; then
 fi
 if [[ ${choice} == 3 ]]; then  
     clear
-    printf "${YW}\\n\\n           You chose Downloads. [!!!]This menu is coming soon. You can continue\\n"
+    printf "${YW}\\n\\n           You chose Apps and Downloads. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
       read -r -n1 -s -t 60
       clear
       #    Download_menu
-    bash ${scripts_dir}install-download.sh
+    bash ${scripts_dir}install-apps.sh
 fi
 if [[ ${choice} == 4 ]]; then  
     printf "${YW}      You chose Pwnagotchi. \\n "
