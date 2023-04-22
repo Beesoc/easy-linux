@@ -3,36 +3,10 @@
 handshakes_dir=/opt/backup/root/handshakes
 
 # Add Color
-RED='\e[1;31m'
-GN='\e[1;32m'
-YW='\e[1;33m'
-BL='\e[1;34m'
-CY='\e[1;36m'
-WT='\e[1;37m'
-OG='\e[1;93m'
-LB='\e[0;34m'
-NC='\e[0m'
+source .envrc
 #
-Banner_func() {
-  printf "${WT}\\n
--------------------------------------------------------------------------------${CY}
-  ▄████▄╗    ▄████▄╗   ▄████▄╗    ▄████▄╗     ▄███▄╗     ▄███▄╗  ██╗  ▄████▄╗  
-  ██═══██╝   ██╔═══╝   ██╔═══╝   ██╔════╝    ██╔══██╗   ██╔══▀╝   ▀╝ ██╔════╝  
-  ██████╝    █████╗    █████╗     ▀████▄╗    ██║  ██║   ██║           ▀████▄╗  
-  ██═══██    ██╔══╝    ██╔══╝      ╚═══██║   ██║  ██╝   ██║  ▄╗        ╚═══██║ 
-  ▀████▀╝    ▀████▀╗   ▀████▀╗    ▀████▀╝     ▀███▀╝     ▀███▀╝       ▀████▀╝  
-   ╚══╝       ╚═══╝     ╚═══╝      ╚══╝        ╚═╝        ╚═╝          ╚══╝
-  ▄████▄╗   ▄█▄╗    ▄███▄╗ █▄╗   ▄█╗   ▄█╗    ▄█╗ ▄█╗  █▄╗ ▄█╗  ▄█╗ ██▄╗  ▄██╗ 
-  ██╔═══╝  ██║██╗  ██╔═══╝  ██╗ ██╔╝   ██║    ██║ ██▄╗ ██║ ██║  ██║  ▀██▄██▀╝  
-  █████╗  ███▀███╗  ▀███▄╗   ████╔╝    ██║    ██║ ████▄██║ ██║  ██║    ███║    
-  ██╔══╝  ██║  ██║   ╚══██║   ██╔╝     ██║    ██║ ██║▀███║ ██║  ██║  ▄██▀██▄╗  
-  ▀████▀╝ ██║  ██║  ▀███▀╝    ██║      ▀████╗ ██║ ██║  ██║  ▀███▀╝  ██▀╝  ▀██╗ 
-   ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝ ${CY}
-------------------------------------------------------------------------------- \\n"
-  #
-#  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
-}
-Banner_func
+
+source support/Banner_func.sh
 #printf "This script backs up your saved hashes from /opt/backup/root/handshakes." 
 
 permissions_func() {
@@ -84,11 +58,15 @@ clear
 }
 main() {
 clear
-Banner_func
+source support/Banner_func.sh
 folders_exist_func
 permissions_func
 upload_func
 }
 main
 clear
-bash "$(HOME)"scripts/install-master.sh
+printf "${CY}All Operations completed. Cracked passwords will start appearing on "
+  printf "https://www.OnlineHashCrack.com and https://wpa-sec.stanev.org within 24hr."
+Press ${WT}any${CY} key to return to ${WT}Main Menu\\n"
+  read -r -n1 -s -t 30
+bash ./install-master.sh

@@ -6,67 +6,20 @@ set -e
 #
 clear
 #
-Prompt_func() {
-    prompt_symbol=㉿
-    prompt_color=${GN}
-    info_color=${BL}
-    if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
-#        prompt_color='\[\033[;94m\]'
-        prompt_color=${GN}
-        info_color=${RED}
-        # Skull emoji for root terminal
-        prompt_symbol=💀
-    fi
 
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
-printf "${GN}└─"${CY}"> ${CY}\\n"
-}
-
-Banner_func() {
-  printf "${WT}\\n
-${OGH}▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀${OGG}${RED}
-    ▄████▄${BK}╗    ${RED}▄████▄${BK}╗   ${RED}▄████▄${BK}╗    ${RED}▄████▄${BK}╗     ${RED}▄███▄${BK}╗     ${RED}▄███▄${BK}╗  ${RED}██${BK}╗  ${RED}▄████▄${BK}╗  ${OG}  
-    ██${BK}═══${OG}██${BK}╝   ${OG}██${BK}╔═══╝   ${OG}██${BK}╔═══╝   ${OG}██${BK}╔════╝    ${OG}██${BK}╔══${OG}██${BK}╗   ${OG}██${BK}╔══${OG}▀${BK}╝   ${OG}▀${BK}╝ ${OG}██${BK}╔════╝${OG}    
-    ██████${BK}╝    ${OG}█████${BK}╗    ${OG}█████${BK}╗     ${OG}▀████▄${BK}╗    ${OG}██${BK}║  ${OG}██${BK}║   ${OG}██${BK}║           ${OG}▀████▄${BK}╗${OG}    
-    ██${BK}═══${OG}██    ${OG}██${BK}╔══╝${OG}    ██${BK}╔══╝      ╚═══${OG}██${BK}║   ${OG}██${BK}║  ${OG}██${BK}╝   ${OG}██${BK}║  ${OG}▄${BK}╗        ╚═══${OG}██${BK}║ ${OGF}  
-    ▀████▀${BK}╝    ${OGF}▀████▀${BK}╗   ${OGF}▀████▀${BK}╗    ${OGF}▀████▀${BK}╝     ${OGF}▀███▀${BK}╝${OGF}     ▀███▀${BK}╝"${OGF}"       ▀████▀${BK}╝   ${BK} 
-     ╚══╝       ╚═══╝     ╚═══╝      ╚══╝        ╚═╝        ╚═╝          ╚══╝      ${OGG}
-    ▄████▄${BK}╗   ${OGG}▄█▄${BK}╗    ${OGG}▄███▄${BK}╗ ${OGG}█▄${BK}╗   ${OGG}▄█${BK}╗   ${OGG}▄█${BK}╗    ${OGG}▄█${BK}╗ ${OGG}▄█${BK}╗  ${OGG}█▄${BK}╗ ${OGG}▄█${BK}╗  ${OGG}▄█${BK}╗ ${OGG}██▄${BK}╗  ${OGG}▄██${BK}╗ ${GN}  
-    ██${BK}╔═══╝  ${GN}██${BK}║${GN}██${BK}╗  ${GN}██${BK}╔═══╝  ${GN}██${BK}╗ ${GN}██${BK}╔╝   ${GN}██${BK}║    ${GN}██${BK}║ "${GN}"██▄${BK}╗ ${GN}██${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▀██▄██▀${BK}╝${GN}    
-    █████${BK}╗  ${GN}███▀███${BK}╗  ${GN}▀███▄${BK}╗   ${GN}████${BK}╔╝    ${GN}██${BK}║    ${GN}██${BK}║ ${GN}████▄██${BK}║ "${GN}"██${BK}║  ${GN}██${BK}║    ${GN}███${BK}║${GN}      
-    ██${BK}╔══╝  ${GN}██${BK}║  ${GN}██${BK}║   ╚══${GN}██${BK}║   ${GN}██${BK}╔╝     ${GN}██${BK}║    ${GN}██${BK}║ ${GN}██${BK}║${GN}▀███${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▄██▀██▄${BK}╗    ${WT}
-    ▀████▀${BK}╝ ${WT}██${BK}║  ${WT}██${BK}║  ${WT}▀███▀${BK}╝    ${WT}██${BK}║      ${WT}▀████${BK}╗ ${WT}██${BK}║ ${WT}██${BK}║  ${WT}██${BK}║  ${WT}▀███▀${BK}╝  ${WT}██▀${BK}╝  ${WT}▀██${BK}╗   ${BK}
-     ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝   ${OGH}
-▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\\n"
-printf "${NC}${CY}"
-#  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
-  #
-}
-#
-
-  if [ ! -d $HOME/scripts ]; then
-        mkdir ~/scripts;
-        scripts_dir=${$(HOME)/scripts}
+  if [ ! -d ${scripts_dir} ]; then
+        sudo mkdir ${scripts_dir}
+        sudo chown -Rf 1000:0 "${scripts_dir}"
   fi
   
-install_compiled="${HOME}/compiled"
-install_keyrings="/etc/apt/keyrings"
-options=("Hacking Tool" "Docker Desktop" "Blah" "Main Menu" "Exit")
+options=("Hacking Tool" "Docker Desktop" "Downloads" "Pwnagotchi" "Main Menu" "Exit")
 #
-main() {
-
-clear
-Banner_func
-printf "  ${OG}First, we will $(WT)update/upgrade ${OG}all packages. Press ${WT}any ${CY}key to continue\\n"
-printf "        ${YW}[!!!] ${CY}DONT UPDATE/UPGRADE A PWNAGOTCHI ${YW}[!!!]${NC}"
-printf "  If you are using a Pwnagotchi, enter P to continue.{NC}\\n${CY}"
-# TODO: don't run upgrade on pwnagotchi!
-  read -r -n1 -s -t 30
-    sudo apt update && sudo apt upgrade -y
- printf "                       ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
-  printf "  ${OG} 1] ${GN}Docker Desktop${OG}                      3] ${GN}Downloads \\n${WT}\\n"
+source /support/Banner_func.sh
+install-apps_options_func() {
+  printf "  \\n                     ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
+  printf "  ${OG} 1] ${GN}Docker Desktop${OG}                     3] ${GN}Downloads \\n${WT}\\n"
   printf "  ${OG} 2] ${GN}Hacking Tool${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
-  printf " ${OG} \\n"
+  printf "  ${OG} \\n"
   printf "  99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
   Prompt_func
@@ -300,6 +253,23 @@ exit
   ngrok config add-authtoken 2NfhLccABPQaLZEPIQ2BHoqMEi1_HtwCjRDobFehPbTDohMW
 }
 
+main() {
+
+clear
+source support/Banner_func.sh
+printf "    ${CY}First, we will $(WT)update/upgrade ${CY}all packages.\\n"
+printf "    $RED[!!!] $[YW]IMPORTANT CHOICE ${RED}[!!!] "
+printf "  ${GN}---->   ${CY}Enter the ${WT}C ${CY}key to continue for ${GN}ANYTHING EXCEPT${CY} a Pwnagotchi.\\n"
+printf "  ${GN}---->   ${CY}If youre using a Pwnagotchi, enter P to continue.{NC}\\n${CY}"
+printf "  ${YW}[!!!] ${CY}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P ${YW}[!!!]${NC}"
+
+read -r -p "[P]wnagotchi or [C]ontinue with ANY other Linux distro?" install-choice
+  if [[ ${install-choice} = "c" ]] || [[ ${install-choice} = "C" ]]; then
+    sudo apt update && sudo apt upgrade -y
+  elif [[ ${install-choice} = "p" ]] || [[ ${install-choice} = "P" ]]; then
+    install-app_options_func
+}
+
 main
 standard_apps_func
 install_apps_func
@@ -308,7 +278,7 @@ docker_func
  if [[  $(hostname) = "updates" ]]; then
         personal_func
     else
-        break
+        printf "Easter egg for Beesoc only triggered"
  fi
   clear
   printf "                        ${YW}Summary of changes made by this script.${WT}   \n  " 
@@ -319,16 +289,14 @@ docker_func
   printf "                 [ Install Additional Nano Lints ].....${GN}[✔] Successfully Installed [✔]${WT}\n";
 printf "  Press M to return to the Main Menu."
 read -r menu_choice
- if [[  ${menu_choice} = "m" ]]||[[  ${menu_choice} = "M" ]]; then
+ if [[  ${menu_choice} = "m" ]] || [[ ${menu_choice} = "M" ]]; then
         printf " \\n";
-        bash "$(HOME)"/scripts/install-master.sh
-        break
-        else
+        bash ./install-master.sh
+  else
           printf " Invalid Selection"
 fi
  if [[  $(hostname) = "updates" ]]; then
         personal_func
         else
-        bash "$(HOME)"/scripts/install-master.sh
-        fi
-    
+        bash ./install-master.sh
+  fi
