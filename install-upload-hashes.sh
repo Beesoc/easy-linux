@@ -1,11 +1,11 @@
 #!/bin/bash
 # set a variable for handshakes directory so it can be changed in program
 handshakes_dir=/opt/backup/root/handshakes
-
+set -e
 # Add Color
 source .envrc
 #
-
+trap "support/trap-wifi.sh" EXIT
 source support/Banner_func.sh
 #printf "This script backs up your saved hashes from /opt/backup/root/handshakes." 
 

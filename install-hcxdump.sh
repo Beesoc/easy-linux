@@ -2,6 +2,7 @@
 #
 set -e
 #
+trap "support/trap-wifi.sh" EXIT
 source .envrc
 #
 # Set the path to the wordlist

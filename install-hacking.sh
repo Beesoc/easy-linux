@@ -1,7 +1,8 @@
 #!/bin/bash
 #
 source .envrc
-
+set -e 
+trap "support/trap-wifi.sh" EXIT
 clear
 source support/Banner_func.sh
 printf "                     ${CY} Welcome to the Hacking/Security Menu.             ${OG}\\n  "
