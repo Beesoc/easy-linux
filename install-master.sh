@@ -9,9 +9,10 @@
 #   by typing the corresponding number.
 #
 #printf "${BG}"
-source .envrc
-
-source support/prompt.sh
+# shellcheck source=.envrc
+source ".envrc"
+set -e
+source "support/Prompt_func.sh"
 
 
 main() {
@@ -19,10 +20,11 @@ main() {
   clear
   source support/Banner_func.sh
   printf "                       ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
-  printf "  ${OG} 1] ${GN}Hacking${OG}                         3] ${GN}Apps and Downloads \\n${WT}\\n"
-  printf "  ${OG} 2] ${GN}Customize${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
-  printf " ${OG} \\n"
-  printf "  99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
+  printf "  ${OG}1] ${GN}Hacking${OG}                         3] ${GN}Apps and Downloads \\n${WT}\\n"
+  printf "  ${OG}2] ${GN}Customize${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
+  printf "  ${OG}\\n"
+  printf "  ${OG}98]${GN} I have no wifi! reset wifi stuff" 
+  printf "  ${OG}99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
   source support/Prompt_func.sh
   printf "  ---->"
@@ -32,14 +34,14 @@ read -r choice
 #  printf "  ${LB}\\n"
 if [[ ${choice} == 1 ]]; then  
     clear
-    printf "${YW}\\n\\n           You chose Hacking. [!!!]This menu is coming soon. You can continue\\n"
+    printf "${YW}\\n\\n           You chose Hacking. [!!!]This menu is continually evolving.  \\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
       read -r -n1 -s -t 60
       clear
       #    Hacking_menu
-bash /${scripts_dir}/install-hacking.sh
+bash ${scripts_dir}/install-hacking.sh
 fi
 if [[ ${choice} == 2 ]]; then  
     clear
@@ -50,24 +52,34 @@ if [[ ${choice} == 2 ]]; then
       read -r -n1 -s -t 60
       clear
 #    Customize_menu
-    bash /${scripts_dir}/install-customize.sh
+    bash ./install-customize.sh
 fi
 if [[ ${choice} == 3 ]]; then  
     clear
     printf "${YW}\\n\\n           You chose Apps and Downloads. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
-    printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
+    printf "\\n${YW}            Press ${WT}any key ${YW}to continue.${GN}\\n"
       read -r -n1 -s -t 60
       clear
       #    Download_menu
-    bash ${scripts_dir}install-apps.sh
+    bash ./install-apps.sh
 fi
 if [[ ${choice} == 4 ]]; then  
     printf "${YW}      You chose Pwnagotchi. \\n "
     clear
 #    Pwnagotchi_menu
     bash ./install-backup_pwn-script.sh
+fi
+if [[ ${choice} == 98 ]]; then  
+    printf "${YW}      You chose Wifi problems. Playing with these menus can occassionally\\n "
+    printf "${YW}      leave your wifi adaptors and network services in varying states.\\n"
+    printf "${YW}      This option will reset all nework adapters to managed mode and restart \\n"
+    printf "${YW}      the NetworkManager and wpa_supplicant services."
+    printf "\\n\\n      ${CY}Press ${WT}any ${CY}key to continue.${GN}"
+      read -r -n1 -s -t 60
+    #    Wifi_problems_menu
+    bash "support/trap-wifi.sh"
 fi
 if [[ ${choice} == 99 ]]; then  
     printf "${YW}      You chose System Information. \\n "

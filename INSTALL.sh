@@ -85,7 +85,7 @@ cleanup_func() {
   printf "   Use the option on your ${WT}Apps menu ${CT}or enter [ ${WT}install-master.sh${CT} ]\\n"
   printf "   from ${WT}any Terminal ${CY} to access. Thanks for using ${WT}Beesoc's Easy Loader\\n" 
   printf "\\n\\n  ${CY}Press ${WT}any ${CY}key to exit the installer."
-  printf "  read -r -n1 -s -t 60
+read -r -n1 -s -t 60
   exit 1
 }
 
