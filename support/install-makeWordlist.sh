@@ -7,21 +7,8 @@ set -u
 #export PS4="\$LINENO: "
 #set -xv
 # colors for printf
-RED='\e[1;31m'
-GN='\e[1;32m'
-BL='\e[1;34m'
-CY='\e[1;36m'
-WT='\e[1;37m'
-OG='\e[1;93m'
-NC='\e[0m'
-#
+source ../.envrc
 # Function for prompt
-Prompt_func() {
-  printf " \\n"
-  printf "  ${GN}┌──(${BL}$USER㉿$HOSTNAME${GN})-[${WT}$(pwd)${BL}${GN}]\\n "
-  printf " ${GN}L${BL}$ ${OG}"
-#  printf " \\n "
-}
 #
 # function for banner
 Banner_func() {
@@ -53,7 +40,7 @@ add_another_func() {
  		   clear
   fi
   if [[ ${another_file} = "Y" ]] || [[ ${another_file} = "y" ]]; then
-  	 Prompt_func
+    source Prompt_func.sh
       printf "\\n   \"${WT}\"[*] The file you are merging into is still \"${BL}\"\"${file2}\".\\n"
 	   read -p -r "Enter the additional filename to merge" file3
   		    backup_func
