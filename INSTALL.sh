@@ -2,39 +2,43 @@
 # 
 # Installer script for Beesoc's Easy Linux Loader.
 #     define colors
-#shellcheck source=support/Prompt_func.sh
-#shellcheck source=".envrc"
-source .envrc
+RED='\e[1;31m'
+CY='\e[1;36m'
+WT='\e[1;37m'
+
 #printf "${BG}"
 scripts_dir="/opt/easy-linux"
 
-install_func() { 
-clear
-        source "support/Banner_func.sh"
-        source "support/Prompt_func.sh"
-        sudo apt install -y bc cat direnv lm-sensors >/dev/null
-                printf " ${WT} "
-    read -pr "   Should I overwrite and install to default location? [Y/N]  " install
-        if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
-            printf "${RED}     You chose not to install. Quiting application"
-            exit 1
-        elif [[ ${install} == "y" ]] || [[ ${install} == "Y" ]]; then
-#          ADMIN NOTE:  add zip files to archive with:
-#          sudo zip -rvq -T -9 INSTALL.zip *.sh  
-
-#            if [[ ! command -v unzip &>  /dev/null ]]; then
-#                printf Prompt_func() {
+Banner_func() {
+  printf "${WT}\\n
+-------------------------------------------------------------------------------${CY}
+  ▄████▄╗    ▄████▄╗   ▄████▄╗    ▄████▄╗     ▄███▄╗     ▄███▄╗  ██╗  ▄████▄╗  
+  ██═══██╝   ██╔═══╝   ██╔═══╝   ██╔════╝    ██╔══██╗   ██╔══▀╝   ▀╝ ██╔════╝  
+  ██████╝    █████╗    █████╗     ▀████▄╗    ██║  ██║   ██║           ▀████▄╗  
+  ██═══██    ██╔══╝    ██╔══╝      ╚═══██║   ██║  ██╝   ██║  ▄╗        ╚═══██║ 
+  ▀████▀╝    ▀████▀╗   ▀████▀╗    ▀████▀╝     ▀███▀╝     ▀███▀╝       ▀████▀╝  
+   ╚══╝       ╚═══╝     ╚═══╝      ╚══╝        ╚═╝        ╚═╝          ╚══╝
+  ▄████▄╗   ▄█▄╗    ▄███▄╗ █▄╗   ▄█╗   ▄█╗    ▄█╗ ▄█╗  █▄╗ ▄█╗  ▄█╗ ██▄╗  ▄██╗ 
+  ██╔═══╝  ██║██╗  ██╔═══╝  ██╗ ██╔╝   ██║    ██║ ██▄╗ ██║ ██║  ██║  ▀██▄██▀╝  
+  █████╗  ███▀███╗  ▀███▄╗   ████╔╝    ██║    ██║ ████▄██║ ██║  ██║    ███║    
+  ██╔══╝  ██║  ██║   ╚══██║   ██╔╝     ██║    ██║ ██║▀███║ ██║  ██║  ▄██▀██▄╗  
+  ▀████▀╝ ██║  ██║  ▀███▀╝    ██║      ▀████╗ ██║ ██║  ██║  ▀███▀╝  ██▀╝  ▀██╗ 
+   ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝ ${WT}
+------------------------------------------------------------------------------- \\n"
+  #
+#  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
+}
 
 folder_exists_func() {
   clear
-  #shellcheck source=support/Banner_func.sh
-  source "support/Banner_func.sh"
+  Banner_func.sh
 
 if [[ ! -d "${scripts_dir}/tmp" ]]; then  
     printf "  ${CY}$scripts_dir/tmp not found.\\n${CY}    Please Wait, creating tmp dir, '${WT}${scripts_dir}/tmp'${CY}."; sleep 1 
     printf "${WT}.."; sleep 1; printf ".."; sleep 1
-    sudo mkdir "${scripts_dir}/tmp"
-    sudo chown -Rf 1000:0 "${scripts_dir}/tmp"
+    sudo mkdir "${scripts_dir}"
+    sudo mkdir ${scripts_dir}/tmp
+    sudo chown -Rf 1000:0 "${scripts_dir}"
     sleep 1
       if [[ -d "${scripts_dir}/tmp" ]]; then  
           printf "${CY}done..\\n"
@@ -44,10 +48,13 @@ if [[ ! -d "${scripts_dir}/tmp" ]]; then
       fi
 
 elif [[ -d ${scripts_dir}/tmp ]]; then  
-  printf "${CY}     Please Wait, checking tmp folder permissions, "${WT}${scripts_dir}/tmp ${CY}.""; sleep 1 
+  printf "${CY}     Please Wait, checking tmp folder permissions, ${WT}${scripts_dir}/tmp ${CY}."; sleep 1 
   sudo rm -rf ${scripts_dir}/tmp -y
+  sudo rm -rf ${scripts_dir}
+  sudo mkdir ${scripts_dir}
+  sudo mkdir ${scripts_dir}/tmp
   printf "${WT}.."; sleep 1; printf ".."; sleep 1 
-    sudo chown -Rf 1000:0 "${scripts_dir}/tmp"
+    sudo chown -Rf 1000:0 "${scripts_dir}"
     sleep 1
       if [[ -d "${scripts_dir}/tmp" ]]; then  
           printf "${CY}done..\\n"
@@ -63,9 +70,25 @@ fi
 
 }
 
+install_func() { 
+clear
+    Banner_func
+    sudo apt install -y bc cat zip direnv lm-sensors >/dev/null
+          printf " ${WT} "
+    read -pr "   Should I overwrite and install to default location? [Y/N]  " install
+        if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
+            printf "${RED}     You chose not to install. Quiting application"
+            exit 1
+        elif [[ ${install} == "y" ]] || [[ ${install} == "Y" ]]; then
+#          ADMIN NOTE:  add zip files to archive with:
+#          sudo zip -rvq -T -9 INSTALL.zip *.sh  
+folder_exists_func
+#            if [[ ! command -v unzip &>  /dev/null ]]; then
+#                printf Prompt_func() {
 
-printf "${YW}Unzip could not be found...\\nAttempting to Install ${WT}unzip${CY}...Please wait...\\n${WT}\\n"
-  sudo apt install -y zip unzip > /dev/null
+
+#printf "${YW}Unzip could not be found...\\nAttempting to Install ${WT}unzip${CY}...Please wait...\\n${WT}\\n"
+#  sudo apt install -y zip unzip > /dev/null
 
     printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
       sudo mv -f *.zip tmp/ 

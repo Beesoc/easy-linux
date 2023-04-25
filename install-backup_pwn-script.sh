@@ -11,9 +11,12 @@ set -e
 FuckThatSh1t_mac="33:33:33:33:33:33"
 mike_host=TODO
 ###################################################  End User Options  #########
- 
-source ./.envrc
-hostname=$HOSTNAME
+#shellcheck source=.envrc 
+#shellcheck source=support/Banner_func.sh
+#shellcheck source=support/Prompt_func.sh
+source .envrc
+source support/Banner_func.sh
+source support/Prompt_func.sh
 clear
 printf "\\n${WT}\\n\\n                               IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
 printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
@@ -23,42 +26,6 @@ options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
 
 printf "${CY}"
 
-Prompt_func() {
-    prompt_symbol=㉿
-    prompt_color=${GN}
-    info_color=${BL}
-    if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
-#        prompt_color='\[\033[;94m\]'
-        prompt_color=${GN}
-        info_color=${RED}
-        # Skull emoji for root terminal
-        prompt_symbol=💀
-    fi
-
-printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
-printf "${GN}└─"${CY}"> ${CY}\\n"
-}
-
-Banner_func() {
-  printf "${WT}\\n
-${OGH}▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀${OGG}${RED}
-    ▄████▄${BK}╗    ${RED}▄████▄${BK}╗   ${RED}▄████▄${BK}╗    ${RED}▄████▄${BK}╗     ${RED}▄███▄${BK}╗     ${RED}▄███▄${BK}╗  ${RED}██${BK}╗  ${RED}▄████▄${BK}╗  ${OG}  
-    ██${BK}═══${OG}██${BK}╝   ${OG}██${BK}╔═══╝   ${OG}██${BK}╔═══╝   ${OG}██${BK}╔════╝    ${OG}██${BK}╔══${OG}██${BK}╗   ${OG}██${BK}╔══${OG}▀${BK}╝   ${OG}▀${BK}╝ ${OG}██${BK}╔════╝${OG}    
-    ██████${BK}╝    ${OG}█████${BK}╗    ${OG}█████${BK}╗     ${OG}▀████▄${BK}╗    ${OG}██${BK}║  ${OG}██${BK}║   ${OG}██${BK}║           ${OG}▀████▄${BK}╗${OG}    
-    ██${BK}═══${OG}██    ${OG}██${BK}╔══╝${OG}    ██${BK}╔══╝      ╚═══${OG}██${BK}║   ${OG}██${BK}║  ${OG}██${BK}╝   ${OG}██${BK}║  ${OG}▄${BK}╗        ╚═══${OG}██${BK}║ ${OGF}  
-    ▀████▀${BK}╝    ${OGF}▀████▀${BK}╗   ${OGF}▀████▀${BK}╗    ${OGF}▀████▀${BK}╝     ${OGF}▀███▀${BK}╝${OGF}     ▀███▀${BK}╝"${OGF}"       ▀████▀${BK}╝   ${BK} 
-     ╚══╝       ╚═══╝     ╚═══╝      ╚══╝        ╚═╝        ╚═╝          ╚══╝      ${OGG}
-    ▄████▄${BK}╗   ${OGG}▄█▄${BK}╗    ${OGG}▄███▄${BK}╗ ${OGG}█▄${BK}╗   ${OGG}▄█${BK}╗   ${OGG}▄█${BK}╗    ${OGG}▄█${BK}╗ ${OGG}▄█${BK}╗  ${OGG}█▄${BK}╗ ${OGG}▄█${BK}╗  ${OGG}▄█${BK}╗ ${OGG}██▄${BK}╗  ${OGG}▄██${BK}╗ ${GN}  
-    ██${BK}╔═══╝  ${GN}██${BK}║${GN}██${BK}╗  ${GN}██${BK}╔═══╝  ${GN}██${BK}╗ ${GN}██${BK}╔╝   ${GN}██${BK}║    ${GN}██${BK}║ "${GN}"██▄${BK}╗ ${GN}██${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▀██▄██▀${BK}╝${GN}    
-    █████${BK}╗  ${GN}███▀███${BK}╗  ${GN}▀███▄${BK}╗   ${GN}████${BK}╔╝    ${GN}██${BK}║    ${GN}██${BK}║ ${GN}████▄██${BK}║ "${GN}"██${BK}║  ${GN}██${BK}║    ${GN}███${BK}║${GN}      
-    ██${BK}╔══╝  ${GN}██${BK}║  ${GN}██${BK}║   ╚══${GN}██${BK}║   ${GN}██${BK}╔╝     ${GN}██${BK}║    ${GN}██${BK}║ ${GN}██${BK}║${GN}▀███${BK}║ ${GN}██${BK}║  ${GN}██${BK}║  ${GN}▄██▀██▄${BK}╗    ${WT}
-    ▀████▀${BK}╝ ${WT}██${BK}║  ${WT}██${BK}║  ${WT}▀███▀${BK}╝    ${WT}██${BK}║      ${WT}▀████${BK}╗ ${WT}██${BK}║ ${WT}██${BK}║  ${WT}██${BK}║  ${WT}▀███▀${BK}╝  ${WT}██▀${BK}╝  ${WT}▀██${BK}╗   ${BK}
-     ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝   ${OGH}
-▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\\n"
-printf "${NC}${CY}"
-#  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
-  #
-}
 pwnagotchi=""
 
 select_pwn_func() {
@@ -88,17 +55,17 @@ if [[ ${USER} == "beesoc" ]]; then
     pwnagotchi="FuckThatSh1t"
 fi
 
-if [[ $HOSTNAME = ${cory_host} ]]; then
+if [[ $HOSTNAME = "${cory_host}" ]]; then
    pwnagotchi=Gotcha
-  elif [[ $HOSTNAME = ${larry_host} ]]; then
+  elif [[ $HOSTNAME = "${larry_host}" ]]; then
    pwnagotchi=Sniffer
-  elif [[ $HOSTNAME = ${mike_host} ]]; then
+  elif [[ $HOSTNAME = "${mike_host}" ]]; then
    pwnagotchi=FuckThatSh1t
   else
     printf "\\n${CY}Unable to determine Pwnagotchi.automatically.  Press ${WT}any ${CY}key to override.\\n"
               read -r -n1 -s -t 60  
     # Unknown device connected, Override or setup new 
-              read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
+              read -rp "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
               printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
 fi
 printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOSTNAME${CY}.\\n"
@@ -131,7 +98,7 @@ ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
   else
       printf "Invalid selection, try again."
   fi
-  printf "  ${CY}Now I will copy SSH key to Pwnagotchi. Password is ${WT}[uB2Aj3j$HcgNWP${CY}.\\n"
+  printf "  ${CY}Now I will copy SSH key to Pwnagotchi. Password is ${WT}[uB2Aj3j\$HcgNWP${CY}.\\n"
   printf "  If new, password is ${WT}[raspberry]${CY}.\\n" 
   printf "  You may be prompted to accept fingerprint next & will be asked for $(WT)${pwnagotchi} ${CY}password.\\n"
   printf "  Press ${WT}any ${CY}key to continue.\\n"
@@ -142,7 +109,7 @@ ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
 }
 udev_func() {
   if [[ ! -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
-     sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"=="usb*", ENV"{MAC_ADDRESS}"=="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/install-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
+     sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"="usb*", ENV"{MAC_ADDRESS}"="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/install-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
      sudo udevadm control --reload-rules
   fi
   if [[ -e /etc/udev/rules.d/99-backup-rule.rules ]]; then

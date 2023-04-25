@@ -6,7 +6,7 @@ RED='\e[1;31m'
 NC='\e[0m'
 scripts_dir="/opt/easy-linux"
 install_compiled="$HOME/compiled"
-
+clear
 Banner_func() {
   printf "${WT}\\n
 -------------------------------------------------------------------------------${CY}
