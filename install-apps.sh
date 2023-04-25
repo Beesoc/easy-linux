@@ -14,16 +14,17 @@ clear
   
 options=("Hacking Tool" "Docker Desktop" "Downloads" "Pwnagotchi" "Main Menu" "Exit")
 #
-source /support/Banner_func.sh
+source "support/Banner_func.sh"
 install-apps_options_func() {
-  printf "  \\n                     ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
-  printf "  ${OG} 1] ${GN}Docker Desktop${OG}                     3] ${GN}Downloads \\n${WT}\\n"
-  printf "  ${OG} 2] ${GN}Hacking Tool${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
-  printf "  ${OG} \\n"
-  printf "  99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
+  printf "  \\n                     ${CY}[???]${CY} Please select an option: ${CY}[???]${CY}\\n  \\n"
+  printf "  ${OG} 1] ${GN}Docker Desktop${OG}                    20] ${GN}Install Wifite\\n "
+  printf "  ${OG} 2] ${GN}Hacking Tool${OG}                      21] ${GN}Install The Fat Rat \\n"
+  printf "  ${OG} 3] ${GN}Downloads${OG}                               \\n"
+  printf "  ${OG} 4] ${GN}Pwnagotchi ${CY}                             \\n"
+  printf "  99]${GN} Display System Information                     ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
-  Prompt_func
-  printf "  ---->"
+    source "source/Prompt_func.sh"
+  printf "${GN}   ---->"
 # Read user input and display the appropriate submenu
 read -r choice
   printf "  ${LB}\\n"
@@ -69,12 +70,27 @@ if [[ ${choice} == 4 ]]; then
 #    Pwnagotchi_menu
     bash ./install-backup_pwn-script.sh
 fi
+if [[ ${choice} == 20 ]]; then  
+    printf "${YW}      You chose to install Wifite. \\n "
+    clear
+#    Sysinfo_menu
+    source "support/Banner_func.sh"
+    source "support/install-wifite.sh"
+    printf "Show sys info"
+fi
+if [[ ${choice} == 21 ]]; then  
+    printf "${YW}      You chose to install the Fat Rat. \\n "
+    clear
+#    Sysinfo_menu
+    source "support/Banner_func.sh"
+    source "support/install-fatrat.sh"
+fi
 if [[ ${choice} == 99 ]]; then  
     printf "${YW}      You chose System Information. \\n "
     clear
 #    Sysinfo_menu
-    Banner_func
-    printf "Show sys info"
+    source "support/Banner_func.sh"
+    source "support/install-sysinfo.sh"
 fi
 if [[ ${choice} == 0 ]]; then  
 #    Exit_menu
