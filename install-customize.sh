@@ -1,14 +1,6 @@
 #!/bin/bash
-
-RED='\e[1;31m'
-GN='\e[1;32m'
-YW='\e[1;33m'
-BL='\e[1;34m'
-CY='\e[1;36m'
-WT='\e[1;37m'
-OG='\e[1;93m'
-LB='\e[0;34m'
-NC='\e[0m'
+#shellcheck source=.envrc
+source .envrc
 
 Banner_func() {
   printf "${WT}\\n

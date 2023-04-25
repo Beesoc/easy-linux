@@ -2,10 +2,11 @@
 # 
 # Installer script for Beesoc's Easy Linux Loader.
 #     define colors
-#shellcheck support/Prompt_func.sh
-#shellcheck .envrc
+#shellcheck source=support/Prompt_func.sh
+#shellcheck source=".envrc"
 source .envrc
 #printf "${BG}"
+scripts_dir="/opt/easy-linux"
 
 install_func() { 
 clear
@@ -13,7 +14,7 @@ clear
         source "support/Prompt_func.sh"
         sudo apt install -y bc cat direnv lm-sensors >/dev/null
                 printf " ${WT} "
-    read -p "   Should I overwrite and install to default location? [Y/N]  " install
+    read -pr "   Should I overwrite and install to default location? [Y/N]  " install
         if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
             printf "${RED}     You chose not to install. Quiting application"
             exit 1
@@ -26,7 +27,7 @@ clear
 
 folder_exists_func() {
   clear
-  #shellcheck support/Banner_func.sh
+  #shellcheck source=support/Banner_func.sh
   source "support/Banner_func.sh"
 
 if [[ ! -d "${scripts_dir}/tmp" ]]; then  
@@ -107,15 +108,18 @@ printf "\\n${CY}Press ${WT}any ${CY}key to continue.                            
 #printf "${WT}\\n    ---->"
 printf "${WT} \\n"
   read -r -n1 -s -t 60
-  cd ~/compiled/
-    if [[ -d "~/compiled/easy-linux" ]]; then  
+  cd ~/compiled/ || exit
+    if [[ -d "$HOME/compiled/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc's Easy Linux exists.\\n${CY}"
        printf "       Please Wait, removing tmp clone and installing to ${WT}${scripts_dir}.${CY}"; sleep 1 
        printf "${WT}.."
-       sudo rm -Rf ~/compiled/  
+       sudo rm -Rf $HOME/compiled/  
        sleep 1; printf ".."; sleep 1
-   
-   
+    else
+       printf "  ${CY}Easy-Linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo."
+    fi
+    cd $HOME/compiled || exit
+    git clone https://github.com/Beesoc/beesoc-menu.git
     sudo mkdir "${scripts_dir}/tmp"
     sudo chown -Rf 1000:0 "${scripts_dir}/tmp"
     sleep 1

@@ -12,7 +12,7 @@ FuckThatSh1t_mac="33:33:33:33:33:33"
 mike_host=TODO
 ###################################################  End User Options  #########
  
-source=./.envrc
+source ./.envrc
 hostname=$HOSTNAME
 clear
 printf "\\n${WT}\\n\\n                               IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"

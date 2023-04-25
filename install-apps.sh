@@ -1,11 +1,17 @@
 #!/bin/bash
 #
 #
-source ./.envrc
+#shellcheck source=".envrc"
+#shellcheck source="source/Prompt_func.sh"
+#shellcheck source="support/Banner_func.sh"
+source ".envrc"
 set -e
 #
 clear
 #
+scripts_dir=/opt/easy-linux
+install_compiled=$HOME/compiled
+install_keyrings=
 
   if [ ! -d ${scripts_dir} ]; then
         sudo mkdir ${scripts_dir}
@@ -31,17 +37,17 @@ read -r choice
 #  printf "  ${LB}\\n"
 if [[ ${choice} == 1 ]]; then  
     clear
-    Banner_func
+    source "support/Banner_func.sh"
     printf "${YW}\\n\\n           You chose Docker Desktop. Highly recommended. Docker runs apps in\\n\\n      "
     printf "\\n           virtual containers. This eliminates problems with dependencies and corrupt\\n\\n      "
     printf "\\n           installations.\\n" 
-    Prompt_func
+    source support/Prompt_func.sh
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
       read -r -n1 -s -t 60
       clear
       docker_func
       #    Hacking_menu
-if [[ ${choice} == 2 ]]; then  
+elif [[ ${choice} == 2 ]]; then  
     clear
     printf "${YW}\\n\\n           You chose Hacking Tool. Download and use the hacking tool featured\\n"
     printf "\\n           in Mr. Robot. This tool has MANY tools built into it.  This is a definite \\n"
@@ -52,8 +58,7 @@ if [[ ${choice} == 2 ]]; then
       hacking_tool_func
 #    Customize_menu
     bash /${scripts_dir}/install-customize.sh
-fi
-if [[ ${choice} == 3 ]]; then  
+elif [[ ${choice} == 3 ]]; then  
     clear
     printf "${YW}\\n\\n           You chose Downloads. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
@@ -63,41 +68,38 @@ if [[ ${choice} == 3 ]]; then
       clear
       #    Download_menu
     bash ${scripts_dir}install-download.sh
-fi
-if [[ ${choice} == 4 ]]; then  
+elif [[ ${choice} == 4 ]]; then  
     printf "${YW}      You chose Pwnagotchi. \\n "
     clear
 #    Pwnagotchi_menu
     bash ./install-backup_pwn-script.sh
-fi
-if [[ ${choice} == 20 ]]; then  
+elif [[ ${choice} == 20 ]]; then  
     printf "${YW}      You chose to install Wifite. \\n "
     clear
 #    Sysinfo_menu
     source "support/Banner_func.sh"
     source "support/install-wifite.sh"
     printf "Show sys info"
-fi
-if [[ ${choice} == 21 ]]; then  
+elif [[ ${choice} == 21 ]]; then  
     printf "${YW}      You chose to install the Fat Rat. \\n "
     clear
 #    Sysinfo_menu
     source "support/Banner_func.sh"
     source "support/install-fatrat.sh"
-fi
-if [[ ${choice} == 99 ]]; then  
+elif [[ ${choice} == 99 ]]; then  
     printf "${YW}      You chose System Information. \\n "
     clear
 #    Sysinfo_menu
     source "support/Banner_func.sh"
     source "support/install-sysinfo.sh"
-fi
-if [[ ${choice} == 0 ]]; then  
+elif [[ ${choice} == 0 ]]; then  
 #    Exit_menu
     clear
-    Banner_func
+    source support/Banner_func.sh
     printf "${RED}0. [✘] Exit tool [✘]${NC} \\n"
     exit 1
+else
+    printf "   ${RED}Invalid Selection"
 fi
 }
 
@@ -106,15 +108,14 @@ printf "Installing Hacking Tool...${NC}\n"
   if [[ -d ${install_compiled} ]]; then
         printf " \n";
           cd compiled
-          break
-        fi
-        printf "  \n";
-    if [[ ! -d ${install_compiled} ]]; then      
+          return 1
+          printf "  \n";
+  elif [[ ! -d ${install_compiled} ]]; then      
           mkdir ~/compiled 
           cd compiled
-     else
+  else
        printf "Invalid Selection"
-     fi  
+  fi  
   sudo git clone https://github.com/Z4nzu/hackingtool.git
   cd hackingtool
   sudo pip3 install -r requirements.txt
@@ -195,7 +196,7 @@ Banner_func
 }
 install_apps_func() {
 clear
-Banner_func
+source support/Banner_func
 printf "  ${OG}Select which app you would like to install.\\n" 
 
 select option in "${options[@]}"; do
@@ -274,7 +275,7 @@ main() {
 clear
 source support/Banner_func.sh
 printf "    ${CY}First, we will $(WT)update/upgrade ${CY}all packages.\\n"
-printf "    $RED[!!!] $[YW]IMPORTANT CHOICE ${RED}[!!!] "
+printf "    ${RED}[!!!] $[YW]IMPORTANT CHOICE ${RED}[!!!] "
 printf "  ${GN}---->   ${CY}Enter the ${WT}C ${CY}key to continue for ${GN}ANYTHING EXCEPT${CY} a Pwnagotchi.\\n"
 printf "  ${GN}---->   ${CY}If youre using a Pwnagotchi, enter P to continue.{NC}\\n${CY}"
 printf "  ${YW}[!!!] ${CY}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P ${YW}[!!!]${NC}"
@@ -284,6 +285,7 @@ read -r -p "[P]wnagotchi or [C]ontinue with ANY other Linux distro?" install-cho
     sudo apt update && sudo apt upgrade -y
   elif [[ ${install-choice} = "p" ]] || [[ ${install-choice} = "P" ]]; then
     install-app_options_func
+  fi
 }
 
 main
