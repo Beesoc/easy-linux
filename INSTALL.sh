@@ -9,7 +9,7 @@ WT='\e[1;37m'
 #printf "${BG}"
 scripts_dir="/opt/easy-linux"
 
-Banner_func() {
+support-Banner_func() {
   printf "${WT}\\n
 -------------------------------------------------------------------------------${CY}
   ▄████▄╗    ▄████▄╗   ▄████▄╗    ▄████▄╗     ▄███▄╗     ▄███▄╗  ██╗  ▄████▄╗  
@@ -31,48 +31,42 @@ Banner_func() {
 
 folder_exists_func() {
   clear
-  Banner_func.sh
+  support-Banner_func
 
-if [[ ! -d "${scripts_dir}/tmp" ]]; then  
-    printf "  ${CY}$scripts_dir/tmp not found.\\n${CY}    Please Wait, creating tmp dir, '${WT}${scripts_dir}/tmp'${CY}."; sleep 1 
+if [[ ! -d "${scripts_dir}" ]]; then  
+    printf "  ${CY}$scripts_dir not found.\\n${CY}    Please Wait, creating ${scripts_dir} dir."; sleep 1 
     printf "${WT}.."; sleep 1; printf ".."; sleep 1
     sudo mkdir "${scripts_dir}"
-    sudo mkdir ${scripts_dir}/tmp
-    sudo chown -Rf 1000:0 "${scripts_dir}"
-    sleep 1
-      if [[ -d "${scripts_dir}/tmp" ]]; then  
-          printf "${CY}done..\\n"
-      else 
-          printf "${RED} An error has occurred. Exiting tool."
-          exit 1
-      fi
-
-elif [[ -d ${scripts_dir}/tmp ]]; then  
-  printf "${CY}     Please Wait, checking tmp folder permissions, ${WT}${scripts_dir}/tmp ${CY}."; sleep 1 
-  sudo rm -rf ${scripts_dir}/tmp -y
-  sudo rm -rf ${scripts_dir}
-  sudo mkdir ${scripts_dir}
-  sudo mkdir ${scripts_dir}/tmp
-  printf "${WT}.."; sleep 1; printf ".."; sleep 1 
-    sudo chown -Rf 1000:0 "${scripts_dir}"
-    sleep 1
-      if [[ -d "${scripts_dir}/tmp" ]]; then  
-          printf "${CY}done..\\n"
-      else 
-          printf "${RED} An error has occurred. Exiting tool."
-          exit 1
-      fi
-
+elif [[ -d "${scripts_dir}" ]]; then 
+    printf "${scripts_dir} found. Continuing."
 else 
-    printf "${RED} An error has occurred.  Exiting Tool."
+    printf "     ${RED} Unknown error detected. Exiting."
     exit 1
+fi
+
+  if [[ ! -d "${scripts_dir}/tmp" ]]; then  
+        printf "  ${CY}${scripts_dir}/tmp not found.\\n${CY}    Please Wait, creating ${scripts_dir} dir."; sleep 1 
+        printf "${WT}.."; sleep 1; printf ".."; sleep 1
+        sudo mkdir "${scripts_dir}/tmp"
+  elif [[ -d "${scripts_dir}/tmp" ]]; then 
+      printf "${scripts_dir}/tmp found. Continuing."
+      sudo chown -Rf 1000:0 ${scripts_dir}
+      sudo rm ${scripts_dir}/tmp/*
+      sudo rmdir -f ${scripts_dir}/tmp
+      sudo mkdir ${scripts_dir}/tmp
+  else 
+       printf "     ${RED} Unknown error detected. Exiting."
+       exit 1
+  fi
+
+    sudo chown -Rf 1000:0 "${scripts_dir}"
 fi
 
 }
 
 install_func() { 
 clear
-    Banner_func
+    support-Banner_func
     sudo apt install -y bc cat zip direnv lm-sensors >/dev/null
           printf " ${WT} "
     read -pr "   Should I overwrite and install to default location? [Y/N]  " install
@@ -96,10 +90,10 @@ folder_exists_func
       sudo cp -rf tmp/*.sh ${scripts_dir}
         sudo chmod -R a+x ${scripts_dir}/*.sh
               sudo chown -vR 1000:0 ${scripts_dir}
-        sudo cp ${scripts_dir}/install-master.sh /usr/bin
-        sudo mv easy-linux.desktop /usr/share/applications/easy-linux.desktop
+        sudo cp ${scripts_dir}/install/menu-master.sh /usr/bin
+        sudo mv install/easy-linux.desktop /usr/share/applications/easy-linux.desktop
         sudo cp .envrc $scripts_dir && direnv allow
-        sudo mv Banner_func.sh install-fix-my-perm.sh install-makeWordlist.sh install-monDOWN.sh install-monUP.sh install-sysinfo.sh install-wifite.sh install-wpaDOWN.sh install-wpaUP.sh linux_connection_script.sh Prompt_func.sh trap-wifi.sh support/
+        sudo mv support-Banner_func.sh install-fix-my-perm.sh install-makeWordlist.sh install-monDOWN.sh install-monUP.sh install-sysinfo.sh install-wifite.sh install-wpaDOWN.sh install-wpaUP.sh linux_connection_script.sh Prompt_func.sh trap-wifi.sh support/
         sudo touch support/adapter
         cd $scripts_dir && direnv allow
         else
@@ -114,9 +108,9 @@ cleanup_func() {
   sudo rmdir tmp/
   printf "...done.${CY}"
   clear
-  source "support/Banner_func.sh" 
+  source "support/support-Banner_func.sh" 
   printf "   ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
-  printf "   Use the option on your ${WT}Apps menu ${CT}or enter [ ${WT}install-master.sh${CT} ]\\n"
+  printf "   Use the option on your ${WT}Apps menu ${CT}or enter [ ${WT}menu-master.sh${CT} ]\\n"
   printf "   from ${WT}any Terminal ${CY} to access. Thanks for using ${WT}Beesoc's Easy Loader\\n" 
   printf "\\n\\n  ${CY}Press ${WT}any ${CY}key to exit the installer."
 read -r -n1 -s -t 60

@@ -32,7 +32,8 @@ printf "\\n${CY}Press ${WT}any ${CY}key to continue.                            
 #printf "${WT}\\n    ---->"
 printf "${WT} \\n"
   read -r -n1 -s -t 60
-  cd ~/compiled/ || exit
+  if [[ -d "$HOME/compiled" ]]; then
+    cd ~/compiled/ || exit
     if [[ -d "${install_compiled}/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc's Easy Linux found.\\n${CY}"
        printf "       Please Wait, removing tmp clone and cloning Github repo to ${WT}${scripts_dir}.\\n"; sleep 1 
@@ -42,7 +43,14 @@ printf "${WT} \\n"
     else
        printf "  ${CY}Easy-Linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo."
     fi
-    cd $HOME/compiled
+  elif [[ ! -d "$HOME/compiled" ]]; then   
+    printf "   $HOME/compiled not found.  Creating folder..."  
+    mkdir "$HOME/compiled"
+  else
+    printf "$RED   Unknown error. Do you have rights to create $HOME/compiled?"
+    exit 1
+  fi  
+    cd $HOME/compiled || exit
     git clone https://github.com/Beesoc/beesoc-menu.git
     cd beesoc-menu
     ./INSTALL.sh
