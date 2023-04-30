@@ -9,18 +9,18 @@
 #   by typing the corresponding number.
 #
 #printf "${BG}"
-# shellcheck source="support/support-Prompt_func.sh"
+# shellcheck source="$scripts_dir/support/support-Prompt_func.sh"
 # shellcheck source=.envrc
-# shellcheck source="support/support-Banner_func.sh"
-source .envrc
+# shellcheck source="$scripts_dir/support/support-Banner_func.sh"
+source "${scripts_dir}/.envrc"
 set -e
-#source "support/support-Prompt_func.sh"
+#source "${scripts_dir}/support/support-Prompt_func.sh"
 scripts_dir="/opt/easy-linux"
 
 main() {
 # Display the main menu
   clear
-  source "support/support-Banner_func.sh"
+  source "$scripts_dir/support/support-Banner_func.sh"
   printf "                       ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}\\n  \\n"
   printf "  ${OG}1] ${GN}Hacking${OG}                         3] ${GN}Apps and Downloads \\n${WT}\\n"
   printf "  ${OG}2] ${GN}Customize${OG}                       4] ${GN}Pwnagotchi${RED} \\n"
@@ -28,7 +28,7 @@ main() {
   printf "  ${OG}98]${GN} I have no wifi! reset wifi stuff" 
   printf "  ${OG}99]${GN} Display System Information                                 ${RED} [✘] Exit tool [✘]${NC}\\n"  
   printf " \\n"
-  source "support/support-Prompt_func.sh"
+  source "$scripts_dir/support/support-Prompt_func.sh"
   printf "     ---->  "
 # Read user input and display the appropriate submenu
 read -r choice
@@ -36,7 +36,7 @@ read -r choice
 #  printf "  ${LB}\\n"
 if [[ ${choice} == 1 ]]; then  
     clear
-    source "support/support-Banner_func.sh"
+    source "$scripts_dir/support/support-Banner_func.sh"
     printf "${YW}\\n\\n           You chose Hacking. [!!!]This menu is continually evolving.  \\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
@@ -44,10 +44,10 @@ if [[ ${choice} == 1 ]]; then
       read -r -n1 -s -t 60
       clear
       #    Hacking_menu
-bash ${scripts_dir}/install-hacking.sh
+bash ${scripts_dir}/menu-hacking.sh
 elif [[ ${choice} == 2 ]]; then  
     clear
-    source "support/Banner_func.sh"
+    source "$scripts_dir/support/Banner_func.sh"
     printf "${YW}\\n\\n           You chose Customize. [!!!]This menu is coming soon. You can continue\\n"
     printf "\\n           but know that you may experience bugs or other weird shit.  ${GN}You\\n"
     printf "\\n           have been warned. [!!!]\\n" 
