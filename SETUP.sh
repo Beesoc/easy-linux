@@ -1,4 +1,7 @@
 #!/bin/bash
+# Installer script for Beesoc's Easy Linux Loader.
+#          ADMIN NOTE:  add zip files to archive with:
+#          zip -r INSTALL.zip ./support/ ./install/
 set -e
 CY='\e[1;36m'
 WT='\e[1;37m'
@@ -33,15 +36,15 @@ printf "\\n${CY}Press ${WT}any ${CY}key to continue.                            
 printf "${WT} \\n"
   read -r -n1 -s -t 60
   if [[ -d "$HOME/compiled" ]]; then
-    cd ~/compiled/ || exit
+    cd $HOME/compiled/ || exit
     if [[ -d "${install_compiled}/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc's Easy Linux found.\\n${CY}"
        printf "       Please Wait, removing tmp clone and cloning Github repo to ${WT}${scripts_dir}.\\n"; sleep 1 
        printf "${WT}.."
-       sudo rm -Rf $HOME/compiled/  
+       sudo rm -Rf $HOME/compiled/easy-linux  
        sleep 1; printf ".."; sleep 1
-    else
-       printf "  ${CY}Easy-Linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo."
+    elif [[ ! -d "${install_compiled}/easy-linux" ]]; then
+       printf "  ${CY}Easy-Linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo."     
     fi
   elif [[ ! -d "$HOME/compiled" ]]; then   
     printf "   $HOME/compiled not found.  Creating folder..."  
@@ -52,5 +55,6 @@ printf "${WT} \\n"
   fi  
     cd $HOME/compiled || exit
     git clone https://github.com/Beesoc/beesoc-menu.git
-    cd beesoc-menu
-    ./INSTALL.sh
+    cd beesoc-menu || exit
+    sudo chmod a+x ./INSTALL.sh
+    bash ./INSTALL.sh
