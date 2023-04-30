@@ -121,9 +121,9 @@ clear
             cd ${scripts_dir} || exit && direnv allow && sudo direnv allow
           sudo cp ${compiled_dir}/.envrc $scripts_dir/support
             cd ${scripts_dir}/support || exit && direnv allow && sudo direnv allow
-          sudo cp ${compiled_dir}/.envrc ${scripts_dir}install
+          sudo cp ${compiled_dir}/.envrc ${scripts_dir}/install
             cd ${scripts_dir}/install || exit && direnv allow && sudo direnv allow
-
+          sudo cp ${compiled_dir}/.shellcheckrc ${scripts_dir}/ 
           sudo chown -vR 1000:0 ${scripts_dir}
           sudo chmod -R a+x ${scripts_dir}
             sudo cp ${scripts_dir}/install/menu-master.sh /usr/bin

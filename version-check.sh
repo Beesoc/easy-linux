@@ -2,6 +2,13 @@
 set -e
 #shellcheck source=.envrc
 source .envrc
+source version.sh
+
+# handle --version option
+if [ "$1" == "--version" ]; then
+  print_version
+fi
+
 scripts_dir=/opt/easy-linux
 # Define the minimum required version for each script
 declare -A required_versions=(
@@ -13,9 +20,11 @@ declare -A required_versions=(
   ["$scripts_dir/.envrc"]="0.0.2"
   ["$scripts_dir/README.md"]="0.0.2"
   ["$scripts_dir/version-check.sh"]="0.0.2"
+  ["$scripts_dir/version.sh"]="0.0.2"
   ["$scripts_dir/SETUP.sh"]="0.0.2"
   ["$scripts_dir/INSTALL.sh"]="0.0.2"
   ["$scripts_dir/INSTALL.zip"]="0.0.2"
+  ["$scripts_dir/.shellcheckrc"]="0.0.2"
 
   ["$scripts_dir/support/Banner_func.sh"]="0.0.2"
   ["$scripts_dir/support/support-fatrat.sh"]="0.0.2"
