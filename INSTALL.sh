@@ -57,8 +57,7 @@ fi
   elif [[ -d "${scripts_dir}/tmp" ]]; then 
       printf "${scripts_dir}/tmp found. Continuing."
       sudo chown -Rf 1000:0 ${scripts_dir}/tmp
-      sudo rm ${scripts_dir}/tmp/*
-      sudo rmdir -f ${scripts_dir}/tmp
+      sudo rm -Rf ${scripts_dir}/tmp/
       sudo mkdir ${scripts_dir}/tmp
   else 
        printf "     ${RED} Unknown error detected. Exiting."
