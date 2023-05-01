@@ -39,7 +39,7 @@ source "support-Banner_func.sh"
 }
 
 main() {
-source "support/Banner_func.sh"
+source "support-Banner_func.sh"
 if which fatrat >/dev/null 2>&1; then
   printf "${WT}The FAt Rat ${CY}is ${RED}not installed${CY}. Installing..."
   app-install_func
@@ -59,10 +59,10 @@ elif [[ ${wlchoice} = "c" ]] || [[ ${wlchoice} = "C" ]]; then
   wordlist=${mywordlist}
 fi
 clear
-source "support/Banner_func.sh"
+source support-Banner_func.sh
 sudo gnome-terminal -t "TheFatRat 1.9.5" --geometry=600x630 -e "bash -c 'fatrat';-bash"
 clear
-bash ${scripts_dir}/install-hacking.sh
+bash ${scripts_dir}/menu-hacking.sh
 }
 
 main
