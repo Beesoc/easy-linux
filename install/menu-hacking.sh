@@ -4,7 +4,7 @@ source .envrc
 set -e 
 trap "support/trap-wifi.sh" EXIT
 clear
-source support/Banner_func.sh
+bash support/support-Banner_func.sh
 printf "                     ${CY} Welcome to the Hacking/Security Menu.             ${OG}\\n  "
   printf "\\n  ${OG}1] ${CY}Enable wifi Monitor mode ${OG}              20] ${CY}Enable wifi and Network Manager${OG} \\n"
   printf "\\n  ${OG}2] ${CY}Disable wifi Monitor mode${OG}              21] ${CY}Disable wifi and Network Manager${OG}\\n"
@@ -16,37 +16,40 @@ printf "                     ${CY} Welcome to the Hacking/Security Menu.        
   printf "${OG}[99] ${CY}Return to main menu${OG}                                       ${RED}[✘] Exit tool [✘]${OG}  \\n      "
   printf "\\n  "
   printf "\\n                         ${WT}[*] ${OG}NOTE: Monitor mode is required for Sniffing/Injecting${WT}\\n\\n"
-  source support/Prompt_func.sh
+  bash support/support-Prompt_func.sh
 printf "    -----> "
 read -r choice
 if [[ ${choice} == 1 ]]; then  
     clear
-    bash support/install-monUP.sh
+    bash support/support-Banner_func.sh
+    bash support/support-monUP.sh
 elif [[ "${choice}" == 2 ]]; then  
     clear
-    bash support/install-monDOWN.sh
+    bash support/support-Banner_func.sh
+    bash support/support-monDOWN.sh
 elif [[ "${choice}" == 20 ]]; then  
     clear
-    bash support/install-wpaUP.sh
+    bash support/support-wpaUP.sh
 elif [[ "${choice}" == 21 ]]; then  
     clear
-    bash support/install-wpaDOWN.sh
+    bash support/support-wpaDOWN.sh
 elif [[ "${choice}" == 22 ]]; then  
     clear
-    bash ./install-hcxdump.sh
+    bash support/support-hcxdump.sh
 elif [[ "${choice}" == 90 ]]; then  
     clear
-    bash ./install-hcxdump.sh
+    bash support/support-hcxdump.sh
 elif [[ "${choice}" == 3 ]]; then  
     clear
-    bash ./install-upload-hashes.sh
+    bash menu-upload-hashes.sh
 elif [[ "${choice}" == 4 ]]; then  
     clear
-    bash support/install-makeWordlist.sh
+    bash support/support-makeWordlist.sh
 elif [[ "${choice}" = "x" ]] || [[ "${choice}" = "X" ]]; then  
     clear
-    bash install-master.sh
+    bash menu-master.sh
 else
     printf "${YW}  Nope, that's an invalid selection."
 fi
-exit 1
+clear
+bash menu-master.sh

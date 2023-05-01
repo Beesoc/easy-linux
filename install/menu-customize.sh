@@ -1,35 +1,18 @@
 #!/bin/bash
 #shellcheck source=.envrc
+#shellcheck source=support/support-Banner_func.sh
+#shellcheck source=support/support-Prompt_func.sh
 source .envrc
 
-Banner_func() {
-  printf "${WT}\\n
--------------------------------------------------------------------------------${CY}
-  ▄████▄╗    ▄████▄╗   ▄████▄╗    ▄████▄╗     ▄███▄╗     ▄███▄╗  ██╗  ▄████▄╗  
-  ██═══██╝   ██╔═══╝   ██╔═══╝   ██╔════╝    ██╔══██╗   ██╔══▀╝   ▀╝ ██╔════╝  
-  ██████╝    █████╗    █████╗     ▀████▄╗    ██║  ██║   ██║           ▀████▄╗  
-  ██═══██    ██╔══╝    ██╔══╝      ╚═══██║   ██║  ██╝   ██║  ▄╗        ╚═══██║ 
-  ▀████▀╝    ▀████▀╗   ▀████▀╗    ▀████▀╝     ▀███▀╝     ▀███▀╝       ▀████▀╝  
-   ╚══╝       ╚═══╝     ╚═══╝      ╚══╝        ╚═╝        ╚═╝          ╚══╝
-  ▄████▄╗   ▄█▄╗    ▄███▄╗ █▄╗   ▄█╗   ▄█╗    ▄█╗ ▄█╗  █▄╗ ▄█╗  ▄█╗ ██▄╗  ▄██╗ 
-  ██╔═══╝  ██║██╗  ██╔═══╝  ██╗ ██╔╝   ██║    ██║ ██▄╗ ██║ ██║  ██║  ▀██▄██▀╝  
-  █████╗  ███▀███╗  ▀███▄╗   ████╔╝    ██║    ██║ ████▄██║ ██║  ██║    ███║    
-  ██╔══╝  ██║  ██║   ╚══██║   ██╔╝     ██║    ██║ ██║▀███║ ██║  ██║  ▄██▀██▄╗  
-  ▀████▀╝ ██║  ██║  ▀███▀╝    ██║      ▀████╗ ██║ ██║  ██║  ▀███▀╝  ██▀╝  ▀██╗ 
-   ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝ ${WT}
-------------------------------------------------------------------------------- \\n"
-  #
-#  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
-}
-  Banner_func
+source support/support-Banner_func.sh
   printf "                    ${OG}[?]${CY} Customization: Please select an option: ${OG}[?] \\n"
   printf "  ${OG} 1] ${GN}Start x11vnc Server [Remote Access]${OG}            ${GN}20] ${GN}Edit HOSTS file \\n${WT}"
   printf "  ${OG} 2] ${GN}Fix Timezone & Time issues in Kali${OG}             ${GN}21] ${GN}Manage Disk Space${RED} \\n"
   printf "  ${OG} 3] ${GN}Fix your perm! Permissions fixes  \\n"
   printf "  ${WT}99]${WT}  Return to main menu                         ${OG}${RED} [✘] Exit tool [✘]${NC}\\n"  
-  Prompt_func
+source support/support-Prompt_func.sh
   
-    printf "   ${YW}
+    printf "   ${YW}\\n"
 
   printf "6. ${WT}Find things${YW} on your machine FAST with plocate ${RED} \\n   "
   printf "0. [✘] Exit tool [✘]${NC} \\n  " 
@@ -51,7 +34,7 @@ if [[ ${choice} == 3 ]]; then
     clear
     Banner_func
     printf "${GN}  3]  Fix your perm - Permission probems in Linux can be a bitch.  Get help here. \\n "
-    printf "${GN}  a]  Fix permissions problems on ${CY}/opt/backup ${GN}and your ${CY}Home folder${GN} \\n   "
+    printf "${GN}  a]  Fix permissions problems on ${CY}/opt/backup ${GN}and your ${CY}Home folder${GN} \\n  "
     printf "${GN}  b]  Enter a custom folder to fix permissions on." 
     printf "TODO \\n"
 fi
@@ -73,33 +56,21 @@ if [[ ${choice} == 99 ]]; then
     printf "${YW}      You chose System Information. \\n "
     clear
 #    Sysinfo_menu
-    Banner_func
-    printf "Show sys info"
+source support/support-Banner_func.sh
+source support/support-sysinfo.sh
 fi
 if [[ ${choice} == 0 ]]; then  
 #    Exit_menu
     clear
-    Banner_func
+    source support/support-Banner_func.sh
     printf "${RED}0. [✘] Exit tool [✘]${NC} \\n      "
-    exit
+    exit 1
+fi
 
-
-
-Prompt_func() {
-  printf " \\n"
-  printf "  ${GN}┌──(${BL}$USER㉿$HOSTNAME${GN})-[${WT}$(pwd)${BL}${GN}]\\n "
-  printf " ${GN}L${BL}$ ${OG}"
-#  printf " \\n "
-}
-
-Banner_func
+source support/support-Banner_func.sh
 printf "${OG} \\n"
-printf "You have entered the Customize menu.  Press any key to exit"
-Prompt_func
-read -r -n1 -s -t 10
-
-  printf "  ${LB}\\n"
-
-  }
+printf "${WT}Customize menu${CY}. Press ${WT}any key ${CY}to exit.\\n"
+source support/support-Prompt_func.sh
+read -r -n1 -s -t 60
 
 exit

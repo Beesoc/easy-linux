@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=Beesoc's Easy Linux Loader
 Comment=Bash menu system to easily launch apps and services
-Exec=$HOME/easy-linux/install-master.sh
+Exec=/opt/easy-linux/menu-master.sh
 Icon=xchat
 Terminal=true
 Type=Application
