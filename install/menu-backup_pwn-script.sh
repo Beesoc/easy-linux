@@ -12,11 +12,11 @@ FuckThatSh1t_mac="33:33:33:33:33:33"
 mike_host=TODO
 ###################################################  End User Options  #########
 #shellcheck source=.envrc 
-#shellcheck source=support/Banner_func.sh
-#shellcheck source=support/Prompt_func.sh
+#shellcheck source=support/support-Banner_func.sh
+#shellcheck source=support/support-Prompt_func.sh
 source .envrc
-source support/Banner_func.sh
-source support/Prompt_func.sh
+source support/support-Banner_func.sh
+source support/support-Prompt_func.sh
 clear
 printf "\\n${WT}\\n\\n                               IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
 printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
@@ -82,8 +82,8 @@ printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}
 ssh_func() {
 # function to control SSH options.  check for key, create key, copy key to pwn.
 clear
-Banner_func
-ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
+source support/support-Banner_func.sh
+ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
   if [[ ! -e $HOME/.ssh/id_rsa.pub ]]; then
     printf "${YW}No Personal SSH key was not found.  Checking for key for Root user\\n  "
   elif [[ ! -e /root/.ssh/id_rsa.pub ]]; then
@@ -98,9 +98,10 @@ ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
   else
       printf "Invalid selection, try again."
   fi
-  printf "  ${CY}Now I will copy SSH key to Pwnagotchi. Password is ${WT}[uB2Aj3j\$HcgNWP${CY}.\\n"
+  printf "  ${CY}Now I will copy SSH key to Pwnagotchi. \\n"
   printf "  If new, password is ${WT}[raspberry]${CY}.\\n" 
-  printf "  You may be prompted to accept fingerprint next & will be asked for $(WT)${pwnagotchi} ${CY}password.\\n"
+  printf "  You may be prompted to accept fingerprint next & will \\n" 
+  printf "  be asked for $(WT)${pwnagotchi} ${CY}password.\\n"
   printf "  Press ${WT}any ${CY}key to continue.\\n"
         read -r -n1 -s -t 60
     ssh-copy-id -p 22 -i ~/.ssh/id_rsa.pub pi@10.0.0.2  
@@ -109,7 +110,7 @@ ssh-keygen -f "/home/beesoc/.ssh/known_hosts" -R "10.0.0.2"
 }
 udev_func() {
   if [[ ! -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
-     sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"="usb*", ENV"{MAC_ADDRESS}"="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/install-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
+     sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"="usb*", ENV"{MAC_ADDRESS}"="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/menu-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
      sudo udevadm control --reload-rules
   fi
   if [[ -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
@@ -148,8 +149,7 @@ printf "\\n  ${CY}You are about to restore ${WT}${pwnagotchi}:\\n"
 # Define the backup directory where the files were saved
 
 # Restore files to their original locations
-rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --sparse \
---itemize-changes --executability --copy-links --progress --verbose --relative \
+rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --sparse --itemize-changes --executability --copy-links --progress --verbose --relative \
 "${backup_dir}/home/" pi@10.0.0.2:/ \
 "${backup_dir}/pwnagotchi/" pi@10.0.0.2:/etc/ \
 "${backup_dir}/root/" pi@10.0.0.2:/ \
@@ -165,8 +165,7 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
 "${backup_dir}/wgetrc/" pi@10.0.0.2:/etc/
 
 # Restore unique files to their original locations
-rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --sparse \
---itemize-changes --executability --copy-links --progress --verbose --relative \
+rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --sparse --itemize-changes --executability --copy-links --progress --verbose --relative \
 "${backup_dir}/cmdline.txt" pi@10.0.0.2:/boot/ \
 "${backup_dir}/fingerprint" pi@10.0.0.2:/etc/pwnagotchi/ \
 "${backup_dir}/id_rsa" pi@10.0.0.2:/etc/pwnagotchi/ \
@@ -177,7 +176,6 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
 "${backup_dir}/shadow" pi@10.0.0.2:/etc/ \
 "${backup_dir}/network" pi@10.0.0.2:/etc/ \
 "${backup_dir}/passwd" pi@10.0.0.2:/etc/
-
 
 }
 
@@ -200,8 +198,8 @@ fi
 #
 main() {
 clear
-Banner_func
-Prompt_func
+source support/support-Banner_func.sh
+source support/support-Prompt_func.sh
 printf " ${OG}\\n                    Welcome to the Pwnagotchi hub\\n"
 usb_func
 select_pwn_func
@@ -209,7 +207,7 @@ select option in "${options[@]}"; do
     case ${option} in
         "Backup")
             clear
-            Banner_func
+            source support/support-Banner_func.sh
 printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             printf "You selected Backup\\n"
             if [[ ${pwnagotchi} == "" ]]; then
@@ -220,11 +218,11 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             ssh_func
 			backup_func
             udev_func
-            break
+            return
             ;;
         "Restore")
             clear
-            Banner_func
+            source support/support-Banner_func.sh
 printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             printf "You selected Restore\\n"
             if [[ ${pwnagotchi} == "" ]]; then
@@ -235,11 +233,11 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             ssh_func
 			restore_func
             udev_func
-            break
+            return
             ;;
         "Maintenance")
             clear
-            Banner_func
+            source support/support-Banner_func.sh
         printf "       ${CY}\\nWelcome to the Pwnagotchi hub\\n"
         printf "   ${GN}You selected Maintenance.  ${YW}[!!!] ${}CYThis menu is coming soon. You can continue\\n"
     printf "\\n   but know that you may experience bugs or other weird shit.  ${GN}You\\n"
@@ -247,7 +245,7 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
     printf "\\n${YW}            Press ${WT}any key ${YW}to continue.\\n"
       read -r -n1 -s -t 60
       clear
-      Banner_func
+      source support/support-Banner_func.sh
             if [[ ${pwnagotchi} == "" ]]; then
                 select_pwn_func
             else
@@ -256,11 +254,11 @@ printf " ${OG}\\nWelcome to the Pwnagotchi hub\\n"
             ssh_func
 			maint_func
             udev_func
-            break
+            return
             ;;
          "Main Menu")
             clear
-			bash ./install-master.sh
+			bash menu-master.sh
             printf "${OG}You selected Main Menu\\n${CY}"
             ;;
           "Exit")

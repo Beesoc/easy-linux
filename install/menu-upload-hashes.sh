@@ -5,19 +5,19 @@ set -e
 # Add Color
 source .envrc
 #
-trap "support/trap-wifi.sh" EXIT
-source support/Banner_func.sh
+trap support/support-trap-wifi.sh EXIT
+source support/support-Banner_func.sh
 #printf "This script backs up your saved hashes from /opt/backup/root/handshakes." 
 
 permissions_func() {
 # make sure permissions are ok.
 if [[ $HOST == "updates" ]]; then 
    sudo chown -vR beesoc:beesoc /opt/backup/root/*
-elif [[ $HOST == "potato" ]]; then 
+elif [[ $HOST == "lepotato" ]]; then 
    sudo chown -vR larry:larry /opt/backup/root/*
 else 
    sudo chown -vR root:root /opt/backup/root/*
-   fi
+fi
 }
 
 folders_exist_func() {
@@ -58,15 +58,15 @@ clear
 }
 main() {
 clear
-source support/Banner_func.sh
+source support/support-Banner_func.sh
 folders_exist_func
 permissions_func
 upload_func
 }
 main
 clear
-printf "${CY}All Operations completed. Cracked passwords will start appearing on "
-  printf "https://www.OnlineHashCrack.com and https://wpa-sec.stanev.org within 24hr."
-Press ${WT}any${CY} key to return to ${WT}Main Menu\\n"
+printf "${CY}All Operations completed. Cracked passwords will start appearing on \\n"
+printf "https://www.OnlineHashCrack.com and https://wpa-sec.stanev.org within 24hr."
+printf "Press ${WT}any${CY} key to return to ${WT}Main Menu.\\n "
   read -r -n1 -s -t 30
-bash ./install-master.sh
+bash menu-master.sh
