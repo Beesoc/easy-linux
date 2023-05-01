@@ -102,7 +102,7 @@ if [[ ! -d "${scripts_dir}/support" ]]; then
 install_func() { 
 clear
     support-Banner_func
-    sudo apt install -y bc cat zip direnv lm-sensors >/dev/null
+    sudo apt install -y bc zip direnv lm-sensors >/dev/null
           printf " ${WT} "
     read -pr "   Should I install to default location? [Y/N]  " install
         if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
