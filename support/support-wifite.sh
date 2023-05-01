@@ -4,6 +4,7 @@ set -e
 # Version: 0.0.2
 source .envrc
 source support-Banner_func.sh
+trap support-trap.wifi.sh EXIT
 
 app-install_func() {
 clear
