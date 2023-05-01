@@ -71,8 +71,7 @@ if [[ ! -d "${scripts_dir}/support" ]]; then
   elif [[ -d "${scripts_dir}/support" ]]; then 
       printf "${scripts_dir}/support found. Continuing."
       sudo chown -Rf 1000:0 ${scripts_dir}/support
-      sudo rm ${scripts_dir}/support/*
-      sudo rmdir -f ${scripts_dir}/support
+      sudo rm -Rf ${scripts_dir}/support/
       sudo mkdir ${scripts_dir}/support
   else 
        printf "     ${RED} Unknown error detected. Exiting."
