@@ -9,22 +9,22 @@ source support-Banner_func.sh
 
 app-install_func() {
 clear
-source "support/Banner_func.sh"
-  if [[ !-d "~/compiled/TheFatRat/" ]]; then
+source "support-Banner_func.sh"
+  if [[ ! -d "$HOME/compiled/TheFatRat/" ]]; then
       read -rp "Would you like to install The Fat Rat? (y/n) " install_fatrat
       if [[ "$install_fatrat" = "y" ]] || [[ ${install_fatrat} = "Y" ]]; then
         sudo git clone https://github.com/Screetsec/TheFatRat.git &&
           cd TheFatRat &&
           sudo chmod +x setup.sh &&
           sudo ./setup.sh
-      read -rp "Would you like to install The Fat Rat? (y/n) " install_fatrat 
-  if [ -d "~/compiled/TheFatRat/" ]]; then 
+      fi
+  elif [[ -d "$HOME/compiled/TheFatRat/" ]]; then 
     read -r -p "The Fat Rat installation folder exists. Remove folder and reinstall?" reinstall
-      elif [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
+      if [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
          printf "${RED} The Fat Rat will not be installed. Press ${WT}any ${RED} key to return to Hacking Menu."
-         source "support/Prompt_func.sh"
+         source "support-Prompt_func.sh"
          read -r -n1 -s -t 60
-           bash $scripts_dir/install-hacking.sh
+           bash $scripts_dir/menu-hacking.sh
       elif [[ "$reinstall" = "y" ]] || [[ ${reinstall} = "Y" ]]; then
          sudo rm -fR ~/compiled/TheFatRat
       else
@@ -57,7 +57,7 @@ elif [[ ${wlchoice} = "c" ]] || [[ ${wlchoice} = "C" ]]; then
   wordlist=""
   read -r -p "Enter the FULL PATH and file name for your desired wordlist" mywordlist
   wordlist=${mywordlist}
-
+fi
 clear
 source "support/Banner_func.sh"
 sudo gnome-terminal -t "TheFatRat 1.9.5" --geometry=600x630 -e "bash -c 'fatrat';-bash"

@@ -10,7 +10,7 @@ clear
 source support-Banner_func.sh
   if [[ -d "$HOME/compiled/wifite2/" ]]; then
     read -r -p "Wifite installation folder exists. Remove folder and reinstall?" reinstall
-      if [[ ${reinstall} = "Y" ]] || [[${reinstall} = "y" ]]; then 
+      if [[ ${reinstall} = "Y" ]] || [[ ${reinstall} = "y" ]]; then 
          sudo rm -fR ~/compiled/wifite2/
       elif [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
          printf "${RED} Wifite will not be installed. Press ${WT}any ${RED} key to return to main menu."
@@ -50,7 +50,7 @@ elif [[ ${wlchoice} = "c" ]] || [[ ${wlchoice} = "C" ]]; then
   wordlist=""
   read -r -p "Enter the FULL PATH and file name for your desired wordlist" mywordlist
   wordlist=${mywordlist}
-
+fi
 clear
 source support-Banner_func.sh
 sudo wifite -v -i ${adapter} -mac -p 160 --kill -ic --daemon --clients-only --dict ${wordlist}
