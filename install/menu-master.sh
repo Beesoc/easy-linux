@@ -9,10 +9,10 @@
 #   by typing the corresponding number.
 #
 #printf "${BG}"
-# shellcheck source="$scripts_dir/support/support-Prompt_func.sh"
+# shellcheck source="./support/support-Prompt_func.sh"
 # shellcheck source=.envrc
 # shellcheck source="$scripts_dir/support/support-Banner_func.sh"
-source "${scripts_dir}/.envrc"
+source ${scripts_dir}/.envrc
 set -e
 #source "${scripts_dir}/support/support-Prompt_func.sh"
 scripts_dir="/opt/easy-linux"
