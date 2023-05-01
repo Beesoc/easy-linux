@@ -3,6 +3,7 @@
 #shellcheck source=support/support-Banner_func.sh
 #shellcheck source=support/support-Prompt_func.sh
 source .envrc
+# Version: 0.0.2
 
 source support/support-Banner_func.sh
   printf "                    ${OG}[?]${CY} Customization: Please select an option: ${OG}[?] \\n"

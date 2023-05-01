@@ -1,9 +1,11 @@
 #!/bin/bash
 # The Fat Rat installer/executor
+# Version: 0.0.2
+
 set -e
 cd ..
 source .envrc
-source "support/Banner_func.sh"
+source support-Banner_func.sh
 
 app-install_func() {
 clear

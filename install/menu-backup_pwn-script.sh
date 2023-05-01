@@ -4,6 +4,7 @@
 # TODO: Get Mikes laptop hostname and FuckThatSh1t Mac address for this script
 #
 #set -euo pipefail
+# Version: 0.0.2
 
 #################################################  Begin User Options  #########
 set -e

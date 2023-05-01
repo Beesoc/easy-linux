@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Version: 0.0.2
+
 source .envrc
 set -e 
 trap "support/trap-wifi.sh" EXIT

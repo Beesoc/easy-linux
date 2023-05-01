@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 #
+# Version: 0.0.2
+
 #shellcheck source=.envrc
 #shellcheck source="support/support-Prompt_func.sh"
 #shellcheck source="support/support-Banner_func.sh"

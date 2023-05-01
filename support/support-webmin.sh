@@ -2,6 +2,7 @@
 # shellcheck disable=SC1090 disable=SC2059 disable=SC2164 disable=SC2181
 # setup-repos.sh
 # Configures Webmin repository for RHEL and Debian systems (derivatives)
+# Version: 0.0.2
 
 webmin_download="https://download.webmin.com"
 webmin_key="jcameron-key.asc"

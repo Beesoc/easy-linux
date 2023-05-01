@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-source ../.envrc
+# Version: 0.0.2
+source .envrc
     prompt_symbol=㉿
     prompt_color=${GN}
     info_color=${BL}
@@ -13,4 +14,4 @@ source ../.envrc
     fi
 
 printf "${GN}┌──(${CY}$USER${prompt_symbol}$HOSTNAME${GN})-[${YW}${PWD}${GN}]\\n"
-printf "${GN}└─"${CY}"> ${CY}\\n"
+printf "${GN}└─${CY}> ${CY}\\n"

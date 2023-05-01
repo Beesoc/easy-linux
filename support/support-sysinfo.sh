@@ -1,17 +1,18 @@
 #!/bin/bash
-#set -e
+set -e
+# Version:0.0.2
 # shellcheck source=.envrc
 clear
-source ${scripts_dir}/support/Banner_func.sh
-source ${scripts_dir}/.envrc
-# shellcheck source=./Banner_func.sh
+source support-Banner_func.sh
+source .envrc
+# shellcheck source=support-Banner_func.sh
 
 # Display hostname and username
 printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')            ${CY}Time: ${WT}$(date +%I:%M:%S\ ${GN}%p)        ${CY}Username: ${GN}$(whoami)""${WT}@""${GN}$(hostname)${NC}\\n"
 
 printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date: ${WT}$(timedatectl | grep "Local time" | awk '{print $3", " $4}')\\n"
 
-battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
+#battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
 batt_per="$(acpi -b | awk '/Battery 0/ {print $4}')"
 battery_state="$(acpi -b | awk '/Battery 0/ {print $3}')"
 # Display Battery info
@@ -42,4 +43,4 @@ echo "$lsb_dist"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
   read -r -n1 -s -t 90
-bash install-master.sh
+bash ${scripts_dir}/menu-master.sh

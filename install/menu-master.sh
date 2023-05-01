@@ -12,10 +12,19 @@
 # shellcheck source=support/support-Prompt_func.sh
 # shellcheck source=.envrc
 # shellcheck source=support/support-Banner_func.sh
+# Version: 0.0.2
 source .envrc
 set -e
 #source "support/support-Prompt_func.sh"
 scripts_dir="/opt/easy-linux"
+
+function show_help {
+  echo "Usage: $SCRIPT_NAME [OPTIONS]"
+  echo
+  echo "Options:"
+  echo "  -h, --help    Show this help message and exit"
+  echo "  -v, --version Show the version number and exit"
+}
 
 main() {
 # Display the main menu

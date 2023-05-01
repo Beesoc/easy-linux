@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-
+# Version: 0.0.2
 # name of the ethernet gadget interface on the host
 USB_IFACE=${1:-usb0}
 USB_IFACE_IP=10.0.0.1

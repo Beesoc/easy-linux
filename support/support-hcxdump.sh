@@ -2,41 +2,41 @@
 #
 set -e
 #
-trap "support/trap-wifi.sh" EXIT
-source .envrc
+trap support-trap-wifi.sh EXIT
+source ${scripts_dir}/.envrc
+# Version: 0.0.2
 #
 # Set the path to the wordlist
-WORDLIST=/usr/share/wordlists/corys-bigass-wordlist.txt 
-RULES=/usr/share/wordlists/OneRuleToRuleThemAll.rule
+
 clear
 #
 
 Test_func() {
 clear
-source support/Banner_func.sh
+source support-Banner_func.sh
 printf "${OG}             What test do you want to run?\\n"
 printf "  \\n"
 printf "   ${OG}1] ${CY}Injection Test - Test your network adapters packet injection abilities.\\n"
 printf "   ${OG}2] ${CY}Driver Test - Runs several tests to determine if the driver supports all IOCTL calls. \\n"
 printf "   \\n"
 printf "   ${OG}99] ${CY}Return to the main menu.                       ${RED} [✘] Exit tool [✘]\"${CY}\" \\n "
-source support/Prompt_func.sh
+source support-Prompt_func.sh
 read -r -p "Which test?" test
 if [[ ${test} = 1 ]]; then
     clear
-    source support/Banner_func.sh
+    source support-Banner_func.sh
     sudo systemctl stop NetworkManager
     sudo systemctl stop wpa_supplicant
     sudo hcxdumptool --check_injection -i "${adapter}"
 elif [[ ${test} = 2 ]]; then
     clear
-    source support/Banner_func.sh
+    source support-Banner_func.sh
     sudo systemctl stop NetworkManager
     sudo systemctl stop wpa_supplicant
     sudo hcxdumptool --check_driver -i "${adapter}"
 elif [[ ${test} = 99 ]]; then
    clear
-   bash ./install-master.sh
+   bash ${scripts_dir}menu-master.sh
 elif [[ ${test} = "x" ]] || [[ ${test} = "X" ]]; then  
     clear
     printf "    ${RED}0. [✘] Exit tool [✘]${NC} \\n      "
@@ -48,7 +48,7 @@ fi
  netadaptercount_func() {
  adapter_count=$(sudo airmon-ng | awk '  /phy/ {print $2 " - " $4 " " $5}' | grep -c "phy")
 #
-source support/Banner_func.sh
+source support-Banner_func.sh
 if [ "${adapter_count}" -eq 1 ]; then
     adapter=$(sudo airmon-ng | awk '  /phy/ {print $2 " - " $4, " " $5}')
 else
@@ -58,14 +58,14 @@ else
     printf "${CY}    Please select one: \\n${OG}"
     sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' 2> /dev/null | grep "wl" | nl -nln
     printf "   \\n  ${WT}" 
-source support/Prompt_func.sh
+source support-Prompt_func.sh
     read -r -p "  Enter the number of the interface you want to use in monitor mode: " selection
     adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | cut -d' ' -f1 | sed -n "${selection}p")
 fi
 }
 #
 printf "${OG}   \\n"
-source support/Banner_func.sh
+source support-Banner_func.sh
 #
 #  These 2 commands are repeated twice!!!
 printf "  Starting...Please wait...${WT} \\n " 
@@ -87,7 +87,6 @@ sudo systemctl stop wpa_supplicant
 #  These 2 commands are repeated twice!!!
 sudo systemctl stop NetworkManager
 sudo systemctl stop wpa_supplicant
-mkdir ./support
 clear
     printf " \\n ${WT}"
 netadapterchoice_func
@@ -98,7 +97,7 @@ printf " \\n"
 printf "     Scan will stop automatically when complete...\\n${WT}   " 
 printf " \\n   "
 printf "  Press ${CY}(T)est to test adapters or ${WT}(S)can to scan AP's.${WT} \\n      "
-source support/Prompt_func.sh
+source support-Prompt_func.sh
 read -r -p "Test or Scan" torscan
 
   if [[ "${torscan}" = "T" ]] || [[ "${torscan}" = "t" ]]; then
@@ -137,7 +136,7 @@ hashcat -m 22000 -a 3 -w 4 -o /opt/backup/root/handshakes/cracked.txt --force --
 
 else
   # Invalid choice
-  echo "Invalid choice. Exiting..."
+  printf "${RED}  Invalid choice. Exiting..."
   exit 1
 fi
 

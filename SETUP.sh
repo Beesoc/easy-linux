@@ -2,6 +2,7 @@
 # Installer script for Beesoc's Easy Linux Loader.
 #          ADMIN NOTE:  add zip files to archive with:
 #          zip -r INSTALL.zip ./support/ ./install/
+# Version: 0.0.2
 set -e
 CY='\e[1;36m'
 WT='\e[1;37m'

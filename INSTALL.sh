@@ -4,6 +4,7 @@
 #          ADMIN NOTE:  add zip files to archive with:
 #          zip -rv INSTALL.zip ./support/ ./install/  
 #     define colors
+# Version: 0.0.2
 set -e
 RED='\e[1;31m'
 CY='\e[1;36m'

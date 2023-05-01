@@ -2,35 +2,13 @@
 #
 #  Script to merge wordlists, sort and eliminate duplicates
 set -e
-set -u
+# Version: 0.0.2
 #
 #export PS4="\$LINENO: "
 #set -xv
 # colors for printf
-source ../.envrc
-# Function for prompt
-#
-# function for banner
-Banner_func() {
-  printf "${WT}\\n
--------------------------------------------------------------------------------${CY}
-  ▄████▄╗    ▄████▄╗   ▄████▄╗    ▄████▄╗     ▄███▄╗     ▄███▄╗  ██╗  ▄████▄╗  
-  ██═══██╝   ██╔═══╝   ██╔═══╝   ██╔════╝    ██╔══██╗   ██╔══▀╝   ▀╝ ██╔════╝  
-  ██████╝    █████╗    █████╗     ▀████▄╗    ██║  ██║   ██║           ▀████▄╗  
-  ██═══██    ██╔══╝    ██╔══╝      ╚═══██║   ██║  ██╝   ██║  ▄╗        ╚═══██║ 
-  ▀████▀╝    ▀████▀╗   ▀████▀╗    ▀████▀╝     ▀███▀╝     ▀███▀╝       ▀████▀╝  
-   ╚══╝       ╚═══╝     ╚═══╝      ╚══╝        ╚═╝        ╚═╝          ╚══╝
-  ▄████▄╗   ▄█▄╗    ▄███▄╗ █▄╗   ▄█╗   ▄█╗    ▄█╗ ▄█╗  █▄╗ ▄█╗  ▄█╗ ██▄╗  ▄██╗ 
-  ██╔═══╝  ██║██╗  ██╔═══╝  ██╗ ██╔╝   ██║    ██║ ██▄╗ ██║ ██║  ██║  ▀██▄██▀╝  
-  █████╗  ███▀███╗  ▀███▄╗   ████╔╝    ██║    ██║ ████▄██║ ██║  ██║    ███║    
-  ██╔══╝  ██║  ██║   ╚══██║   ██╔╝     ██║    ██║ ██║▀███║ ██║  ██║  ▄██▀██▄╗  
-  ▀████▀╝ ██║  ██║  ▀███▀╝    ██║      ▀████╗ ██║ ██║  ██║  ▀███▀╝  ██▀╝  ▀██╗ 
-   ╚═══╝  ╚═╝  ╚═╝   ╚═╝      ╚═╝       ╚═══╝ ╚═╝ ╚═╝  ╚═╝   ╚═╝    ╚═╝    ╚═╝ ${WT}
-------------------------------------------------------------------------------- ${CY}\\n"
-  #
-#  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
-}
-# function to add another wordlist
+source ${scripts_dir}/.envrc
+
 add_another_func() {
   ls ${pwd}
   printf "${GN}\\n  "
@@ -40,7 +18,7 @@ add_another_func() {
  		   clear
   fi
   if [[ ${another_file} = "Y" ]] || [[ ${another_file} = "y" ]]; then
-    source Prompt_func.sh
+    source support/support-Prompt_func.sh
       printf "\\n   \"${WT}\"[*] The file you are merging into is still \"${BL}\"\"${file2}\".\\n"
 	   read -p -r "Enter the additional filename to merge" file3
   		    backup_func
@@ -71,15 +49,15 @@ sudo cat ${file3} | sudo tee -a ${file2}
 #
 main() {
 clear
-Banner_func
+source support-Banner_func.sh
   printf "${OG}This script will join (concatenate) 2 files, then remove duplicates.\\n"
   printf "\\n${WT}The 2 files ${RED}must be IN THIS FOLDER. ${WT}Copy files to this location if needed.${WT}\\n"
   printf "Here are the contents of your current wordlist directory:\\n        ${GN}\\n"
   ls ${pwd}
-  printf "${GN}\\n     "
+  printf "${GN}\\n  ---->   "
   read -p -r "[???]  Enter the 1st file to merge  [???]" file1
     printf "${BL}NOTE: ${WT}A backup will be made of 2nd file before editing.${GN}                     \\n"
-    Prompt_func
+    source support-Prompt_func.sh
     printf "${BL}   NOTE: ${WT}The 1st file, ${file1} will be merged ${RED}INTO ${WT}this one                    \\n     ${GN}"
   read -p -r "[???]  Now enter the 2nd file to merge  [???]" file2
 

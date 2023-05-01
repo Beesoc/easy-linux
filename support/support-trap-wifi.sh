@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -e
-
+# Version: 0.0.2
 cd ..
 source .envrc
 
-source support/Banner_func.sh
+source support-Banner_func.sh
 
 # get a list of wireless network interfaces
 interfaces=$(iwconfig 2>/dev/null | grep -o "^[^ ]*")
@@ -21,7 +21,7 @@ for iface in $interfaces; do
     # restart wpa_supplicant and Network Manager services
     sudo systemctl restart wpa_supplicant.service NetworkManager.service
 
-    echo "Interface $iface switched to managed mode"
+    printf "  ${CY}Interface $iface switched to managed mode"
   fi
 done
 
