@@ -13,7 +13,7 @@ compiled_dir=$HOME/compiled
 echo "#!/bin/bash
 # Cleanup script
 # Version: 0.0.2
-set -e
+# set -e
 
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
