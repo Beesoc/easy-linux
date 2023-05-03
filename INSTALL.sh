@@ -138,7 +138,7 @@ install_func() {
 clear
     support-Banner_func
     sudo apt install -y bc zip direnv lm-sensors >/dev/null
-    printf "  ${CY}Press ${WT}any ${CY}key to install ${WT}Beesoc's Easy Linux Loader...or cancel with ${RED}Ctrl C${WT}\\n"
+    printf "  ${CY}Press ${WT}any ${CY}key to install ${WT}Beesoc's Easy Linux Loader${CY}...or cancel with ${RED}Ctrl C${WT}\\n"
 #    printf " ${WT}    ----->"
     read -r -n1 -s -t 60
 #    read -r "Should I install to default location? [Y/N]  " install
