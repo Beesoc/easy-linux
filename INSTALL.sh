@@ -77,7 +77,7 @@ folder_exists_func() {
   support-Banner_func
 
 if [[ ! -d "${scripts_dir}" ]]; then  
-    printf "  ${CY}${scripts_dir} not found.\\n${CY}    Please Wait, creating ${scripts_dir} dir."; sleep 1 
+    printf "  ${CY}${scripts_dir} not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir} ${CY}directory"; sleep 1 
     printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
     sudo mkdir ${scripts_dir}
 elif [[ -d ${scripts_dir} ]]; then 
@@ -89,7 +89,7 @@ fi
   sudo chown -Rf 1000:0 ${scripts_dir}
 
   if [[ ! -d ${scripts_dir}/tmp ]]; then  
-        printf "  ${CY}${scripts_dir}/tmp not found.\\n${CY}    Please Wait, creating ${scripts_dir}/tmp directory."; sleep 1 
+        printf "  ${CY}${scripts_dir}/tmp not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/tmp ${CY}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
         sudo mkdir ${scripts_dir}/tmp
   elif [[ -d ${scripts_dir}/tmp ]]; then 
@@ -103,7 +103,7 @@ fi
   fi
 
 if [[ ! -d ${scripts_dir}/support ]]; then  
-        printf "  ${CY}${scripts_dir}/support not found.\\n${CY}    Please Wait, creating ${scripts_dir}/support directory."; sleep 1 
+        printf "  ${CY}${scripts_dir}/support not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/support ${CY}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
         sudo mkdir ${scripts_dir}/support
   elif [[ -d ${scripts_dir}/support ]]; then 
@@ -116,7 +116,7 @@ if [[ ! -d ${scripts_dir}/support ]]; then
        exit 1
   fi  
   if [[ ! -d ${scripts_dir}/install ]]; then  
-        printf "  ${CY}${scripts_dir}/install not found.\\n${CY}    Please Wait, creating ${scripts_dir}/install directory."; sleep 1 
+        printf "  ${CY}${scripts_dir}/install not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/install ${CY}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
         sudo mkdir "${scripts_dir}/install"
   elif [[ -d ${scripts_dir}/install ]]; then 
@@ -138,7 +138,7 @@ install_func() {
 clear
     support-Banner_func
     sudo apt install -y bc zip direnv lm-sensors >/dev/null
-    printf "  ${CY}Press ${WT}any ${CY} key to install ${WT}Beesoc's Easy Linux Loader...or cancel with ${RED}Ctrl C${WT}\\n"
+    printf "  ${CY}Press ${WT}any ${CY}key to install ${WT}Beesoc's Easy Linux Loader...or cancel with ${RED}Ctrl C${WT}\\n"
 #    printf " ${WT}    ----->"
     read -r -n1 -s -t 60
 #    read -r "Should I install to default location? [Y/N]  " install
@@ -190,7 +190,7 @@ fi
   clear
   support-Banner_func
   printf "   ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
-  printf "   Use the option on your ${WT}Apps menu ${CT}or enter [ ${WT}menu-master.sh${CT} ]\\n"
+  printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY} to access. Thanks for using ${WT}Beesoc's Easy Loader\\n" 
   printf "\\n\\n  ${CY}Press ${WT}any ${CY}key to exit the installer.\\n  "
     read -r -n1 -s -t 60
