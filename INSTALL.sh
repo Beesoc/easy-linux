@@ -19,13 +19,6 @@ scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
 
 cleanup_func() {
-if [[ ! -d ${scripts_dir} ]]; then  
-    return
-elif [[ -d ${scripts_dir} ]]; then 
-    sudo rm -Rf ${scripts_dir}
-else 
-    return
-fi
 if [[ ! -d ${compiled_dir}/easy-linux ]]; then  
     return
 elif [[ -d ${compiled_dir}/easy-linux ]]; then 
