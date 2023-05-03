@@ -191,7 +191,7 @@ fi
   support-Banner_func
   printf "   ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
   printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
-  printf "   from ${WT}any Terminal ${CY} to access. Thanks for using ${WT}Beesoc's Easy Loader\\n" 
+  printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n" 
   printf "\\n\\n  ${CY}Press ${WT}any ${CY}key to exit the installer.\\n  "
     read -r -n1 -s -t 60
   exit 1
@@ -200,7 +200,7 @@ fi
 main() {
 clear
 support-Banner_func
-printf "\\n${OG}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
+#printf "\\n${OG}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
 printf "\\n${CY}Press ${WT}any ${CY}key to continue.                              Press ${RED}[ctrl+c] ${CY}to cancel\\n"
 #printf "${WT}\\n    ---->"
 printf "${WT} \\n"
