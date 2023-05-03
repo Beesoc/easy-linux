@@ -105,4 +105,4 @@ printf "${WT} \\n"
     sudo chmod a+x $HOME/easy-linux/.cleanup.sh
     sudo chmod a+x $HOME/easy-linux/.cleanup2.sh
     sudo chmod a+x $HOME/easy-linux/INSTALL.sh
-    bash $HOME/easy-linux/INSTALL.sh
+    source $HOME/easy-linux/INSTALL.sh
