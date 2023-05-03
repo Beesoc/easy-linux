@@ -37,17 +37,17 @@ fi
 
 cleanup_func
 cd $HOME || exit
-exit" > .cleanup.sh
+exit" > ${compiled_dir}/.cleanup.sh
 
 echo "#!/bin/bash
 sudo bash ./.cleanup.sh
 cd $HOME || exit
-exit" > .cleanup2.sh
+exit" > ${compiled_dir}/.cleanup2.sh
 
-sudo chmod a+x .cleanup.sh
-sudo chmod a+x .cleanup2.sh
+sudo chmod a+x ${compiled_dir}/.cleanup.sh
+sudo chmod a+x ${compiled_dir}/.cleanup2.sh
 
-trap .cleanup2.sh EXIT
+trap ${compiled_dir}/.cleanup2.sh EXIT
 RED='\e[1;31m'
 CY='\e[1;36m'
 WT='\e[1;37m'
@@ -215,3 +215,5 @@ cd ${compiled_dir}/easy-linux || exit
 direnv allow && sudo direnv allow
 main
 cleanup_func
+rm -Rf ${compiled_dir}/.cleanup*
+exit 1
