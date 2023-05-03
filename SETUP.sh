@@ -11,25 +11,30 @@ compiled_dir=$HOME/compiled
 echo "#!/bin/bash
 # Cleanup script
 # Version: 0.0.2
-# set -e
+set -e
 
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
 
+cleanup_func() {
 if [[ ! -d ${scripts_dir} ]]; then  
     return
 elif [[ -d ${scripts_dir} ]]; then 
-    sudo rm -Rf ${scripts_dir}
+    sudo rm -RF ${scripts_dir}
 else 
     return
 fi
 if [[ ! -d ${compiled_dir}/easy-linux ]]; then  
     return
 elif [[ -d ${compiled_dir}/easy-linux ]]; then 
-    sudo rm -Rf ${compiled_dir}/easy-linux
+    sudo rm -RF ${compiled_dir}/easy-linux
 else 
     return
-fi" > .cleanup.sh
+fi
+}
+
+cleanup_func
+exit" > .cleanup.sh
 sudo chmod a+x ./.cleanup.sh
 
 echo "#!/bin/bash
