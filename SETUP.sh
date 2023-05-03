@@ -29,7 +29,7 @@ else
 fi" > .cleanup.sh
 sudo chmod a+x ./.cleanup.sh
 
-trap ./.cleanup.sh EXIT
+#trap ./.cleanup.sh EXIT
 CY='\e[1;36m'
 WT='\e[1;37m'
 RED='\e[1;31m'
