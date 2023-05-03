@@ -81,24 +81,22 @@ printf "\\n${CY}Press ${WT}any ${CY}key to continue.                            
 #printf "${WT}\\n    ---->"
 printf "${WT} \\n"
   read -r -n1 -s -t 60
-  if [[ -d ${compiled_dir} ]]; then
-    cd ${compiled_dir}/ || exit
-    if [[ -d "${compiled_dir}/easy-linux" ]]; then  
+     if [[ ! -d ${compiled_dir} ]]; then
+       printf "  ${CY}${compiled_dir} directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
+       mkdir ${compiled_dir}
+     fi
+     if [[ ! -d ${compiled_dir}/easy-linux ]]; then
+           printf "  ${CY}${compiled_dir}/easy-linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
+           mkdir ${compiled_dir}/easy-linux   
+     fi
+     if [[ -d "${compiled_dir}/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc's Easy Linux found.\\n${CY}"
        printf "       Please Wait, removing tmp clone and cloning Github repo to ${WT}${scripts_dir}.\\n"; sleep 1 
        printf "${WT}.."
        sudo rm -Rf ${compiled_dir}/easy-linux  
        sleep 1; printf ".."; sleep 1
-    elif [[ ! -d ${compiled_dir} ]]; then
-       printf "  ${CY}${compiled_dir} directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
-       mkdir ${compiled_dir}
-       if [[ ! -d ${compiled_dir}/easy-linux ]]; then
-           mkdir ${compiled_dir}/easy-linux   
-       fi
-  else
-    printf "$RED   Unknown error. Do you have rights to create $HOME/compiled?"
-    exit 1
-  fi  
+  
+     fi  
     cd ${compiled_dir} || exit
     git clone https://github.com/Beesoc/easy-linux.git
     cd easy-linux || exit
