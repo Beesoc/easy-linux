@@ -8,7 +8,7 @@ set -e
 echo "#!/bin/bash
 # Cleanup script
 # Version: 0.0.2
-# set -e
+set -e
 
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
@@ -29,7 +29,12 @@ else
 fi" > .cleanup.sh
 sudo chmod a+x ./.cleanup.sh
 
-#trap ./.cleanup.sh EXIT
+echo "#!/bin/bash
+sudo bash ./.cleanup.sh
+exit" > .cleanup2.sh
+sudo chmod a+x ./.cleanup2.sh
+
+trap ./.cleanup2.sh EXIT
 CY='\e[1;36m'
 WT='\e[1;37m'
 RED='\e[1;31m'
