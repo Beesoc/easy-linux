@@ -11,7 +11,7 @@ compiled_dir=$HOME/compiled
 echo "#!/bin/bash
 # Cleanup script
 # Version: 0.0.2
-set -e
+# set -e
 
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
@@ -20,19 +20,18 @@ cleanup_func() {
 if [[ ! -d ${scripts_dir} ]]; then  
     return
 elif [[ -d ${scripts_dir} ]]; then 
-    sudo rm -RF ${scripts_dir}
+    sudo rm -Rf ${scripts_dir}
 else 
     return
 fi
 if [[ ! -d ${compiled_dir}/easy-linux ]]; then  
     return
 elif [[ -d ${compiled_dir}/easy-linux ]]; then 
-    sudo rm -RF ${compiled_dir}/easy-linux
+    sudo rm -Rf ${compiled_dir}/easy-linux
 else 
     return
 fi
 }
-
 cleanup_func
 exit" > .cleanup.sh
 sudo chmod a+x ./.cleanup.sh
@@ -76,7 +75,7 @@ printf "\\n${WT}                 Welcome to the Installer for Beesoc's Easy Linu
 printf "\\n        ${CY}This installer will create the necessary folders and then clone\\n"
 printf "        the official repo for ${WT}Beesoc's Easy Linux ${CY}for installation. You will \\n"
 printf "        need a ${WT}Github username ${CY}and ${WT}fine-grained access token ${CY}to continue.\\n"
-printf "\\n${WT}        For more info on Github's Personal Access Token see \\n"
+printf "\\n${WT}        For more info on Github's Personal Access Token see:\\n" 
 printf "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token.\\n"
 printf "\\n${CY}Press ${WT}any ${CY}key to continue.                            Press ${RED}[ctrl+c] ${CY}to cancel\\n"
 #printf "${WT}\\n    ---->"
@@ -90,12 +89,12 @@ printf "${WT} \\n"
        printf "${WT}.."
        sudo rm -Rf ${compiled_dir}/easy-linux  
        sleep 1; printf ".."; sleep 1
-    elif [[ ! -d "${compiled_dir}/easy-linux" ]]; then
-       printf "  ${CY}Easy-Linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"     
-    fi
-  elif [[ ! -d ${compiled_dir} ]]; then   
-    printf "   ${compiled_dir} not found.  Creating folder..."  
-    mkdir "${compiled_dir}"
+    elif [[ ! -d ${compiled_dir} ]]; then
+       printf "  ${CY}${compiled_dir} directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
+       mkdir ${compiled_dir}
+       if [[ ! -d ${compiled_dir}/easy-linux ]]; then
+           mkdir $HOME/easy-linux   
+       fi
   else
     printf "$RED   Unknown error. Do you have rights to create $HOME/compiled?"
     exit 1
@@ -103,7 +102,7 @@ printf "${WT} \\n"
     cd ${compiled_dir} || exit
     git clone https://github.com/Beesoc/easy-linux.git
     cd easy-linux || exit
-    sudo chmod a+x ./.cleanup.sh
-    sudo chmod a+x ./.cleanup2.sh
-    sudo chmod a+x ./INSTALL.sh
-    bash ./INSTALL.sh
+    sudo chmod a+x $HOME/easy-linux/.cleanup.sh
+    sudo chmod a+x $HOME/easy-linux/.cleanup2.sh
+    sudo chmod a+x $HOME/easy-linux/INSTALL.sh
+    bash $HOME/easy-linux/INSTALL.sh
