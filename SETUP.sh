@@ -4,12 +4,38 @@
 #          zip -r INSTALL.zip ./support/ ./install/
 # Version: 0.0.2
 set -e
+
+echo "#!/bin/bash
+# Cleanup script
+# Version: 0.0.2
+set -e
+
+scripts_dir=/opt/easy-linux
+compiled_dir=$HOME/compiled
+
+if [[ ! -d ${scripts_dir} ]]; then  
+    return
+elif [[ -d ${scripts_dir} ]]; then 
+    sudo rm -RF ${scripts_dir}
+else 
+    return
+fi
+if [[ ! -d ${compiled_dir}/easy-linux ]]; then  
+    return
+elif [[ -d ${compiled_dir}/easy-linux ]]; then 
+    sudo rm -RF ${compiled_dir}/easy-linux
+else 
+    return
+fi" > .cleanup.sh
+sudo chmod a+x ./.cleanup.sh
+
+trap ./.cleanup.sh EXIT
 CY='\e[1;36m'
 WT='\e[1;37m'
 RED='\e[1;31m'
 NC='\e[0m'
-scripts_dir="/opt/easy-linux"
-install_compiled="$HOME/compiled"
+scripts_dir=/opt/easy-linux
+compiled_dir=$HOME/compiled
 clear
 Banner_func() {
   printf "${WT}\\n
@@ -36,26 +62,26 @@ printf "\\n${CY}Press ${WT}any ${CY}key to continue.                            
 #printf "${WT}\\n    ---->"
 printf "${WT} \\n"
   read -r -n1 -s -t 60
-  if [[ -d "$HOME/compiled" ]]; then
-    cd $HOME/compiled/ || exit
-    if [[ -d "${install_compiled}/easy-linux" ]]; then  
+  if [[ -d ${compiled_dir} ]]; then
+    cd ${compiled_dir}/ || exit
+    if [[ -d "${compiled_dir}/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc's Easy Linux found.\\n${CY}"
        printf "       Please Wait, removing tmp clone and cloning Github repo to ${WT}${scripts_dir}.\\n"; sleep 1 
        printf "${WT}.."
-       sudo rm -Rf $HOME/compiled/easy-linux  
+       sudo rm -Rf ${compiled_dir}/easy-linux  
        sleep 1; printf ".."; sleep 1
-    elif [[ ! -d "${install_compiled}/easy-linux" ]]; then
+    elif [[ ! -d "${compiled_dir}/easy-linux" ]]; then
        printf "  ${CY}Easy-Linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"     
     fi
-  elif [[ ! -d "$HOME/compiled" ]]; then   
-    printf "   $HOME/compiled not found.  Creating folder..."  
-    mkdir "$HOME/compiled"
+  elif [[ ! -d ${compiled_dir} ]]; then   
+    printf "   ${compiled_dir} not found.  Creating folder..."  
+    mkdir "${compiled_dir}"
   else
     printf "$RED   Unknown error. Do you have rights to create $HOME/compiled?"
     exit 1
   fi  
-    cd $HOME/compiled || exit
-    git clone https://github.com/Beesoc/beesoc-menu.git
-    cd beesoc-menu || exit
+    cd ${compiled_dir} || exit
+    git clone https://github.com/Beesoc/easy-linux.git
+    cd easy-linux || exit
     sudo chmod a+x ./INSTALL.sh
     bash ./INSTALL.sh
