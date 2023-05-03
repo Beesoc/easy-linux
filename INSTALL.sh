@@ -38,9 +38,6 @@ echo "#!/bin/bash
 sudo bash ./.cleanup.sh
 exit" > ./.cleanup2.sh
 
-cd ${compiled_dir}/easy-linux || exit
-direnv allow && sudo direnv allow
-
 sudo chmod a+x ./.cleanup.sh
 sudo chmod a+x ./.cleanup2.sh
 
@@ -209,6 +206,7 @@ printf "${WT} \\n"
 folder_exists_func
 install_func  
 }
-
+cd ${compiled_dir}/easy-linux || exit
+direnv allow && sudo direnv allow
 main
 cleanup_func
