@@ -177,7 +177,10 @@ cleanup_func() {
   printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
   
 if [[ -d ${scripts_dir}/easy-linux/tmp ]]; then
-  sudo rm -Rf ${scripts_dir}tmp/
+  sudo rm -Rf ${scripts_dir}/easy-linux/tmp/
+fi
+if [[ -d ${scripts_dir}/easy-linux/install ]]; then
+  sudo rmdir ${scripts_dir}/easy-linux/install/
 fi
 if [[ -d ${compiled_dir}/beesoc-menu ]]; then
   rm -Rf ${compiled_dir}/beesoc-menu/
@@ -210,7 +213,7 @@ printf "${WT} \\n"
 folder_exists_func
 install_func  
 }
-cd ${compiled_dir}/easy-linux || exit
+cd ${scripts_dir}/easy-linux || exit
 direnv allow && sudo direnv allow
 main
 cleanup_func
