@@ -36,10 +36,12 @@ fi
 }
 
 cleanup_func
+cd $HOME || exit
 exit" > .cleanup.sh
 
 echo "#!/bin/bash
 sudo bash ./.cleanup.sh
+cd $HOME || exit
 exit" > .cleanup2.sh
 
 sudo chmod a+x .cleanup.sh
