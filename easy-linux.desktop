@@ -1,11 +1,7 @@
 [Desktop Entry]
-Encoding=UTF-8
-Name=Beesoc's Easy Linux Loader
+Name=My Bash Menu System
 Comment=Bash menu system to easily launch apps and services
-Exec=/opt/easy-linux/menu-master.sh
-Icon=xchat
+Exec=gnome-terminal -e "/bin/bash /path/to/your/menu/system.sh"
+Icon=terminal
 Terminal=true
 Type=Application
-Categories=Network;Utilities;
-StartupNotify=true
-X-Desktop-File-Install-Version=0.19
