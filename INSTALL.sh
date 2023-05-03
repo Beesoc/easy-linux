@@ -208,5 +208,6 @@ cd ${compiled_dir}/easy-linux || exit
 direnv allow && sudo direnv allow
 main
 cleanup_func
-rm -Rf ${compiled_dir}/.cleanup*
+rm -f ${compiled_dir}/.cleanup.sh
+rm -f ${compiled_dir}/.cleanup2.sh
 exit 1
