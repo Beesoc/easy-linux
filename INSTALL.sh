@@ -82,6 +82,8 @@ else
     exit 1
 fi
   sudo chown -Rf 1000:0 ${scripts_dir}
+  sudo cp ${compiled_dir}/.cleanup.sh ${scripts_dir}/.cleanup.sh
+  sudo cp ${compiled_dir}/.cleanup2.sh ${scripts_dir}/.cleanup2.sh  
 
   if [[ ! -d ${scripts_dir}/tmp ]]; then  
         printf "  ${CY}${scripts_dir}/tmp not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/tmp ${CY}directory"; sleep 1 
@@ -158,6 +160,10 @@ clear
           
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
+          sudo rm -f ${scripts_dir}/install
+          sudo rm -f ${scripts_dir}/INSTALL.sh
+          sudo rm -f ${scripts_dir}/SETUP.sh
+          sudo rm -f ${scripts_dir}/tmp
           sudo chown -vR 1000:0 ${scripts_dir}  
           sudo chmod -R a+x ${scripts_dir}/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
