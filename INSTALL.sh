@@ -126,8 +126,8 @@ install_func() {
 clear
     support-Banner_func
     sudo apt install -y bc zip direnv lm-sensors >/dev/null
-          printf " ${WT} "
-    read -r "   Should I install to default location? [Y/N]  " install
+          printf " ${WT}    ----->"
+    read -r "Should I install to default location? [Y/N]  " install
         if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
             printf "${RED}     You chose not to install. Quiting application"
             exit 1
