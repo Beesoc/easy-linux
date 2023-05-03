@@ -13,7 +13,7 @@ compiled_dir=$HOME/compiled
 echo "#!/bin/bash
 # Cleanup script
 # Version: 0.0.2
-# set -e
+set -e
 
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
@@ -31,9 +31,10 @@ elif [[ -d ${compiled_dir}/easy-linux ]]; then
     sudo rm -RF ${compiled_dir}/easy-linux
 else 
     return
-fi" > .cleanup.sh
+fi
+exit" > .cleanup.sh
 
-trap ./.cleanup.sh EXIT
+trap ./.cleanup2.sh EXIT
 RED='\e[1;31m'
 CY='\e[1;36m'
 WT='\e[1;37m'
