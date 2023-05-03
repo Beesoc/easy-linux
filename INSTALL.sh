@@ -39,13 +39,13 @@ cleanup_func
 exit" > .cleanup.sh
 
 echo "#!/bin/bash
-sudo bash ./.cleanup.sh
-exit" > ./.cleanup2.sh
+sudo bash .cleanup.sh
+exit" > .cleanup2.sh
 
-sudo chmod a+x ./.cleanup.sh
-sudo chmod a+x ./.cleanup2.sh
+sudo chmod a+x .cleanup.sh
+sudo chmod a+x .cleanup2.sh
 
-trap ./.cleanup2.sh EXIT
+trap .cleanup2.sh EXIT
 RED='\e[1;31m'
 CY='\e[1;36m'
 WT='\e[1;37m'
