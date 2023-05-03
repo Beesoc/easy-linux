@@ -18,6 +18,7 @@ set -e
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
 
+cleanup_func() {
 if [[ ! -d ${scripts_dir} ]]; then  
     return
 elif [[ -d ${scripts_dir} ]]; then 
@@ -32,6 +33,9 @@ elif [[ -d ${compiled_dir}/easy-linux ]]; then
 else 
     return
 fi
+}
+
+cleanup_func
 exit" > .cleanup.sh
 
 echo "#!/bin/bash
