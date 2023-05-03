@@ -97,10 +97,8 @@ printf "${WT} \\n"
        sleep 1; printf ".."; sleep 1
   
      fi  
-    cd ${compiled_dir} || exit
-    git clone https://github.com/Beesoc/easy-linux.git
-    cd easy-linux || exit
-    sudo chmod a+x ${compiled_dir}/easy-linux/.cleanup.sh
-    sudo chmod a+x ${compiled_dir}/easy-linux/.cleanup2.sh
+    cd ${compiled_dir}/easy-linux || exit
+    sudo chmod a+x ${compiled_dir}/.cleanup.sh
+    sudo chmod a+x ${compiled_dir}/.cleanup2.sh
     sudo chmod a+x ${compiled_dir}/easy-linux/INSTALL.sh
     source ${compiled_dir}/easy-linux/INSTALL.sh
