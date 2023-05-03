@@ -147,6 +147,7 @@ clear
 #            exit 1
 #        elif [[ ${install} == "y" ]] || [[ ${install} == "Y" ]]; then
           printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
+          sudo cp -Rf ${compiled_dir}/easy-linux/easy-linux.desktop /usr/share/applications/
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/tmp/ 
           sudo cp -Rf ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
             cd ${scripts_dir} && direnv allow && sudo direnv allow
