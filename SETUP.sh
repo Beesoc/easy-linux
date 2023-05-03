@@ -73,7 +73,7 @@ Banner_func() {
 }
 Banner_func
 printf "\\n${WT}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
-printf "\\n\\n\\n        ${CY}This installer will create the necessary folders and then clone\\n"
+printf "\\n        ${CY}This installer will create the necessary folders and then clone\\n"
 printf "        the official repo for ${WT}Beesoc's Easy Linux ${CY}for installation. You will \\n"
 printf "        need a ${WT}Github username ${CY}and ${WT}fine-grained access token ${CY}to continue.\\n"
 printf "\\n${WT}        For more info on Github's Personal Access Token see \\n"
