@@ -164,9 +164,6 @@ clear
             sudo cp -f easy-linux.desktop /usr/share/applications/easy-linux.desktop
             sudo touch ${scripts_dir}/support/adapter
         cd ${scripts_dir} && direnv allow && sudo direnv allow
-        else
-            printf "     Invalid selection\\n"
-        fi
 }
 
 cleanup_func() {
