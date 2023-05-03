@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=My Bash Menu System
+Name=Beesoc's Easy Linux Loader
 Comment=Bash menu system to easily launch apps and services
-Exec=gnome-terminal -e "/bin/bash /path/to/your/menu/system.sh"
+Exec=gnome-terminal -e "/bin/bash /opt/easy-linux/menu-master.sh"
 Icon=terminal
 Terminal=true
 Type=Application
