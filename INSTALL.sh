@@ -39,7 +39,7 @@ cleanup_func
 exit" > .cleanup.sh
 
 echo "#!/bin/bash
-sudo bash .cleanup.sh
+sudo bash ./.cleanup.sh
 exit" > .cleanup2.sh
 
 sudo chmod a+x .cleanup.sh
