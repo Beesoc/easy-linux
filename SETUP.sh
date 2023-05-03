@@ -34,15 +34,15 @@ fi
 }
 cleanup_func
 exit" > .cleanup.sh
-sudo chmod a+x ./.cleanup.sh
+sudo chmod a+x ${compiled_dir}/.cleanup.sh
 
 echo "#!/bin/bash
-sudo bash ./.cleanup.sh
+sudo bash ${compiled_dir}/.cleanup.sh
 exit" > .cleanup2.sh
 
-sudo chmod a+x ./.cleanup2.sh
+sudo chmod a+x ${compiled_dir}/.cleanup2.sh
 
-trap ./.cleanup2.sh EXIT
+trap ${compiled_dir}/.cleanup2.sh EXIT
 
 # trap ./.cleanup.sh EXIT
 CY='\e[1;36m'
@@ -93,7 +93,7 @@ printf "${WT} \\n"
        printf "  ${CY}${compiled_dir} directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
        mkdir ${compiled_dir}
        if [[ ! -d ${compiled_dir}/easy-linux ]]; then
-           mkdir $HOME/easy-linux   
+           mkdir ${compiled_dir}/easy-linux   
        fi
   else
     printf "$RED   Unknown error. Do you have rights to create $HOME/compiled?"
@@ -102,7 +102,7 @@ printf "${WT} \\n"
     cd ${compiled_dir} || exit
     git clone https://github.com/Beesoc/easy-linux.git
     cd easy-linux || exit
-    sudo chmod a+x $HOME/easy-linux/.cleanup.sh
-    sudo chmod a+x $HOME/easy-linux/.cleanup2.sh
-    sudo chmod a+x $HOME/easy-linux/INSTALL.sh
-    source $HOME/easy-linux/INSTALL.sh
+    sudo chmod a+x ${compiled_dir}/easy-linux/.cleanup.sh
+    sudo chmod a+x ${compiled_dir}/easy-linux/.cleanup2.sh
+    sudo chmod a+x ${compiled_dir}/easy-linux/INSTALL.sh
+    source ${compiled_dir}/easy-linux/INSTALL.sh
