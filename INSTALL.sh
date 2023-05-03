@@ -34,6 +34,15 @@ else
 fi
 exit" > .cleanup.sh
 
+echo "#!/bin/bash
+sudo bash ./.cleanup.sh
+exit" > ./.cleanup2.sh
+
+cd ${compiled_dir}/easy-linux || exit
+direnv allow && sudo direnv allow
+
+sudo chmod a+x ./.cleanup2.sh
+
 trap ./.cleanup2.sh EXIT
 RED='\e[1;31m'
 CY='\e[1;36m'
