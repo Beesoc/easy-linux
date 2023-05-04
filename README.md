@@ -15,4 +15,6 @@ Credit for these amazing tools go to the following creators and projects, in no 
 2. hcxtools
 3. wifite2
 4. pwnagotchi
+5. TheFatRat
+6. Docker Desktop
 
