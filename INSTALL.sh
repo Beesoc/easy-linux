@@ -86,7 +86,7 @@ if [[ ! -d ${scripts_dir}/support ]]; then
   elif [[ -d ${scripts_dir}/install ]]; then 
       printf "${scripts_dir}/install found. Continuing.\\n"
       sudo chown -Rf 1000:0 ${scripts_dir}/install
-      sudo rm -Rf ${scripts_dir}/install/*
+      sudo rm -f ${scripts_dir}/install/*
       sudo rmdir ${scripts_dir}/install
       sudo mkdir ${scripts_dir}/install
   else 
@@ -141,19 +141,23 @@ cleanup_func() {
   printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
 
 if [[ -d ${scripts_dir}/easy-linux/tmp ]]; then
-  sudo rm -Rf ${scripts_dir}/easy-linux/tmp/
+  sudo rm -f ${scripts_dir}/easy-linux/tmp/*
+  sudo rmdir ${scripts_dir}/easy-linux/tmp/
 fi
 if [[ -d ${scripts_dir}/easy-linux/install ]]; then
+  sudo rm -f ${scripts_dir}/easy-linux/install/*
   sudo rmdir ${scripts_dir}/easy-linux/install/
 fi
 if [[ -d ${compiled_dir}/beesoc-menu ]]; then
-  sudo rm -Rf ${compiled_dir}/beesoc-menu/
+  sudo rm -f ${compiled_dir}/beesoc-menu/*
+  sudo rmdir ${compiled_dir}/beesoc-menu/
 fi
 if [[ -d ${compiled_dir}/easy-linux ]]; then
-  sudo rm -Rf ${compiled_dir}/easy-linux/*
+  sudo rm -f ${compiled_dir}/easy-linux/*
+  sudo rmdir ${compiled_dir}/easy-linux/
 fi
 if [[ -f ${compiled_dir}/SETUP-easy-linux.sh ]]; then
-  sudo rm -Rf ${compiled_dir}/SETUP-easy-linux.sh
+  sudo rm -f ${compiled_dir}/SETUP-easy-linux.sh
 fi
   sleep 1
   printf "...done.${CY}"
