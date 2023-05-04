@@ -176,8 +176,9 @@ printf "${WT} \\n"
 folder_exists_func
 install_func  
 }
+
+main
 cd ${scripts_dir} || exit
 direnv allow && sudo direnv allow
-main
 cleanup_func
 exit 1
