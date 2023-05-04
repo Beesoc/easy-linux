@@ -121,6 +121,8 @@ clear
 
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
+          sudo rm -Rf ${scripts_dir}/install/
+          sudo rm -Rf ${scripts_dir}/tmp/
           sudo rm -f ${scripts_dir}/INSTALL.sh
           sudo rm -f ${scripts_dir}/SETUP.sh
           sudo chown -vR 1000:0 ${scripts_dir}  
@@ -128,11 +130,12 @@ clear
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
             sudo cp -Rf easy-linux.desktop /usr/share/applications/easy-linux.desktop
             sudo touch ${scripts_dir}/support/adapter
+            sudo rm -Rf ${compiled_dir}/easy-linux/.*
         cd ${scripts_dir} && direnv allow && sudo direnv allow
 }
 
 cleanup_func() {
-  printf " - Please Wait while I cleanup some files used in the installation - \\n" 
+  printf "${CY} - Please Wait while I cleanup some files used in the installation -${NC} \\n" 
   printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
 
 if [[ -d ${scripts_dir}/easy-linux/tmp ]]; then
