@@ -52,16 +52,17 @@ printf "${WT} \\n"
      fi
      if [[ ! -d ${compiled_dir}/easy-linux ]]; then
            printf "  ${CY}${compiled_dir}/easy-linux directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
-           mkdir ${compiled_dir}/easy-linux   
+           mkdir ${compiled_dir}/easy-linux 
+           git clone https://github.com/Beesoc/easy-linux.git
      fi
      if [[ -d "${compiled_dir}/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc's Easy Linux found.\\n${CY}"
        printf "       Please Wait, recloning Github repo to ${WT}${scripts_dir}.\\n"; sleep 1 
        printf "${WT}.."
-       sudo rm -Rf ${compiled_dir}/easy-linux  
+ #      sudo rm -Rf ${compiled_dir}/easy-linux  
        sleep 1; printf ".."; sleep 1
-       cd ${compiled_dir} || exit
-       git clone https://github.com/Beesoc/easy-linux.git
+ #      cd ${compiled_dir} || exit
+ #      git clone https://github.com/Beesoc/easy-linux.git
      fi  
     
     source ${compiled_dir}/easy-linux/INSTALL.sh
