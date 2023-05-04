@@ -123,7 +123,6 @@ clear
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
           sudo rm -f ${scripts_dir}/INSTALL.sh
           sudo rm -f ${scripts_dir}/SETUP.sh
-          sudo rmdir ${scripts_dir}/tmp
           sudo chown -vR 1000:0 ${scripts_dir}  
           sudo chmod -R a+x ${scripts_dir}/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
