@@ -146,10 +146,13 @@ if [[ -d ${scripts_dir}/easy-linux/install ]]; then
   sudo rmdir ${scripts_dir}/easy-linux/install/
 fi
 if [[ -d ${compiled_dir}/beesoc-menu ]]; then
-  rm -Rf ${compiled_dir}/beesoc-menu/
+  sudo rm -Rf ${compiled_dir}/beesoc-menu/
 fi
 if [[ -d ${compiled_dir}/easy-linux ]]; then
-  rm -Rf ${compiled_dir}/easy-linux/*
+  sudo rm -Rf ${compiled_dir}/easy-linux/*
+fi
+if [[ -f ${compiled_dir}/SETUP-easy-linux.sh ]]; then
+  sudo rm -Rf ${compiled_dir}/SETUP-easy-linux.sh
 fi
   sleep 1
   printf "...done.${CY}"
