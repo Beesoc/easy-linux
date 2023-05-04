@@ -8,45 +8,8 @@ set -e
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
 
-echo "#!/bin/bash
-# Cleanup script
-# Version: 0.0.2
-# set -e
-
-scripts_dir=/opt/easy-linux
-compiled_dir=$HOME/compiled
-
-cleanup_func() {
-if [[ -d ${scripts_dir}/install ]]; then  
-    sudo rm -Rf ${scripts_dir}/install
-elif [[ -d ${scripts_dir}/tmp ]]; then 
-    sudo rm -Rf ${scripts_dir}/tmp
-fi
-if [[ -d ${compiled_dir}/easy-linux ]]; then  
-    sudo rm -Rf ${compiled_dir}/easy-linux
-fi
-}
-cleanup_func
-exit" > .cleanup.sh
-
-sudo chmod a+x ${compiled_dir}/.cleanup.sh
-
-echo "#!/bin/bash
-if [[ -e ${compiled_dir}/.cleanup.sh ]]; then
-    sudo bash ${compiled_dir}/.cleanup.sh
-elif [[ -e ${scripts_dir}/.cleanup.sh ]]; then
-    sudo bash ${scripts_dir}/.cleanup.sh
-else 
-    printf "  ${CY}File missing: .cleanup.sh cannot be found at ${WT}${scripts_dir} ${CY}or ${WT}${compiled_dir}"
-fi
-exit" > .cleanup2.sh
-
-sudo chmod a+x ${compiled_dir}/.cleanup2.sh
 sudo chmod a+x ${compiled_dir}/easy-linux/INSTALL.sh
-
-trap ${compiled_dir}/.cleanup2.sh EXIT
     
-# trap ./.cleanup.sh EXIT
 CY='\e[1;36m'
 WT='\e[1;37m'
 RED='\e[1;31m'
