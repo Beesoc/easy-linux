@@ -176,7 +176,7 @@ printf "${WT} \\n"
 folder_exists_func
 install_func  
 }
-cd ${scripts_dir}/easy-linux || exit
+cd ${scripts_dir} || exit
 direnv allow && sudo direnv allow
 main
 cleanup_func
