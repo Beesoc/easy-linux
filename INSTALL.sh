@@ -128,7 +128,7 @@ clear
           sudo chown -vR 1000:0 ${scripts_dir}  
           sudo chmod -R a+x ${scripts_dir}/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
-            sudo cp -Rf easy-linux.desktop /usr/share/applications/easy-linux.desktop
+            sudo cp -Rf ${compiled_dir}/easy-linux/easy-linux.desktop /usr/share/applications/easy-linux.desktop
             sudo touch ${scripts_dir}/support/adapter
             sudo rm -Rf ${compiled_dir}/easy-linux/.*
         cd ${scripts_dir} && direnv allow && sudo direnv allow
