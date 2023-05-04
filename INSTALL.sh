@@ -86,9 +86,6 @@ if [[ ! -d ${scripts_dir}/support ]]; then
   elif [[ -d ${scripts_dir}/install ]]; then 
       printf "${scripts_dir}/install found. Continuing.\\n"
       sudo chown -Rf 1000:0 ${scripts_dir}/install
-  #    sudo rm -f ${scripts_dir}/install/*
-  #    sudo rmdir ${scripts_dir}/install
-  #    sudo mkdir ${scripts_dir}/install
   else 
        printf "     ${RED} Unknown error detected. Exiting.\\n"
        exit 1
@@ -124,7 +121,6 @@ clear
 
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
-          sudo rmdir ${scripts_dir}/install
           sudo rm -f ${scripts_dir}/INSTALL.sh
           sudo rm -f ${scripts_dir}/SETUP.sh
           sudo rmdir ${scripts_dir}/tmp
