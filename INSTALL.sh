@@ -10,37 +10,6 @@ set -e
 scripts_dir="/opt/easy-linux"
 compiled_dir=$HOME/compiled
 
-echo "#!/bin/bash
-# Cleanup script
-# Version: 0.0.2
-set -e
-
-scripts_dir=/opt/easy-linux
-compiled_dir=$HOME/compiled
-
-cleanup_func() {
-if [[ ! -d ${compiled_dir}/easy-linux ]]; then  
-    return
-elif [[ -d ${compiled_dir}/easy-linux ]]; then 
-    sudo rm -Rf ${compiled_dir}/easy-linux
-else 
-    return
-fi
-}
-
-cleanup_func
-cd $HOME || exit
-exit" > ${compiled_dir}/.cleanup.sh
-
-echo "#!/bin/bash
-sudo bash ./.cleanup.sh
-cd $HOME || exit
-exit" > ${compiled_dir}/.cleanup2.sh
-
-sudo chmod a+x ${compiled_dir}/.cleanup.sh
-sudo chmod a+x ${compiled_dir}/.cleanup2.sh
-
-trap ${compiled_dir}/.cleanup2.sh EXIT
 RED='\e[1;31m'
 CY='\e[1;36m'
 WT='\e[1;37m'
@@ -82,8 +51,6 @@ else
     exit 1
 fi
   sudo chown -Rf 1000:0 ${scripts_dir}
-  sudo cp ${compiled_dir}/.cleanup.sh ${scripts_dir}/.cleanup.sh
-  sudo cp ${compiled_dir}/.cleanup2.sh ${scripts_dir}/.cleanup2.sh  
 
   if [[ ! -d ${scripts_dir}/tmp ]]; then  
         printf "  ${CY}${scripts_dir}/tmp not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/tmp ${CY}directory"; sleep 1 
@@ -138,11 +105,7 @@ clear
     printf "  ${CY}Press ${WT}any ${CY}key to install ${WT}Beesoc's Easy Linux Loader${CY}...or cancel with ${RED}Ctrl C${WT}\\n"
 #    printf " ${WT}    ----->"
     read -r -n1 -s -t 60
-#    read -r "Should I install to default location? [Y/N]  " install
-#        if [[ ${install} == "n" ]] || [[ ${install} == "N" ]]; then
-#            printf "${RED}     You chose not to install. Quiting application"
-#            exit 1
-#        elif [[ ${install} == "y" ]] || [[ ${install} == "Y" ]]; then
+
           printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
           sudo cp -Rf ${compiled_dir}/easy-linux/easy-linux.desktop /usr/share/applications/
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/tmp/ 
@@ -156,7 +119,7 @@ clear
           
           cd ${scripts_dir}/tmp || exit
           sudo unzip -uqo *.zip
-          sudo cp -Rf ./*.sh ${scripts_dir}
+          sudo cp -Rf ./* ${scripts_dir}
           
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
@@ -217,6 +180,4 @@ cd ${scripts_dir}/easy-linux || exit
 direnv allow && sudo direnv allow
 main
 cleanup_func
-rm -f ${compiled_dir}/.cleanup.sh
-rm -f ${compiled_dir}/.cleanup2.sh
 exit 1
