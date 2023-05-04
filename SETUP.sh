@@ -8,6 +8,10 @@ set -e
 scripts_dir=/opt/easy-linux
 compiled_dir=$HOME/compiled
 
+if [[ -d ${compiled_dir}/easy-linux ]]; then
+    sudo rm -Rf ${compiled_dir}/easy-linux
+fi
+
 sudo chmod a+x ${compiled_dir}/easy-linux/INSTALL.sh
     
 CY='\e[1;36m'
