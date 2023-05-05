@@ -105,7 +105,9 @@ clear
     read -r -n1 -s -t 60
 
           printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
-          
+          printf "${WT}  Determining processor architecture."
+          machine_architecture=$(uname -m)
+          echo $machine_architecture > ${scripts_dir}/support/arch
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/tmp/ 
           sudo cp -Rf ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
             cd ${scripts_dir} && direnv allow && sudo direnv allow
