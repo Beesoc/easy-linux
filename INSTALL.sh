@@ -105,7 +105,6 @@ clear
     read -r -n1 -s -t 60
 
           printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
-          sudo cp -Rf ${compiled_dir}/easy-linux/easy-linux.desktop /usr/share/applications/
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/tmp/ 
           sudo cp -Rf ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
             cd ${scripts_dir} && direnv allow && sudo direnv allow
@@ -121,6 +120,7 @@ clear
 
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
+          sudo cp -f ${scripts_dir}/install/easy-linux.desktop /usr/share/applications/easy-linux.desktop
           sudo rm -Rf ${scripts_dir}/install/
           sudo rm -Rf ${scripts_dir}/tmp/
           sudo rm -f ${scripts_dir}/INSTALL.sh
@@ -128,7 +128,6 @@ clear
           sudo chown -vR 1000:0 ${scripts_dir}  
           sudo chmod -R a+x ${scripts_dir}/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
-            sudo cp -Rf ${scripts_dir}/install/easy-linux.desktop /usr/share/applications/easy-linux.desktop
             sudo touch ${scripts_dir}/support/adapter
             sudo rm -Rf ${compiled_dir}/easy-linux/.*
         cd ${scripts_dir} && direnv allow && sudo direnv allow
