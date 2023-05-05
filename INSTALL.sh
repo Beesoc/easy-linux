@@ -2,7 +2,7 @@
 # 
 # Installer script for Beesoc's Easy Linux Loader.
 #          ADMIN NOTE:  add zip files to archive with:
-#          zip -rv INSTALL.zip ./support/ ./install/  
+#          zip -rv INSTALL.zip ./support/ ./install/ ./archive/ easy-linux.desktop
 #     define colors
 # Version: 0.0.2
 set -e
