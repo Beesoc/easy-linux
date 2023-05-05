@@ -7,7 +7,7 @@ I am not the author of ANY of the tools that this menu system is installing, con
 ### Setup
 To install Beesoc's Easy Linux menu system, copy and paste the following command to the Linux Terminal: 
 * **curl -L -o $HOME/Downloads/SETUP-easy-linux.sh https://raw.githubusercontent.com/Beesoc/my-configs-public/main/SETUP-easy-linux.sh && chmod a+x $HOME/Downloads/SETUP-easy-linux.sh && $HOME/Downloads/SETUP-easy-linux.sh**
-NOTE:  The install command above should be copied and pasted as 1 command.
+IMPORTANT::  The install command above should be copied and pasted as 1 command.
 
 #### Credits
 Credit for these amazing tools go to the following creators and projects, in no particular order.
