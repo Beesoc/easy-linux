@@ -116,12 +116,11 @@ clear
 
           cd ${scripts_dir}/tmp || exit
           sudo unzip -uqo *.zip
-          sudo cp -f ${scripts_dir}/install/easy-linux.desktop /usr/share/applications/
+          sudo cp -f ${scripts_dir}/tmp/install/easy-linux.desktop /usr/share/applications/
           sudo cp -Rf ./* ${scripts_dir}
 
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
           sudo mv ${scripts_dir}/tmp/install/* ${scripts_dir}
-          sudo cp -f ${scripts_dir}/install/easy-linux.desktop /usr/share/applications/easy-linux.desktop
           sudo rm -Rf ${scripts_dir}/install/
           sudo rm -Rf ${scripts_dir}/tmp/
           sudo rm -f ${scripts_dir}/INSTALL.sh
