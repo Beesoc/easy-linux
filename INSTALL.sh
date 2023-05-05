@@ -105,7 +105,7 @@ clear
     read -r -n1 -s -t 60
 
           printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
-          sudo cp -Rf ${compiled_dir}/easy-linux/easy-linux.desktop /usr/share/applications
+          
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/tmp/ 
           sudo cp -Rf ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
             cd ${scripts_dir} && direnv allow && sudo direnv allow
@@ -113,7 +113,6 @@ clear
             cd ${scripts_dir}/support && direnv allow && sudo direnv allow
           sudo cp -Rf ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/install
             cd ${scripts_dir}/install && direnv allow && sudo direnv allow
-          sudo cp -Rf ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/ 
 
           cd ${scripts_dir}/tmp || exit
           sudo unzip -uqo *.zip
