@@ -117,7 +117,7 @@ clear
 
           cd ${scripts_dir}/tmp || exit
           sudo unzip -uqo *.zip
-          sudo cp -f ${scripts_dir}/tmp/install/easy-linux.desktop /usr/share/applications/
+  #        sudo cp -f ${scripts_dir}/tmp/install/easy-linux.desktop /usr/share/applications/
           sudo cp -Rf ./* ${scripts_dir}
 
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
@@ -154,8 +154,8 @@ if [[ -d ${compiled_dir}/easy-linux ]]; then
   sudo rm -f ${compiled_dir}/easy-linux/*
   sudo rmdir ${compiled_dir}/easy-linux/
 fi
-if [[ -f ${compiled_dir}/SETUP-easy-linux.sh ]]; then
-  sudo rm -f ${compiled_dir}/SETUP-easy-linux.sh
+if [[ -f $HOME/Downloads/SETUP-easy-linux.sh ]]; then
+  sudo rm -f $HOME/Downloads/SETUP-easy-linux.sh
 fi
   sleep 1
   printf "...done.${CY}"
