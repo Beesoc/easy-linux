@@ -116,6 +116,7 @@ clear
 
           cd ${scripts_dir}/tmp || exit
           sudo unzip -uqo *.zip
+          sudo cp -f ${scripts_dir}/install/easy-linux.desktop /usr/share/applications/
           sudo cp -Rf ./* ${scripts_dir}
 
           sudo mv ${scripts_dir}/tmp/support/* ${scripts_dir}/support
