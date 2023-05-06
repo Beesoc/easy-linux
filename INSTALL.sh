@@ -38,7 +38,7 @@ folder_exists_func() {
   support-Banner_func
 
 printf "${CY}\\n  Default install location is ${WT}/opt/easy-linux${CY}.\\n\\n"
-read -p "Press ${WT}enter to accept ${CY}or enter your own path? [ /opt/easy-linux ] " scripts_dir
+read -p "Press enter to accept or enter your own path? [ /opt/easy-linux ] " scripts_dir
 scripts_dir=${scripts_dir:-/opt/easy-linux}
 
 if [[ ! -d "${scripts_dir}" ]]; then  
@@ -101,7 +101,7 @@ clear
 define_var_func
 
 
-read -p "${ORIGINAL_USER}, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
+read -p "$ORIGINAL_USER, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
 installchoice=${installchoice:-Y}
 if [[ $installchoice =~ ^[Yy]$ ]]; then
   printf "Continuing...\\n"
