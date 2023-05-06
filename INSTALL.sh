@@ -112,7 +112,7 @@ else
   exit 0
 fi
 
-          printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n" 
+          printf "${CY}Installing to ${WT}${scripts_dir}\\n" 
 
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
