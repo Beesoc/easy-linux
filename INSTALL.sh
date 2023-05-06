@@ -115,9 +115,10 @@ fi
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/support
-          sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/install
           sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}
           sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/support
+          sudo cp -f ${scripts_dir}/install ${scripts_dir}
+          sudo chmod a+x ${scripts_dir}/*.sh
 
              cd ${scripts_dir} && direnv allow && sudo direnv allow
              cd ${scripts_dir}/support && direnv allow && sudo direnv allow
