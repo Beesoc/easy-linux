@@ -39,7 +39,7 @@ folder_exists_func() {
   clear
   support-Banner_func
 
-printf "${CY}  Default install location is ${WT}/opt/easy-linux${CY}."
+printf "${CY}\\n  Default install location is ${WT}/opt/easy-linux${CY}.\\n"
 read -p "Press enter to accept or enter your own path? [ /opt/easy-linux ] " scripts_dir
 scripts_dir=${scripts_dir:-/opt/easy-linux}
 
