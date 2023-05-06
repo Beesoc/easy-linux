@@ -46,9 +46,9 @@ printf "\\n"
 printf "${WT}\\n    For more info on Github\'s Personal Access Token see:\\n" 
 printf "${OG}https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token\\n"
 
-read -pr "Would you like to continue with the installation? [Y/n] " install
-install=${install:-Y}
-if [[ $install =~ ^[Yy]$ ]]; then
+read -p "Would you like to continue with the installation? [Y/n] " installdec
+installdec=${install:-Y}
+if [[ $installdec =~ ^[Yy]$ ]]; then
   printf "Continuing...\\n"
 else
   printf "Exiting.\\n"
@@ -73,9 +73,7 @@ fi
        sleep 1
        printf "${WT}..."
        sleep 1
-       cd ${compiled_dir} || exit
      fi  
-    git clone https://github.com/Beesoc/easy-linux.git
-
-
+       cd ${compiled_dir} || exit
+git clone https://github.com/Beesoc/easy-linux.git
     source $HOME/compiled/easy-linux/INSTALL.sh
