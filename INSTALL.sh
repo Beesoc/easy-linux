@@ -133,6 +133,7 @@ fi
           sudo chmod -R a+x ${scripts_dir}/*.sh
           sudo chmod -R a+x ${scripts_dir}/support/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
+            sudo cp -f ${scripts_dir}/install/easy-linux.desktop /usr/share/applications
             sudo touch ${scripts_dir}/support/adapter
             sudo rm -Rf ${compiled_dir}/easy-linux/.*
 }
