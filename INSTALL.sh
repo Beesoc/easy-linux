@@ -7,7 +7,6 @@
 # Version: 0.0.2
 set -e
 
-scripts_dir="/opt/easy-linux"
 compiled_dir=$HOME/compiled
 
 RED='\e[1;31m'
@@ -107,6 +106,7 @@ clear
           printf "${CY}Unzipping files into ${WT}'${scripts_dir}/tmp' ${CY}and then installing to ${WT}${scripts_dir}\\n"
           printf "${WT}  Determining processor architecture."
           machine_architecture=$(uname -m)
+
           echo $machine_architecture > ${scripts_dir}/support/arch
           sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/tmp/ 
           sudo cp -Rf ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
@@ -131,6 +131,7 @@ clear
           sudo chmod -R a+x ${scripts_dir}/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
             sudo touch ${scripts_dir}/support/adapter
+            sudo touch ${scripts_dir}/support/arch
             sudo rm -Rf ${compiled_dir}/easy-linux/.*
         cd ${scripts_dir} && direnv allow && sudo direnv allow
 }
@@ -140,19 +141,19 @@ cleanup_func() {
   printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
 
 if [[ -d ${scripts_dir}/easy-linux/tmp ]]; then
-  sudo rm -f ${scripts_dir}/easy-linux/tmp/*
+  sudo rm -Rf ${scripts_dir}/easy-linux/tmp/
   sudo rmdir ${scripts_dir}/easy-linux/tmp/
 fi
 if [[ -d ${scripts_dir}/easy-linux/install ]]; then
-  sudo rm -f ${scripts_dir}/easy-linux/install/*
+  sudo rm -Rf ${scripts_dir}/easy-linux/install/
   sudo rmdir ${scripts_dir}/easy-linux/install/
 fi
 if [[ -d ${compiled_dir}/beesoc-menu ]]; then
-  sudo rm -f ${compiled_dir}/beesoc-menu/*
+  sudo rm -Rf ${compiled_dir}/beesoc-menu/
   sudo rmdir ${compiled_dir}/beesoc-menu/
 fi
 if [[ -d ${compiled_dir}/easy-linux ]]; then
-  sudo rm -f ${compiled_dir}/easy-linux/*
+  sudo rm -Rf ${compiled_dir}/easy-linux/
   sudo rmdir ${compiled_dir}/easy-linux/
 fi
 if [[ -f $HOME/Downloads/SETUP-easy-linux.sh ]]; then
@@ -167,18 +168,23 @@ fi
   printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n" 
   printf "\\n\\n  ${CY}Press ${WT}any ${CY}key to exit the installer.\\n  "
-    read -r -n1 -s -t 60
+    read -r -n1 -s -t 300
   exit 1
 }
 
 main() {
 clear
 support-Banner_func
-#printf "\\n${OG}                 Welcome to the Installer for Beesoc's Easy Linux.                   ${CY}${NC}\\n" 
-printf "\\n${CY}Press ${WT}any ${CY}key to continue.                              Press ${RED}[ctrl+c] ${CY}to cancel\\n"
-#printf "${WT}\\n    ---->"
-printf "${WT} \\n"
-  read -r -n1 -s -t 60
+printf "\\n${OG}            Welcome to the Installer for Beesoc's Easy Linux        Press ${RED}[ctrl+c] ${CY}to cancel\\n${CY}${NC}\\n" 
+
+read -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
+install=${install:-Y}
+if [[ $install =~ ^[Yy]$ ]]; then
+  echo "Loading...Please Wait..."
+else
+  echo "Exiting."
+  exit 0
+fi
 
 folder_exists_func
 install_func  
@@ -188,4 +194,4 @@ main
 cd ${scripts_dir} || exit
 direnv allow && sudo direnv allow
 cleanup_func
-exit 1
+exit 0
