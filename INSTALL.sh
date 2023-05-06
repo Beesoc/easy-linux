@@ -171,7 +171,7 @@ fi
 main() {
 clear
 support-Banner_func
-printf "\\n${OG}      Welcome to the Installer for Beesoc's Easy Linux     Press ${RED}[ctrl+c] ${CY}to cancel\\n${CY}${NC}\\n" 
+printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}${NC}\\n" 
 
 read -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
