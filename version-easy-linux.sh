@@ -18,7 +18,6 @@ declare -A required_versions=(
   ["version-easy-linux.sh"]="0.0.2"
   ["SETUP.sh"]="0.0.2"
   ["INSTALL.sh"]="0.0.2"
-  ["INSTALL.zip"]="0.0.2"
   [".shellcheckrc"]="0.0.2"
   ["support/support-Banner_func.sh"]="0.0.2"
   ["support/support-docker.sh"]="0.0.2"
@@ -67,15 +66,6 @@ for script_path in $(find . -type f -name "*.sh"); do
 done
 
 for script_path in $(find . -type f -name "*.sh"); do
-  script_name=$(basename "$script_path")
-  update_script "$script_name" "$script_path"
-done
-
-for script_path in $(find . -type f -name "*.zip"); do
-  check_version "$script_path"
-done
-
-for script_path in $(find . -type f -name "*.zip"); do
   script_name=$(basename "$script_path")
   update_script "$script_name" "$script_path"
 done
