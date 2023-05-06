@@ -3,7 +3,6 @@
 #
 # Version: 0.0.2
 scripts_dir=/opt/easy-linux
-install_compiled=$HOME/compiled
 compiled_dir=$HOME/compiled
 #shellcheck source=${scripts_dir}/.envrc
 #shellcheck source="${scripts_dir}/support/support-Prompt_func.sh"
@@ -19,6 +18,8 @@ security_updates=$(apt list --upgradable 2>/dev/null | grep -i security | wc -l)
   if [ ! -d ${scripts_dir} ]; then
         printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${NC}"
   fi
+
+
 
 source ${scripts_dir}/.envrc
   
@@ -52,12 +53,12 @@ if [[ ${choice} == 1 ]]; then
     printf "  \\n" 
     source "${scripts_dir}/support/support-Prompt_func.sh"
 
-read -p "Do you want to continue? [Y/n] " choice-docker
-choice-docker=${choice-docker:-Y}
-if [[ $choice-docker =~ ^[Yy]$ ]]; then
-  echo "Continuing..."
+read -p "Do you want to continue? [Y/n] " choicedocker
+choicedocker=${choicedocker:-Y}
+if [[ $choicedocker =~ ^[Yy]$ ]]; then
+  echo "Continuing...\\n"
 else
-  echo "Exiting."
+  echo "Exiting.\\n"
   exit 0
 fi
 
@@ -65,7 +66,7 @@ fi
            if command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1; then
                 printf "${GN}Docker is already installed\\n"
            else
-                printf "${YW}Docker is not installed. Installing\\n"
+                printf "${YW}Docker Desktop is not installed. Installing\\n"
                 source "${scripts_dir}/support/support-docker.sh"
            fi
            
@@ -79,17 +80,17 @@ elif [[ ${choice} == 2 ]]; then
 read -p "Do you want to continue? [Y/n] " choicehacking
         choicehacking=${choicehacking:-Y}
             if [[ $choicehacking =~ ^[Yy]$ ]]; then
-              printf "${GN}Continuing..."
+              printf "${GN}Continuing...\\n"
             else
-              printf "${RED}Exiting."
+              printf "${RED}Exiting.\\n"
               exit 0
             fi
 
            if command -v hackingtool >/dev/null 2>&1; then
-                printf "\\n${GN}Hackingtool is already installed"
+                printf "\\n${GN}Hackingtool is already installed.\\n"
               sudo hackingtool
            else
-              printf "\\n${YW}hackingtool is not installed"
+              printf "\\n${YW}hackingtool is not installed.  Installing...\\n"
               hacking_tool_func
            fi
 #    Hacking Tool_menu
@@ -104,9 +105,9 @@ elif [[ ${choice} == 3 ]]; then
     read -p "Do you want to continue? [Y/n] " choicefavs
 choicefavs=${choicefavs:-Y}
     if [[ $choicefavs =~ ^[Yy]$ ]]; then
-          printf "Continuing..."
+          printf "Continuing...\\n"
     else
-          printf "Exiting."
+          printf "Exiting.\\n"
       exit 0
     fi
 
@@ -118,9 +119,9 @@ elif [[ ${choice} == 4 ]]; then
 read -p "Do you want to continue? [Y/n] " choicepwn
         choicepwn=${choicepwn:-Y}
             if [[ $choicepwn =~ ^[Yy]$ ]]; then
-              printf "${GN}Continuing..."
+              printf "${GN}Continuing...\\n"
             else
-              printf "${RED}Exiting."
+              printf "${RED}Exiting.\\n"
               exit 0
             fi
 
@@ -135,17 +136,17 @@ elif [[ ${choice} == 20 ]]; then
 read -p "Do you want to continue? [Y/n] " choicewifite
         choicewifite=${choicewifite:-Y}
             if [[ $choicewifite =~ ^[Yy]$ ]]; then
-              printf "${GN}Continuing..."
+              printf "${GN}Continuing...\\n"
             else
-              printf "${RED}Exiting."
+              printf "${RED}Exiting.\\n"
               exit 0
             fi
 
            if command -v wifite >/dev/null 2>&1; then
-                printf "\\n${GN}Wifite is already installed"
+                printf "\\n${GN}Wifite is already installed\\n"
               sudo wifite
            else
-              printf "\\n${YW}Wifite is not installed"
+              printf "\\n${YW}Wifite is not installed\\n"
               source "${scripts_dir}/support/support-wifite.sh"
            fi
 
