@@ -88,8 +88,8 @@ if [[ ! -d ${scripts_dir}/support ]]; then
 
 define_var_func() {
 ORIG_USER=$(USER)
-echo "export scripts_dir=${scripts_dir}" > ${scripts_dir}/.envrc
-echo "export ORIGINAL_USER=${ORIG_USER}" > ${scripts_dir}/.envrc
+echo "export scripts_dir=${scripts_dir}" >> ${scripts_dir}/.envrc
+echo "export ORIGINAL_USER=${ORIG_USER}" >> ${scripts_dir}/.envrc
 
 
 cd ${scripts_dir} && direnv allow 
