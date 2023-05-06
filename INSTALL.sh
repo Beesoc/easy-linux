@@ -103,7 +103,7 @@ clear
 define_var_func
 
 
-read -p "${ORIG_USER}, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
+read -p "${ORIGINAL_USER}, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
 installchoice=${installchoice:-Y}
 if [[ $installchoice =~ ^[Yy]$ ]]; then
   printf "Continuing...\\n"
