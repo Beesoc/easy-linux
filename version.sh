@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
-source .envrc
+# Version: 0.0.2
+scripts_dir=/opt/easy-linux
+source ${scripts_dir}/.envrc
 
 # Define the minimum required version for each script
 declare -A required_versions=(
