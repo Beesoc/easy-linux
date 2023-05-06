@@ -1,8 +1,6 @@
 #!/bin/bash
 # 
 # Installer script for Beesoc's Easy Linux Loader.
-#          ADMIN NOTE:  add zip files to archive with:
-#          zip -rv INSTALL.zip ./support/ ./install/ ./archive/ easy-linux.desktop
 #     define colors
 # Version: 0.0.2
 set -e
@@ -99,7 +97,7 @@ cd ${scripts_dir} && direnv allow
 install_func() { 
 clear
     support-Banner_func
-    sudo apt install -y bc zip direnv lm-sensors >/dev/null
+    sudo apt install -y bc direnv lm-sensors >/dev/null
 define_var_func
 
 
@@ -125,9 +123,7 @@ fi
              cd ${scripts_dir}/support && direnv allow && sudo direnv allow
              cd ${scripts_dir}/install && direnv allow && sudo direnv allow
           source ${scripts_dir}/.envrc
-          cd ${scripts_dir} || exit
-          sudo unzip -uqo *.zip
-  #        sudo cp -f ${scripts_dir}/tmp/install/easy-linux.desktop /usr/share/applications/
+  
               clear
               source ${scripts_dir}/support/support-Banner_func.sh
           sudo rm -f ${scripts_dir}/INSTALL.sh
@@ -144,10 +140,6 @@ cleanup_func() {
   printf "${CY} - Please Wait while I cleanup some files used in the installation -${NC} \\n" 
   printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
 
-if [[ -d ${scripts_dir}/easy-linux/tmp ]]; then
-  sudo rm -Rf ${scripts_dir}/easy-linux/tmp/
-  sudo rmdir ${scripts_dir}/easy-linux/tmp/
-fi
 if [[ -d ${scripts_dir}/easy-linux/install ]]; then
   sudo rm -Rf ${scripts_dir}/easy-linux/install/
   sudo rmdir ${scripts_dir}/easy-linux/install/
