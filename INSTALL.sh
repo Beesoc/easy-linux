@@ -92,7 +92,7 @@ echo "export scripts_dir=${scripts_dir}" > ${scripts_dir}/.envrc
 echo "export ORIGINAL_USER=${ORIG_USER}" > ${scripts_dir}/.envrc
 
 
-cd ${scripts_dir} && direnv allow
+cd ${scripts_dir} && direnv allow 
 }
 
 install_func() { 

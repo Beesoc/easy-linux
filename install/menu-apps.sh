@@ -12,8 +12,7 @@ set -e
 clear
 #
 install_keyrings=
-updates=$(apt list --upgradable 2>/dev/null | wc -l)
-security_updates=$(apt list --upgradable 2>/dev/null | grep -i security | wc -l)
+
 
   if [ ! -d ${scripts_dir} ]; then
         printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${NC}"
