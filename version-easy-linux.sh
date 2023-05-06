@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+# Version: 0.0.2
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 
@@ -20,16 +21,21 @@ declare -A required_versions=(
   ["INSTALL.zip"]="0.0.2"
   [".shellcheckrc"]="0.0.2"
   ["support/support-Banner_func.sh"]="0.0.2"
+  ["support/support-docker.sh"]="0.0.2"
   ["support/support-fatrat.sh"]="0.0.2"
   ["support/support-fix-my-perm.sh"]="0.0.2"
   ["support/support-hxcdump.sh"]="0.0.2"
   ["support/support-linux_connection_script.sh"]="0.0.2"
   ["support/support-makeWordlist.sh"]="0.0.2"
+  ["support/support-monDOWN.sh"]="0.0.2"
+  ["support/support-monUP.sh"]="0.0.2" 
   ["support/support-Prompt_func.sh"]="0.0.2"
   ["support/support-sysinfo.sh"]="0.0.2"
   ["support/support-trap-wifi.sh"]="0.0.2"
   ["support/support-webmin.sh"]="0.0.2"
   ["support/support-wifite.sh"]="0.0.2"
+  ["support/support-wpaDOWN.sh"]="0.0.2"
+  ["support/support-wpaUP.sh"]="0.0.2"
 )
 
 function check_version {
