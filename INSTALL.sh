@@ -5,7 +5,8 @@
 # Version: 0.0.2
 set -e
 
-compiled_dir=$HOME/compiled
+export scripts_dir=/opt/easy-linux
+export compiled_dir=$HOME/compiled
 
 RED='\e[1;31m'
 CY='\e[1;36m'
