@@ -2,8 +2,6 @@
 #
 #
 # Version: 0.0.2
-scripts_dir=/opt/easy-linux
-compiled_dir=$HOME/compiled
 #shellcheck source=${scripts_dir}/.envrc
 #shellcheck source="${scripts_dir}/support/support-Prompt_func.sh"
 #shellcheck source="${scripts_dir}/support/support-Banner_func.sh"
@@ -11,16 +9,11 @@ set -e
 #
 clear
 #
-install_keyrings=
-
+source ${scripts_dir}/.envrc
 
   if [ ! -d ${scripts_dir} ]; then
         printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${NC}"
   fi
-
-
-
-source ${scripts_dir}/.envrc
   
 options=("Hacking Tool" "Docker Desktop" "My Favs" "TheFatRat" "Wifite" "Pwnagotchi" "Webmin" "System Information" "Main Menu" "Exit")
 #
