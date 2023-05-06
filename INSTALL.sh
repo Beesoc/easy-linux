@@ -88,9 +88,9 @@ if [[ ! -d ${scripts_dir}/support ]]; then
 }
 
 define_var_func() {
-ORIG_USER=$USER
+echo "export compiled_dir=${compiled_dir}" >> ${scripts_dir}/.envrc
 echo "export scripts_dir=${scripts_dir}" >> ${scripts_dir}/.envrc
-echo "export ORIGINAL_USER=${ORIG_USER}" >> ${scripts_dir}/.envrc
+echo "export ORIGINAL_USER=$USER" >> ${scripts_dir}/.envrc
 
 
 cd ${scripts_dir} && direnv allow 
@@ -118,7 +118,9 @@ fi
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/support
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/install
-          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc
+          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}
+          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/support
+
              cd ${scripts_dir} && direnv allow && sudo direnv allow
              cd ${scripts_dir}/support && direnv allow && sudo direnv allow
              cd ${scripts_dir}/install && direnv allow && sudo direnv allow
