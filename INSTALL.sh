@@ -39,7 +39,7 @@ folder_exists_func() {
   clear
   support-Banner_func
 
-read -pr "Default install location is /opt/easy-linux. Press enter to accept or enter your own path? [ /opt/easy-linux ] " scripts_dir
+read -p "Default install location is /opt/easy-linux. Press enter to accept or enter your own path? [ /opt/easy-linux ] " scripts_dir
 scripts_dir=${scripts_dir:-/opt/easy-linux}
 
 if [[ ! -d "${scripts_dir}" ]]; then  
@@ -102,7 +102,7 @@ clear
 define_var_func
 
 
-read -rp "${ORIG_USER}, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
+read -p "${ORIG_USER}, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
 installchoice=${installchoice:-Y}
 if [[ $installchoice =~ ^[Yy]$ ]]; then
   printf "Continuing...\\n"
@@ -178,7 +178,7 @@ clear
 support-Banner_func
 printf "\\n${OG}            Welcome to the Installer for Beesoc's Easy Linux        Press ${RED}[ctrl+c] ${CY}to cancel\\n${CY}${NC}\\n" 
 
-read -pr "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
+read -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
   echo "Loading...Please Wait..."
