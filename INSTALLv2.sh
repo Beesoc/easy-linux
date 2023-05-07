@@ -56,7 +56,7 @@ direnv_func() {
 
 install_func() {
 
-printf "${WT}\\n   [*] ${CY}Dependencies satisfied. \\n"
+printf "${WT}\\n  [*] ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY}"
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
            if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
@@ -100,7 +100,7 @@ main() {
 }
 git_files_func() {
 
-  printf "  ${WT} \\n [*]  ${GN} Preparing to clone remote Git repo.${OG}"
+  printf "  ${WT} \\n [*]  ${GN} Preparing to clone remote Git repo.${OG}\\n"
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
