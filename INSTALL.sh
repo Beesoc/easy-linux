@@ -159,7 +159,7 @@ if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
    else 
       printf "  Unknown error."
 fi
-hostname="cat /etc/hostname"
+hostname=$(echo /etc/hostname)
 cory_host=updates
 if [ $etc_hostname == $hostname ] && [ $ORIGINAL_USER = $USER ]; then
      if [ $ORIGINAL_USER = beesoc ] && [ $hostname = updates ]; then
@@ -180,7 +180,6 @@ if [ $etc_hostname == $hostname ] && [ $ORIGINAL_USER = $USER ]; then
       fi
 
 HOST=updates
-export $HOST
 
 echo "export etc_hostname=$(cat /etc/hostname)" >> $scripts_dir/.envrc
 # echo "export compiled_dir=$HOME/compiled" >> $scripts_dir/.envrc
@@ -205,10 +204,9 @@ cd ${scripts_dir} && direnv allow
 
 
 install_func() { 
-# clear
-#    support-Banner_func
-    sudo apt install -y bc direnv lm-sensors 
- #   >/dev/null
+ clear
+    support-Banner_func
+    sudo apt install -y bc direnv lm-sensors >/dev/null
 define_var_func
 
 printf "${WT}$USER,${CY} "
@@ -224,16 +222,16 @@ fi
           printf "${CY}Installing to ${WT}${scripts_dir}\\n" 
           sudo chown -v 1000:1000 ${scripts_dir}
           sudo chown -v 1000:1000 ${scripts_dir}
-          sudo cp -Rf $compiled_dir/easy-linux/install/ ${scripts_dir}
-          sudo cp -Rf ${compiled_dir}/easy-linux/ /opt/
-          sudo cp -rf ${compiled_dir}/easy-linux/support ${scripts_dir}/support
-          sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
-          sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/support
-          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}
-          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/support
-          sudo cp -rf ${scripts_dir}/install ..
+#          sudo cp -Rf $compiled_dir/easy-linux/install/ ${scripts_dir}
+#          sudo cp -Rf ${compiled_dir}/easy-linux/ /opt/
+#          sudo cp -rf ${compiled_dir}/easy-linux/support ${scripts_dir}/support
+#          sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
+#          sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/support
+#          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}
+#          sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/support
+          sudo cp -rf ${scripts_dir}/install ${scripts_dir}
       #    sudo chmod a+x ${scripts_dir}/
-#          sudo cp -Rf ${scripts_dir}/install/ ${scripts_dir}
+#          sudo cp -Rf ${scripts_dir}/install ${scripts_dir}
 #sudo cp -Rf ${scripts_dir}/easy-linux/ /opt/ 
 #sudo cp -Rf ${scripts_dir}/support/ ${scripts_dir}/support 
 #sudo cp -Rf ${scripts_dir}/easy-linux/install/ ${scripts_dir}
@@ -243,7 +241,7 @@ sudo chmod +x ${scripts_dir}/support/*.sh
 
              cd ${scripts_dir} && direnv allow && sudo direnv allow
              cd ${scripts_dir}/support && direnv allow && sudo direnv allow
-             cd ${scripts_dir}/install && direnv allow && sudo direnv allow
+   #          cd ${scripts_dir}/install && direnv allow && sudo direnv allow
           source ${scripts_dir}/.envrc
   
               
@@ -253,22 +251,21 @@ sudo chmod +x ${scripts_dir}/support/*.sh
           sudo chmod -R a+x ${scripts_dir}/
           sudo chmod -R a+x ${scripts_dir}/support/
             sudo cp -Rf ${scripts_dir}/install/menu-master.sh /usr/bin
-            sudo cp -Rf ${scripts_dir}/install/ /opt/
-            cd /opt/install || exit
-            sudo cp -f /opt/install/menu-apps.sh /opt/easy-linux/
-            sudo cp -f /opt/install/menu-backup_pwn-script.sh /opt/easy-linux/
-            sudo cp -f /opt/install/menu-customize.sh /opt/easy-linux/
-            sudo cp -f /opt/install/menu-hacking.sh /opt/easy-linux/
-            sudo cp -f /opt/install/menu-master.sh /opt/easy-linux/
-            sudo cp -f /opt/install/menu-upload-hashes.sh /opt/easy-linux/
-            sudo cp -f /opt/install/version-easy-linux.sh /opt/easy-linux/
-            sudo cp -f /opt/install/version.sh /opt/easy-linux/
+            sudo cp -Rf ${scripts_dir}/install /opt/easy-linux
+#            cd /opt/install || exit
+#            sudo cp -f /opt/install/menu-apps.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/menu-backup_pwn-script.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/menu-customize.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/menu-hacking.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/menu-master.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/menu-upload-hashes.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/version-easy-linux.sh /opt/easy-linux/
+#            sudo cp -f /opt/install/version.sh /opt/easy-linux/
             sudo cp -f /opt/install/easy-linux.desktop /usr/share/applications/
             
             sudo chmod +x *.sh
             sudo chown 1000:1000 .
-            sudo mv . /opt/easy-linux
-            sudo cp -f ${scripts_dir}/easy-linux.desktop /usr/share/applications
+            sudo mv * /opt/easy-linux
             sudo touch ${scripts_dir}/support/adapter
 }
 
