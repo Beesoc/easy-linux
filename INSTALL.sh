@@ -93,7 +93,6 @@ if [[ ! -d ${scripts_dir}/support ]]; then
 
     sudo chown -Rf 1000:0 ${scripts_dir}
     sudo chown -Rf 1000:0 ${compiled_dir}
-
 }
 
 identity_wiz_func(){
@@ -192,7 +191,7 @@ elif [ $ORIGINAL_USER != $home_dir_user ]; then
           printf "${OG}    Don\'t Panic! Autodetection has failed. Loading ${WT}manual wizard${CY}."
           identity_wiz_func
 fi
-         
+fi         
 cd ${scripts_dir} && direnv allow 
 
 }
