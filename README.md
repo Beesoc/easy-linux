@@ -13,7 +13,7 @@ Detailed instructions:
 1. open a 'Terminal' emulator app on your Linux desktop.
 2. in the Terminal window, copy and paste this command: **sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux && cd /opt/easy-linux && INSTALLv2.sh**
  
-**IMPORTANT:**  The install command above should be copied and pasted as 1 command!  Seriously, every single letter, EXACTLY!
+**IMPORTANT:**  The install command above should be copied and pasted as 1 command!  There are actually 3 separate commands there but they are ran as 1 for simplicity.  Seriously, every single letter, EXACTLY!
 
 ##### Credits
 Credit for these amazing tools go to the following creators and projects, in no particular order.
