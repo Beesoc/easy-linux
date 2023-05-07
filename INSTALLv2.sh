@@ -55,10 +55,10 @@ direnv_func() {
 
 install_func() {
 
-printf "${WT}   [*] ${CY}Dependencies satisfied. "; sleep 1
-read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceezlinux
-        choiceezlinux=${choiceezlinux:-Y}
-            if [[ $choiceezlinux =~ ^[Yy]$ ]]; then
+printf "${WT}\\n   [*] ${CY}Dependencies satisfied. "; sleep 1
+read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
+        choiceez=${choiceez:-Y}
+            if [[ $choiceez =~ ^[Yy]$ ]]; then
               printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
             elif [[ $choiceezlinux =~ ^[Nn]$ ]]; then
@@ -66,7 +66,6 @@ read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceezlinux
               exit 0
             else
               printf "${RED} Exiting."
-              exit 0
             fi
      get_files_func
 }
@@ -76,7 +75,7 @@ if [[ -d /opt/easy-linux ]]; then
     printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found. Removing abd recloning repository."; sleep 1
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
-    sudo chown -vr 1000:1000 /opt
+    sudo chown -v 1000:1000 /opt
     printf "  ${WT} [*]  ${GN}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
 fi  
 install_func
@@ -100,7 +99,7 @@ git_files_func() {
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
 cd /opt/easy-linux
-sudo chown -vR 1000:1000 /opt/easy-linux
+sudo chown -v 1000:1000 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/*.sh
 sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
