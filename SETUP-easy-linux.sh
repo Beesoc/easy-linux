@@ -3,6 +3,7 @@
 # Version: 0.0.2
 set -euo pipefail
 
+compiled_dir=$HOME/compiled
 # Install prereq, DIRENV
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "${GN}DIRENV is already installed\\n"
@@ -20,15 +21,15 @@ if [[ ! -d $compiled_dir ]]; then
     mkdir $compiled_dir
 elif [[ -d $compiled_dir ]]; then
 		if [[ -d $compiled_dir/tmp ]]; then
-			  sudo rm -rf $compiled_dir/tmp
-			  sudo mkdir $compiled_dir/tmp
+			  rm -rf $compiled_dir/tmp
+			  mkdir $compiled_dir/tmp
 		elif [[ ! -d $compiled_dir/tmp ]]; then
-			 sudo mkdir $compiled_dir/tmp
-			 sudo chown -vR 1000:0 $compiled_dir/tmp
+			 mkdir $compiled_dir/tmp
+			 chown -vR 1000:0 $compiled_dir/tmp
 			 printf "${GN}  Continuing...."
 		fi
 fi
-
+chown -vR $USER:$USER $compiled_dir/tmp
 cd $compiled_dir/tmp
 
 echo "#/bin/bash
