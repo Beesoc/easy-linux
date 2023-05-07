@@ -36,10 +36,7 @@ printf "${NC}${CY}"
 Banner_func
 
 direnv_func() {
-           if command -v /usr/bin/direnv >/dev/null 2>&1; then
-                printf "${GN}DIRENV is already installed\\n"
-           else
-                read -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
+               read -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ $choicedirenv =~ ^[Yy]$ ]]; then
                     printf "${GN}Continuing..." 
@@ -50,10 +47,10 @@ direnv_func() {
                     sudo apt update
                     sudo apt install -y direnv
                 else
-                   printf "${RED}Exiting."
-                exit 0
+                   printf "${GN} Not Needed.  Continuing."
+                
                 fi
-           fi
+       check_directories_func
 }
 
 install_func() {
