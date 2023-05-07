@@ -110,6 +110,9 @@ sudo chmod +x /opt/easy-linux/*.sh
 sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
 sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
+cd /opt/easy-linux || exit
+sudo mv *.sh ..
+sudo mv *.desktop /usr/share/applications/
 
 sudo mv /opt/easy-linux/install/* ..
 sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
