@@ -113,7 +113,8 @@ sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
 cd /opt/easy-linux || exit
 sudo mv *.sh ..
 sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
-
+cd /opt/easy-linux/install || exit
+sudo mv menu*.sh /opt/easy-install
 sudo mv /opt/easy-linux/install/* ..
 }
 
