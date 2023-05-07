@@ -119,8 +119,8 @@ fi
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/support
           sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}
           sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/support
-          sudo cp -f ${scripts_dir}/install ${scripts_dir}
           sudo chmod a+x ${scripts_dir}/*.sh
+          sudo cp -Rf ${scripts_dir}/install/* ${scripts_dir}
 
              cd ${scripts_dir} && direnv allow && sudo direnv allow
              cd ${scripts_dir}/support && direnv allow && sudo direnv allow
@@ -129,23 +129,26 @@ fi
   
               clear
               source ${scripts_dir}/support/support-Banner_func.sh
-          sudo rm -f ${scripts_dir}/INSTALL.sh
-          sudo rm -f ${scripts_dir}/SETUP.sh
+
           sudo chown -vR 1000:0 ${scripts_dir}  
           sudo chmod -R a+x ${scripts_dir}/*.sh
           sudo chmod -R a+x ${scripts_dir}/support/*.sh
             sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
-            sudo cp -f ${scripts_dir}/install/easy-linux.desktop /usr/share/applications
+            sudo cp -f ${scripts_dir}/easy-linux.desktop /usr/share/applications
             sudo touch ${scripts_dir}/support/adapter
-            sudo rm -Rf ${compiled_dir}/easy-linux/.*
 }
 
 cleanup_func() {
-  printf "${CY} - Please Wait while I cleanup some files used in the installation -${NC} \\n" 
+
+printf "${CY} - Please Wait while I cleanup some files used in the installation -${NC} \\n" 
   printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
 
-if [[ -d ${scripts_dir}/easy-linux/install ]]; then
-  sudo rm -Rf ${scripts_dir}/easy-linux/install/
+if [[ -d ${scripts_dir}/install ]]; then
+  sudo rm -Rf ${scripts_dir}/install/
+#  sudo rmdir ${scripts_dir}/install/
+fi
+if [[ -d ${scripts_dir}/INSTALL.sh ]]; then
+  sudo rm -Rf ${scripts_dir}/INSTALL.sh
 #  sudo rmdir ${scripts_dir}/easy-linux/install/
 fi
 if [[ -d ${compiled_dir}/beesoc-menu ]]; then
@@ -158,6 +161,9 @@ if [[ -d ${compiled_dir}/easy-linux ]]; then
 fi
 if [[ -f $HOME/Downloads/SETUP-easy-linux.sh ]]; then
   sudo rm -f $HOME/Downloads/SETUP-easy-linux.sh
+fi
+if [[ -f ${scripts_dir}/SETUP-easy-linux.sh ]]; then
+  sudo rm -f $scripts_dir/SETUP-easy-linux.sh
 fi
   sleep 1
   printf "...done.${CY}"
