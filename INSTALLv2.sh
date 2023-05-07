@@ -56,11 +56,11 @@ direnv_func() {
 
 install_func() {
 
-printf "${WT}\\n  [*] ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY}"
+printf "${WT}\\n  [*] ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
            if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-              printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
+              printf "${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
             elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
               printf "${WT} [*] ${CY}Installation rejected..."
@@ -100,7 +100,7 @@ main() {
 }
 git_files_func() {
 
-  printf "  ${WT} \\n [*]  ${GN} Preparing to clone remote Git repo.${OG}\\n"
+  printf "  ${WT} \\n [*]   ${GN} Preparing to clone remote Git repo.${OG}\\n"
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
@@ -109,9 +109,9 @@ sudo chown -v 1000:1000 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/*.sh
 sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
-sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
+sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
 
-sudo mv /opt/easy-linux/install/*.sh /opt/easy-linux/
+sudo mv /opt/easy-linux/install/* ..
 sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 }
 
