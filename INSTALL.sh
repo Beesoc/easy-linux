@@ -14,7 +14,7 @@ compiled_dir=/tmp/easy-linux
            else
                 printf "${YW}DIRENV is not installed. Installing\\n"
                 direnvinstall=$(curl -sfL https://direnv.net/install.sh | bash)
-	         source $direnvinstall
+                 source $direnvinstall
            fi
 
 RED='\e[1;31m'
@@ -52,23 +52,23 @@ read -p "Press enter to accept or enter your own path? [ /opt/easy-linux ] " scr
 scripts_dir=${scripts_dir:-/opt/easy-linux}
 
 if [[ ! -d "${scripts_dir}" ]]; then  
-    printf "  ${CY}${scripts_dir} not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir} ${CY}directory"; sleep 1 
+    printf "  ${WT}${scripts_dir} ${OG}not found.\\n${OG}    Please Wait, creating ${WT}${scripts_dir} ${OG}directory"; sleep 1
     printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
     sudo mkdir ${scripts_dir}
 elif [[ -d ${scripts_dir} ]]; then 
-    printf "${scripts_dir} found. Continuing.\\n"
+    printf "${WT}${scripts_dir} ${OG}found. Continuing.\\n"
 else 
     printf "     ${RED} Unknown error detected. Exiting.\\n"
     exit 1
 fi
-  sudo chown -Rf 1000:0 ${scripts_dir}
+  sudo chown -Rf $USER:$USER ${scripts_dir}
 
 if [[ ! -d ${scripts_dir}/support ]]; then  
-        printf "  ${CY}${scripts_dir}/support not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/support ${CY}directory"; sleep 1 
+        printf "  ${WT}${scripts_dir}/support ${OG}not found.\\n    Please Wait, creating ${WT}${scripts_dir}/support ${OG}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
         sudo mkdir ${scripts_dir}/support
   elif [[ -d ${scripts_dir}/support ]]; then 
-      printf "${scripts_dir}/support found. Continuing.\\n"
+      printf "${WT}${scripts_dir}/support ${OG}found. Continuing.\\n"
       sudo chown -Rf 1000:0 ${scripts_dir}/support
       sudo rm -Rf ${scripts_dir}/support/
       sudo mkdir ${scripts_dir}/support
@@ -78,12 +78,12 @@ if [[ ! -d ${scripts_dir}/support ]]; then
   fi  
 
   if [[ ! -d ${scripts_dir}/install ]]; then  
-        printf "  ${CY}${scripts_dir}/install not found.\\n${CY}  Please Wait, creating ${WT}${scripts_dir}/install ${CY}directory"; sleep 1 
+        printf "  ${WT}${scripts_dir}/install ${OG}not found.\\n$  Please Wait, creating ${WT}${scripts_dir}/install ${OG}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
         sudo mkdir ${scripts_dir}/install
   elif [[ -d ${scripts_dir}/install ]]; then 
-      printf "${CY}${scripts_dir}/install found. Continuing.\\n"
-      sudo chown -Rf 1000:0 ${scripts_dir}/install
+      printf "${WT}${scripts_dir}/install ${OG}found. Continuing.\\n"
+      sudo chown -Rf $USER:$USER ${scripts_dir}/install
       sudo rm -Rf ${scripts_dir}/install/
       sudo mkdir ${scripts_dir}/install
   else 
@@ -93,6 +93,7 @@ if [[ ! -d ${scripts_dir}/support ]]; then
 
     sudo chown -Rf 1000:0 ${scripts_dir}
     sudo chown -Rf 1000:0 ${compiled_dir}
+
 }
 
 identity_wiz_func(){
@@ -144,7 +145,7 @@ define_var_func() {
 
 
 etc_hostname=$(cat /etc/hostname)
-compiled_dir=$HOME/compiled
+compiled_dir=/tmp
 ORIGINAL_USER=$(cat $USER)
 echo "export ORIGINAL_USER=$(cat $USER)" >> ${scripts_dir}/.envrc 
 
