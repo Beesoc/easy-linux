@@ -58,7 +58,6 @@ install_func() {
 
 printf "${WT}\\n   [*] ${CY}Dependencies satisfied. "
 sleep 1
-printf " debug test"
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
            if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
               printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
