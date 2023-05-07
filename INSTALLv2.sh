@@ -59,7 +59,9 @@ install_func() {
 printf "${WT}\\n  [*]  ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
-           if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
+          choiceez=${choiceez:-Y}
+          [[ $choiceez =~ ^[Yy]$ ]];
+          #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
               printf "${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
             elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
@@ -68,7 +70,7 @@ read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
               printf "..Please wait.."
               exit 0
             else
-              printf "${RED} Invalid Selection. Exiting."
+              printf "${RED}  [*]  Invalid Selection. Exiting."
             fi
      git_files_func
 }
