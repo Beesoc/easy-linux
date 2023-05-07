@@ -3,7 +3,14 @@
 # Installer script for Beesoc's Easy Linux Loader.
 #     define colors
 # Version: 0.0.2
-set -e
+set -euo pipefail
+#set -e
+RED='\e[1;31m'
+CY='\e[1;36m'
+WT='\e[1;37m'
+GN='\e[1;32m'
+OG='\e[1;93m'
+NC='\e[0m'
 
 scripts_dir=/opt/easy-linux
 compiled_dir=/tmp/easy-linux
@@ -17,9 +24,6 @@ compiled_dir=/tmp/easy-linux
                  source $direnvinstall
            fi
 
-RED='\e[1;31m'
-CY='\e[1;36m'
-WT='\e[1;37m'
 
 #printf "${BG}"
 
@@ -44,7 +48,7 @@ support-Banner_func() {
 }
 
 folder_exists_func() {
-  clear
+#  clear
   support-Banner_func
 
 printf "${CY}\\n  Default install location is ${WT}/opt/easy-linux${CY}.\\n\\n"
@@ -61,7 +65,7 @@ else
     printf "     ${RED} Unknown error detected. Exiting.\\n"
     exit 1
 fi
-  sudo chown -Rf $USER:$USER ${scripts_dir}
+  sudo chown -Rf 1000:1000 ${scripts_dir}
 
 if [[ ! -d ${scripts_dir}/support ]]; then  
         printf "  ${WT}${scripts_dir}/support ${OG}not found.\\n    Please Wait, creating ${WT}${scripts_dir}/support ${OG}directory"; sleep 1 
@@ -69,7 +73,7 @@ if [[ ! -d ${scripts_dir}/support ]]; then
         sudo mkdir ${scripts_dir}/support
   elif [[ -d ${scripts_dir}/support ]]; then 
       printf "${WT}${scripts_dir}/support ${OG}found. Continuing.\\n"
-      sudo chown -Rf 1000:0 ${scripts_dir}/support
+      sudo chown -Rf 1000:1000 ${scripts_dir}/support
       sudo rm -Rf ${scripts_dir}/support/
       sudo mkdir ${scripts_dir}/support
   else 
@@ -78,12 +82,12 @@ if [[ ! -d ${scripts_dir}/support ]]; then
   fi  
 
   if [[ ! -d ${scripts_dir}/install ]]; then  
-        printf "  ${WT}${scripts_dir}/install ${OG}not found.\\n$  Please Wait, creating ${WT}${scripts_dir}/install ${OG}directory"; sleep 1 
+        printf "${WT}  ${scripts_dir}/install ${OG}not found.\\n  Please Wait, creating ${WT}${scripts_dir}/install ${OG}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
         sudo mkdir ${scripts_dir}/install
   elif [[ -d ${scripts_dir}/install ]]; then 
       printf "${WT}${scripts_dir}/install ${OG}found. Continuing.\\n"
-      sudo chown -Rf $USER:$USER ${scripts_dir}/install
+      sudo chown -Rf 1000:1000 ${scripts_dir}/install
       sudo rm -Rf ${scripts_dir}/install/
       sudo mkdir ${scripts_dir}/install
   else 
@@ -91,38 +95,35 @@ if [[ ! -d ${scripts_dir}/support ]]; then
        exit 1
   fi  
 
-    sudo chown -Rf 1000:0 ${scripts_dir}
-    sudo chown -Rf 1000:0 ${compiled_dir}
+    sudo chown -Rf 1000:1000 ${scripts_dir}
+    sudo chown -Rf 1000:1000 ${compiled_dir}
 
 }
 
 identity_wiz_func(){
-printf "${OG}  Autodetection has failed. I'll now ask you several questions and we'll proceed.${GN}\\n"
-read -p "When you login to Linux, is your username, $USER? [Y/n] " userchoice
+printf "{OG}  \\nAutodetection has failed.\\n"
+printf "${CY}I\'ll now ask you several questions and we\'ll proceed.${GN}\\n"
+read -p "When you login to Linux, is your regular username $USER? [Y/n] " userchoice
 userchoice=${userchoice:-Y}
 if [[ $userchoice =~ ^[Yy]$ ]]; then
   printf "${CY}Continuing...\\n"
   ORIGINAL_USER=$USER
-  
 else
   read -p "Enter the EXACT username you use to login to Linux. CASE SENSITIVE. " userchoice2
-  printf "${OG}You have entered, ${WT}$userchoice2${OG}. Continuing...\\n"
+  printf "\\n${OG}You have entered, ${WT}$userchoice2${OG}. Continuing...\\n"
   ORIGINAL_USER=$userchoice2
   echo "export pwnagotchi=$userchoice2" >> $scripts_dir/.envrc 
-  exit 0
 fi
-
-read -p "Your machine name has been detected as $hostname. Is this correct? [Y/n] " userhost
+printf "${CY}  You\'re computer name has been detected as ${CY}. "
+read -p "Is this correct? [Y/n] " userhost
 userhost=${userhost:-Y}
 if [[ $userhost =~ ^[Yy]$ ]]; then
   printf "${CY}Continuing...\\n"
-  $userhost=$hostname 
 else
   read -p "Enter the EXACT computer name you are using. CASE SENSITIVE. " userhost2
   printf "${OG}You have entered, ${WT}$userhost2${OG}. Continuing...\\n"
-  hostname=$userchoice2
-  echo "export hostname=$userchoice2" >> $scripts_dir/.envrc 
-  exit 0
+  $userhost2=$hostname
+  #echo "export hostname=$userhost2" >> $scripts_dir/.envrc 
 fi
 
 read -p "When you use Easy-Linux, will you be utilizing a Pwnagotchi? [Y/n] " pwnchoice
@@ -136,7 +137,6 @@ elif [[ $pwnchoice =~ ^[Nn]$ ]]; then
   printf "${OG}You have selected that you will ${WT}NOT be using ${OG}a Pwnagotchi. Continuing...\\n"
   unset pwnagotchi
   unset amiPwn
-  exit 0
 fi
 
 }
@@ -146,50 +146,55 @@ define_var_func() {
 
 etc_hostname=$(cat /etc/hostname)
 compiled_dir=/tmp
-ORIGINAL_USER=$(cat $USER)
-echo "export ORIGINAL_USER=$(cat $USER)" >> ${scripts_dir}/.envrc 
+#ORIGINAL_USER=$(cat $USER)
+# echo "export ORIGINAL_USER=$(cat $USER)" >> ${scripts_dir}/.envrc 
 
 
 if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
       amiPwn=yes
       echo "export amiPwn=yes" >> $scripts_dir/.envrc
-   elif [ !-d /etc/pwnagotchi ] && [ !-d /usr/local/share/pwnagotchi ]; then
+   elif [ ! -d /etc/pwnagotchi ] && [ ! -d /usr/local/share/pwnagotchi ]; then
       amiPwn=no
       echo "export amiPwn=no" >> $scripts_dir/.envrc
    else 
       printf "  Unknown error."
 fi
-
-if [ $etc_hosts = $hostname ] && [ $ORIGINAL_USER = $home_dir_user ]; then
-     if [ $ORIGINAL_USER = beesoc ] && [ $HOST = updates ]; then
+hostname="cat /etc/hostname"
+cory_host=updates
+if [ $etc_hostname == $hostname ] && [ $ORIGINAL_USER = $USER ]; then
+     if [ $ORIGINAL_USER = beesoc ] && [ $hostname = updates ]; then
          echo "export pwnagotchi=Gotcha" >> $scripts_dir/.envrc
-         echo "export hostname=updates" >> $scripts_dir/.envrc
+         #echo "export hostname=updates" >> $scripts_dir/.envrc
          echo "export ORIGINAL_USER=beesoc" >> $scripts_dir/.envrc
          
       elif [ $ORIGINAL_USER = larry ] && [ $HOST = lepotato ]; then
          echo "export pwnagotchi=Sniffer" >> $scripts_dir/.envrc
-         echo "export hostname=lepotato" >> $scripts_dir/.envrc
+         #echo "export hostname=lepotato" >> $scripts_dir/.envrc
          echo "export ORIGINAL_USER=larry" >> $scripts_dir/.envrc
 
       else
          unset pwnagotchi
-         echo "export hostname=$etc_hostname" >> $scripts_dir/.envrc
+         #echo "export hostname=$etc_hostname" >> $scripts_dir/.envrc
          echo "export ORIGINAL_USER=$USER" >> $scripts_dir/.envrc
          identity_wiz_func
       fi
 
+HOST=updates
+export $HOST
 
 echo "export etc_hostname=$(cat /etc/hostname)" >> $scripts_dir/.envrc
-echo "export compiled_dir=$HOME/compiled" >> $scripts_dir/.envrc
+# echo "export compiled_dir=$HOME/compiled" >> $scripts_dir/.envrc
 
-elif [ $etc_hosts != $hostname ] || [ $ORIGINAL_USER != $home_dir_user ]; then
-      if [ $etc_hosts != $hostname ]; then
-          printf "${RED}    FATAL error: condition check failed. ${WT}$etc_hosts ${CY}should match ${WT}$hostname"
-          printf "${OG}    Don\'t Panic! Autodetection has failed. Loading ${WT}manual wizard${CY}."
+elif [ $etc_hostname != $cory_host  ] || [ $USER != $ORIGINAL_USER ]; then
+      if [ $etc_hostname != $cory_host ]; then
+          printf "${RED}    FATAL error: condition check failed.\\n"
+          printf "${WT}$etc_hostname ${CY}should match ${WT}$hostname"
+          printf "${OG}    Don\'t Panic! Autodetection has failed.\\n \\n Loading ${WT}manual wizard${CY}."
           identity_wiz_func
-elif [ $ORIGINAL_USER != $home_dir_user ]; then
-          printf "${RED}    FATAL error: condition check failed. ${WT}$ORIGINAL_USER ${CY}should match ${WT}$home_dir_user"
-          printf "${OG}    Don\'t Panic! Autodetection has failed. Loading ${WT}manual wizard${CY}."
+elif [ $ORIGINAL_USER != $USER ]; then
+          printf "${RED}    FATAL error: condition check failed.\\n"
+          printf "${WT}$ORIGINAL_USER ${CY}should match ${WT}$home_dir_user"
+          printf "${OG}    Don\'t Panic! Autodetection has failed.\\n \\n Loading ${WT}manual wizard${CY}."
           identity_wiz_func
 fi
 fi         
@@ -200,9 +205,10 @@ cd ${scripts_dir} && direnv allow
 
 
 install_func() { 
-clear
-    support-Banner_func
-    sudo apt install -y bc direnv lm-sensors >/dev/null
+# clear
+#    support-Banner_func
+    sudo apt install -y bc direnv lm-sensors 
+ #   >/dev/null
 define_var_func
 
 printf "${WT}$USER,${CY} "
@@ -216,27 +222,52 @@ else
 fi
 
           printf "${CY}Installing to ${WT}${scripts_dir}\\n" 
-
-          sudo cp -Rf ${compiled_dir}/easy-linux/* ${scripts_dir}/
+          sudo chown -v 1000:1000 ${scripts_dir}
+          sudo chown -v 1000:1000 ${scripts_dir}
+          sudo cp -Rf $compiled_dir/easy-linux/install/ ${scripts_dir}
+          sudo cp -Rf ${compiled_dir}/easy-linux/ /opt/
+          sudo cp -rf ${compiled_dir}/easy-linux/support ${scripts_dir}/support
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}
           sudo cp -f ${compiled_dir}/easy-linux/.envrc ${scripts_dir}/support
           sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}
           sudo cp -f ${compiled_dir}/easy-linux/.shellcheckrc ${scripts_dir}/support
-          sudo chmod a+x ${scripts_dir}/*.sh
-          sudo cp -Rf ${scripts_dir}/install/* ${scripts_dir}
+          sudo cp -rf ${scripts_dir}/install ..
+      #    sudo chmod a+x ${scripts_dir}/
+#          sudo cp -Rf ${scripts_dir}/install/ ${scripts_dir}
+#sudo cp -Rf ${scripts_dir}/easy-linux/ /opt/ 
+#sudo cp -Rf ${scripts_dir}/support/ ${scripts_dir}/support 
+#sudo cp -Rf ${scripts_dir}/easy-linux/install/ ${scripts_dir}
+sudo chmod +x ${scripts_dir}/*.sh
+sudo chmod +x ${scripts_dir}/support/*.sh
+
 
              cd ${scripts_dir} && direnv allow && sudo direnv allow
              cd ${scripts_dir}/support && direnv allow && sudo direnv allow
              cd ${scripts_dir}/install && direnv allow && sudo direnv allow
           source ${scripts_dir}/.envrc
   
-              clear
-              source ${scripts_dir}/support/support-Banner_func.sh
+              
+             # source ${scripts_dir}/support/support-Banner_func.sh
 
           sudo chown -vR 1000:0 ${scripts_dir}  
-          sudo chmod -R a+x ${scripts_dir}/*.sh
-          sudo chmod -R a+x ${scripts_dir}/support/*.sh
-            sudo cp -Rf ${scripts_dir}/menu-master.sh /usr/bin
+          sudo chmod -R a+x ${scripts_dir}/
+          sudo chmod -R a+x ${scripts_dir}/support/
+            sudo cp -Rf ${scripts_dir}/install/menu-master.sh /usr/bin
+            sudo cp -Rf ${scripts_dir}/install/ /opt/
+            cd /opt/install || exit
+            sudo cp -f /opt/install/menu-apps.sh /opt/easy-linux/
+            sudo cp -f /opt/install/menu-backup_pwn-script.sh /opt/easy-linux/
+            sudo cp -f /opt/install/menu-customize.sh /opt/easy-linux/
+            sudo cp -f /opt/install/menu-hacking.sh /opt/easy-linux/
+            sudo cp -f /opt/install/menu-master.sh /opt/easy-linux/
+            sudo cp -f /opt/install/menu-upload-hashes.sh /opt/easy-linux/
+            sudo cp -f /opt/install/version-easy-linux.sh /opt/easy-linux/
+            sudo cp -f /opt/install/version.sh /opt/easy-linux/
+            sudo cp -f /opt/install/easy-linux.desktop /usr/share/applications/
+            
+            sudo chmod +x *.sh
+            sudo chown 1000:1000 .
+            sudo mv . /opt/easy-linux
             sudo cp -f ${scripts_dir}/easy-linux.desktop /usr/share/applications
             sudo touch ${scripts_dir}/support/adapter
 }
@@ -271,7 +302,7 @@ fi
   sleep 1
   printf "...done.${CY}"
 
-  clear
+ #  clear
   support-Banner_func
   printf "   ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
   printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
@@ -282,10 +313,11 @@ fi
 }
 
 main() {
-clear
+# clear
 support-Banner_func
 printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}${NC}\\n" 
-
+ORIGINAL_USER=$USER
+export $ORIGINAL_USER
 read -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
