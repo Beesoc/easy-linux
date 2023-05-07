@@ -6,9 +6,7 @@
 set -e
 
 scripts_dir=/opt/easy-linux
-export ${scripts_dir}
 compiled_dir=/tmp/easy-linux
-export ${compiled_dir}
 
 # Install prereq, DIRENV
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
@@ -184,7 +182,7 @@ if [ $etc_hosts = $hostname ] && [ $ORIGINAL_USER = $home_dir_user ]; then
 echo "export etc_hostname=$(cat /etc/hostname)" >> $scripts_dir/.envrc
 echo "export compiled_dir=$HOME/compiled" >> $scripts_dir/.envrc
 
-elif  [ $etc_hosts != $hostname ] || [ $ORIGINAL_USER != $home_dir_user ] || ; then
+elif [ $etc_hosts != $hostname ] || [ $ORIGINAL_USER != $home_dir_user ]; then
       if [ $etc_hosts != $hostname ]; then
           printf "${RED}    FATAL error: condition check failed. ${WT}$etc_hosts ${CY}should match ${WT}$hostname"
           printf "${OG}    Don\'t Panic! Autodetection has failed. Loading ${WT}manual wizard${CY}."
