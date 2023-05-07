@@ -3,7 +3,7 @@
 # Version: 0.0.2
 set -euo pipefail
 
-compiled_dir=$HOME/compiled
+compiled_dir=/tmp/
 # Install prereq, DIRENV
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "${GN}DIRENV is already installed\\n"
@@ -20,17 +20,18 @@ chmod a+x support/*.sh
 if [[ ! -d $compiled_dir ]]; then
     mkdir $compiled_dir
 elif [[ -d $compiled_dir ]]; then
-		if [[ -d $compiled_dir/tmp ]]; then
-			  rm -rf $compiled_dir/tmp
-			  mkdir $compiled_dir/tmp
-		elif [[ ! -d $compiled_dir/tmp ]]; then
-			 mkdir $compiled_dir/tmp
-			 chown -vR 1000:0 $compiled_dir/tmp
+		if [[ -d $compiled_dir/easy-linux ]]; then
+			  rm -rf $compiled_dir/easy-linux
+			  mkdir $compiled_dir/easy-linux
+		elif [[ ! -d $compiled_dir/easy-linux ]]; then
+			 mkdir $compiled_dir/easy-linux
 			 printf "${GN}  Continuing...."
 		fi
 fi
-chown -vR $USER:$USER $compiled_dir/tmp
-cd $compiled_dir/tmp
+chown -vR $USER:$USER $compiled_dir/easy-linux
+cp -vr . $compiled_dir/easy-linux
+cp .* $compiled_dir/easy-linux
+cd $compiled_dir/easy-linux
 
 echo "#/bin/bash
 # Temp .envrc
@@ -40,9 +41,9 @@ export RED='\e[1;31m'
 export OG='\e[1;93m'
 export NC='\e[0m'
 
-scripts_dir=/opt/easy-linux" > $compiled_dir/tmp/.envrc
-cd $compiled_dir/tmp && direnv allow
-source $compiled_dir/tmp/.envrc
+scripts_dir=/opt/easy-linux" > $compiled_dir/easy-linux/.envrc
+cd $compiled_dir/easy-linux && direnv allow
+source $compiled_dir/easy-linux/.envrc
 
 clear
 Banner_func() {
@@ -65,25 +66,13 @@ Banner_func() {
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
 }
 Banner_func
-printf "\\n${WT}    Welcome to the Installer for Beesoc\'s Easy Linux    "
+printf "\\n${WT} Welcome to the Installer for Beesoc\'s Easy Linux    "
 printf "${CY}Press ${RED}[ctrl+c] ${CY}to cancel${CY}${NC}\\n" 
 printf "\\n      ${OG}This installer will create the necessary folders and clone the official\\n"
-printf "      repo for ${WT}Beesoc\'s Easy Linux ${OG}for installation. You will need a ${WT}Github username\\n"
-printf "      username ${WT}and ${WT}fine-grained access token ${CY}to continue.\\n"
-printf "\\n  ${WT}If you need to create a fine grained personal access token, see here for instructions:${WT}\\n" 
-printf "${OG}https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token\\n"
-printf "\\n"
-printf "${WT}\\n    For more info on Github\'s Personal Access Token see:\\n" 
-printf "${OG}https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token${GN}\\n"
-
-read -p "Would you like me to automagically clone the repo for installation? [Y/n] " installdec
-installdec=${installdec:-Y}
-if [[ $installdec =~ ^[Yy]$ ]]; then
-  printf "${OG}    Continuing...\\n"
-else
-  printf "${RED}    Exiting.\\n"
-  exit 0
-fi
+printf "      repo for ${WT}Beesoc\'s Easy Linux ${OG}for installation. "
+printf "${GN}  Press ${WT}any ${GN}key to continue."
+read -r -n1 -s -t 300 
+source $compiled_dir/easy-linux/INSTALL.sh
 
      if [[ ! -d ${compiled_dir} ]]; then
        printf "${CY}  ${compiled_dir} directory not found. Creating folder and ${WT}cloning Github${CY} repo.\\n"
