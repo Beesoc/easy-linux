@@ -56,17 +56,20 @@ direnv_func() {
 
 install_func() {
 
-printf "${WT}\\n   [*] ${CY}Dependencies satisfied. "; sleep 1
-read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
-        choiceez=${choiceez:-Y}
-            if [[ $choiceez =~ ^[Yy]$ ]]; then
+printf "${WT}\\n   [*] ${CY}Dependencies satisfied. "
+sleep 1
+printf " debug test"
+read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
+           if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
               printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
-            elif [[ $choiceezlinux =~ ^[Nn]$ ]]; then
-              printf "${WT} [*] ${CY}Installation rejected..."; sleep 1; printf "..Please wait.."
+            elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
+              printf "${WT} [*] ${CY}Installation rejected..."
+              sleep 1 
+              printf "..Please wait.."
               exit 0
             else
-              printf "${RED} Exiting."
+              printf "${RED} Invalid Selection. Exiting."
             fi
      get_files_func
 }
@@ -96,7 +99,8 @@ main() {
 }
 git_files_func() {
 
-  printf "  ${WT} [*]  ${GN} Preparing to clone remote Git repo.${OG}"; sleep 1
+  printf "  ${WT} [*]  ${GN} Preparing to clone remote Git repo.${OG}"
+  sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
 cd /opt/easy-linux
@@ -104,6 +108,7 @@ sudo chown -v 1000:1000 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/*.sh
 sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
+sudo cp -f /opt/easy-linux /usr/bin/
 
 sudo mv /opt/easy-linux/install/*.sh /opt/easy-linux/
 sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
