@@ -75,7 +75,9 @@ read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
 
 check_directories_func() {
 if [[ -d /opt/easy-linux ]]; then
-    printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found. Removing abd recloning repository."; sleep 1
+    printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
+    printf "  ${WT}[*] ${GN}Removing and recloning repository." 
+    sleep 1
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
     sudo chown -v 1000:1000 /opt
@@ -98,7 +100,7 @@ main() {
 }
 git_files_func() {
 
-  printf "  ${WT} [*]  ${GN} Preparing to clone remote Git repo.${OG}"
+  printf "  ${WT} \\n [*]  ${GN} Preparing to clone remote Git repo.${OG}"
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
