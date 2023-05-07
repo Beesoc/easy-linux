@@ -38,21 +38,44 @@ Banner_func
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "${GN}DIRENV is already installed\\n"
            else
-                printf "${YW}DIRENV is not installed. Installing\\n"
-                sudo apt install -y direnv
+                read -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
+        choicedirenv=${choicedirenv:-Y}
+                if [[ $choicedirenv =~ ^[Yy]$ ]]; then
+                    printf "${GN}Continuing..." 
+                    sleep 1
+                    printf "This step may take a few minutes..."
+                    sleep 1
+                    printf "Please wait."
+                    sudo apt update
+                    sudo apt install -y direnv
+                else
+                   printf "${RED}Exiting."
+                exit 0
+                fi
            fi
 
 # curl -sfL https://direnv.net/install.sh | bash
 
+printf "${WT}   [*] ${CY}Dependencies satisfied."; sleep 1
+read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceezlinux
+        choiceezlinux=${choiceezlinux:-Y}
+            if [[ $choiceezlinux =~ ^[Yy]$ ]]; then
+              printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
+              sleep 1
+            else
+              printf "${RED}Exiting."
+              exit 0
+            fi
 
 if [[ -d /opt/easy-linux ]]; then
-    printf "  ${WT}/opt/easy-linux ${CY}directory found. Removing abd recloning repository."
+    printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found. Removing abd recloning repository."; sleep 1
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
     sudo chown -vr 1000:1000 /opt
-    printf "  ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."
-fi
-sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
+    printf "  ${WT} [*]  ${GN}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
+fi  
+    printf "  ${WT} [*]  ${GN} Preparing to clone remote Git repo.${OG}"; sleep 1
+  sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
 cd /opt/easy-linux
 sudo chown -vR 1000:1000 /opt/easy-linux
