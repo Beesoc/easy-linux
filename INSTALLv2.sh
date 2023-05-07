@@ -107,7 +107,7 @@ sudo chown -v 1000:1000 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/*.sh
 sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
-sudo cp -f /opt/easy-linux /usr/bin/
+sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
 
 sudo mv /opt/easy-linux/install/*.sh /opt/easy-linux/
 sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
