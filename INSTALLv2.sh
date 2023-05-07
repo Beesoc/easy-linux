@@ -39,8 +39,7 @@ printf "${NC}${CY}"
                 printf "${GN}DIRENV is already installed\\n"
            else
                 printf "${YW}DIRENV is not installed. Installing\\n"
-                direnvinstall=$(curl -sfL https://direnv.net/install.sh | bash)
-                 source $direnvinstall
+                curl -sfL https://direnv.net/install.sh | bash
            fi
 
 # curl -sfL https://direnv.net/install.sh | bash
