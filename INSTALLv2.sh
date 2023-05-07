@@ -56,7 +56,7 @@ direnv_func() {
 
 install_func() {
 
-printf "${WT}\\n   [*] ${CY}Dependencies satisfied. "
+printf "${WT}\\n   [*] ${CY}Dependencies satisfied. \\n"
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
            if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
