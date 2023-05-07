@@ -102,7 +102,7 @@ clear
     sudo apt install -y bc direnv lm-sensors >/dev/null
 define_var_func
 
-printf "$ORIGINAL_USER, "
+printf "${WT}$USER,${CY} "
 read -p "do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
 installchoice=${installchoice:-Y}
 if [[ $installchoice =~ ^[Yy]$ ]]; then
