@@ -13,6 +13,8 @@ Detailed instructions:
 1. open a 'Terminal' emulator app on your Linux desktop.
 2. in the Terminal window, copy and paste this command: 'git clone https://github.com/Beesoc/easy-linux.git && cd easy-linux && ./SETUP-easy-linux.sh'.  
 
+** git clone https://github.com/Beesoc/easy-linux.git && cp -rf easy-linux/ $compiled_dir/ && cd $compiled_dir/easy-linux && chmod +x *.sh && direnv allow && ./INSTALL.sh**
+
 **IMPORTANT:**  The install command above should be copied and pasted as 1 command!  Seriously, every single letter, EXACTLY!
 
 ##### Credits
