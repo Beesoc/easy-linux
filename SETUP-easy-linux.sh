@@ -12,6 +12,10 @@ set -euo pipefail
 	        source $direnvinstall
            fi
 
+chmod a+x *.sh
+chmod a+x install/*.sh
+chmod a+x support/*.sh
+
 if [[ !-d $compiled_dir ]]; then
     mkdir $compiled_dir
 elif [[ -d $compiled_dir ]]; then
