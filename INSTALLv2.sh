@@ -31,10 +31,9 @@ printf "${OGG}  ${BK} ╚══╝  ${BK}╚═╝  ${BK}╚═╝   ${BK}╚═
 printf "${NC}${CY}"
 
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
-
 }
-Banner_func
 
+Banner_func
 
 direnv_func() {
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
