@@ -34,8 +34,16 @@ printf "${NC}${CY}"
 
 }
 
+# Install prereq, DIRENV
+           if command -v /usr/bin/direnv >/dev/null 2>&1; then
+                printf "${GN}DIRENV is already installed\\n"
+           else
+                printf "${YW}DIRENV is not installed. Installing\\n"
+                direnvinstall=$(curl -sfL https://direnv.net/install.sh | bash)
+                 source $direnvinstall
+           fi
 
-curl -sfL https://direnv.net/install.sh | bash
+# curl -sfL https://direnv.net/install.sh | bash
 
 
 if [[ -d /opt/easy-linux ]]; then
