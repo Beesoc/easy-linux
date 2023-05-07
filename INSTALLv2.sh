@@ -113,4 +113,4 @@ sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 }
 
 main
-source /opt/easy-linux
+source /opt/easy-linux/menu-master.sh
