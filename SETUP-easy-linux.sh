@@ -1,7 +1,16 @@
 #!/bin/bash
 # Installer script for Beesoc's Easy Linux Loader.
 # Version: 0.0.2
-set -e
+set -euo pipefail
+
+# Install prereq, DIRENV
+           if command -v /usr/bin/direnv >/dev/null 2>&1; then
+                printf "${GN}DIRENV is already installed\\n"
+           else
+                printf "${YW}DIRENV is not installed. Installing\\n"
+                direnvinstall=$(curl -sfL https://direnv.net/install.sh | bash)
+	        source $direnvinstall
+           fi
 
 if [[ !-d $compiled_dir ]]; then
     mkdir $compiled_dir
