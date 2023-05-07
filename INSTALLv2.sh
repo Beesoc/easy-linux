@@ -33,7 +33,7 @@ printf "${NC}${CY}"
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
 
 }
-
+Banner_func
 # Install prereq, DIRENV
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "${GN}DIRENV is already installed\\n"
@@ -62,3 +62,5 @@ sudo chmod +x /opt/easy-linux/support/*.sh
 
 sudo mv /opt/easy-linux/install/*.sh /opt/easy-linux/
 sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
+
+source /opt/easy-linux
