@@ -71,7 +71,7 @@ read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
             else
               printf "${RED} Invalid Selection. Exiting."
             fi
-     get_files_func
+     git_files_func
 }
 
 check_directories_func() {
