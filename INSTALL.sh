@@ -69,13 +69,14 @@ if [[ ! -d ${scripts_dir}/support ]]; then
   fi  
 
   if [[ ! -d ${scripts_dir}/install ]]; then  
-        printf "  ${CY}${scripts_dir}/install not found.\\n${CY}    Please Wait, creating ${WT}${scripts_dir}/install ${CY}directory"; sleep 1 
+        printf "  ${CY}${scripts_dir}/install not found.\\n${CY}  Please Wait, creating ${WT}${scripts_dir}/install ${CY}directory"; sleep 1 
         printf "${WT}.."; sleep 1; printf "..\\n"; sleep 1
-        sudo mkdir "${scripts_dir}/install"
+        sudo mkdir ${scripts_dir}/install
   elif [[ -d ${scripts_dir}/install ]]; then 
-      printf "${scripts_dir}/install found. Continuing.\\n"
+      printf "${CY}${scripts_dir}/install found. Continuing.\\n"
       sudo chown -Rf 1000:0 ${scripts_dir}/install
-      sudo rm -Rf ${scripts_dir}/install/     
+      sudo rm -Rf ${scripts_dir}/install/
+      sudo mkdir ${scripts_dir}/install
   else 
        printf "     ${RED} Unknown error detected. Exiting.\\n"
        exit 1
@@ -101,13 +102,13 @@ clear
     sudo apt install -y bc direnv lm-sensors >/dev/null
 define_var_func
 
-
-read -p "$ORIGINAL_USER, do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
+printf "$ORIGINAL_USER, "
+read -p "do you want to install Easy Linux to ${scripts_dir}? [Y/n] " installchoice
 installchoice=${installchoice:-Y}
 if [[ $installchoice =~ ^[Yy]$ ]]; then
-  printf "Continuing...\\n"
+  printf "${GN}Continuing...\\n"
 else
-  printf "Exiting.\\n"
+  printf "${RED}Exiting.\\n"
   exit 0
 fi
 
@@ -145,15 +146,15 @@ cleanup_func() {
 
 if [[ -d ${scripts_dir}/easy-linux/install ]]; then
   sudo rm -Rf ${scripts_dir}/easy-linux/install/
-  sudo rmdir ${scripts_dir}/easy-linux/install/
+#  sudo rmdir ${scripts_dir}/easy-linux/install/
 fi
 if [[ -d ${compiled_dir}/beesoc-menu ]]; then
   sudo rm -Rf ${compiled_dir}/beesoc-menu/
-  sudo rmdir ${compiled_dir}/beesoc-menu/
+#  sudo rmdir ${compiled_dir}/beesoc-menu/
 fi
 if [[ -d ${compiled_dir}/easy-linux ]]; then
   sudo rm -Rf ${compiled_dir}/easy-linux/
-  sudo rmdir ${compiled_dir}/easy-linux/
+#  sudo rmdir ${compiled_dir}/easy-linux/
 fi
 if [[ -f $HOME/Downloads/SETUP-easy-linux.sh ]]; then
   sudo rm -f $HOME/Downloads/SETUP-easy-linux.sh
@@ -179,9 +180,9 @@ printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${
 read -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
-  echo "Loading...Please Wait..."
+  printf "${GN}Loading...Please Wait..."
 else
-  echo "Exiting."
+  printf "${RED}   Exiting."
   exit 0
 fi
 
@@ -191,5 +192,7 @@ install_func
 
 main
 cd ${scripts_dir} || exit
+direnv allow && sudo direnv allow
+cd ${scripts_dir}/support || exit
 direnv allow && sudo direnv allow
 cleanup_func
