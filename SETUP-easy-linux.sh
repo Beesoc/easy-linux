@@ -75,5 +75,6 @@ fi
        sleep 1
      fi  
        cd ${compiled_dir} || exit
+       
 git clone https://github.com/Beesoc/easy-linux.git
     source $HOME/compiled/easy-linux/INSTALL.sh
