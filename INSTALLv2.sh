@@ -1,6 +1,7 @@
 #!/bin/bash
 # New app installer from Github
 # Version: 0.0.2
+set -e
 BK='\e[0;44;30m'
 RED='\e[1;31m'
 GN='\e[1;32m'
