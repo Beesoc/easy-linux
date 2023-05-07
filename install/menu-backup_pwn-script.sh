@@ -9,8 +9,6 @@
 #################################################  Begin User Options  #########
 set -e
 
-FuckThatSh1t_mac="33:33:33:33:33:33"
-mike_host=TODO
 ###################################################  End User Options  #########
 #shellcheck source=${scripts_dir}/.envrc 
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
@@ -21,18 +19,14 @@ source ${scripts_dir}/support/support-Prompt_func.sh
 clear
 printf "\\n${WT}\\n\\n                               IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
 printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
-      read -r -n1 -s -t 60
+      read -r -n1 -s -t 300
 clear
 options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
 
 printf "${CY}"
 
-pwnagotchi=""
-
 select_pwn_func() {
 # display a list of pwnagotchis
-pwnagotchi_mac=""
-pwnagotchi_host=""
 
 if [[ ${mac_address} == "${gotcha_mac}" ]]; then
     # Gotcha is connected, run backup for Gotcha
@@ -45,28 +39,17 @@ elif [[ ${mac_address} == "${FuckThatSh1t_mac}" ]]; then
     pwnagotchi="FuckThatSh1t"
 fi
 
-if [[ ${USER} == "beesoc" ]]; then
-    # Gotcha is connected, run backup for Gotcha
-    pwnagotchi="Gotcha"
-  elif [[ ${USER} == "larry" ]]; then
-    # Sniffer is connected, run backup for Sniffer
-    pwnagotchi="Sniffer"
-  else 
-    # FuckThatSh1t is connected, run backup for FuckThatSh1t
-    pwnagotchi="FuckThatSh1t"
-fi
-
-if [[ $HOSTNAME = "${cory_host}" ]]; then
+if [[ $HOSTNAME = "updates" ]] || [[ $USER = "beesoc" ]]; then
    pwnagotchi="Gotcha"
-  elif [[ $HOSTNAME = "${larry_host}" ]]; then
+  elif [[ $HOSTNAME = "lepotato" ]] || [[ $USER = "larry" ]]; then
    pwnagotchi="Sniffer"
   elif [[ $HOSTNAME = "${mike_host}" ]]; then
    pwnagotchi="FuckThatSh1t"
   else
     printf "\\n${CY}Unable to determine Pwnagotchi.automatically.  Press ${WT}any ${CY}key to override.\\n"
-              read -r -n1 -s -t 60  
+              read -r -n1 -s -t 300  
     # Unknown device connected, Override or setup new 
-              read -rp "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
+              read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
               printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
 fi
 printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOSTNAME${CY}.\\n"
@@ -183,7 +166,7 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
 
  usb_func() {
  usb_count=$(sudo ifconfig | grep -c "usb")
- 
+
 if [[ "${usb_count}" -eq 0 ]]; then
     printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
     printf "    Please connect the USB cable to your Pwnagotchi and try again."

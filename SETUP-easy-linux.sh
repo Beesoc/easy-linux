@@ -1,19 +1,34 @@
 #!/bin/bash
 # Installer script for Beesoc's Easy Linux Loader.
-#          ADMIN NOTE:  add zip files to archive with:
-#          zip -r INSTALL.zip ./support/ ./install/ ./archive/
 # Version: 0.0.2
 set -e
 
-compiled_dir=$HOME/compiled
+if [[ !-d $compiled_dir ]]; then
+    mkdir $compiled_dir
+elif [[ -d $compiled_dir ]]; then
+		if [[ -d $compiled_dir/tmp ]]; then
+			  sudo rm -rf $compiled_dir/tmp
+			  sudo mkdir $compiled_dir/tmp
+		elif [[ !-d $compiled_dir/tmp ]]; then
+			 sudo mkdir $compiled_dir/tmp
+			 sudo chown -vR 1000:0 $compiled_dir/tmp
+			 printf "${GN}  Continuing...."
+		fi
+fi
 
-#sudo chmod a+x ${compiled_dir}/easy-linux/INSTALL.sh
-    
-CY='\e[1;36m'
-WT='\e[1;37m'
-RED='\e[1;31m'
-OG='\e[1;93m'
-NC='\e[0m'
+cd $compiled_dir/tmp
+
+echo "#/bin/bash
+# Temp .envrc
+export CY='\e[1;36m'
+export WT='\e[1;37m'
+export RED='\e[1;31m'
+export OG='\e[1;93m'
+export NC='\e[0m'
+
+scripts_dir=/opt/easy-linux" > $compiled_dir/tmp/.envrc
+cd $compiled_dir/tmp && direnv allow
+source $compiled_dir/tmp/.envrc
 
 clear
 Banner_func() {
@@ -36,33 +51,34 @@ Banner_func() {
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
 }
 Banner_func
-printf "\\n${WT}                 Welcome to the Installer for Beesoc\'s Easy Linux.         Press ${RED}[ctrl+c] ${CY}to cancel${CY}${NC}\\n" 
-printf "\\n      ${CY}This installer will create the necessary folders and clone the official\\n"
-printf "      repo for ${WT}Beesoc\'s Easy Linux ${CY}for installation. You will need a ${WT}Github username\\n"
-printf "      username ${CY}and ${WT}fine-grained access token ${CY}to continue.\\n"
-printf "\\n  ${OG}If you need to create a fine grained personal access token, see here for instructions:${GN}\\n" 
-printf "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token\\n"
+printf "\\n${WT}    Welcome to the Installer for Beesoc\'s Easy Linux    "
+printf "${CY}Press ${RED}[ctrl+c] ${CY}to cancel${CY}${NC}\\n" 
+printf "\\n      ${OG}This installer will create the necessary folders and clone the official\\n"
+printf "      repo for ${WT}Beesoc\'s Easy Linux ${OG}for installation. You will need a ${WT}Github username\\n"
+printf "      username ${WT}and ${WT}fine-grained access token ${CY}to continue.\\n"
+printf "\\n  ${WT}If you need to create a fine grained personal access token, see here for instructions:${WT}\\n" 
+printf "${OG}https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token\\n"
 printf "\\n"
 printf "${WT}\\n    For more info on Github\'s Personal Access Token see:\\n" 
-printf "${OG}https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token\\n"
+printf "${OG}https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token${GN}\\n"
 
-read -p "Would you like to continue with the installation? [Y/n] " installdec
-installdec=${install:-Y}
+read -p "Would you like me to automagically clone the repo for installation? [Y/n] " installdec
+installdec=${installdec:-Y}
 if [[ $installdec =~ ^[Yy]$ ]]; then
-  printf "Continuing...\\n"
+  printf "${OG}    Continuing...\\n"
 else
-  printf "Exiting.\\n"
+  printf "${RED}    Exiting.\\n"
   exit 0
 fi
 
      if [[ ! -d ${compiled_dir} ]]; then
-       printf "${CY}  ${compiled_dir} directory not found.  Creating folder and ${WT}cloning Github${CY} repo.\\n"
-       mkdir ${compiled_dir}
+       printf "${CY}  ${compiled_dir} directory not found. Creating folder and ${WT}cloning Github${CY} repo.\\n"
+       mkdir "${compiled_dir}"
      fi
      if [[ ! -d "${compiled_dir}/easy-linux" ]]; then
            printf "${CY}  ${compiled_dir}/easy-linux directory not found.\\n"
            printf "${CY}  Creating folder and ${WT}cloning Github ${CY}repo.\\n"
-           mkdir ${compiled_dir}/easy-linux 
+           mkdir "${compiled_dir}"/easy-linux 
      fi
      if [[ -d "${compiled_dir}/easy-linux" ]]; then  
        printf "  ${CY}Existing Github clone for Beesoc\'s Easy Linux found.\\n${CY}"
@@ -74,6 +90,8 @@ fi
        printf "${WT}..."
        sleep 1
      fi  
-       cd ${compiled_dir} || exit
-git clone https://github.com/Beesoc/easy-linux.git
-    source $HOME/compiled/easy-linux/INSTALL.sh
+
+    cd "${compiled_dir}" || exit
+    git clone https://github.com/Beesoc/easy-linux.git
+    sudo rm -f $compiled_dir/tmp/.envrc
+    source "$HOME"/compiled/easy-linux/INSTALL.sh

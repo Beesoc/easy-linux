@@ -10,7 +10,6 @@ printf "\n   "
 printf "\n"
 #	printf "  ${ORANGE}Adapter selection to STOP Monitor Mode. ${RED}Press ctrl+c to cancel.${NC}\n"
 	adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4}')
-#	adapter_count=$(echo ./support/adapter | awk '  /wl/ {print $1}' | grep -c "wl")
 #	if [ "${adapter_count}" -eq 1 ]; then
 #		adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4}')
 #	else
@@ -26,8 +25,6 @@ printf "\n"
 	#    adapter=$(sudo airmon-ng | awk ' /mon/ {print $2 $4}' | cut -d' ' -f1 | sed -n "${selection}p")
 #	fi
 	#
-printf " \n"
-printf "  ${ORANGE}----------------------------------------------------------------------\n${ORANGE}"
 printf "    \n"
 printf "   \n"
 printf "    ${ORANGE}Restoring MAC address & original Networking & Wifi processes \\n"

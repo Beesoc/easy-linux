@@ -5,8 +5,11 @@
 # Version: 0.0.2
 set -e
 
-export scripts_dir=/opt/easy-linux
-export compiled_dir=$HOME/compiled
+scripts_dir=/opt/easy-linux
+export ${scripts_dir}
+compiled_dir=$HOME/compiled
+export ${compiled_dir}
+
 
 RED='\e[1;31m'
 CY='\e[1;36m'
@@ -87,14 +90,108 @@ if [[ ! -d ${scripts_dir}/support ]]; then
 
 }
 
-define_var_func() {
-echo "export compiled_dir=${compiled_dir}" >> ${scripts_dir}/.envrc
-echo "export scripts_dir=${scripts_dir}" >> ${scripts_dir}/.envrc
-echo "export ORIGINAL_USER=$USER" >> ${scripts_dir}/.envrc
+identity_wiz_func(){
+printf "${OG}  Autodetection has failed. I'll now ask you several questions and we'll proceed.${GN}\\n"
+read -p "When you login to Linux, is your username, $USER? [Y/n] " userchoice
+userchoice=${userchoice:-Y}
+if [[ $userchoice =~ ^[Yy]$ ]]; then
+  printf "${CY}Continuing...\\n"
+  ORIGINAL_USER=$USER
+  
+else
+  read -p "Enter the EXACT username you use to login to Linux. CASE SENSITIVE. " userchoice2
+  printf "${OG}You have entered, ${WT}$userchoice2${OG}. Continuing...\\n"
+  ORIGINAL_USER=$userchoice2
+  echo "export pwnagotchi=$userchoice2" >> $scripts_dir/.envrc 
+  exit 0
+fi
 
+read -p "Your machine name has been detected as $hostname. Is this correct? [Y/n] " userhost
+userhost=${userhost:-Y}
+if [[ $userhost =~ ^[Yy]$ ]]; then
+  printf "${CY}Continuing...\\n"
+  $userhost=$hostname 
+else
+  read -p "Enter the EXACT computer name you are using. CASE SENSITIVE. " userhost2
+  printf "${OG}You have entered, ${WT}$userhost2${OG}. Continuing...\\n"
+  hostname=$userchoice2
+  echo "export hostname=$userchoice2" >> $scripts_dir/.envrc 
+  exit 0
+fi
 
-cd ${scripts_dir} && direnv allow 
+read -p "When you use Easy-Linux, will you be utilizing a Pwnagotchi? [Y/n] " pwnchoice
+pwnchoice=${pwnchoice:-Y}
+if [[ $pwnchoice =~ ^[Yy]$ ]]; then
+  printf "${CY}...\\n"
+    read -p "Enter the EXACT name of the Pwnagotchi that you will be using. " pwnchoice2
+    pwnagotchi=$pwnchoice2
+    echo "export pwnagotchi=$pwnchoice2" >> ${scripts_dir}/.envrc 
+elif [[ $pwnchoice =~ ^[Nn]$ ]]; then
+  printf "${OG}You have selected that you will ${WT}NOT be using ${OG}a Pwnagotchi. Continuing...\\n"
+  unset pwnagotchi
+  unset amiPwn
+  exit 0
+fi
+
 }
+
+define_var_func() {
+
+
+etc_hostname=$(cat /etc/hostname)
+compiled_dir=$HOME/compiled
+ORIGINAL_USER=$(cat $USER)
+echo "export ORIGINAL_USER=$(cat $USER)" >> ${scripts_dir}/.envrc 
+
+
+if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
+      amiPwn=yes
+      echo "export amiPwn=yes" >> $scripts_dir/.envrc
+   elif [ !-d /etc/pwnagotchi ] && [ !-d /usr/local/share/pwnagotchi ]; then
+      amiPwn=no
+      echo "export amiPwn=no" >> $scripts_dir/.envrc
+   else 
+      printf "  Unknown error."
+fi
+
+if [ $etc_hosts = $hostname ] && [ $ORIGINAL_USER = $home_dir_user ]; then
+     if [ $ORIGINAL_USER = beesoc ] && [ $HOST = updates ]; then
+         echo "export pwnagotchi=Gotcha" >> $scripts_dir/.envrc
+         echo "export hostname=updates" >> $scripts_dir/.envrc
+         echo "export ORIGINAL_USER=beesoc" >> $scripts_dir/.envrc
+         
+      elif [ $ORIGINAL_USER = larry ] && [ $HOST = lepotato ]; then
+         echo "export pwnagotchi=Sniffer" >> $scripts_dir/.envrc
+         echo "export hostname=lepotato" >> $scripts_dir/.envrc
+         echo "export ORIGINAL_USER=larry" >> $scripts_dir/.envrc
+
+      else
+         unset pwnagotchi
+         echo "export hostname=$etc_hostname" >> $scripts_dir/.envrc
+         echo "export ORIGINAL_USER=$USER" >> $scripts_dir/.envrc
+         identity_wiz_func
+      fi
+
+
+echo "export etc_hostname=$(cat /etc/hostname)" >> $scripts_dir/.envrc
+echo "export compiled_dir=$HOME/compiled" >> $scripts_dir/.envrc
+
+elif  [ $etc_hosts != $hostname ] || [ $ORIGINAL_USER != $home_dir_user ] || ; then
+      if [ $etc_hosts != $hostname ]; then
+          printf "${RED}    FATAL error: condition check failed. ${WT}$etc_hosts ${CY}should match ${WT}$hostname"
+          printf "${OG}    Don\'t Panic! Autodetection has failed. Loading ${WT}manual wizard${CY}."
+          identity_wiz_func
+elif [ $ORIGINAL_USER != $home_dir_user ]; then
+          printf "${RED}    FATAL error: condition check failed. ${WT}$ORIGINAL_USER ${CY}should match ${WT}$home_dir_user"
+          printf "${OG}    Don\'t Panic! Autodetection has failed. Loading ${WT}manual wizard${CY}."
+          identity_wiz_func
+fi
+         
+cd ${scripts_dir} && direnv allow 
+
+}
+
+
 
 install_func() { 
 clear

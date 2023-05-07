@@ -17,7 +17,7 @@ printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date:
 batt_per="$(acpi -b | awk '/Battery 0/ {print $4}')"
 battery_state="$(acpi -b | awk '/Battery 0/ {print $3}')"
 # Display Battery info
-printf "\\n${CY}Your battery state is currently${WT} ${battery_state}${CY} and your machine has${WT} ${batt_per}% battery remaining.\\n"
+printf "\\n${CY}Your battery state is currently ${WT}${battery_state} ${CY}and your machine has ${WT}${batt_per}% battery remaining.\\n"
 printf "\\n"
 
 # Display disk usage
