@@ -9,8 +9,7 @@ I am not the author of ANY of the tools that this menu system is installing, con
 Don't know how to do that?  No prob. The purpose of this project is to help non-technical (or, at least non-Linux) people out.  
 Detailed instructions: 
 1. open a 'Terminal' emulator app on your Linux desktop.
-2. in the Terminal window, copy and paste this command: 'git clone 
-
+2. in the Terminal window, copy and paste this command: 'git clone https://github.com/Beesoc/easy-linux.git && cd easy-linux && ./SETUP-easy-linux.sh'.  
 
 **IMPORTANT:**  The install command above should be copied and pasted as 1 command!  Seriously, every single letter, EXACTLY!
 
