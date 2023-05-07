@@ -65,7 +65,7 @@ read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceezlinux
             if [[ $choiceezlinux =~ ^[Yy]$ ]]; then
               printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
-            if [[ $choiceezlinux =~ ^[Nn]$ ]]; then
+            elif [[ $choiceezlinux =~ ^[Nn]$ ]]; then
               printf "${WT} [*] ${CY}Installation rejected..."; sleep 1; printf "..Please wait.."
               exit 0
             else
