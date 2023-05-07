@@ -56,7 +56,7 @@ direnv_func() {
 
 install_func() {
 
-printf "${WT}\\n  [*] ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
+printf "${WT}\\n  [*]  ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
            if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
@@ -81,7 +81,7 @@ if [[ -d /opt/easy-linux ]]; then
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
     sudo chown -v 1000:1000 /opt
-    printf "  ${WT} [*]  ${GN}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
+    printf " ${WT} [*]  ${GN}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
 fi  
 install_func
 
@@ -90,7 +90,7 @@ main() {
    clear
    Banner_func
    if command -v /usr/bin/direnv >/dev/null 2>&1; then
-                printf "${GN}DIRENV is already installed\\n"
+                printf "\\n${GN}DIRENV is already installed\\n"
        check_directories_func
     else
     direnv_func
@@ -100,7 +100,7 @@ main() {
 }
 git_files_func() {
 
-  printf "  ${WT} \\n [*]   ${GN} Preparing to clone remote Git repo.${OG}\\n"
+  printf "  ${WT} \\n  [*]  ${GN} Preparing to clone remote Git repo.${OG}\\n"
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
@@ -112,10 +112,9 @@ sudo chmod +x /opt/easy-linux/support/*.sh
 sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
 cd /opt/easy-linux || exit
 sudo mv *.sh ..
-sudo mv *.desktop /usr/share/applications/
+sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 
 sudo mv /opt/easy-linux/install/* ..
-sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 }
 
 main
