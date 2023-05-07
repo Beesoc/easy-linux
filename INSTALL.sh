@@ -7,9 +7,17 @@ set -e
 
 scripts_dir=/opt/easy-linux
 export ${scripts_dir}
-compiled_dir=$HOME/compiled
+compiled_dir=/tmp/easy-linux
 export ${compiled_dir}
 
+# Install prereq, DIRENV
+           if command -v /usr/bin/direnv >/dev/null 2>&1; then
+                printf "${GN}DIRENV is already installed\\n"
+           else
+                printf "${YW}DIRENV is not installed. Installing\\n"
+                direnvinstall=$(curl -sfL https://direnv.net/install.sh | bash)
+	         source $direnvinstall
+           fi
 
 RED='\e[1;31m'
 CY='\e[1;36m'
