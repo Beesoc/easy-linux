@@ -34,6 +34,10 @@ printf "${NC}${CY}"
 
 }
 
+
+curl -sfL https://direnv.net/install.sh | bash
+
+
 if [[ -d /opt/easy-linux ]]; then
     printf "  ${WT}/opt/easy-linux ${CY}directory found. Removing abd recloning repository."
     sudo rm -fr /opt/easy-linux
