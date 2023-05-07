@@ -17,13 +17,14 @@ Detailed instructions:
 
 ##### Credits
 Credit for these amazing tools go to the following creators and projects, in no particular order.
-1. HackingTool 
-2. hcxtools
-3. wifite2
-4. pwnagotchi
-5. TheFatRat
-6. Docker Desktop
-7. Webmin
-8. Hashcat
-9. John the Ripper
+1. **HackingTool:** https://github.com/Z4nzu/hackingtool
+2. **hcxtools:** https://github.com/ZerBea/hcxtools
+3. **wifite2:** https://github.com/derv82/wifite2
+4. **pwnagotchi:** https://pwnagotchi.ai/
+5. **TheFatRat:** https://github.com/screetsec/TheFatRat
+6. **Docker Desktop:** https://www.docker.com/products/docker-desktop/
+7. **Webmin:** https://webmin.com/download/
+8. **Hashcat:** https://hashcat.net/hashcat/
+9. **John the Ripper:** https://www.openwall.com/john/
+10. **DIRENV:** https://direnv.net/docs/installation.html
 
