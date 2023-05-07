@@ -34,7 +34,9 @@ printf "${NC}${CY}"
 
 }
 Banner_func
-# Install prereq, DIRENV
+
+
+direnv_func() {
            if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "${GN}DIRENV is already installed\\n"
            else
@@ -53,20 +55,27 @@ Banner_func
                 exit 0
                 fi
            fi
+}
 
-# curl -sfL https://direnv.net/install.sh | bash
+install_func() {
 
-printf "${WT}   [*] ${CY}Dependencies satisfied."; sleep 1
+printf "${WT}   [*] ${CY}Dependencies satisfied. "; sleep 1
 read -p "Do you want to install Easy Linux Loader? [Y/n] " choiceezlinux
         choiceezlinux=${choiceezlinux:-Y}
             if [[ $choiceezlinux =~ ^[Yy]$ ]]; then
               printf "${WT} [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
+            if [[ $choiceezlinux =~ ^[Nn]$ ]]; then
+              printf "${WT} [*] ${CY}Installation rejected..."; sleep 1; printf "..Please wait.."
+              exit 0
             else
-              printf "${RED}Exiting."
+              printf "${RED} Exiting."
               exit 0
             fi
+     get_files_func
+}
 
+check_directories_func() {
 if [[ -d /opt/easy-linux ]]; then
     printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found. Removing abd recloning repository."; sleep 1
     sudo rm -fr /opt/easy-linux
@@ -74,7 +83,24 @@ elif [[ ! -d /opt/easy-linux ]]; then
     sudo chown -vr 1000:1000 /opt
     printf "  ${WT} [*]  ${GN}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
 fi  
-    printf "  ${WT} [*]  ${GN} Preparing to clone remote Git repo.${OG}"; sleep 1
+install_func
+
+}
+main() {
+   clear
+   Banner_func
+   if command -v /usr/bin/direnv >/dev/null 2>&1; then
+                printf "${GN}DIRENV is already installed\\n"
+       check_directories_func
+    else
+    direnv_func
+    fi
+
+
+}
+git_files_func() {
+
+  printf "  ${WT} [*]  ${GN} Preparing to clone remote Git repo.${OG}"; sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
 cd /opt/easy-linux
@@ -85,5 +111,7 @@ sudo chmod +x /opt/easy-linux/support/*.sh
 
 sudo mv /opt/easy-linux/install/*.sh /opt/easy-linux/
 sudo cp -f /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
+}
 
+main
 source /opt/easy-linux
