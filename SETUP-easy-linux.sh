@@ -16,13 +16,13 @@ chmod a+x *.sh
 chmod a+x install/*.sh
 chmod a+x support/*.sh
 
-if [[ !-d $compiled_dir ]]; then
+if [[ ! -d $compiled_dir ]]; then
     mkdir $compiled_dir
 elif [[ -d $compiled_dir ]]; then
 		if [[ -d $compiled_dir/tmp ]]; then
 			  sudo rm -rf $compiled_dir/tmp
 			  sudo mkdir $compiled_dir/tmp
-		elif [[ !-d $compiled_dir/tmp ]]; then
+		elif [[ ! -d $compiled_dir/tmp ]]; then
 			 sudo mkdir $compiled_dir/tmp
 			 sudo chown -vR 1000:0 $compiled_dir/tmp
 			 printf "${GN}  Continuing...."
