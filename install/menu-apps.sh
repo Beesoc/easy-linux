@@ -144,7 +144,7 @@ read -p "Do you want to continue? [Y/n] " choicewifite
 
 elif [[ ${choice} == 21 ]]; then  
     printf "${CY}      You chose to install the Fat Rat. \\n "
-#    Sysinfo_menu
+#    TheFatRat_menu
 
 read -p "Do you want to continue? [Y/n] " choicefatrat
         choicefatrat=${choicefatrat:-Y}
@@ -165,7 +165,7 @@ read -p "Do you want to continue? [Y/n] " choicefatrat
 
 elif [[ ${choice} == 22 ]]; then  
     printf "${CY}      You chose to install Webmin. \\n "
-#    Sysinfo_menu
+#    Webmin_menu
 
 read -p "Do you want to continue? [Y/n] " choicewebmin
         choicewebmin=${choicewebmin:-Y}
@@ -177,16 +177,16 @@ read -p "Do you want to continue? [Y/n] " choicewebmin
             fi
 
            if command -v webmin >/dev/null 2>&1; then
-                printf "\\n${GN}Webmin is already installed"
-              printf "Access via web browser at https://localhost:10000/sysinfo.cgi?xnavigation=1.\\n"
-              printf "Use your normal Linux account info that you use to login to this computer\\n."
+                printf "\\n${WT}Webmin ${CY}is already installed"
+              printf "${CY}Access via web browser at ${WT}https://localhost:10000/sysinfo.cgi?xnavigation=1${CY}\\n"
+              printf "${CY}Use your ${WT}normal Linux account info that you use to login to this computer\\n."
            else
-              printf "\\n${YW}Webmin is not installed"
+              printf "\\n${WT}Webmin ${YW}is not installed"
               source "${scripts_dir}/support/support-webmin.sh"
            fi
 
 elif [[ ${choice} == 99 ]]; then  
-    printf "${CY}      You chose System Information. \\n "
+    printf "${CY}      You chose ${WT}System Information${CY} \\n "
     clear
 #    Sysinfo_menu
     source "${scripts_dir}/support/support-Banner_func.sh"
@@ -203,7 +203,7 @@ fi
 }
 
 hacking_tool_func() {
-printf "Installing Hacking Tool...${NC}\n"
+printf "${CY}Installing ${WT}Hacking Tool${CY}...${NC}\n"
   if [[ -d ${compiled_dir} ]]; then
         printf " \\n";
           cd ~/compiled || exit
@@ -212,7 +212,7 @@ printf "Installing Hacking Tool...${NC}\n"
           mkdir ~/compiled 
           cd ~/compiled || exit
   else
-       printf "Invalid Selection"
+       printf "${RED}Invalid Selection"
   fi
   sudo git clone https://github.com/Z4nzu/hackingtool.git
   cd hackingtool || exit
@@ -225,8 +225,8 @@ standard_apps_func() {
   clear
     source "${scripts_dir}/support/support-Banner_func.sh"
     printf "${OG}  \\n"
-    printf "      Installing some of my favorite [ Aptitude, ncdu, htop, git ] and ${WT}known \\n"
-    printf "  required${OG} [ ${WT}python3-pip, python3-numpy ${OG}] apps.\\n ${GN}"
+    printf "      Installing some apps that are standard, built-in [ Aptitude, ncdu, htop, git ] and ${WT}known \\n"
+    printf "  ${WT} known required${OG} [ ${WT}python3-pip, python3-numpy ${OG}] apps.\\n ${GN}"
       sudo apt install -y aptitude ncdu git ncdu geany geany-plugins htop aircrack-ng > /dev/null
     printf "  \\n" 
       printf "${OG}  Installing additional nano lints.${NC}\\n"
@@ -235,7 +235,7 @@ standard_apps_func() {
           cd ${compiled_dir} || exit
         printf "  \\n";
   else
-          mkdir ${compiled_dir}
+          mkdir ${compiled_dir} && cd ${compiled_dir}
   fi
          
   if [[ -d ${compiled_dir}/nanorc ]]; then
@@ -248,8 +248,9 @@ standard_apps_func() {
         cd nanorc || exit
           sudo cp *.nanorc /usr/share/nano
           sudo cp ./shellcheck.sh /usr/bin
-          sudo rm -r ~/compiled/nanorc/
+          sudo rm -Rf ${compiled_dir}/nanorc/
 }
+
 install_apps_func() {
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
@@ -260,7 +261,7 @@ select option in "${options[@]}"; do
         "Hacking Tool")
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
-            printf " ${OG}\\nHacking Tool\\n"
+            printf " ${WT}\\nHacking Tool${CY}: Hacking Tool featured on TV show Mr. Robot\\n"
             hacking_tool_func
             ;;
         "Docker Desktop")
@@ -271,12 +272,12 @@ select option in "${options[@]}"; do
         "TheFatRat")
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
-            printf "${CY}You selected The Fat Rat\\n"
+            printf "${CY}You selected ${WT}The Fat Rat${CY}\\n"
             source "${scripts_dir}/support/support-fatrat.sh"
             ;;
          "Main Menu")
             clear
-            printf "${OG}You selected Main Menu\\n${CY}"
+            printf "${OG}You selected ${WT}Main Menu\\n${CY}"
             source ${scripts_dir}/menu-master.sh
             ;;
         "My Favs")
@@ -288,7 +289,8 @@ select option in "${options[@]}"; do
         "Webmin")
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
-            printf "${CY}You selected Webmin\\n"
+            printf "${CY}You selected ${WT}Webmin${CY}. Configure just about every\\n"
+	    printf "aspect of your Linux computer, all from any web browser.\\n"
             source "${scripts_dir}/support/support-webmin.sh"
             ;;
           "Exit")
@@ -319,8 +321,8 @@ printf "${CY}  Install Storm-Breaker"
 
 \$CONFIG = array (
     \"hidden\" => [
-        \"fullname\" => \"hacker\",
-        \"password\" => \"57aW48YwPn3@\",
+        \"fullname\" => \"$StormBreakerUser\",
+        \"password\" => \"$StormBreakerPass\",
     ],
 
 );
@@ -380,7 +382,7 @@ hacking_tool_func
 
  if [[ $(hostname) = "updates" ]]; then
         personal_func
-        printf "Updates only install triggered"
+        printf "${GN}   Updates only install triggered"
  elif [[ $(hostname) != "updates" ]]; then
  return
  fi
@@ -397,10 +399,13 @@ hacking_tool_func
   printf "                           [ Install The Fat Rat ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
   printf "                 [ Install Additional Nano Lints ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
 printf "  ${CY}Press M to return to the Main Menu.\\n    ----->"
-read -r menu_choice
- if [[  ${menu_choice} = "m" ]] || [[ ${menu_choice} = "M" ]]; then
+read -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
+ if [[  ${menuchoice} = "m" ]] || [[ ${menuchoice} = "M" ]]; then
         printf " \\n";
         source ${scripts_dir}/menu-master.sh
+  elif [[  ${menuchoice} = "x" ]] || [[ ${menuchoice} = "X" ]]; then
+        printf " \\n";
+        exit
   else
           printf " ${RED}  Invalid Selection"
 fi
