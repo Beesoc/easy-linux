@@ -7,14 +7,12 @@ I am not the author of ANY of the tools that this menu system is installing, con
 DIRENV should be the only dependency that isn't handled by the installer itself.
 
 #### Setup
-*To install Beesoc's Easy Linux menu system, just **clone the repository** and run **SETUP-easy-linux.sh**
+*To install Beesoc's Easy Linux menu system, just **clone the repository** and run **INSTALLv2.sh**
 Don't know how to do that?  No prob. The purpose of this project is to help non-technical (or, at least non-Linux) people out.  
 Detailed instructions: 
 1. open a 'Terminal' emulator app on your Linux desktop.
-2. in the Terminal window, copy and paste this command: 'git clone https://github.com/Beesoc/easy-linux.git && cd easy-linux && ./SETUP-easy-linux.sh'.  
-
-** git clone https://github.com/Beesoc/easy-linux.git && cp -rf easy-linux/ $compiled_dir/ && cd $compiled_dir/easy-linux && chmod +x *.sh && direnv allow && ./INSTALL.sh**
-
+2. in the Terminal window, copy and paste this command: **sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux && cd /opt/easy-linux && INSTALLv2.sh**
+ 
 **IMPORTANT:**  The install command above should be copied and pasted as 1 command!  Seriously, every single letter, EXACTLY!
 
 ##### Credits
