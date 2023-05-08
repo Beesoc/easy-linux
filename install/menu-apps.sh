@@ -45,12 +45,12 @@ if [[ ${choice} == 1 ]]; then
     printf "  \\n" 
     source "${scripts_dir}/support/support-Prompt_func.sh"
 
-read -p "Do you want to continue? [Y/n] " choicedocker
+read -n 1 -p "Do you want to continue? [Y/n] " choicedocker
 choicedocker=${choicedocker:-Y}
 if [[ $choicedocker =~ ^[Yy]$ ]]; then
-  echo "Continuing...\\n"
+  printf "${GN}Continuing...\\n"
 else
-  echo "Exiting.\\n"
+  printf "${RED}Exiting.\\n"
   exit 0
 fi
 
@@ -69,7 +69,7 @@ elif [[ ${choice} == 2 ]]; then
     printf "              in Mr. Robot. This tool has MANY tools built into it.  ${GN}This is a\\n"
     printf "           definite must install. ${WT}Swiss army knife for hackers.\\n\\n    " 
 
-read -p "Do you want to continue? [Y/n] " choicehacking
+read -n 1 -p "Do you want to continue? [Y/n] " choicehacking
         choicehacking=${choicehacking:-Y}
             if [[ $choicehacking =~ ^[Yy]$ ]]; then
               printf "${GN}Continuing...\\n"
@@ -94,12 +94,12 @@ elif [[ ${choice} == 3 ]]; then
     printf "        of my favorites or are required for other things that Linux Loader needs.\\n"
     printf "\\n${GN}        Should be safe installing anything here. ${WT}[***]\\n\\n    " 
 
-    read -p "Do you want to continue? [Y/n] " choicefavs
+    read -n 1 -p "Do you want to continue? [Y/n] " choicefavs
 choicefavs=${choicefavs:-Y}
     if [[ $choicefavs =~ ^[Yy]$ ]]; then
-          printf "Continuing...\\n"
+          printf "${GN}Continuing...\\n"
     else
-          printf "Exiting.\\n"
+          printf "${RED}Exiting.\\n"
       exit 0
     fi
 
@@ -108,7 +108,7 @@ choicefavs=${choicefavs:-Y}
 elif [[ ${choice} == 4 ]]; then  
     printf "${CY}      You chose Pwnagotchi. \\n "
 
-read -p "Do you want to continue? [Y/n] " choicepwn
+read -n 1 -p "Do you want to continue? [Y/n] " choicepwn
         choicepwn=${choicepwn:-Y}
             if [[ $choicepwn =~ ^[Yy]$ ]]; then
               printf "${GN}Continuing...\\n"
@@ -125,7 +125,7 @@ elif [[ ${choice} == 20 ]]; then
     clear
 #    Sysinfo_menu
 
-read -p "Do you want to continue? [Y/n] " choicewifite
+read -n 1 -p "Do you want to continue? [Y/n] " choicewifite
         choicewifite=${choicewifite:-Y}
             if [[ $choicewifite =~ ^[Yy]$ ]]; then
               printf "${GN}Continuing...\\n"
@@ -146,7 +146,7 @@ elif [[ ${choice} == 21 ]]; then
     printf "${CY}      You chose to install the Fat Rat. \\n "
 #    TheFatRat_menu
 
-read -p "Do you want to continue? [Y/n] " choicefatrat
+read -n 1 -p "Do you want to continue? [Y/n] " choicefatrat
         choicefatrat=${choicefatrat:-Y}
             if [[ $choicefatrat =~ ^[Yy]$ ]]; then
               printf "${GN}Continuing..."
@@ -157,17 +157,17 @@ read -p "Do you want to continue? [Y/n] " choicefatrat
 
            if command -v fatrat >/dev/null 2>&1; then
                 printf "\\n${GN}The Fat Rat is already installed"
-              bash -c 'fatrat'
+              source -c 'fatrat'
            else
               printf "\\n${YW}TheFatRat is not installed"
               source "${scripts_dir}/support/support-fatrat.sh"
            fi
 
 elif [[ ${choice} == 22 ]]; then  
-    printf "${CY}      You chose to install Webmin. \\n "
+    printf "${CY}      You chose to install ${WT}Webmin.${CY} \\n "
 #    Webmin_menu
 
-read -p "Do you want to continue? [Y/n] " choicewebmin
+read -n 1 -p "Do you want to continue? [Y/n] " choicewebmin
         choicewebmin=${choicewebmin:-Y}
             if [[ $choicewebmin =~ ^[Yy]$ ]]; then
               printf "${GN}Continuing..."
@@ -178,8 +178,8 @@ read -p "Do you want to continue? [Y/n] " choicewebmin
 
            if command -v webmin >/dev/null 2>&1; then
                 printf "\\n${WT}Webmin ${CY}is already installed"
-              printf "${CY}Access via web browser at ${WT}https://localhost:10000/sysinfo.cgi?xnavigation=1${CY}\\n"
-              printf "${CY}Use your ${WT}normal Linux account info that you use to login to this computer\\n."
+              printf "${CY}  Access via web browser at ${WT}https://localhost:10000/sysinfo.cgi?xnavigation=1${CY}\\n"
+              printf "${CY}  Use your ${WT}normal Linux account info ${CY}that you use to login to this computer\\n."
            else
               printf "\\n${WT}Webmin ${YW}is not installed"
               source "${scripts_dir}/support/support-webmin.sh"
@@ -217,7 +217,7 @@ printf "${CY}Installing ${WT}Hacking Tool${CY}...${NC}\n"
   sudo git clone https://github.com/Z4nzu/hackingtool.git
   cd hackingtool || exit
   sudo pip3 install -r requirements.txt
-  bash ./install.sh
+  source sudo ./install.sh
 }
 #
 
@@ -227,7 +227,7 @@ standard_apps_func() {
     printf "${OG}  \\n"
     printf "      Installing some apps that are standard, built-in [ Aptitude, ncdu, htop, git ] and ${WT}known \\n"
     printf "  ${WT} known required${OG} [ ${WT}python3-pip, python3-numpy ${OG}] apps.\\n ${GN}"
-      sudo apt install -y aptitude ncdu git ncdu geany geany-plugins htop aircrack-ng > /dev/null
+      sudo apt install -y aptitude ncdu bc acpi git ncdu geany geany-plugins htop aircrack-ng > /dev/null
     printf "  \\n" 
       printf "${OG}  Installing additional nano lints.${NC}\\n"
   if [[ -d ${compiled_dir} ]]; then
@@ -235,7 +235,8 @@ standard_apps_func() {
           cd ${compiled_dir} || exit
         printf "  \\n";
   else
-          mkdir ${compiled_dir} && cd ${compiled_dir}
+          mkdir ${compiled_dir}
+	  cd ${compiled_dir} || exit
   fi
          
   if [[ -d ${compiled_dir}/nanorc ]]; then
@@ -307,13 +308,13 @@ done
 
 personal_func() {
 #####  Personal  #######
-printf "${CY}  Install Storm-Breaker"
+printf "${CY}Storm-Breaker"
   sudo apt install -y python3-requests python3-colorama python3-psutil > /dev/null
   cd /opt || exit
   sudo git clone https://github.com/ultrasecurity/Storm-Breaker.git
   cd Storm-Breaker || exit
-  sudo bash ./install.sh
-  cd storm-web
+  sudo source ./install.sh
+  cd storm-web || exit
   sudo su
   rm config.php
   touch ./config.php
@@ -329,11 +330,11 @@ printf "${CY}  Install Storm-Breaker"
 
 ?>" > config.php
 
-  printf "Install ngrok"
-  cd $HOME/Downloads
+  printf "  ${CY}Install ngrok"
+  cd $HOME/Downloads || exit
   wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
   sudo tar xvzf $HOME/Downloads/ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
-  printf "Go signup for an ngrok account.  That's how you get the key below"
+  printf "  ${CY}Signup for an ${WT}ngrok account${CY}.  That's how you get the key below"
   ngrok config add-authtoken $ngrok_token
 }
 
@@ -356,7 +357,8 @@ read -r installchoice
     printf "  ${CY}You have ${updates} updates available, of which ${security_updates} are security related or severe.\\n"
     printf "  ${CY}Please wait. This step may take ${WT}several minutes ${CY}depending on your internet speed!\\n"
       if (( $(echo "$security_pct >= 20" | bc -l) )); then
-         printf "${RED}Security updates represent 20 percent or more of available updates.  Performing upgrade. "
+         printf "${RED}Security updates represent 20 percent or more of available updates.\\n"
+	 printf "  ${YW}Performing upgrade. "
       sudo apt upgrade -y
       elif (( $(echo "$security_pct <= 20" | bc -l) )); then
          printf "\\n${GN}Security updates represent 20 percent or less of available updates.  Perform upgrade? [Y/N] "
@@ -380,10 +382,10 @@ standard_apps_func
 install_apps_func
 hacking_tool_func
 
- if [[ $(hostname) = "updates" ]]; then
+ if [[ $(hostname) = "updates" ]] && [[ $USER = "beesoc" ]]; then
         personal_func
         printf "${GN}   Updates only install triggered"
- elif [[ $(hostname) != "updates" ]]; then
+ elif [[ $(hostname) ! = "updates" ]]; then
  return
  fi
 
@@ -405,7 +407,7 @@ read -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
         source ${scripts_dir}/menu-master.sh
   elif [[  ${menuchoice} = "x" ]] || [[ ${menuchoice} = "X" ]]; then
         printf " \\n";
-        exit
+        exit 0
   else
           printf " ${RED}  Invalid Selection"
 fi
