@@ -201,12 +201,13 @@ elif [[ ${choice} == 99 ]]; then
         fi
 elif [[ ${choice} == "x" ]] || [[ ${choice} == "X" ]] || [[ ${choice} == "0" ]]; then  
 #    Exit_menu
-    read -n 1 -p "Do you really want to exit? [Y/n] " choiceexit
-        choiceexit=${choiceexit:-Y}
-        if [[ $choiceexit =~ ^[Yy]$ ]]; then
+    read -n 1 -p "Do you really want to exit? [y/N] " choiceexit
+        choiceexit=${choiceexit:-N}
+        if [[ $choiceexit =~ ^[Nn]$ ]]; then
+                return
+        elif [[ $choiceexit =~ ^[Yy]$ ]]; then
                 printf "${RED} [✘] Exit tool [✘]${NC} \\n"
-        elif [[ $choiceexit =~ ^[Nn]$ ]]; then
-            return
+            exit 0
         else
             printf "${RED}Invalid Selection.\\n"
         fi 
