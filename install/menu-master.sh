@@ -17,15 +17,14 @@ scripts_dir="/opt/easy-linux"
 source ${scripts_dir}/.envrc
 set -e
 
-# Define usage function
 function usage {
-  printf "${WT}Usage:${GN} $0"
-  printf "${CY}  Nothing to configure externally and no options to pass.\\n" 
-  printf "${CY}  This is the main menu of ${WT}Beesoc's Easy Linux Loader." 
-  printf "${CY}  Run program via applications menu or run '${WT}menu-master.sh${CY}'\\n"
-  printf "${CY}  from any location."
-  printf "${WT}  Options:"
-  printf "${CY}    --help         Display this help message and exit"
+  echo "Usage: $0"
+  echo "Nothing to configure externally and no options to pass." 
+  echo "This is the main menu of 'Beesoc's Easy Linux Loader'." 
+  echo "Run program via applications menu or run 'menu-master.sh'" 
+  echo "from any location."
+  echo "  Options:"
+  echo "    --help         Display this help message and exit"
   echo "                                          "
   echo "                                          "
 }
