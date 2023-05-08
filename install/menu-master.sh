@@ -1,4 +1,20 @@
-#!/bin/bash
+!/bin/bash
+function help {
+  echo 
+  echo "Usage: $0 [options]"
+  echo "Options:"
+  echo "  -h, --help: Display this help information."
+  echo "  -v, --version: Display the version information."
+  echo
+}
+
+if [[ $1 == "-h" || $1 == "--help" ]]; then
+  help
+  exit 0
+elif [[ $1 == "-v" || $1 == "--version" ]]; then
+  echo "The script is version 1.0."
+  exit 0
+fi
 #
 # 1st release of Beesoc's Easy Linux Loader
 # * Defines a series of color codes for printing output in different colors.
@@ -16,54 +32,6 @@ scripts_dir="/opt/easy-linux"
 # Version: 0.0.2
 source ${scripts_dir}/.envrc
 set -e
-
-function usage {
-    echo "Usage: $0 [-h|--help] [-v|--verbose] <input_file> <output_file>"
-    echo "Nothing to configure externally and no options to pass." 
-    echo "This is the main menu of 'Beesoc's Easy Linux Loader'." 
-    echo "Run program via applications menu or run 'menu-master.sh'" 
-    echo "from any location."
-}
-
-function help {
-    usage
-    echo
-    echo "Options:"
-    echo "  -h, --help     show help message and exit"
-    echo "  -v, --verbose  enable verbose mode"
-    echo
-}
-
-verbose=0
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -h|--help)
-            help
-            exit 0
-            ;;
-        -v|--verbose)
-            verbose=1
-            shift
-            ;;
-        *)
-            break
-            ;;
-    esac
-done
-
-if [[ $# -lt 2 ]]; then
-    usage
-    exit 1
-fi
-
-input_file=$1
-output_file=$2
-
-if [[ $verbose -eq 1 ]]; then
-    echo "Copying $input_file to $output_file"
-fi
-
-cp $input_file $output_file
 
 determine_mac_func() {
 
@@ -185,7 +153,7 @@ elif [[ ${choice} == 4 ]]; then
         fi
         
 elif [[ ${choice} == 98 ]]; then  
-    printf "${YW}      You chose Troubleshooting.  Wifi problems. Playing with these menus can occassionally\\n "
+    printf "${YW}      You chose Troubleshooting.  Wifi problems. Playing with these menus can occasionally\\n "
     printf "${YW}      leave your wifi adaptors and network services in varying states.\\n"
     printf "${YW}      This option will reset all nework adapters to managed mode and restart \\n"
     printf "${YW}      the NetworkManager and wpa_supplicant services.\\n       "
@@ -235,3 +203,4 @@ else
 fi
 }
 main
+                        
