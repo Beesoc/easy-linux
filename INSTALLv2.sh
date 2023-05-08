@@ -170,25 +170,19 @@ chmod 600 /opt/easy-linux/support/whoami.sh
 }
 git_files_func() {
 # step 6 function.
-  printf "  ${WT} \\n  [*]  ${GN} Preparing to clone remote Git repo.${OG}\\n"
+  printf "  ${WT} \\n  [*]  ${GN} Cloning remote Git repo.${OG}\\n"
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
-cd /opt/easy-linux
 sudo chown -v 1000:1000 /opt/easy-linux
-sudo chmod +x /opt/easy-linux/*.sh
-sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
+sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
+mv -t /opt/easy-linux /opt/easy-linux/install/*
+sudo chmod +x /opt/easy-linux/*.sh
+sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
 
 whoami_func
 
-sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
-cd /opt/easy-linux || exit
-sudo mv *.sh ..
-sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
-cd /opt/easy-linux/install || exit
-sudo mv menu*.sh /opt/easy-install
-sudo mv /opt/easy-linux/install/* ..
 }
 
 cleanup_func() {
