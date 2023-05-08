@@ -22,6 +22,7 @@ declare -A required_versions=(
   ["support/support-docker.sh"]="0.0.2"
   ["support/support-fatrat.sh"]="0.0.2"
   ["support/support-fix-my-perm.sh"]="0.0.2"
+  ["support/support-hackingtool.sh"]="0.0.2"
   ["support/support-hxcdump.sh"]="0.0.2"
   ["support/support-linux_connection_script.sh"]="0.0.2"
   ["support/support-makeWordlist.sh"]="0.0.2"
@@ -34,7 +35,6 @@ declare -A required_versions=(
   ["support/support-wifite.sh"]="0.0.2"
   ["support/support-wpaDOWN.sh"]="0.0.2"
   ["support/support-wpaUP.sh"]="0.0.2"
-  ["support/whoami.sh"]="0.0.2"
 )
 
 function check_version {
@@ -52,7 +52,7 @@ function check_version {
 function update_script {
   script_name=$1
   script_path=$2
-  latest_version=$(curl -s https://raw.githubusercontent.com/Beesoc/beesoc-menu/0.1/"$script_name" | grep '^# Version:' | awk '{print $3}')
+  latest_version=$(curl -s https://raw.githubusercontent.com/Beesoc/easy-linux/0.1/"$script_name" | grep '^# Version:' | awk '{print $3}')
 
   if [[ "$(printf '%s\n' "$latest_version" "${required_versions[$script_name]}" | sort -V | head -n1)" == "$latest_version" ]]; then
     echo "Updating $script_name to version $latest_version"
