@@ -3,21 +3,19 @@
 set -e
 # Version: 0.0.2
 source "${scripts_dir}/.envrc"
-source "${scripts_dir}/support/support-Banner_func.sh"
-trap ${scripts_dir}/support/support-trap.wifi.sh EXIT
+trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 
 app-install_func() {
-clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 
   if [[ -d "$HOME/compiled/wifite2/" ]]; then
-    read -r -p "Wifite installation folder exists. Remove folder and reinstall?" reinstall
+    read -n 1 -r -p "Wifite installation folder exists. Remove folder and reinstall?" reinstall
       if [[ ${reinstall} = "Y" ]] || [[ ${reinstall} = "y" ]]; then 
          sudo rm -fR $HOME/compiled/wifite2/
       elif [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
          printf "${RED} Wifite will not be installed. Press ${WT}any ${RED} key to return to main menu."
          source "${scripts_dir}/support/support-Prompt_func.sh"
-         read -r -n1 -s -t 60
+         read -r -n1 -s -t 300
            bash "$scripts_dir/menu-master.sh"
       else
          printf "${YW}    Invalid Selection."
@@ -43,12 +41,13 @@ source ${scripts_dir}/support/support-Banner_func.sh
                 app-install_func
            fi
 
-printf "${CY}  Your wordlist is currently set to: ${WT}${wordlist}${CY}." 
-printf "${CY}  To change your used wordlist, select ${WT}C${CY}. To keep the default, enter ${WT}W."
+printf "${CY}  Your wordlist is currently set to: ${WT}${wordlist}${CY}\\n." 
+printf "${CY}  To change your used wordlist, select ${WT}C${CY}.\\n"
+printf "To keep the default, enter ${WT}W.\\n"
 
-read -r -p "[C]hange your wordlist or keep Default [W]ordlist?" wlchoice
+read -n 1 -p "[C]hange your wordlist or keep Default [W]ordlist?" wlchoice
 if [[ ${wlchoice} = "W" ]] || [[ ${wlchoice} = "w" ]]; then
-  printf "${CY}  Default wordlist, ${WT}${wordlist}${CY} selected."
+  printf "${CY}  Default wordlist, ${WT}${wordlist}${CY} selected.\\n"
 elif [[ ${wlchoice} = "c" ]] || [[ ${wlchoice} = "C" ]]; then
   wordlist=""
   read -r -p "Enter the FULL PATH and file name for your desired wordlist" mywordlist
@@ -57,9 +56,7 @@ fi
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
 sudo wifite -v -i ${adapter} -mac -p 160 --kill -ic --daemon --clients-only --dict ${wordlist}
-clear
 bash ${scripts_dir}/menu-hacking.sh
 }
 
 main
-
