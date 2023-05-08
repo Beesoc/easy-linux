@@ -77,6 +77,7 @@ read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
               exit 0
             else
               printf "\\n${RED}  [*]  Invalid Selection. Exiting."
+              exit 0
             fi
      git_files_func
 }
