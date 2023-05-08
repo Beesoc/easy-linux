@@ -6,19 +6,18 @@ source ${scripts_dir}/.envrc
 set -e 
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 clear
-bash "${scripts_dir}/support/support-Banner_func.sh"
+source "${scripts_dir}/support/support-Banner_func.sh"
 printf "                     ${CY} Welcome to the Hacking/Security Menu.             ${OG}\\n  "
   printf "\\n  ${OG}1] ${CY}Enable wifi Monitor mode ${OG}              20] ${CY}Enable wifi and Network Manager${OG} \\n"
   printf "\\n  ${OG}2] ${CY}Disable wifi Monitor mode${OG}              21] ${CY}Disable wifi and Network Manager${OG}\\n"
   printf "\\n  ${OG}3] ${CY}Upload all hashes to wpa-sec and OHC${OG}   22] ${CY}Capture Hashes ${OG}\\n"
   printf "\\n  ${OG}4] ${CY}Use Beesoc's wordlist or merge ${OG}        23] ${CY}Wifite: PMKID, EAPOL, WPS attacks  \\n" 
   printf "    lists, sort and eliminate dups with 1 easy tool."
-  printf "\\n\\n  "
-  printf "${OG}[90] ${WT}[!!!] ${CY}Try the new AutoHack ${WT}[!!!]\\n"
-  printf "${OG}[99] ${CY}Return to main menu${OG}                                       ${RED}[✘] Exit tool [✘]${OG}  \\n      "
+  printf "\\n\\n"
+  printf "${OG}[90]  ${WT}[!!!] ${CY}Try the new AutoHack ${WT}[!!!]\\n"
+  printf "${OG}[99]  ${CY}Return to main menu${OG}                                       ${RED}[✘] Exit tool [✘]${OG}  \\n      "
   printf "\\n  "
   printf "\\n                         ${WT}[*] ${OG}NOTE: Monitor mode is required for Sniffing/Injecting${WT}\\n\\n"
-  bash "${scripts_dir}/support/support-Prompt_func.sh"
 printf "      -----> "
 read -r choice
 if [[ ${choice} == 1 ]]; then
