@@ -112,8 +112,8 @@ else
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
 
-readonly username=$(whoami)
-readonly computername=$(hostname)
+username=$(whoami)
+computername=$(hostname)
 
 clear
    Banner_func
@@ -148,9 +148,9 @@ if [ "$username" != "$(USER)" ]; then
 fi
 
 # Check if user is using Pwnagotchi
-if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
+if [ -d /etc/pwnagotchi ] || [ -d /usr/local/share/pwnagotchi ]; then
       amiPwn=yes
-   elif [ !-d /etc/pwnagotchi ] && [ !-d /usr/local/share/pwnagotchi ]; then
+   elif [ ! -d /etc/pwnagotchi ] && [ !-d /usr/local/share/pwnagotchi ]; then
       amiPwn=no
    else 
       printf "${RED}  Unknown error."
@@ -191,7 +191,7 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
 
   clear
   Banner_func
-  printf "   ${WT}[*] ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
+  printf "   ${WT}[*] ${GN}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
   printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
@@ -199,7 +199,7 @@ printf "\\n${WT}   $username,${CY} "
 read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
-  printf "${GN}\\nStarting Beesoc's Easy Linux now....\\n"
+  printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
   source /opt/easy-linux/menu-master.sh
 else
   printf "    ${RED}Exiting.\\n"
