@@ -61,7 +61,7 @@ direnv_func() {
 
 install_func() {
 # Step 5 function.
-printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n  ${WT}[*]${GN} "
+printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "
 sleep 1
 read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
