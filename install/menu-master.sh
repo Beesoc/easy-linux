@@ -18,36 +18,52 @@ source ${scripts_dir}/.envrc
 set -e
 
 function usage {
-  echo "Usage: $0"
-  echo "Nothing to configure externally and no options to pass." 
-  echo "This is the main menu of 'Beesoc's Easy Linux Loader'." 
-  echo "Run program via applications menu or run 'menu-master.sh'" 
-  echo "from any location."
-  echo "  Options:"
-  echo "    --help         Display this help message and exit"
-  echo "                                          "
-  echo "                                          "
+    echo "Usage: $0 [-h|--help] [-v|--verbose] <input_file> <output_file>"
+    echo "Nothing to configure externally and no options to pass." 
+    echo "This is the main menu of 'Beesoc's Easy Linux Loader'." 
+    echo "Run program via applications menu or run 'menu-master.sh'" 
+    echo "from any location."
 }
 
-# Parse command line arguments with getopts
-while getopts "h:" opt; do
-  case $opt in
-    h)
-      usage
-      exit 0
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      usage
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument" >&2
-      usage
-      exit 1
-      ;;
-  esac
+function help {
+    usage
+    echo
+    echo "Options:"
+    echo "  -h, --help     show help message and exit"
+    echo "  -v, --verbose  enable verbose mode"
+    echo
+}
+
+verbose=0
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            help
+            exit 0
+            ;;
+        -v|--verbose)
+            verbose=1
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
 done
+
+if [[ $# -lt 2 ]]; then
+    usage
+    exit 1
+fi
+
+input_file=$1
+output_file=$2
+
+if [[ $verbose -eq 1 ]]; then
+    echo "Copying $input_file to $output_file"
+fi
+
+cp $input_file $output_file
 
 determine_mac_func() {
 
@@ -94,9 +110,9 @@ read -r choice
 if [[ ${choice} == 1 ]]; then  
     clear
     source ${scripts_dir}/support/support-Banner_func.sh
-    printf "${CY}\\n\\n           You chose Hacking. ${RED}[!!!] ${CY}This menu is continually evolving.\\n"
+    printf "${CY}\\n\\n           You chose Hacking.  ${CY}This menu is continually evolving.\\n"
     printf "\\n           ${OG}You can continue, but know that you may experience bugs or other weird shit.\\n"
-    printf "\\n${GN}           You have been warned. ${RED}[!!!]\\n" 
+    printf "\\n${GN}           ${RED}[!!!] You have been warned. ${RED}[!!!]\\n       " 
         read -n 1 -p "Do you want to continue? [Y/n] " choicehacking
         choicehacking=${choicehacking:-Y}
         if [[ $choicehacking =~ ^[Yy]$ ]]; then
@@ -114,9 +130,9 @@ if [[ ${choice} == 1 ]]; then
 elif [[ ${choice} == 2 ]]; then  
     clear
     source ${scripts_dir}/support/support-Banner_func.sh
-    printf "${YW}\\n\\n           You chose Customize. ${RED}[!!!] ${CY}This menu is continually evolving.\\n"
+    printf "${YW}\\n\\n           You chose Customize. ${CY}This menu is continually evolving.\\n"
     printf "\\n           ${OG}You can continue, but know that you may experience bugs or other weird shit.\\n"
-    printf "\\n${GN}           You have been warned. ${RED}[!!!]\\n" 
+    printf "\\n${GN}           ${RED}[!!!] You have been warned. ${RED}[!!!]\\n       " 
     read -n 1 -p "Do you want to continue? [Y/n] " choicecustom
         choicecustom=${choicecustom:-Y}
         if [[ $choicecustom =~ ^[Yy]$ ]]; then
@@ -133,9 +149,9 @@ elif [[ ${choice} == 2 ]]; then
 
 elif [[ ${choice} == 3 ]]; then  
     clear
-    printf "${YW}\\n\\n           You chose Apps. ${RED}[!!!] ${CY}This menu is continually evolving.\\n"
+    printf "${YW}\\n\\n           You chose Apps. ${CY}This menu is continually evolving.\\n"
     printf "\\n           ${OG}You can continue, but know that you may experience bugs or other weird shit.\\n"
-    printf "\\n${GN}           You have been warned. ${RED}[!!!]\\n" 
+    printf "\\n${GN}           ${RED}[!!!] You have been warned. ${RED}[!!!]\\n       " 
     read -n 1 -p "Do you want to continue? [Y/n] " choiceapps
         choiceapps=${choiceapps:-Y}
         if [[ $choiceapps =~ ^[Yy]$ ]]; then
@@ -154,7 +170,7 @@ elif [[ ${choice} == 3 ]]; then
 elif [[ ${choice} == 4 ]]; then  
     printf "${YW}      You chose Pwnagotchi. In the Pwnagotchi module, you'll be able to backup and restore\\n"
     printf "${YW}      your Pwnagotchi. You could also setup a new device, upload your collected wifi hashes and\\" 
-    printf "${YW}      handshakes or even install Pwnagotchi compatible software.\\n"
+    printf "${YW}      handshakes or even install Pwnagotchi compatible software.\\n        "
     read -n 1 -p "Do you want to continue? [Y/n] " choicepwn
         choicepwn=${choicepwn:-Y}
         if [[ $choicepwn =~ ^[Yy]$ ]]; then
@@ -172,7 +188,7 @@ elif [[ ${choice} == 98 ]]; then
     printf "${YW}      You chose Troubleshooting.  Wifi problems. Playing with these menus can occassionally\\n "
     printf "${YW}      leave your wifi adaptors and network services in varying states.\\n"
     printf "${YW}      This option will reset all nework adapters to managed mode and restart \\n"
-    printf "${YW}      the NetworkManager and wpa_supplicant services."
+    printf "${YW}      the NetworkManager and wpa_supplicant services.\\n       "
     read -n 1 -p "Do you want to continue? [Y/n] " choicetrbl
         choicetrbl=${choicetrbl:-Y}
         if [[ $choicetrbl =~ ^[Yy]$ ]]; then
@@ -189,7 +205,7 @@ elif [[ ${choice} == 98 ]]; then
     trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 elif [[ ${choice} == 99 ]]; then  
-    printf "${YW}      You chose System Information. \\n "
+    printf "${YW}      You chose System Information. \\n        "
     read -n 1 -p "Do you want to continue? [Y/n] " choiceinfo
         choiceinfo=${choiceinfo:-Y}
         if [[ $choiceinfo =~ ^[Yy]$ ]]; then
