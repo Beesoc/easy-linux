@@ -35,18 +35,22 @@ determine_mac_func() {
 
 if [ $wlan_count == 1 ]; then
    wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" > ${scripts_dir}/.envrc
+   echo "export wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
 elif [ $wlan_count == 2 ]; then
+   wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+   echo "export wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
    wlan1_mac=$(ip address show wlan1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export wlan1_mac=$(ip address show wlan1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" > ${scripts_dir}/.envrc
+   echo "export wlan1_mac=$(ip address show wlan1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
 fi
 
 if [ $usb_count == 1 ]; then
    usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" > ${scripts_dir}/.envrc
+   echo "export usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
 elif [ $usb_count == 2 ]; then
+   usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+   echo "export usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
    usb1_mac=$(ip address show usb1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export usb1_mac=$(ip address show usb1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" > ${scripts_dir}/.envrc
+   echo "export usb1_mac=$(ip address show usb1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
 fi
 
 }
@@ -75,7 +79,7 @@ if [[ ${choice} == 1 ]]; then
     printf "${CY}\\n\\n           You chose Hacking. ${RED}[!!!] ${CY}This menu is continually evolving.\\n"
     printf "\\n           ${OG}You can continue, but know that you may experience bugs or other weird shit.\\n"
     printf "\\n${GN}           You have been warned. ${RED}[!!!]\\n" 
-        read -p "Do you want to continue? [Y/n] " choicehacking
+        read -n 1 -p "Do you want to continue? [Y/n] " choicehacking
         choicehacking=${choicehacking:-Y}
         if [[ $choicehacking =~ ^[Yy]$ ]]; then
             printf "${CY}Continuing...\\n"
@@ -95,7 +99,7 @@ elif [[ ${choice} == 2 ]]; then
     printf "${YW}\\n\\n           You chose Customize. ${RED}[!!!] ${CY}This menu is continually evolving.\\n"
     printf "\\n           ${OG}You can continue, but know that you may experience bugs or other weird shit.\\n"
     printf "\\n${GN}           You have been warned. ${RED}[!!!]\\n" 
-    read -p "Do you want to continue? [Y/n] " choicecustom
+    read -n 1 -p "Do you want to continue? [Y/n] " choicecustom
         choicecustom=${choicecustom:-Y}
         if [[ $choicecustom =~ ^[Yy]$ ]]; then
             printf "${CY}Continuing...\\n"
@@ -114,7 +118,7 @@ elif [[ ${choice} == 3 ]]; then
     printf "${YW}\\n\\n           You chose Apps. ${RED}[!!!] ${CY}This menu is continually evolving.\\n"
     printf "\\n           ${OG}You can continue, but know that you may experience bugs or other weird shit.\\n"
     printf "\\n${GN}           You have been warned. ${RED}[!!!]\\n" 
-    read -p "Do you want to continue? [Y/n] " choiceapps
+    read -n 1 -p "Do you want to continue? [Y/n] " choiceapps
         choiceapps=${choiceapps:-Y}
         if [[ $choiceapps =~ ^[Yy]$ ]]; then
             printf "${CY}Continuing...\\n"
@@ -133,7 +137,7 @@ elif [[ ${choice} == 4 ]]; then
     printf "${YW}      You chose Pwnagotchi. In the Pwnagotchi module, you'll be able to backup and restore\\n"
     printf "${YW}      your Pwnagotchi. You could also setup a new device, upload your collected wifi hashes and\\" 
     printf "${YW}      handshakes or even install Pwnagotchi compatible software.\\n"
-    read -p "Do you want to continue? [Y/n] " choicepwn
+    read -n 1 -p "Do you want to continue? [Y/n] " choicepwn
         choicepwn=${choicepwn:-Y}
         if [[ $choicepwn =~ ^[Yy]$ ]]; then
             printf "${CY}Continuing...\\n"
@@ -151,7 +155,7 @@ elif [[ ${choice} == 98 ]]; then
     printf "${YW}      leave your wifi adaptors and network services in varying states.\\n"
     printf "${YW}      This option will reset all nework adapters to managed mode and restart \\n"
     printf "${YW}      the NetworkManager and wpa_supplicant services."
-    read -p "Do you want to continue? [Y/n] " choicetrbl
+    read -n 1 -p "Do you want to continue? [Y/n] " choicetrbl
         choicetrbl=${choicetrbl:-Y}
         if [[ $choicetrbl =~ ^[Yy]$ ]]; then
             printf "${CY}Continuing...\\n"
@@ -168,7 +172,7 @@ elif [[ ${choice} == 98 ]]; then
 
 elif [[ ${choice} == 99 ]]; then  
     printf "${YW}      You chose System Information. \\n "
-    read -p "Do you want to continue? [Y/n] " choiceinfo
+    read -n 1 -p "Do you want to continue? [Y/n] " choiceinfo
         choiceinfo=${choiceinfo:-Y}
         if [[ $choiceinfo =~ ^[Yy]$ ]]; then
             printf "${CY}Continuing...\\n"
@@ -180,9 +184,9 @@ elif [[ ${choice} == 99 ]]; then
             printf "${RED}Invalid Selection.\\n"
     #    Troubleshooting_menu
         fi
-elif [[ ${choice} == 0 ]]; then  
+elif [[ ${choice} == "x" ]] || [[ ${choice} == "X" ]] || [[ ${choice} == "0" ]]; then  
 #    Exit_menu
-    read -p "Do you want to continue? [Y/n] " choiceexit
+    read -n 1 -p "Do you really want to exit? [Y/n] " choiceexit
         choiceexit=${choiceexit:-Y}
         if [[ $choiceexit =~ ^[Yy]$ ]]; then
                 printf "${RED} [✘] Exit tool [✘]${NC} \\n"
