@@ -14,6 +14,7 @@ OGH='\e[0;30;44m'
 NC='\e[0m'
 clear
 Banner_func() {
+# step 2. function.
   printf "${WT}\\n"
 printf "${OGH}▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀${OGG}${RED}\\n"
 printf "    ▄████▄${BK}╗    ${RED}▄████▄${BK}╗   ${RED}▄████▄${BK}╗    ${RED}▄████▄${BK}╗     ${RED}▄███▄${BK}╗     ${RED}▄███▄${BK}╗  ${RED}██${BK}╗  ${RED}▄████▄${BK}╗    ${NC}\\n"
@@ -37,6 +38,7 @@ printf "${NC}${CY}"
 Banner_func
 
 direnv_func() {
+# Step 3 function.
                read -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ $choicedirenv =~ ^[Yy]$ ]]; then
@@ -55,7 +57,7 @@ direnv_func() {
 }
 
 install_func() {
-
+# Step 5 function.
 printf "${WT}\\n  [*]  ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
@@ -76,6 +78,7 @@ read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
 }
 
 check_directories_func() {
+# Step 4 function.
 if [[ -d /opt/easy-linux ]]; then
     printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
     printf "  ${WT}[*] ${GN}Removing and recloning repository." 
@@ -89,7 +92,8 @@ install_func
 
 }
 main() {
-   clear
+# 1.  script starts executing here.
+clear
    Banner_func
    if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "\\n${GN}DIRENV is already installed\\n"
@@ -101,7 +105,7 @@ main() {
 
 }
 git_files_func() {
-
+# step 6 function.
   printf "  ${WT} \\n  [*]  ${GN} Preparing to clone remote Git repo.${OG}\\n"
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
@@ -120,5 +124,12 @@ sudo mv menu*.sh /opt/easy-install
 sudo mv /opt/easy-linux/install/* ..
 }
 
+cleanup_func() {
+# Step 7 function. End.
+printf "   ${GN}Beesoc's Easy Linux Menu System has been installed.
+
+}
+
 main
+cleanup_func
 source /opt/easy-linux/menu-master.sh
