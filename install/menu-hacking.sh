@@ -46,8 +46,6 @@ elif [[ "${choice}" == 22 ]]; then
     bash "${scripts_dir}/support/support-Banner_func.sh"
     bash "${scripts_dir}/support/support-hcxdump.sh"
 elif [[ "${choice}" == 23 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
     bash "${scripts_dir}/support/support-wifite.sh"
 elif [[ "${choice}" == 90 ]]; then  
     clear
