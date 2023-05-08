@@ -42,7 +42,7 @@ Banner_func
 
 direnv_func() {
 # Step 3 or skip function.
-               read -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
+               read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ $choicedirenv =~ ^[Yy]$ ]]; then
                     printf "${GN}Continuing..." 
@@ -63,7 +63,7 @@ install_func() {
 # Step 5 function.
 printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n  ${WT}[*]${GN} "
 sleep 1
-read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
+read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
             if [[ $choiceez =~ ^[Yy]$ ]]; then
           #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
@@ -102,7 +102,7 @@ Banner_func
 
 printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
 
-read -n 1 -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
+read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
   printf "${GN}Loading...Please Wait..."
@@ -135,19 +135,19 @@ VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
 
 # Verify the user and computer name
 if [ "$USER_NAME" != "$(whoami)" ] || [ "$COMPUTER_NAME" != "$VERIFY_HOST" ] || [ "$COMPUTER_NAME" != "$VERIFY_ETC_HOSTNAME" ]; then
-  echo "Verification failed. Exiting..."
+  printf "${RED}    Verification failed. Exiting..."
   exit 1
 fi
 
 # Verify computer name using three different methods
 if [ "$computername" != "$(echo $HOST)" ]; then
-  echo "Warning: computer name does not match \$HOST" >&2
+  printf "${RED}  Warning: computer name does not match \$HOST" >&2
 fi
 if [ "$computername" != "$(cat /etc/hostname)" ]; then
-  echo "Warning: computer name does not match /etc/hostname" >&2
+  printf "${RED}  Warning: computer name does not match /etc/hostname" >&2
 fi
 if [ "$computername" != "$(uname -n)" ]; then
-  echo "Warning: computer name does not match uname -n" >&2
+  printf "${RED}  Warning: computer name does not match uname -n" >&2
 fi
 
 # Check if user is using Pwnagotchi
@@ -156,7 +156,7 @@ if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
    elif [ !-d /etc/pwnagotchi ] && [ !-d /usr/local/share/pwnagotchi ]; then
       amiPwn=no
    else 
-      printf "  Unknown error."
+      printf "${RED}  Unknown error."
 fi
 
 # Write information to file
@@ -192,9 +192,9 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
 
   clear
   Banner_func
-  printf "   ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
+  printf "   ${WT}[*] ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
   printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
-  printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n" 
+  printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
 printf "${WT}$USER_NAME,${CY} "
 read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
