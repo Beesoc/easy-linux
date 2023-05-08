@@ -67,16 +67,16 @@ read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
             if [[ $choiceez =~ ^[Yy]$ ]]; then
           #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-              printf "${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
+              printf "\\n${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
             elif [[ $choiceez =~ ^[Nn]$ ]]; then
             #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
-              printf "${RED}  [*] ${OG}Installation rejected..."
+              printf "\\n${RED}  [*] ${OG}Installation rejected..."
               sleep 1 
               printf "..Please wait.."
               exit 0
             else
-              printf "${RED}  [*]  Invalid Selection. Exiting."
+              printf "\\n${RED}  [*]  Invalid Selection. Exiting."
             fi
      git_files_func
 }
@@ -105,9 +105,9 @@ printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${
 read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
-  printf "${GN}Loading...Please Wait..."
+  printf "\\n$${WT}  [*] ${GN}Loading...Please Wait..."
 else
-  printf "${RED}   Exiting."
+  printf "  ${RED}   Exiting."
   exit 0
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
