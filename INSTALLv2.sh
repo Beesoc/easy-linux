@@ -90,7 +90,7 @@ if [[ -d /opt/easy-linux ]]; then
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
     sudo chown -v 1000:1000 /opt
-    printf " ${WT} [*]  ${GN}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
+    printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
 fi  
 install_func
 
@@ -156,15 +156,20 @@ if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
       printf "${RED}  Unknown error."
 fi
 
+sudo chown 1000:0 /opt/easy-linux/.envrc
 # Write information to file
-echo "username=$username" >> /opt/easy-linux/support/.whoami
-echo "computername=$computername" >> /opt/easy-linux/support/.whoami
-echo "amiPwn=$amiPwn" >> /opt/easy-linux/support/.whoami
+echo "export readonly username=$username" >> /opt/easy-linux/.envrc
+echo "export computername=$computername" >> /opt/easy-linux/.envrc
+echo "export amiPwn=$amiPwn" >> /opt/easy-linux/.envrc
+cd /opt/easy-linux || exit
+direnv allow
+sudo direnv allow
 
 }
+
 git_files_func() {
 # step 6 function.
-  printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n"
+  printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n  "
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
