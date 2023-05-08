@@ -44,11 +44,11 @@ direnv_func() {
                read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ $choicedirenv =~ ^[Yy]$ ]]; then
-                    printf "${GN}Continuing..." 
+                    printf "${GN}  Continuing..." 
                     sleep 1
-                    printf "This step may take a few minutes..."
+                    printf "  This step may take a few minutes..."
                     sleep 1
-                    printf "Please wait."
+                    printf "  Please wait."
                     sudo apt update
                     sudo apt install -y direnv
                 else
@@ -105,7 +105,7 @@ printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${
 read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
-  printf "\\n$${WT}  [*] ${GN}Loading...Please Wait..."
+  printf "\\n ${WT} [*] ${GN}Loading...Please Wait..."
 else
   printf "  ${RED}   Exiting."
   exit 0
@@ -135,16 +135,16 @@ VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
 
 # Verify computer name using three different methods
 if [ "$computername" != "$(echo $HOST)" ]; then
-  printf "${RED}  Warning: computer name does not match \$HOST" >&2
+  printf "${OG}  Warning: computer name does not match \$HOST" >&2
 fi
 if [ "$computername" != "$(cat /etc/hostname)" ]; then
-  printf "${RED}  Warning: computer name does not match /etc/hostname" >&2
+  printf "${OG}  Warning: computer name does not match /etc/hostname" >&2
 fi
 if [ "$computername" != "$(uname -n)" ]; then
-  printf "${RED}  Warning: computer name does not match uname -n" >&2
+  printf "${OG}  Warning: computer name does not match uname -n" >&2
 fi
 if [ "$username" != "$(USER)" ]; then
-  printf "${RED}  Warning: Username does not match $USER" >&2
+  printf "${OG}  Warning: Username does not match $USER" >&2
 fi
 
 # Check if user is using Pwnagotchi
