@@ -11,6 +11,13 @@ clear
 #
 source ${scripts_dir}/.envrc
 
+   if command -v hackingtool >/dev/null 2>&1; then
+              sudo hackingtool
+           else
+              printf "\\n${YW}hackingtool is not installed.  Installing...\\n"
+              hacking_tool_func
+           fi
+
   if [ ! -d ${scripts_dir} ]; then
         printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${NC}"
   fi
@@ -32,5 +39,4 @@ printf "${CY}Installing ${WT}Hacking Tool${CY}...${NC}\n"
   sudo git clone https://github.com/Z4nzu/hackingtool.git
   cd hackingtool || exit
   sudo pip3 install -r requirements.txt
-  bash ./install.sh
-}
+  source sudo ./install.sh
