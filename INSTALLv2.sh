@@ -133,12 +133,6 @@ whoami_func() {
 VERIFY_HOST=$(hostname)
 VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
 
-# Verify the user and computer name
-if [ "$USER_NAME" != "$(whoami)" ] || [ "$COMPUTER_NAME" != "$VERIFY_HOST" ] || [ "$COMPUTER_NAME" != "$VERIFY_ETC_HOSTNAME" ]; then
-  printf "${RED}    Verification failed. Exiting..."
-  exit 1
-fi
-
 # Verify computer name using three different methods
 if [ "$computername" != "$(echo $HOST)" ]; then
   printf "${RED}  Warning: computer name does not match \$HOST" >&2
@@ -148,6 +142,9 @@ if [ "$computername" != "$(cat /etc/hostname)" ]; then
 fi
 if [ "$computername" != "$(uname -n)" ]; then
   printf "${RED}  Warning: computer name does not match uname -n" >&2
+fi
+if [ "$username" != "$(USER)" ]; then
+  printf "${RED}  Warning: Username does not match $USER" >&2
 fi
 
 # Check if user is using Pwnagotchi
@@ -160,12 +157,9 @@ if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
 fi
 
 # Write information to file
-echo "username=$username" >> /opt/easy-linux/support/whoami.sh
-echo "computername=$computername" >> /opt/easy-linux/support/whoami.sh
-echo "amiPwn=$amiPwn" >> /opt/easy-linux/support/whoami.sh
-
-# Set file permissions so only owner of a file can access.
-chmod 600 /opt/easy-linux/support/whoami.sh
+echo "username=$username" >> /opt/easy-linux/support/.whoami.sh
+echo "computername=$computername" >> /opt/easy-linux/support/.whoami.sh
+echo "amiPwn=$amiPwn" >> /opt/easy-linux/support/.whoami.sh
 
 }
 git_files_func() {
