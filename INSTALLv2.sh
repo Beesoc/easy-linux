@@ -71,7 +71,7 @@ read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
               sleep 1
             elif [[ $choiceez =~ ^[Nn]$ ]]; then
             #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
-              printf "${WT} [*] ${CY}Installation rejected..."
+              printf "${RED}  [*] ${OG}Installation rejected..."
               sleep 1 
               printf "..Please wait.."
               exit 0
