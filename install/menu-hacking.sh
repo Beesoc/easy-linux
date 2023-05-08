@@ -61,4 +61,4 @@ else
     printf "${RED}  Nope, that's an invalid selection."
 fi
 clear
-bash "${scripts_dir}/menu-master.sh"
+source "${scripts_dir}/menu-master.sh"
