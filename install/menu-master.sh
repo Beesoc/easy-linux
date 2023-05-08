@@ -19,9 +19,12 @@ set -e
 
 # Define usage function
 function usage {
-  echo "Usage: $0 [options]"
-  echo "Options:"
-  echo "  --help         Display this help message"
+  printf "${WT}Usage:${GN} $0"
+  printf "${CY}  Nothing to configure externally and no options to pass.\\n" 
+  printf "  This is the main menu of ${WT}Beesoc's Easy Linux Loader." 
+  printf "${CY}  Run program via applications menu or run 'menu-master.sh' from any location."
+  printf "${WT}  Options:"
+  printf "${CY}    --help         Display this help message and exit"
   echo "                                          "
   echo "                                          "
 }
