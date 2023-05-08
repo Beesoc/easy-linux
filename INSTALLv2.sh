@@ -65,11 +65,12 @@ printf "${WT}\\n  [*]  ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
-          [[ $choiceez =~ ^[Yy]$ ]];
+            if [[ $choiceez =~ ^[Yy]$ ]]; then
           #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
               printf "${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
-            elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
+            elif [[ $choiceez =~ ^[Nn]$ ]]; then
+            #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
               printf "${WT} [*] ${CY}Installation rejected..."
               sleep 1 
               printf "..Please wait.."
