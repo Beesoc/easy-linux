@@ -17,19 +17,34 @@ scripts_dir="/opt/easy-linux"
 source ${scripts_dir}/.envrc
 set -e
 
-show_help_func {
-  echo "Usage: $SCRIPT_NAME [OPTIONS]"
-  echo "Usage: basename S0"
-  echo
+# Define usage function
+function usage {
+  echo "Usage: $0 [options]"
   echo "Options:"
-  echo "  -h, --help    Show this help message and exit"
-  echo "  -v, --version Show the version number and exit"
+  echo "  --help         Display this help message"
+  echo "                                          "
+  echo "                                          "
 }
 
-if [[ $1 == "--help" ]]; then
-show_help_func
-exit 0
-fi
+# Parse command line arguments with getopts
+while getopts "h:" opt; do
+  case $opt in
+    h)
+      usage
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument" >&2
+      usage
+      exit 1
+      ;;
+  esac
+done
 
 determine_mac_func() {
 
@@ -200,8 +215,3 @@ else
 fi
 }
 main
-
-if [[ $# -eq 0 ]]; then
-show_help_func
-exit 1
-fi
