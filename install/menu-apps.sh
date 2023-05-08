@@ -124,7 +124,7 @@ read -n 1 -p "Do you want to continue? [Y/n] " choicepwn
 elif [[ ${choice} == 20 ]]; then  
     printf "${CY}      You chose Wifite. \\n "
     clear
-#    Sysinfo_menu
+#    wifiteo_menu
 
 read -n 1 -p "Do you want to continue? [Y/n] " choicewifite
         choicewifite=${choicewifite:-Y}
