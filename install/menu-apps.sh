@@ -6,6 +6,7 @@
 #shellcheck source="${scripts_dir}/support/support-Prompt_func.sh"
 #shellcheck source="${scripts_dir}/support/support-Banner_func.sh"
 set -e
+scripts_dir=/opt/easy-linux
 #
 clear
 #
