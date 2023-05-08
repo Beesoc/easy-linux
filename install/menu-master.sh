@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 function help {
   echo 
   echo "Usage: $0 [options]"
@@ -32,6 +32,9 @@ scripts_dir="/opt/easy-linux"
 # Version: 0.0.2
 source ${scripts_dir}/.envrc
 set -e
+
+export WM_CLASS="/usr/bin/menu-master.sh"
+export WM_NAME="Beesoc's Easy Linux Loader"
 
 determine_mac_func() {
 
@@ -203,4 +206,3 @@ else
 fi
 }
 main
-                        
