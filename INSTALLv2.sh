@@ -61,7 +61,7 @@ direnv_func() {
 
 install_func() {
 # Step 5 function.
-printf "${WT}\\n  [*]  ${CY}Dependencies satisfied.\\n  ${WT}[*]${CY} "
+printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n  ${WT}[*]${GN} "
 sleep 1
 read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
@@ -119,7 +119,6 @@ clear
    Banner_func
 # check for requirements.
     if command -v /usr/bin/direnv >/dev/null 2>&1; then
-                printf "\\n${GN}DIRENV is already installed\\n"
        check_directories_func
     else
     direnv_func
@@ -198,7 +197,7 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n" 
 
 printf "${WT}$USER_NAME,${CY} "
-read -p "would you like to launch Easy Linux now? [Y/n] " launchnow
+read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
   printf "${GN}Starting Beesoc's Easy Linux now....\\n"
