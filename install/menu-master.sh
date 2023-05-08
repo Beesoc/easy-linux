@@ -17,13 +17,19 @@ scripts_dir="/opt/easy-linux"
 source ${scripts_dir}/.envrc
 set -e
 
-function show_help {
+show_help_func {
   echo "Usage: $SCRIPT_NAME [OPTIONS]"
+  echo "Usage: basename S0"
   echo
   echo "Options:"
   echo "  -h, --help    Show this help message and exit"
   echo "  -v, --version Show the version number and exit"
 }
+
+if [[ $1 == "--help" ]]; then
+show_help_func
+exit 0
+fi
 
 determine_mac_func() {
 
@@ -190,3 +196,8 @@ else
 fi
 }
 main
+
+if [[ $# -eq 0 ]]; then
+show_help_func
+exit 1
+fi
