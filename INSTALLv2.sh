@@ -157,9 +157,9 @@ if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
 fi
 
 # Write information to file
-echo "username=$username" >> /opt/easy-linux/support/.whoami.sh
-echo "computername=$computername" >> /opt/easy-linux/support/.whoami.sh
-echo "amiPwn=$amiPwn" >> /opt/easy-linux/support/.whoami.sh
+echo "username=$username" >> /opt/easy-linux/support/.whoami
+echo "computername=$computername" >> /opt/easy-linux/support/.whoami
+echo "amiPwn=$amiPwn" >> /opt/easy-linux/support/.whoami
 
 }
 git_files_func() {
