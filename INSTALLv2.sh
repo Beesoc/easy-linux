@@ -158,7 +158,7 @@ fi
 
 sudo chown 1000:0 /opt/easy-linux/.envrc
 # Write information to file
-echo "export readonly username=$username" >> /opt/easy-linux/.envrc
+echo "export username=$username" >> /opt/easy-linux/.envrc
 echo "export computername=$computername" >> /opt/easy-linux/.envrc
 echo "export amiPwn=$amiPwn" >> /opt/easy-linux/.envrc
 cd /opt/easy-linux || exit
@@ -199,7 +199,7 @@ printf "\\n${WT}   $username,${CY} "
 read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
-  printf "${GN}Starting Beesoc's Easy Linux now....\\n"
+  printf "${GN}\\nStarting Beesoc's Easy Linux now....\\n"
   source /opt/easy-linux/menu-master.sh
 else
   printf "    ${RED}Exiting.\\n"
