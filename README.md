@@ -11,7 +11,7 @@ Package management is done via APT. DIRENV, bc, lm-sensors and curl are prerequi
 Don't know how to do that?  No prob. The purpose of this project is to help non-technical (or, at least non-Linux) people out.  
 Detailed instructions: 
 1. open a 'Terminal' emulator app on your Linux desktop. Check you application menu, you have one.
-2. in the Terminal window, copy and paste this command: **curl -sfL https://raw.githubusercontent.com/Beesoc/easy-linux/main/INSTALLv2.sh >> INSTALLv2.sh && chmod a+x INSTALLv2.sh && ./INSTALLv2.sh**
+2. in the Terminal window, copy and paste this command: **curl -sfL https://raw.githubusercontent.com/Beesoc/easy-linux/main/INSTALLv2.sh >> $HOME/INSTALLv2.sh && chmod a+x $HOME/INSTALLv2.sh && $HOME/INSTALLv2.sh**
  
 **IMPORTANT:**  The install command above should be copied and pasted as 1 command!  There are actually 2 separate commands there but they are ran as 1 for simplicity.
 
