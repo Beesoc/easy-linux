@@ -10,7 +10,8 @@ source ${scripts_dir}/.envrc
 trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 source ${scripts_dir}/support/support-Banner_func.sh
 
-printf "  ${CY}This script backs up your saved hashes from ${WT}/opt/backup/root/handshakes${CY}." 
+printf "  ${CY}This script backs up your saved hashes from ${WT}/opt/backup/root/handshakes${CY}."
+# TODO: pull handshakes directly off Pwnagotchi.
 
 permissions_func() {
 # make sure permissions are ok.
