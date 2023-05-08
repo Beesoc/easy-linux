@@ -1,7 +1,9 @@
 #!/bin/bash
 # New app installer from Github
 # Version: 0.0.2
+
 set -e
+
 BK='\e[0;44;30m'
 RED='\e[1;31m'
 GN='\e[1;32m'
@@ -12,6 +14,7 @@ OGG='\e[0;32;44m'
 OGF='\e[0;33;44m'
 OGH='\e[0;30;44m'
 NC='\e[0m'
+
 clear
 Banner_func() {
 # step 2. function.
@@ -38,7 +41,7 @@ printf "${NC}${CY}"
 Banner_func
 
 direnv_func() {
-# Step 3 function.
+# Step 3 or skip function.
                read -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ $choicedirenv =~ ^[Yy]$ ]]; then
@@ -78,7 +81,7 @@ read -rp "Do you want to install Easy Linux Loader? [Y/n] " choiceez
 }
 
 check_directories_func() {
-# Step 4 function.
+# Step 2 or 4 function.
 if [[ -d /opt/easy-linux ]]; then
     printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
     printf "  ${WT}[*] ${GN}Removing and recloning repository." 
@@ -94,14 +97,75 @@ install_func
 main() {
 # 1.  script starts executing here.
 clear
+Banner_func
+
+printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
+
+read -p "Do you want to install Beesoc's Easy Linux Loader? [Y/n] " install
+install=${install:-Y}
+if [[ $install =~ ^[Yy]$ ]]; then
+  printf "${GN}Loading...Please Wait..."
+else
+  printf "${RED}   Exiting."
+  exit 0
+fi
+sudo apt install -y bc lm-sensors curl > /dev/null
+
+readonly username=$(whoami)
+readonly computername=$(hostname)
+
+clear
    Banner_func
-   if command -v /usr/bin/direnv >/dev/null 2>&1; then
+# check for requirements.
+    if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 printf "\\n${GN}DIRENV is already installed\\n"
        check_directories_func
     else
     direnv_func
     fi
+}
 
+whoami_func() {
+# Step 7 func.
+# Capture user's username and computer name
+
+# Verify the user and computer name in three different ways
+VERIFY_HOST=$(hostname)
+VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
+
+# Verify the user and computer name
+if [ "$USER_NAME" != "$(whoami)" ] || [ "$COMPUTER_NAME" != "$VERIFY_HOST" ] || [ "$COMPUTER_NAME" != "$VERIFY_ETC_HOSTNAME" ]; then
+  echo "Verification failed. Exiting..."
+  exit 1
+fi
+
+# Verify computer name using three different methods
+if [ "$computername" != "$(echo $HOST)" ]; then
+  echo "Warning: computer name does not match \$HOST" >&2
+fi
+if [ "$computername" != "$(cat /etc/hostname)" ]; then
+  echo "Warning: computer name does not match /etc/hostname" >&2
+fi
+if [ "$computername" != "$(uname -n)" ]; then
+  echo "Warning: computer name does not match uname -n" >&2
+fi
+
+# Check if user is using Pwnagotchi
+if [ -d /etc/pwnagotchi ] && [ -d /usr/local/share/pwnagotchi ]; then
+      amiPwn=yes
+   elif [ !-d /etc/pwnagotchi ] && [ !-d /usr/local/share/pwnagotchi ]; then
+      amiPwn=no
+   else 
+      printf "  Unknown error."
+fi
+
+# Write information to file
+echo "username=$username" >> /opt/easy-linux/support/whoami.sh
+echo "computername=$computername" >> /opt/easy-linux/support/whoami.sh
+echo "amiPwn=$amiPwn" >> /opt/easy-linux/support/whoami.sh
+
+# Set file permissions so only owner of a file can access.
+chmod 600 /opt/easy-linux/support/whoami.sh
 
 }
 git_files_func() {
@@ -115,6 +179,9 @@ sudo chown -v 1000:1000 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/*.sh
 sudo chmod +x /opt/easy-linux/install/*.sh
 sudo chmod +x /opt/easy-linux/support/*.sh
+
+whoami_func
+
 sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
 cd /opt/easy-linux || exit
 sudo mv *.sh ..
@@ -126,10 +193,26 @@ sudo mv /opt/easy-linux/install/* ..
 
 cleanup_func() {
 # Step 7 function. End.
-printf "   ${GN}Beesoc's Easy Linux Menu System has been installed.
+printf "${WT} [*] ${CY}Please Wait while I cleanup some files used in the installation -${NC} \\n"
+printf "${WT}..."; sleep 1; printf "...Almost done\\n" 
 
+  clear
+  Banner_func
+  printf "   ${CY}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
+  printf "   Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
+  printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n" 
+
+printf "${WT}$USER_NAME,${CY} "
+read -p "would you like to launch Easy Linux now? [Y/n] " launchnow
+launchnow=${launchnow:-Y}
+if [[ $launchnow =~ ^[Yy]$ ]]; then
+  printf "${GN}Starting Beesoc's Easy Linux now....\\n"
+  source /opt/easy-linux/menu-master.sh
+else
+  printf "    ${RED}Exiting.\\n"
+  exit 0
+fi
 }
 
 main
 cleanup_func
-source /opt/easy-linux/menu-master.sh
