@@ -6,7 +6,7 @@ clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 source ${scripts_dir}/.envrc
 # shellcheck source=support-Banner_func.sh
-sudo apt install -y bc > /dev/null
+sudo apt install -y acpi bc > /dev/null
 
 # Display hostname and username
 printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')            ${CY}Time: ${WT}$(date +%I:%M:%S\ ${GN}%p)        ${CY}Username: ${GN}$(whoami)""${WT}@""${GN}$(hostname)${NC}\\n"
@@ -49,5 +49,5 @@ printf "# Critical Updates: ${RED}$security_updates        |   ${YW}   Critical 
 echo "$lsb_dist"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
-  read -r -n1 -s -t 90
-bash ${scripts_dir}/menu-master.sh
+  read -r -n1 -s -t 300
+source ${scripts_dir}/menu-master.sh
