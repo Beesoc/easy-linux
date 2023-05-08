@@ -16,8 +16,7 @@ declare -A required_versions=(
   ["README.md"]="0.0.2"
   ["version-check.sh"]="0.0.2"
   ["version-easy-linux.sh"]="0.0.2"
-  ["SETUP.sh"]="0.0.2"
-  ["INSTALL.sh"]="0.0.2"
+  ["INSTALLv2.sh"]="0.0.2"
   [".shellcheckrc"]="0.0.2"
   ["support/support-Banner_func.sh"]="0.0.2"
   ["support/support-docker.sh"]="0.0.2"
@@ -35,6 +34,7 @@ declare -A required_versions=(
   ["support/support-wifite.sh"]="0.0.2"
   ["support/support-wpaDOWN.sh"]="0.0.2"
   ["support/support-wpaUP.sh"]="0.0.2"
+  ["support/whoami.sh"]="0.0.2"
 )
 
 function check_version {
