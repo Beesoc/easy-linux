@@ -205,6 +205,12 @@ fi
 
 hacking_tool_func() {
 printf "${CY}Installing ${WT}Hacking Tool${CY}...${NC}\n"
+
+  if [[ $EUID -ne 0 ]]; then
+	echo -e "${RED}This script must be run as root."
+	exit 1
+  fi
+
   if [[ -d ${compiled_dir} ]]; then
         printf " \\n";
           cd ~/compiled || exit
@@ -212,6 +218,17 @@ printf "${CY}Installing ${WT}Hacking Tool${CY}...${NC}\n"
   elif [[ ! -d ${compiled_dir} ]]; then
           mkdir ~/compiled 
           cd ~/compiled || exit
+  else
+       printf "${RED}Invalid Selection"
+  fi
+  
+    if [[ -d ${compiled_dir}/hackingtool ]]; then
+        printf " \\n";
+          cd $HOME/compiled/hackingtool || exit
+          sudo hackingtool
+  elif [[ ! -d ${compiled_dir}/hackingtool ]]; then
+          mkdir $HOME/compiled 
+          cd $HOME/compiled || exit
   else
        printf "${RED}Invalid Selection"
   fi
