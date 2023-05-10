@@ -2,10 +2,18 @@
 # Aircrack-ng installer/executor
 # Version: 0.0.2
 
+if [[ $(cat ${scripts_dir}/.envrc | grep "depsinstalled" -c) = 0 ]]; then
+    depsinstalled=0
+fi
+
+if [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) = 0 ]]; then
+    airinstalled=0
+fi
+
 set -e
 scripts_dir=/opt/easy-linux
-source ${scripts_dir}/.envrc
-source ${scripts_dir}/support/support-Banner_func.sh
+source "${scripts_dir}/.envrc"
+source "${scripts_dir}/support/support-Banner_func.sh"
 
 check_directories_func() {
 # Step 2 or 4 function.
