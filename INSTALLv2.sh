@@ -89,7 +89,7 @@ if [[ -d /opt/easy-linux ]]; then
     sleep 1
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
-    sudo chown -v 1000:1000 /opt
+#    sudo chown -v 1000:1000 /opt
     printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
 fi  
 install_func
@@ -113,6 +113,8 @@ fi
 sudo apt install -y bc lm-sensors curl > /dev/null
 
 username=$(whoami)
+userid=${USER}
+useraccount=$(getent passwd 1000 | cut -d ":" -f 1)
 computername=$(hostname)
 
 clear
@@ -134,16 +136,16 @@ VERIFY_HOST=$(hostname)
 VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
 
 # Verify computer name using three different methods
-if [ "$computername" != "$(echo $HOST)" ]; then
+if [ $computername != $(echo $HOST) ]; then
   printf "${OG}  Warning: computer name does not match \$HOST" >&2
 fi
-if [ "$computername" != "$(cat /etc/hostname)" ]; then
+if [ $computername != $(cat /etc/hostname) ]; then
   printf "${OG}  Warning: computer name does not match /etc/hostname" >&2
 fi
-if [ "$computername" != "$(uname -n)" ]; then
+if [ $computername != $(uname -n) ]; then
   printf "${OG}  Warning: computer name does not match uname -n" >&2
 fi
-if [ "$username" != "$(USER)" ]; then
+if [ $username != $userid ] && [ $userid != $useraccount ]; then
   printf "${OG}  Warning: Username does not match $USER" >&2
 fi
 
