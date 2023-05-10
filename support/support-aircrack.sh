@@ -48,8 +48,7 @@ run_func() {
     airinstalled=1
     if [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) -gt 0 ]]; then
         printf "${CY}...Variables previously written...Continuing...\\n"
-    elif [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) != 
-
+    elif [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) != 1]]; then
            sudo sh -c echo "export airinstalled=$airinstalled" >> ${scripts_dir}/.envrc
            cd ${scripts_dir} && direnv allow
      fi
