@@ -3,16 +3,23 @@
 # Version: 0.0.2
 
 scripts_dir=/opt/easy-linux
-source "${scripts_dir}/support/support-Banner_func.sh"
 source "${scripts_dir}/.envrc"
+air_installed=""
+deps_installed=""
 
-# Initialize variables if not previously set
-if [[ $(cat "${scripts_dir}/.envrc" | grep "depsinstalled" -c) = 0 ]]; then
-    deps_installed=0
+# Initialize variables if not previously set 
+if [[ $(cat "${scripts_dir}/.envrc" | grep "air_installed" -c) = 1 ]]; then
+    run_func
+fi
+if [[ $(cat "${scripts_dir}/.envrc" | grep "air_installed" -c) != 1 ]]; then
+    air_installed=0
 fi
 
-if [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) = 0 ]]; then
-    air_installed=0
+if [[ $(cat "${scripts_dir}/.envrc" | grep "deps_installed" -c) = 1 ]]; then
+    run_func
+fi
+if [[ $(cat "${scripts_dir}/.envrc" | grep "deps_installed" -c) != 1 ]]; then
+    deps_installed=0
 fi
 
 # Step 2 or 4 function.
@@ -41,19 +48,18 @@ check_directories_func() {
 # Step 3 function.
 run_func() {
     deps_installed=1
-    if [[ $(cat "${scripts_dir}/.envrc" | grep "depsinstalled" -c) -gt 0 ]]; then
-        printf "${CY}...Variables previously written...Continuing...\\n"
-    elif [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) != 1 ]]; then
-        sudo sh -c "echo 'export depsinstalled=$deps_installed' >> ${scripts_dir}/.envrc"
+if [[ $(cat "${scripts_dir}/.envrc" | grep "air_installed" -c) = 0 ]]; then
+        air_installed=1
+        sudo sh -c "echo 'export air_installed=$air_installed' >> ${scripts_dir}/.envrc"
         cd "${scripts_dir}/support" && direnv allow
-    fi                 
-    air_installed=1
-    if [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) -gt 0 ]]; then
-        printf "${CY}...Variables previously written...Continuing...\\n"
-    elif [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) != 1 ]]; then
-           sudo sh -c "echo 'export airinstalled=$air_installed' >> ${scripts_dir}/.envrc"
-           cd "${scripts_dir}" && direnv allow
-     fi
+fi
+
+if [[ $(cat "${scripts_dir}/.envrc" | grep "deps_installed" -c) = 0 ]]; then
+        deps_installed=1
+        sudo sh -c "echo 'export deps_installed=$deps_installed' >> ${scripts_dir}/.envrc"
+        cd "${scripts_dir}/support" && direnv allow
+fi
+
      sudo aircrack-ng --help
      sudo aircrack-ng -u  
      
@@ -67,7 +73,7 @@ app_install_func() {
     if [[ $air_installed = 1 ]]; then
         printf "${GB}  Aircrack-ng already installed\\n"
         read -n 1 -s -r -p "Press any key to continue..."
-        run_func
+        run_func           
     else
         printf "${GN}  Loading, please wait."
         if [[ $deps_installed = 1 ]]; then
