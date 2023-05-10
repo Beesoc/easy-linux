@@ -58,7 +58,6 @@ run_func() {
      sudo aircrack-ng -u  
      
      printf "${CY} See program help above.\\n  ${WT}"
-     read -n 1 -s -p "Press any key to continue..."
 
 }
 
