@@ -1,39 +1,43 @@
 #!/bin/bash
 set -e
 # Version: 0.0.2
-source ${scripts_dir}/.envrc
+source .envrc
 
 #################################################  Begin User Options  #########
-#set -e
-gotcha_mac="12:B3:F4:47:58:B7"
-sniffer_mac="22:22:22:22:22:22"
-FuckThatSh1t_mac="33:33:33:33:33:33"
-larry_host=potato
-cory_host=updates
-mike_host=TODO
-backup_dir=/opt/backup
 
 ###################################################  End User Options  #########
 
-source ${scripts_dir}/support/support-Banner_func.sh
+source support-Banner_func.sh
+printf "\\n "
+# Get the username associated with UID 1000
+reg_user=$(getent passwd 1000 | cut -d ':' -f 1)
 
-sudo su
-if [ -d /home/pi ]; then
-   sudo chown -vR pi:pi /home/pi/*
-fi
+# Print the username
+printf "The user with UID 1000 is: \\n"
+printf "${GN}  Username: ${WT}$reg_user \\n    "
 
-if [ -d /opt/backup ]; then
-   sudo chown -vR 1000:1000 /opt/backup/*
-   sudo chown -vR 1000:1000 /home/1000
-#   cd /opt/backup/root
-#   sudo chown -vR beesoc:beesoc /opt/backup/root/*.*
-#   sudo chown -vR beesoc:beesoc ./.*
-fi
+read -n 1 -p "Is the above username correct? [Y/n] " userid
+  userid=${userid:-Y}
+  if [[ ${userid} =~ ^[Nn]$ ]]; then
+       printf "\\n ${RED}  FATAL ERROR: Exiting."
+       exit 1
+  elif [[ ${userid} =~ ^[Yy]$ ]]; then
 
-if [ -d /home/beesoc ]; then
-   sudo chown -vR beesoc:beesoc /home/beesoc/
-fi
+        if [ -d /home/pi ]; then
+           sudo chown -vR pi:pi /home/pi/
+        fi
 
-if [ -d /home/larry ]; then
-   sudo chown -vR larry:larry /home/larry/
-fi
+        if [ -d /opt/backup ]; then
+           sudo chown -vR $reg_user:$reg_user /opt/backup/
+        fi
+        
+        sudo chown -vR $reg_user:$reg_user /home/$reg_user
+
+        if [ -d /opt/easy-linux ]; then
+           sudo chown -vR $reg_user:$reg_user /opt/easy-linux
+        fi
+  else
+     printf "${RED}  Invalid selection"
+  fi
+
+source ${scripts_dir}/menu-master.sh
