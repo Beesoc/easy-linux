@@ -116,4 +116,8 @@ read -n 1 -s -r -p "Press any key to continue..."
 
 }
 main
+cd $HOME/easy-linux && direnv allow
+sudo cp $HOME/easy-linux/.envrc $HOME/easy-linux/support/.envrc
+cd $HOME/easy-linux/support && direnv allow
+
 source ${scripts_dir}/menu-master.sh
