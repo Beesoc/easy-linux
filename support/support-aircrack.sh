@@ -32,10 +32,14 @@ app-install_func
 
 run_func() {
            depsinstalled=1
+     if [[ (cat ${scripts_dir}/.envrc | grep "depsinstalled" -c) gt 0 ]]; then
+          printf "${CY}...Variables previously written...Continuing..."
+     elif [[ (cat ${scripts_dir}/.envrc | grep "depsinstalled" -c) != 1 ]]; then
            sudo echo "export depsinstalled=$depsinstalled" >> ${scripts_dir}/.envrc
            airinstalled=1  
            sudo echo "export airinstalled=$airinstalled" >> ${scripts_dir}/.envrc
            cd ${scripts_dir} && direnv allow
+     fi
      sudo aircrack-ng --help
      sudo aircrack-ng -u
      printf "${CY} See program help above.\\n  ${WT}"
