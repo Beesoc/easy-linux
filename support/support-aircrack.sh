@@ -6,17 +6,18 @@ scripts_dir=/opt/easy-linux
 source "${scripts_dir}/support/support-Banner_func.sh"
 source "${scripts_dir}/.envrc"
 
-if [[ $(cat ${scripts_dir}/.envrc | grep "depsinstalled" -c) = 0 ]]; then
-    depsinstalled=0
+# Initialize variables if not previously set
+if [[ $(cat "${scripts_dir}/.envrc" | grep "depsinstalled" -c) = 0 ]]; then
+    deps_installed=0
 fi
 
-if [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) = 0 ]]; then
-    airinstalled=0
+if [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) = 0 ]]; then
+    air_installed=0
 fi
 
+# Step 2 or 4 function.
 check_directories_func() {
-    # Step 2 or 4 function.
-    if [[ $airinstalled = 1 ]]; then 
+    if [[ $air_installed -eq 1 ]]; then 
         run_func
     else
         printf "${WT}  Aircrack-ng ${CY}not detected. Continuing...\\n"
@@ -24,7 +25,7 @@ check_directories_func() {
 
     if [[ -d /opt/aircrack-ng ]]; then
         printf "  ${WT}[*] ${GN}/opt/aircrack-ng ${CY}directory found.\\n"
-        printf "  ${WT}[*] ${GN}Removing and reinstalling.\\n " 
+        printf "  ${WT}[*] ${GN}Removing and reinstalling.\\n" 
         sleep 1
         sudo rm -fr /opt/aircrack-ng
     elif [[ ! -d /opt/aircrack-ng ]]; then
@@ -32,28 +33,30 @@ check_directories_func() {
         printf " ${WT} [*] ${WT}/opt/aircrack-ng ${CY}directory not found. Installing into that folder.\\n"; sleep 1
     fi  
     #curl https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz $HOME/Downloads
-    sudo wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P $HOME/Downloads
+    sudo wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P "$HOME/Downloads"
 
-    app-install_func
+    app_install_func
 }
 
+# Step 3 function.
 run_func() {
-    depsinstalled=1
-    if [[ $(cat ${scripts_dir}/.envrc | grep "depsinstalled" -c) -gt 0 ]]; then
+    deps_installed=1
+    if [[ $(cat "${scripts_dir}/.envrc" | grep "depsinstalled" -c) -gt 0 ]]; then
         printf "${CY}...Variables previously written...Continuing...\\n"
-    elif [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) != 1 ]]; then
-        sudo sh -c "echo 'export depsinstalled=$depsinstalled' >> ${scripts_dir}/.envrc"
-        cd ${scripts_dir}/support && direnv allow
+    elif [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) != 1 ]]; then
+        sudo sh -c "echo 'export depsinstalled=$deps_installed' >> ${scripts_dir}/.envrc"
+        cd "${scripts_dir}/support" && direnv allow
     fi                 
-    airinstalled=1
-    if [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) -gt 0 ]]; then
+    air_installed=1
+    if [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) -gt 0 ]]; then
         printf "${CY}...Variables previously written...Continuing...\\n"
-    elif [[ $(cat ${scripts_dir}/.envrc | grep "airinstalled" -c) != 1]]; then
-           sudo sh -c echo "export airinstalled=$airinstalled" >> ${scripts_dir}/.envrc
-           cd ${scripts_dir} && direnv allow
+    elif [[ $(cat "${scripts_dir}/.envrc" | grep "airinstalled" -c) != 1 ]]; then
+           sudo sh -c "echo 'export airinstalled=$air_installed' >> ${scripts_dir}/.envrc"
+           cd "${scripts_dir}" && direnv allow
      fi
      sudo aircrack-ng --help
-     sudo aircrack-ng -u
+     sudo aircrack-ng -u  
+     
      printf "${CY} See program help above.\\n  ${WT}"
      read -n 1 -s -p "Press any key to continue..."
 
