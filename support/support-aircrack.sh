@@ -120,7 +120,7 @@ read -n 1 -s -r -p "Press any key to continue..."
 }
 main
 cd ${scripts_dir} && direnv allow
-sudo cp ${scripts_dir}/easy-linux/.envrc ${scripts_dir}/easy-linux/support/.envrc
-cd ${scripts_dir}/easy-linux/support && direnv allow
+sudo cp ${scripts_dir}/.envrc ${scripts_dir}/support/.envrc
+cd ${scripts_dir}/support && direnv allow
 
 source ${scripts_dir}/menu-master.sh
