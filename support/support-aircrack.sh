@@ -101,7 +101,7 @@ else
                              fi
                            sudo make install
                            airinstalled=1  
-                           elif [[ $installair = "N" ]] || [[ $installdir = "n" ]]; then
+                           elif [[ $installair = "N" ]] || [[ $installair = "n" ]]; then
                            printf "${RED}  Not installing aircrack-ng.  Exiting."
                              exit 0
                            fi
