@@ -62,64 +62,49 @@ run_func() {
 
 }
 
-app-install_func() {
-sudo tar -xvf $HOME/Downloads/aircrack-ng-1.7.tar.gz
+app_install_func() {
+    sudo tar -xvf $HOME/Downloads/aircrack-ng-1.7.tar.gz
 
-if [[ $airinstalled = 1 ]]; then
-    printf "${GB}  Aircrack-ng already installed\\n"
-    read -n 1 -s -r -p "Press any key to continue..."
-    run_func
-else
-  printf "${GN}  Loading, please wait."
-  if [[ $depsinstalled = 1 ]]; then
-       printf "${OG} Dependencies already installed\\n"
-  elif [[ $depsinstalled != 1 ]]; then 
-   printf "${GN}\\n"
-       read -n 1 -p "Would you like to download and install Aircrack-ng dependancies? [Y/n] " installdeps
-           installdeps=${installdeps:-Y}
-           if [[ $installdeps =~ ^[Yy]$ ]]; then
-                   printf "${CY}  Downloading and installing dependencies.  ${WT}Please wait.\\n"
+    if [[ $air_installed = 1 ]]; then
+        printf "${GB}  Aircrack-ng already installed\\n"
+        read -n 1 -s -r -p "Press any key to continue..."
+        run_func
+    else
+        printf "${GN}  Loading, please wait."
+        if [[ $deps_installed = 1 ]]; then
+            printf "${OG} Dependencies already installed\\n"
+        elif [[ $deps_installed != 1 ]]; then 
+            printf "${GN}\\n"
+            read -n 1 -p "Would you like to download and install Aircrack-ng dependencies? [Y/n] " installdeps
+            installdeps=${installdeps:-Y}
+            if [[ $installdeps =~ ^[Yy]$ ]]; then
+                printf "${CY}  Downloading and installing dependencies.  ${WT}Please wait.\\n"
                 sudo apt-get update
-        sudo apt-get install -y build-essential autoconf automake libtool pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev ethtool shtool rfkill zlib1g-dev libpcap-dev libsqlite3-dev libpcre3-dev libhwloc-dev libcmocka-dev hostapd wpasupplicant tcpdump screen iw usbutils
-                depsinstalled=1
-                sudo sh -c echo "export depsinstalled=$depsinstalled" >> ${scripts_dir}/.envrc
+                sudo apt-get install -y build-essential autoconf automake libtool pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev ethtool shtool rfkill zlib1g-dev libpcap-dev libsqlite3-dev libpcre3-dev libhwloc-dev libcmocka-dev hostapd wpasupplicant tcpdump screen iw usbutils
+                deps_installed=1
+                sudo sh -c "echo 'export depsinstalled=$deps_installed' >> ${scripts_dir}/.envrc"
                 cd ${scripts_dir} && direnv allow
-                   printf "  ${GN}Dependencies installed successfully.\\n"
-                           read -n 1 -p "Would you like to download and install Aircrack-ng? [Y/n] " installair
-                           if [[ $installair =~ ^[Yy]$ ]]; then
-                           sudo apt install -y hwloc
-                           sudo apt install -y duma
-                           sudo apt install -y mk-configure 
-                           sudo apt install -y ui-auto
-                           cd $HOME/Downloads/aircrack-ng-1.7
-
-                           sudo ./autogen.sh
-                           sudo ./make
-
-                           sudo make check
-                           sudo make integration
-                             if [[ -f /usr/bin/aircrack-ng ]]; then
-                                sudo mv /usr/bin/aircrack-ng /usr/bin/aircrack-ng.backup
-                             fi
-                           sudo make install
-                           airinstalled=1  
-                           elif [[ $installair = "N" ]] || [[ $installair = "n" ]]; then
-                           printf "${RED}  Not installing aircrack-ng.  Exiting.\\n"
-                             exit 0
-                           fi
-                           sudo sh -c echo "export airinstalled=$airinstalled" >> ${scripts_dir}/.envrc
-                           cd ${scripts_dir} && direnv allow
-           elif [[ $installdeps =~ ^[Nn]$ ]]; then
-                   printf "${RED} [✘] Exit tool [✘]${NC} \\n"
-               exit 0
-           else
-               printf "  ${RED}Invalid Selection.\\n"
-           fi
-  else
-      $depsinstalled=0
-  fi
-fi
-
+                printf "  ${GN}Dependencies installed successfully.\\n"
+                read -n 1 -p "Would you like to download and install Aircrack-ng? [Y/n] " installair
+                if [[ $installair =~ ^[Yy]$ ]]; then
+                    sudo apt install -y hwloc
+                    sudo apt install -y duma
+                    sudo apt install -y mk-configure 
+                    sudo apt install -y ui-auto
+                    cd $HOME/Downloads/aircrack-ng-1.7
+                    sudo ./autogen.sh
+                    sudo make
+                    sudo make install
+                    air_installed=1
+                    sudo sh -c "echo 'export airinstalled=$air_installed' >> ${scripts_dir}/.envrc"
+                    cd ${scripts_dir} && direnv allow
+                    printf "${GB}  Aircrack-ng has been installed.\\n"
+                    read -n 1 -s -r -p "Press any key to continue..."
+                    run_func
+                fi
+            fi
+        fi
+    fi
 }
 
 main() {
