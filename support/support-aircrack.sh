@@ -91,8 +91,8 @@ else
                            sudo apt install -y ui-auto
                            cd $HOME/Downloads/aircrack-ng-1.7
 
-                           sudo $HOME/Downloads/aircrack-ng-1.7.tar.gz/autogen.sh
-                           sudo $HOME/Downloads/aircrack-ng-1.7.tar.gz/make
+                           sudo ./autogen.sh
+                           sudo ./make
 
                            sudo make check
                            sudo make integration
