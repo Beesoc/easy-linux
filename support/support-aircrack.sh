@@ -33,7 +33,7 @@ elif [[ ! -d /opt/aircrack-ng ]]; then
     printf " ${WT} [*] ${WT}/opt/aircrack-ng ${CY}directory not found. Installing into that folder.\\n"; sleep 1
 fi  
 #curl https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz $HOME/Downloads
-sudo wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz $HOME/Downloads
+sudo wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P $HOME/Downloads
 
 app-install_func
 }
