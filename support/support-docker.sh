@@ -1,12 +1,21 @@
 #!/bin/bash
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
+set -e
 source "${scripts_dir}/support/support-Banner_func.sh"
 printf "\\n    ${OG}install docker requirements, but first...\\n"
+printf "  ${CY}This script will install Docker Desktop.${GN}" 
+read -n 1 -r -p "Do you want to continue? [Y/n] "instdocker
+instdocker=${instdocker:-Y}
+    if [[ "$instdocker" =~ ^[Nn]$ ]]; then
+        printf "${RED}  User chose no. Exiting"
+        exit 0
+    if [[ "$instdocker" =~ ^[Yy]$ ]]; then
 printf "    ${CY}General maintenance: sudo apt --fix-broken install -y${NC}\\n"
 printf "    ${CY}Installing dependencies. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
   sudo apt --fix-broken install -y > /dev/null
   sudo apt install -y docker docker-compose wmdocker python3-dockerpty docker.io uidmap rootlesskit golang-github-rootless-containers-rootlesskit-dev containerd runc tini cgroupfs-mount needrestart golang-github-gofrs-flock-dev golang-github-gorilla-mux-dev golang-github-insomniacslk-dhcp-dev golang-github-moby-sys-dev golang-github-sirupsen-logrus-dev golang-golang-x-sys-dev libsubid4
+  fi
   printf "    ${CY}Installing dependencies. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
   sudo apt --fix-broken install -y > /dev/null
   printf "${OG}Install ${WT}Docker-desktop requirements QEMU${NC}\\n"

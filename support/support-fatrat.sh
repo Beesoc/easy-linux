@@ -3,7 +3,6 @@
 # Version: 0.0.2
 
 set -e
-cd ..
 source ${scripts_dir}/.envrc
 source ${scripts_dir}/support/support-Banner_func.sh
 
@@ -11,21 +10,22 @@ app-install_func() {
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
   if [[ ! -d "$HOME/compiled/TheFatRat/" ]]; then
-      read -rp "Would you like to install The Fat Rat? (y/n) " install_fatrat
-      if [[ "$install_fatrat" = "y" ]] || [[ ${install_fatrat} = "Y" ]]; then
+      read -n 1 -r -p "Would you like to install The Fat Rat? (Y/n) " install_fatrat
+      install_fatrat={$install_fatrat:-Y}
+      if [[ "$install_fatrat" ~= ^[Yy]$ ]]; then
         sudo git clone https://github.com/Screetsec/TheFatRat.git &&
           cd TheFatRat &&
           sudo chmod +x setup.sh &&
           sudo ./setup.sh
       fi
   elif [[ -d "$HOME/compiled/TheFatRat/" ]]; then 
-    read -r -p "The Fat Rat installation folder exists. Remove folder and reinstall?" reinstall
-      if [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
+    read -n 1 -r -p "The Fat Rat installation folder exists. Remove folder and reinstall?" reinstall
+    reinstall={$reinstall:-Y}
+      if [[ "$reinstall" ~= ^[Nn]$ ]]; then
          printf "${RED} The Fat Rat will not be installed. Press ${WT}any ${RED} key to return to Hacking Menu."
-         source "${scripts_dir}/support/support-Prompt_func.sh"
-         read -r -n1 -s -t 60
-           bash $scripts_dir/menu-hacking.sh
-      elif [[ "$reinstall" = "y" ]] || [[ ${reinstall} = "Y" ]]; then
+         read -r -n 1 -s -t 300
+           source $scripts_dir/menu-hacking.sh
+      elif [[ "$reinstall" ~= ^[Yy]$ ]]; then
          sudo rm -fR $HOME/compiled/TheFatRat
       else
          printf "${YW}    Invalid Selection."
@@ -41,10 +41,10 @@ source "${scripts_dir}/support/support-Banner_func.sh"
 main() {
 source "${scripts_dir}/support/support-Banner_func.sh"
 if which fatrat >/dev/null 2>&1; then
-  printf "${WT}The FAt Rat ${CY}is ${RED}not installed${CY}. Installing..."
+  printf "  ${WT}The FAt Rat ${CY}is ${RED}not installed${CY}. Installing..."
   app-install_func
 else
-  printf "The Fat Rat is already installed. Continuing"
+  printf "${GN}  The Fat Rat is already installed. Continuing"
 fi
 
 #printf "${CY}  Your wordlist is currently set to: ${WT}${wordlist}${CY}." 
@@ -58,12 +58,11 @@ fi
 #  read -r -p "Enter the FULL PATH and file name for your desired wordlist" mywordlist
 #  wordlist=${mywordlist}
 #fi
-clear
-source ${scripts_dir}/support/support-Banner_func.sh
 #sudo gnome-terminal -t "TheFatRat 1.9.5" --geometry=600x630 -e "bash -c 'fatrat';-bash"
-clear
-bash ${scripts_dir}/menu-hacking.sh
+app-install_func
 }
 
 main
-
+clear
+source ${scripts_dir}/menu-hacking.sh
+exit 0
