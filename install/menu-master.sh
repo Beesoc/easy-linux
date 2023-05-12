@@ -87,7 +87,7 @@ if [[ ${choice} == 1 ]]; then
         read -n 1 -p "Do you want to continue? [Y/n] " choicehacking
         choicehacking=${choicehacking:-Y}
         if [[ $choicehacking =~ ^[Yy]$ ]]; then
-            printf "${CY}Continuing...\\n"
+            printf "${CY}Continuing...\\n"q
             clear
       #    Hacking_menu
                source ${scripts_dir}/menu-hacking.sh
@@ -191,18 +191,9 @@ elif [[ ${choice} == 99 ]]; then
         fi
 elif [[ ${choice} == "x" ]] || [[ ${choice} == "X" ]] || [[ ${choice} == "0" ]]; then  
 #    Exit_menu
-    read -n 1 -p "Do you really want to exit? [y/N] " choiceexit
-        choiceexit=${choiceexit:-N}
-        if [[ $choiceexit =~ ^[Nn]$ ]]; then
-                return
-        elif [[ $choiceexit =~ ^[Yy]$ ]]; then
-                printf "${RED} [✘] Exit tool [✘]${NC} \\n"
             exit 0
         else
             printf "${RED}Invalid Selection.\\n"
         fi 
-else 
-    printf "${RED}[!!!]${OG} Invalid Selection  ${RED}[!!!]"
-fi
 }
 main

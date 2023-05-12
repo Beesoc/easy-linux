@@ -91,5 +91,5 @@ else
 fi
 
 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
-read -r -n1 -s -t 120
+read -r -n 1 -s -t 120
 source "${scripts_dir}/menu-master.sh"

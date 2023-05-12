@@ -12,51 +12,46 @@ printf "                     ${CY} Welcome to the Hacking/Security Menu.        
   printf "\\n  ${OG}2] ${CY}Disable wifi Monitor mode${OG}              21] ${CY}Disable wifi and Network Manager${OG}\\n"
   printf "\\n  ${OG}3] ${CY}Upload all hashes to wpa-sec and OHC${OG}   22] ${CY}Capture Hashes ${OG}\\n"
   printf "\\n  ${OG}4] ${CY}Use Beesoc's wordlist or merge ${OG}        23] ${CY}Wifite: PMKID, EAPOL, WPS attacks  \\n" 
-  printf "    lists, sort and eliminate dups with 1 easy tool."
+  printf "    lists, sort and delete dups with 1 easy tool."
   printf "\\n\\n"
-  printf "${OG}[90]  ${WT}[!!!] ${CY}Try the new AutoHack ${WT}[!!!]\\n"
-  printf "${OG}[99]  ${CY}Return to main menu${OG}                                       ${RED}[✘] Exit tool [✘]${OG}  \\n      "
+  printf "${OG}[90] ${WT}[!!!] ${CY}Try the new AutoHack ${WT}[!!!]\\n"
+  printf "${OG}[99] ${CY}Return to main menu${OG}                                       ${RED}[✘] Exit tool [✘]${OG}  \\n      "
   printf "\\n  "
   printf "\\n                         ${WT}[*] ${OG}NOTE: Monitor mode is required for Sniffing/Injecting${WT}\\n\\n"
 printf "      -----> "
 read -r choice
 if [[ ${choice} == 1 ]]; then
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-monUP.sh"
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-monUP.sh"
 elif [[ "${choice}" == 2 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-monDOWN.sh"
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-monDOWN.sh"
 elif [[ "${choice}" == 3 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/menu-upload-hashes.sh"
-elif [[ "${choice}" == 20 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-wpaUP.sh"
-elif [[ "${choice}" == 21 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-wpaDOWN.sh"
-elif [[ "${choice}" == 22 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-hcxdump.sh"
-elif [[ "${choice}" == 23 ]]; then  
-    bash "${scripts_dir}/support/support-wifite.sh"
-elif [[ "${choice}" == 90 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-hcxdump.sh"
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/menu-upload-hashes.sh"
 elif [[ "${choice}" == 4 ]]; then  
-    clear
-    bash "${scripts_dir}/support/support-Banner_func.sh"
-    bash "${scripts_dir}/support/support-makeWordlist.sh"
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-makeWordlist.sh"
+elif [[ "${choice}" == 20 ]]; then  
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-wpaUP.sh"
+elif [[ "${choice}" == 21 ]]; then  
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-wpaDOWN.sh"
+elif [[ "${choice}" == 22 ]]; then  
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-hcxdump.sh"
+elif [[ "${choice}" == 23 ]]; then  
+    source "${scripts_dir}/support/support-wifite.sh"
+elif [[ "${choice}" == 90 ]]; then  
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/support/support-hcxdump.sh"
+elif [[ "${choice}" == 99 ]]; then  
+    source "${scripts_dir}/support/support-Banner_func.sh"
+    source "${scripts_dir}/menu-master.sh"
 elif [[ "${choice}" = "x" ]] || [[ "${choice}" = "X" ]]; then  
     clear
-    source "${scripts_dir}/menu-master.sh"
+    exit 0
 else
     printf "${RED}  Nope, that's an invalid selection."
 fi
