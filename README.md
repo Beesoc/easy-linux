@@ -27,4 +27,6 @@ Credit for these amazing tools go to the following creators and projects, in no 
 8. **Hashcat:** https://hashcat.net/hashcat/
 9. **John the Ripper:** https://www.openwall.com/john/
 10. **DIRENV:** https://direnv.net/docs/installation.html
+11. **Aircrack-NG:** https://www.aircrack-ng.org/doku.php?id=install_aircrack
+12. **Airgeddon:** https://github.com/v1s1t0r1sh3r3/airgeddon
 
