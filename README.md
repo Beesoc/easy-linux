@@ -13,7 +13,7 @@ Detailed instructions:
 1. open a 'Terminal' emulator app on your Linux desktop. Check you application menu, you have one.
 2. in the Terminal window, copy and paste this command: **curl -sfL https://raw.githubusercontent.com/Beesoc/easy-linux/main/INSTALLv2.sh >> $HOME/INSTALLv2.sh && chmod a+x $HOME/INSTALLv2.sh && $HOME/INSTALLv2.sh**
  
-**IMPORTANT:**  The install command above should be copied and pasted as 1 command!  There are actually 2 separate commands there but they are ran as 1 for simplicity.
+**IMPORTANT:**  The install command above should be copied and pasted as 1 command!  There are actually a few separate commands there but they are ran as 1 for simplicity.
 
 ##### Credits
 Credit for these amazing tools go to the following creators and projects, in no particular order.
