@@ -14,11 +14,12 @@ printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')     
 printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date: ${WT}$(timedatectl | grep "Local time" | awk '{print $3", " $4}')\\n"
 
 #battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
-batt_per="$(acpi -b | awk '/Battery 0/ {print $4}')"
-battery_state="$(acpi -b | awk '/Battery 0/ {print $3}')"
+batt_per="$(acpi -b | awk '/Battery 0/ {gsub(/,|%/, ""); print $4}')"
+battery_state="$(acpi -b | awk '/Battery 0/ {gsub(/,$/,"",$3); print $3}')"
 # Display Battery info
-printf "\\n${CY}Your battery state is currently ${WT}${battery_state} ${CY}and your machine has ${WT}${batt_per}% battery remaining.\\n"
-printf "\\n"
+printf "\\n${CY}Battery state: ${battery_state}"
+printf "         ${CY}Battery Percentage remaining: ${WT}$batt_per"
+echo "%   "
 
 # Display disk usage
 disk_usage="$(df -h | awk '{if($NF=="/") print $5}')"
@@ -40,7 +41,7 @@ security_updates_age=$(sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i sec
 printf " \\n"
 printf "${CY}# Updates Available: ${WT}$updates       |      ${CY}Non-Critical Percent: ${GN}$total_pct \\n${YW}"
 
-printf "# Critical Updates: ${RED}$security_updates        |   ${YW}   Critical Update Percent:${RED}$security_pct "
+printf "# Critical Updates: ${RED}$security_updates        |   ${YW}   Critical Update Percent:${RED}$security_pct"
 
 	lsb_dist=""
 	if [ -r /etc/os-release ]; then
@@ -50,4 +51,4 @@ echo "$lsb_dist"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
   read -r -n1 -s -t 90
-bash ${scripts_dir}/menu-master.sh
+source ${scripts_dir}/menu-master.sh

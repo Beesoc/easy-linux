@@ -8,7 +8,7 @@ printf "  ${CY}This script will install Docker Desktop.${GN}"
 read -n 1 -r -p "Do you want to continue? [Y/n] "instdocker
 instdocker=${instdocker:-Y}
     if [[ "$instdocker" =~ ^[Nn]$ ]]; then
-        printf "${RED}  User chose no. Exiting"
+        printf "${RED} $USER chose no. Exiting"
         exit 0
     if [[ "$instdocker" =~ ^[Yy]$ ]]; then
 printf "    ${CY}General maintenance: sudo apt --fix-broken install -y${NC}\\n"
@@ -63,3 +63,4 @@ echo \
   sudo apt --fix-broken install -y > /dev/null
   sudo apt autoremove -y > /dev/null
   systemctl --user start docker-desktop
+  docker-installed=1

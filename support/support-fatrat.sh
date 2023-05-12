@@ -40,11 +40,14 @@ source "${scripts_dir}/support/support-Banner_func.sh"
 
 main() {
 source "${scripts_dir}/support/support-Banner_func.sh"
-if which fatrat >/dev/null 2>&1; then
-  printf "  ${WT}The FAt Rat ${CY}is ${RED}not installed${CY}. Installing..."
+read -n 1 -r -p "Do you want to install the Fat Rat? [Y/n] " inst-fat
+   inst-fat=${inst-fat:-Y}
+if [[ $inst-fat = "Y" ]] || [[ $inst-fat = "y" ]]; then
   app-install_func
+  fatrat-inst=1
 else
-  printf "${GN}  The Fat Rat is already installed. Continuing"
+  printf "${RED}  $USER has selected to not install The Fat Rat.  Exiting"
+  exit 0
 fi
 
 #printf "${CY}  Your wordlist is currently set to: ${WT}${wordlist}${CY}." 

@@ -1,42 +1,44 @@
 #!/bin/bash
 scripts_dir=/opt/easy-linux
-#
-# Version: 0.0.2
-#shellcheck source=${scripts_dir}/.envrc
-#shellcheck source="${scripts_dir}/support/support-Prompt_func.sh"
-#shellcheck source="${scripts_dir}/support/support-Banner_func.sh"
 set -e
-#
+# Version: 0.0.2
+source "${scripts_dir}/.envrc"
 clear
-#
-source ${scripts_dir}/.envrc
+            source "${scripts_dir}/support/support-Banner_func.sh"
+            printf "${WT}\\n\\        You chose Hacking Tool. ${CY}Download and use the hacking tool featured\\n"
+            printf "          in Mr. Robot. This tool has MANY tools built into it.  ${GN}This is a\\n"
+            printf "       definite must install. ${WT}Swiss army knife for hackers.\\n\\n    " 
 
-   if command -v hackingtool >/dev/null 2>&1; then
+           if [[ $(command -v hackingtool >/dev/null 2>&1) ]]; then
+                printf "\\n${GN}Hackingtool is already installed.\\n"
               sudo hackingtool
            else
               printf "\\n${YW}hackingtool is not installed.  Installing...\\n"
-              hacking_tool_func
            fi
 
-  if [ ! -d ${scripts_dir} ]; then
-        printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${NC}"
-  fi
+            read -n 1 -p "Do you want to install HackingTool [Y/n] " choicehacking
+            choicehacking=${choicehacking:-Y}
+            if [[ $choicehacking =~ ^[Yy]$ ]]; then
+              printf "${GN}Continuing...\\n"
+            else
+              printf "${RED}Exiting.\\n"
+              exit 0
+            fi
 
-
-printf "${CY}Installing ${WT}Hacking Tool${CY}...${NC}\n"
   if [[ -d ${compiled_dir} ]]; then
-        printf " \\n";
-          cd ~/compiled || exit
+          cd $HOME/compiled || exit
           return 1
   elif [[ ! -d ${compiled_dir} ]]; then
-          mkdir ~/compiled 
-          cd ~/compiled || exit
+          mkdir $HOME/compiled 
+          cd $HOME/compiled || exit
   else
        printf "${RED}Invalid Selection"
   fi
-  
-  
+        printf " \\n${CY}"  
   sudo git clone https://github.com/Z4nzu/hackingtool.git
   cd hackingtool || exit
   sudo pip3 install -r requirements.txt
-  source sudo ./install.sh
+  source ./install.sh
+printf "${CY}  Press ${WT}any ${CY}key to continue."
+read -n 1 -s -t 300 
+source ${scripts_dir}/menu-apps.sh

@@ -1,4 +1,5 @@
 #!/bin/bash
+scripts_dir=/opt/easy-linux
 #
 set -e
 #
@@ -45,6 +46,7 @@ else
     printf "${RED}  Invalid Selection${NC}\\n"
 fi
 }
+
  netadaptercount_func() {
  adapter_count=$(sudo airmon-ng | awk '  /phy/ {print $2 " - " $4 " " $5}' | grep -c "phy")
 #

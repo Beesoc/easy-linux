@@ -3,7 +3,31 @@
 # setup-repos.sh
 # Configures Webmin repository for RHEL and Debian systems (derivatives)
 # Version: 0.0.2
+#######################################################################
+#
+# Added by Cory
+set -e
+scripts_dir=/opt/easy-linux
+                read -n 1 -p "Do you want to install/launch Webmin? [Y/n] " choicewebmin
+                choicewebmin=${choicewebmin:-Y}
+                    if [[ $choicewebmin =~ ^[Yy]$ ]]; then
+                      printf "${GN}  Continuing..."
+                    else
+                     printf "${RED}  Exiting."
+                     exit 0
+               fi
 
+               if [[ $(command -v webmin >/dev/null 2>&1) ]]; then
+                   printf "\\n${WT}Webmin ${CY}is already installed"
+                   printf "${CY}Access via web browser at ${WT}https://localhost:10000/sysinfo.cgi?xnavigation=1${CY}\\n"
+                   printf "${CY}Use your ${WT}normal Linux account info that you use to login to this computer\\n."
+               else
+                  printf "\\n${WT}Webmin ${YW}is not installed"
+                   source "${scripts_dir}/support/support-webmin.sh"
+                fi
+
+
+########################################################################
 webmin_download="https://download.webmin.com"
 webmin_key="jcameron-key.asc"
 webmin_key_download="$webmin_download/$webmin_key"

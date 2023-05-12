@@ -6,17 +6,18 @@ source "${scripts_dir}/.envrc"
 trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 
 app-install_func() {
-source "${scripts_dir}/support/support-Banner_func.sh"
 
   if [[ -d "$HOME/compiled/wifite2/" ]]; then
-    read -n 1 -r -p "Wifite installation folder exists. Remove folder and reinstall?" reinstall
+    printf "${WT}Wifite ${OG}installation folder exists.\\n${CY}  " 
+    read -n 1 -r -p "Remove folder and reinstall? [Y/n]" reinstall
+      reinstall=${reinstall:-Y}
       if [[ ${reinstall} = "Y" ]] || [[ ${reinstall} = "y" ]]; then 
          sudo rm -fR $HOME/compiled/wifite2/
       elif [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
          printf "${RED} Wifite will not be installed. Press ${WT}any ${RED} key to return to main menu."
          source "${scripts_dir}/support/support-Prompt_func.sh"
-         read -r -n1 -s -t 300
-           bash "$scripts_dir/menu-master.sh"
+         read -r -n 1 -s -t 300
+           source "$scripts_dir/menu-master.sh"
       else
          printf "${YW}    Invalid Selection."
       fi
@@ -29,16 +30,27 @@ source "${scripts_dir}/support/support-Banner_func.sh"
   cd wifite2 || exit
   pip3 install -r requirements.txt
   sudo python3 setup.py install
+  wifite-installed=1
 }
 
 main() {
+clear
 source ${scripts_dir}/support/support-Banner_func.sh
+                  
 
-   if command -v wifite >/dev/null 2>&1; then
+   if [[ $(command -v wifite >/dev/null 2>&1) ]]; then
                 printf "${GN}Wifite is already installed"
+                sudo wifite
+                wifite-installed=1
            else
                 printf "${YW}Wifite is not installed.  Installing..."
+                     read -n 1 -r -p "Do you want to install Wifite? [Y/n]" install
+                     install=${install:-Y}
+                         if [[ $install = "N" ]] || [[ $install = "n" ]]; then
+                            exit 0
+                         elif [[ $install = "Y" ]] || [[ $install = "y"  ]]; then
                 app-install_func
+                         fi
            fi
 
 printf "${CY}  Your wordlist is currently set to: ${WT}${wordlist}${CY}\\n." 
@@ -56,7 +68,7 @@ fi
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
 sudo wifite -v -i ${adapter} -mac -p 160 --kill -ic --daemon --clients-only --dict ${wordlist}
-bash ${scripts_dir}/menu-hacking.sh
+source ${scripts_dir}/menu-hacking.sh
 }
 
 main
