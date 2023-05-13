@@ -112,11 +112,6 @@ else
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
 
-username=$(whoami)
-userid=${USER}
-useraccount=$(getent passwd 1000 | cut -d ":" -f 1)
-computername=$(hostname)
-
 clear
    Banner_func
 # check for requirements.
@@ -131,23 +126,6 @@ whoami_func() {
 # Step 7 func.
 # Capture user's username and computer name
 
-# Verify the user and computer name in three different ways
-VERIFY_HOST=$(hostname)
-VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
-
-# Verify computer name using three different methods
-if [ $computername != $(echo $HOST) ]; then
-  printf "${OG}  Warning: computer name does not match \$HOST" >&2
-fi
-if [ $computername != $(cat /etc/hostname) ]; then
-  printf "${OG}  Warning: computer name does not match /etc/hostname" >&2
-fi
-if [ $computername != $(uname -n) ]; then
-  printf "${OG}  Warning: computer name does not match uname -n" >&2
-fi
-if [ $username != $userid ] && [ $userid != $useraccount ]; then
-  printf "${OG}  Warning: Username does not match $USER" >&2
-fi
 
 # Check if user is using Pwnagotchi
 if [ -d /etc/pwnagotchi ] || [ -d /usr/local/share/pwnagotchi ]; then
@@ -157,15 +135,6 @@ if [ -d /etc/pwnagotchi ] || [ -d /usr/local/share/pwnagotchi ]; then
    else 
       printf "${RED}  Unknown error."
 fi
-
-sudo chown 1000:0 /opt/easy-linux/.envrc
-# Write information to file
-echo "export username=$username" >> /opt/easy-linux/.envrc
-echo "export computername=$computername" >> /opt/easy-linux/.envrc
-echo "export amiPwn=$amiPwn" >> /opt/easy-linux/.envrc
-cd /opt/easy-linux || exit
-direnv allow
-sudo direnv allow
 
 }
 
