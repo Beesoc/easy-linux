@@ -152,7 +152,7 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
-printf "\\n${WT}   $username,${CY} "
+printf "\\n${WT}   $USER,${CY} "
 read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
