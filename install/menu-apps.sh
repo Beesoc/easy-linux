@@ -2,7 +2,6 @@
 # Version: 0.0.2
 set -e
 scripts_dir=/opt/easy-linux
-#
 clear
 #
 source ${scripts_dir}/.envrc
@@ -19,68 +18,82 @@ select option in "${options[@]}"; do
     case ${option} in
 
            "Airgeddon")
-               clear
-                 source ${scripts_dir}/support/support-Banner_func.sh
-                 printf "${GN}  You've selected ${WT}Airgeddon${CY}.\\n    "
+                 clear
+                 source "${scripts_dir}/support/support-Banner_func.sh"
+                 printf "${GN}\\n  You've selected ${WT}Airgeddon${CY}.\\n    "
+                 if [[ $airg_installed = 1 ]]; then
+                 sudo airgeddon
+                 airg_installed=1
+                     sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "${scripts_dir}/.envrc"
+                 else
                  read -n 1 -p "Do you want to continue? [Y/n] " choiceairged
                  choiceairged=${choiceairged:-Y}
+                 fi
                    if [[ "$choiceairged" =~ ^[Yy]$ ]]; then
                       printf "${GN}  Continuing...\\n"
+                   elif [[ "$choiceairged" =~ ^[Nn]$ ]]; then
+                      printf "${RED}  Cancelling. Returning to ${WT}Main Menu\\n"
+                   source ${scripts_dir}/support/support-airgeddon.sh
                    else
                    printf "${RED}  Exiting.\\n"
                    exit 0
                    fi
-
                    source ${scripts_dir}/support/support-airgeddon.sh
           ;;
          "Aircrack-NG")
-               clear
-                 source ${scripts_dir}/support/support-Banner_func.sh
-                   if [[ $(command -v aircrack-ng >/dev/null 2>&1) ]] && [[ $airc-installed = 1 ]]; then
+                 clear
+                 source "${scripts_dir}/support/support-Banner_func.sh"
+                   if [[ $(command -v aircrack-ng >/dev/null 2>&1) ]] && [[ $airc_installed = 1 ]]; then
                         printf "${GN}Aircrack-NG is already installed\\n"
                         sudo aircrack-ng --help
+                        airc_installed=1
+                        sudo sed -i "s/airc_installed=.*/airc_installed=$airc_installed/g" "${scripts_dir}/.envrc"
                    else
                         printf "${YW}Aircrack-NG is not installed. Installing\\n"
                         source ${scripts_dir}/support/support-aircrack2.sh
-                        airc-installed=1
                    fi
            ;;
         "Docker Desktop")
-
-           if [[ $(command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1) ]] && [[ $docker-installed = 1 ]]; then
-                printf "${GN}Docker is already installed\\n"
+           clear
+           if [[ $(command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1) ]]; then
+                docker_installed=1
+                printf "${GN}Docker Desktop is already installed\\n"
                 sudo /opt/docker-desktop/bin/docker-desktop
+                sudo sed -i "s/docker_installed=.*/docker_installed=$docker_installed/g" "${scripts_dir}/.envrc"
            else
                 printf "${YW}Docker Desktop is not installed. Installing\\n"
-                docker-installed=""
-                $docker-installed=1
+                source ${scripts_dir}/support/support-docker.sh
            fi
          ;;
         "Hacking Tool")
-            if [[ $hacktool-inst = 0 ]]; then
+            if [[ $hacktool-installed = 0 ]]; then
                source ${scripts_dir}/support/support-hackingtool.sh
-               hacktool-inst=1
-            elif [[ $hacktool-inst = 1 ]]; then
+            elif [[ $hacktool-installed = 1 ]]; then
                sudo hackingtool
+               hacktool_installed=1
+                   sudo sed -i "s/hacktool_installed=.*/hacktool_installed=$hacktool_installed/g" "${scripts_dir}/.envrc"
             exit 0
             fi
         ;;
         "TheFatRat")
             clear
-            source "${scripts_dir}/support/support-Banner_func.sh"
-                    if [[ $(command -v fatrat >/dev/null 2>&1) ]] && [[ $fatrat-inst = 1  ]]; then
-                       printf "\\n${GN}The Fat Rat is already installed"
+            source ${scripts_dir}/support-support-Banner_func.sh
+                    if [[ $(command -v fatrat >/dev/null 2>&1) ]] && [[ $fatrat_installed = 1  ]]; then
+                       printf "\\n${GN}The Fat Rat is already installed\\n"
                     sudo fatrat
+                    fatrat_installed=1
+                    sudo sed -i "s/fatrat_installed=.*/fatrat_installed=$fatrat_installed/g" "${scripts_dir}/.envrc"
                     else
                        source ${scripts_dir}/support/support-fatrat.sh
                     fi
        ;;
         "My Favs")
-            if [[ $stan-inst = 0 ]]; then
+            if [[ $stand_installed = 0 ]]; then
                source ${scripts_dir}/support/support-inst-standard.sh
-               stan-inst=1
-            elif [[ $stan-inst = 1 ]]; then
-               printf "${OG}  You have already installed all of the standard tools."
+            elif [[ $stand_installed = 1 ]]; then
+               printf "${OG}  You have already installed all of the standard tools.\\n"
+               stand_installed=1
+               sudo sed -i "s/stand_installed=.*/stand_installed=$stand_installed/g" "${scripts_dir}/.envrc"
             exit 0
             fi
             ;;
@@ -90,9 +103,14 @@ select option in "${options[@]}"; do
             ;;
         "Nano")
             clear
-            source "${scripts_dir}/support/support-Banner_func.sh"
+            if [[ $nano_installed = 1 ]]; then
+            sudo nano
+            nano_installed=1
+                sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" "${scripts_dir}/.envrc"
+            else
             source $scripts_dir/support/support-nano.sh
-         ;;
+            fi
+            ;;
         "System Info")
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
@@ -107,21 +125,25 @@ select option in "${options[@]}"; do
                     printf "https://localhost:10000\\n"
                     printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
                     read n 1 -t 300
+                      webmin_installed=1
+                   sudo sed -i "s/webmin_installed=.*/webmin_installed=$webmin_installed/g" "${scripts_dir}/.envrc"
+                     
                fi
                if [[ $webmin_installed = 0 ]]; then
                   source ${script_dir}/support/support-webmin.sh
-                  webmin_installed=1
-               fi
+                    fi
         ;;
         "Wifite")
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
-             if [[ $(command -v wifite >/dev/null 2>&1) ]] && [[ $wifite-installed = 1 ]]; then
+             if [[ $(command -v wifite >/dev/null 2>&1) ]] && [[ $wifite_installed = 1 ]]; then
                         printf "\\n${GN}Wifite is already installed\\n"
                    sudo wifite
+                       sudo sed -i "s/wifite_installed=.*/wifite_installed=$wifite_installed/g" "${scripts_dir}/.envrc"
                    else
-                   printf "\\n${YW}Wifite is not installed\\n"
+                   printf "    \\n${YW}Wifite is not installed\\n"
                    source "${scripts_dir}/support/support-wifite.sh"
+                   wifite_installed=1
                    fi
           ;;
          "All")
@@ -161,19 +183,26 @@ else
 fi
 }
 
-main() {
+deps_install_func() {
+# List of package names to install
+       packages=("ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "iproute2 / ip" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb / usbutils" "wget" "ethtool" "loginctl / systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff")
 
-#  if [ ! -d ${scripts_dir} ]; then
-#        printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${GN}\\n"
-#        read -n 1 -p "Would you like to reinstall Easy Linux now? [Y/n] " reinstallall
-#        reinstallall=${reinstallall:-Y}
-#           if [[ $reinstallall = "Y" ]] || [[ $reinstallall = "y" ]]; then
-#           curl -sfL https://raw.githubusercontent.com/Beesoc/easy-linux/main/INSTALLv2.sh >> $HOME/INSTALLv2.sh && chmod a+x $HOME/INSTALLv2.sh && $HOME/INSTALLv2.sh
-#           elif [[ $reinstallall = "N" ]] || [[ $reinstallall = "n" ]]; then
-#           printf "${RED}  $USER decided not to reinstall.\\n"
-#           exit 0
-#           fi
-#  fi
+# Loop through the list of package names
+for package in "${packages[@]}"
+do
+    if dpkg -s "$package" >/dev/null 2>&1; then
+        echo "$package is already installed"
+    else
+        echo "Installing $package"
+        sudo apt-get install -y "$package"
+    fi
+    menu_apps_deps=1
+    sudo sed -i "s/menu-apps-deps=.*/menu-apps-deps=$menu-apps-deps/g" "${scripts_dir}/.envrc"
+install_apps_func
+done
+}
+
+main() {
 
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
@@ -206,21 +235,20 @@ installchoice=${installchoice:-P}
                   fi
       fi
   elif [[ ${installchoice} = "p" ]] || [[ ${installchoice} = "P" ]]; then
-      install_apps_func
+      deps_install_func
   fi
 
   clear
   source "${scripts_dir}/support/support-Banner_func.sh"
-  printf "\\n                        ${CY}Summary of changes made by this script.${WT}   \\n" 
-  printf "                   [ Update/Upgrade all packages ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                           [ Install HackingTool ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                   [ Docker Desktop Dependencies ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                        [ Install Docker Desktop ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                               [ Install Wifite2 ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                              [ Install HCXTools ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                           [ Install The Fat Rat ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-  printf "                 [ Install Additional Nano Lints ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
-printf "  ${CY}Press M to return to the Main Menu.\\n    ----->"
+  printf "\\n                   ${CY}Summary of changes made by this script.${WT}   \\n" 
+  printf "              [ Update/Upgrade all packages ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "                      [ Install HackingTool ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "              [ Docker Desktop Dependencies ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "                   [ Install Docker Desktop ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "                          [ Install Wifite2 ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "                         [ Install HCXTools ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "                      [ Install The Fat Rat ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
+  printf "            [ Install Additional Nano Lints ].....${GN}[✔] Successfully Installed [✔]${CY}\\n"; sleep 1
 read -n 1 -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
  menuchoice=${menuchoice:-M}
  if [[  ${menuchoice} = "m" ]] || [[ ${menuchoice} = "M" ]]; then
