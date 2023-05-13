@@ -60,5 +60,3 @@ fi
 cd /opt/easy-linux || exit
 direnv allow
 sudo direnv allow
-
-}
