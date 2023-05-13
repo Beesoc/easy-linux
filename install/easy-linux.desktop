@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Easy Linux Loader
 GenericName=BASH Menu
+Version=0.0.2   # Version: 0.0.2
 X-GNOME-FullName=Beesoc's Easy Linux Application Loader
 Comment=Bash menu system to easily launch apps and services
 Exec=bash /opt/easy-linux/menu-master.sh
