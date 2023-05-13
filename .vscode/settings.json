@@ -1,5 +1,6 @@
 {
     "githubPullRequests.ignoredPullRequestBranches": [
         "0.1"
-    ]
+    ],
+    "shellcheck.useWorkspaceRootAsCwd": true
 }
