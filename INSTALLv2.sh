@@ -1,5 +1,26 @@
 #!/bin/bash
 # New app installer from Github
+function help {
+  echo 
+  echo "Usage: $0 [options]"
+  echo "  This is the help menu for the app installer for Beesoc's Easy Linux Loader."
+  echo "  No extra parameters can be applied to the installer at this point."
+  echo "  Make it executable with 'sudo chmod +x INSTALLv2.sh' then run with .INSTALLv2.sh"
+  echo
+  echo
+echo "Options:"
+  echo "  -h, --help: Display this help information."
+  echo "  -v, --version: Display the version information."
+  echo
+}
+
+if [[ $1 == "-h" || $1 == "--help" ]]; then
+  help
+  exit 0
+elif [[ $1 == "-v" || $1 == "--version" ]]; then
+  echo "The script is version 0.0.2."
+  exit 0
+fi
 # Version: 0.0.2
 
 set -e
@@ -45,11 +66,11 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
 
   clear
   Banner_func
-  printf "   ${WT}[*] ${GN}Beesoc's Easy Linux Loader has been installed.\\n\\n" 
+  printf "   ${CY}[*] ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n" 
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
-printf "\\n${WT}   $username,${CY} "
+printf "\\n${CY}  Hey ${CY}$username, "
 read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
@@ -67,7 +88,7 @@ git_files_func() {
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
-sudo chown -v 1000:1000 /opt/easy-linux
+sudo chown -vR 1000:0 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/support/*.sh
 sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 sudo mv -t /opt/easy-linux /opt/easy-linux/install/*
@@ -84,18 +105,18 @@ printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "
 sleep 1
 read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
-            if [[ $choiceez =~ ^[Yy]$ ]]; then
+            if [[ "$choiceez" =~ ^[Yy]$ ]]; then
           #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
               printf "\\n${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
               sleep 1
-            elif [[ $choiceez =~ ^[Nn]$ ]]; then
+            elif [[ "$choiceez" =~ ^[Nn]$ ]]; then
             #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
               printf "\\n${RED}  [*] ${OG}Installation rejected..."
               sleep 1 
-              printf "..Please wait.."
+              printf "${CY}..Please wait.."
               exit 0
             else
-              printf "\\n${RED}  [*]  Invalid Selection. Exiting."
+              printf "\\n${WT}  [*]  ${RED}Invalid Selection. Exiting."
               exit 0
             fi
      git_files_func
@@ -118,7 +139,7 @@ direnv_func() {
 # Step 3 or skip function.
                read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
-                if [[ $choicedirenv =~ ^[Yy]$ ]]; then
+                if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                     printf "${GN}  Continuing..." 
                     sleep 1
                     printf "  This step may take a few minutes..."
@@ -138,12 +159,12 @@ main() {
 clear
 Banner_func
 
-printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
+printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}    Press ${RED}[ctrl+c] ${GN}to cancel\\n${CY}\\n    " 
 
 read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
-if [[ $install =~ ^[Yy]$ ]]; then
-  printf "\\n ${WT} [*] ${GN}Loading...Please Wait..."
+if [[ "$install" =~ ^[Yy]$ ]]; then
+  printf "\\n  ${WT}[*] ${CY}Loading...Please Wait..."
 else
   printf "  ${RED}   Exiting."
   exit 0
