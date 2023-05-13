@@ -1,5 +1,5 @@
 #!/bin/bash
-# Aircrack-ng installer/executor
+# Aircrack-ng installer/runner
 # Version: 0.0.2
 
 scripts_dir=/opt/easy-linux
