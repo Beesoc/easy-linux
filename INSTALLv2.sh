@@ -100,17 +100,22 @@ main() {
 clear
 Banner_func
 
-printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n    " 
+printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
 
 read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
-  printf "\\n ${WT} [*] ${GN}Loading...Please Wait...\\n"
+  printf "\\n ${WT} [*] ${GN}Loading...Please Wait..."
 else
-  printf "  ${RED}   Exiting.\\n"
+  printf "  ${RED}   Exiting."
   exit 0
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
+
+username=$(whoami)
+userid=${USER}
+useraccount=$(getent passwd 1000 | cut -d ":" -f 1)
+computername=$(hostname)
 
 clear
    Banner_func
@@ -122,7 +127,41 @@ clear
     fi
 }
 
+whoami_func() {
+# Step 7 func.
+# Capture user's username and computer name
 
+# Verify the user and computer name in three different ways
+VERIFY_HOST=$(hostname)
+VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
+
+# Verify computer name using three different methods
+if [ $computername != $(echo $HOST) ]; then
+  printf "${OG}  Warning: computer name does not match \$HOST" >&2
+fi
+if [ $computername != $(cat /etc/hostname) ]; then
+  printf "${OG}  Warning: computer name does not match /etc/hostname" >&2
+fi
+if [ $computername != $(uname -n) ]; then
+  printf "${OG}  Warning: computer name does not match uname -n" >&2
+fi
+if [ $username != $userid ] && [ $userid != $useraccount ]; then
+  printf "${OG}  Warning: Username does not match $USER" >&2
+fi
+
+# Check if user is using Pwnagotchi
+amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)
+
+sudo chown 1000:0 /opt/easy-linux/.envrc
+# Write information to file
+echo "export username=$username" >> /opt/easy-linux/.envrc
+echo "export computername=$computername" >> /opt/easy-linux/.envrc
+echo "export amiPwn=$amiPwn" >> /opt/easy-linux/.envrc
+cd /opt/easy-linux || exit
+direnv allow
+sudo direnv allow
+
+}
 
 git_files_func() {
 # step 6 function.
@@ -130,14 +169,14 @@ git_files_func() {
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
-sudo chown -v 1000:0 /opt/easy-linux
+sudo chown -v 1000:1000 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/support/*.sh
 sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 sudo mv -t /opt/easy-linux /opt/easy-linux/install/*
 sudo chmod +x /opt/easy-linux/*.sh
 sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
 
-cleanup_func
+whoami_func
 
 }
 
@@ -152,7 +191,7 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
-printf "\\n${WT}   $USER,${CY} "
+printf "\\n${WT}   $username,${CY} "
 read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
