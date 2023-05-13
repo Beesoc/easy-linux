@@ -1,11 +1,18 @@
 #!/bin/bash
 #
 # Version: 0.0.2
-
+scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 set -e 
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 clear
+echo "export airc_installed=0" >> ${scripts_dir}/.envrc
+echo "export airc_deps_installed=0" >> ${scripts_dir}/.envrc
+echo "export airg_deps_inst=0" >> ${scripts_dir}/.envrc
+echo "export airg_installed=0" >> ${scripts_dir}/.envrc
+cd ${scripts_dir}
+direnv allow
+sudo direnv allow
 source "${scripts_dir}/support/support-Banner_func.sh"
 printf "                     ${CY} Welcome to the Hacking/Security Menu.             ${OG}\\n  "
   printf "\\n  ${OG}1] ${CY}Enable wifi Monitor mode ${OG}              20] ${CY}Enable wifi and Network Manager${OG} \\n"

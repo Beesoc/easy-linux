@@ -26,13 +26,13 @@ printf "\\n           ${OG}Select which app you would like to install.${GN}\\n\\
 select option in "${options[@]}"; do
     case ${option} in
 
-         "${WT}Airgeddon")
+           "Airgeddon")
                clear
 
                  source ${scripts_dir}/support/support-Banner_func.sh
                  read -p "Do you want to continue? [Y/n] " choiceairged
                  choiceairged=${choiceairged:-Y}
-                   if [[ $choiceairged =~ ^[Yy]$ ]]; then
+                   if [[ "$choiceairged" =~ ^[Yy]$ ]]; then
                       printf "${GN}  Continuing..."
                    else
                    printf "${RED}  Exiting."
@@ -42,16 +42,16 @@ select option in "${options[@]}"; do
                    source ${scripts_dir}/support/support-airgeddon.sh
           ;;
          "Aircrack-NG")
-            clear
-            source ${scripts_dir}/support/support-Banner_func.sh
-           if [[ $(command -v aircrack-ng >/dev/null 2>&1) ]] && [[ $airc-installed = 1 ]]; then
-                printf "${GN}Aircrack-NG is already installed\\n"
-                sudo aircrack-ng --help
-           else
-                printf "${YW}Aircrack-NG is not installed. Installing\\n"
-                source ${scripts_dir}/support/support-aircrack2.sh
-                airc-installed=1
-           fi
+               clear
+                 source ${scripts_dir}/support/support-Banner_func.sh
+                   if [[ $(command -v aircrack-ng >/dev/null 2>&1) ]] && [[ $airc-installed = 1 ]]; then
+                        printf "${GN}Aircrack-NG is already installed\\n"
+                        sudo aircrack-ng --help
+                   else
+                        printf "${YW}Aircrack-NG is not installed. Installing\\n"
+                        source ${scripts_dir}/support/support-aircrack2.sh
+                        airc-installed=1
+                   fi
            ;;
         "Docker Desktop")
 
@@ -60,7 +60,8 @@ select option in "${options[@]}"; do
                 sudo /opt/docker-desktop/bin/docker-desktop
            else
                 printf "${YW}Docker Desktop is not installed. Installing\\n"
-                docker-installed=1
+                docker-installed=""
+                $docker-installed=1
            fi
          ;;
         "Hacking Tool")
@@ -160,6 +161,8 @@ select option in "${options[@]}"; do
 done
 }
 
+
+
 personal_func() {
 if [[ $USER = "beesoc" ]] && [[ $HOST = "updates" ]]; then
   source ${scripts_dir}/support/support-updates.sh
@@ -203,17 +206,40 @@ read -n 1 -r installchoice
       install_apps_func
   fi
 
-    printf "  ${CY}"
-#    install-apps_options_func
-}
+FLAG_FILE=/opt/easy-linux/.envrc_populated
 
-main
-install_apps_func
+if [ ! -f "$FLAG_FILE" ]; then
 
- if [[ $HOST = "updates" ]] && [[ $USER = "beesoc"  ]]; then
-        personal_func
-        printf "${GN}   Updates only install triggered"
- fi
+  # Function to populate .envrc file
+  function populate_envrc() {
+    # Add more environment variables as needed
+#    echo "export MY_VAR=my_value" >> /opt/easy-linux/.envrc
+sudo echo "export docker-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export fatrat-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export hacktool-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export hcxdump-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export nano-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export webmin-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export wifite-installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export stand-install=0" >> ${scripts_dir}/.envrc 
+sudo echo "export amiPwn=0" >> ${scripts_dir}/.envrc
+sudo echo "export airc_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export airc__deps_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export airg_deps_inst=0" >> ${scripts_dir}/.envrc
+sudo echo "export airg_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export username=$USER" >> ${scripts_dir}/.envrc
+sudo echo "export computername=$HOST" >> ${scripts_dir}/.envrc
+sudo echo "export hostname=$HOST" >> ${scripts_dir}/.envrc
+sudo echo "export arch=$(uname -m)" >> ${scripts_dir}/.envrc
+sudo echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" >> ${scripts_dir}/.envrc
+sudo echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" >> ${scripts_dir}/.envrc
+
+# Populate the envrc table
+populate_envrc
+
+# Update flag to indicate function has ran.
+touch "$FLAG_FILE"
+fi
 
   clear
   source "${scripts_dir}/support/support-Banner_func.sh"
