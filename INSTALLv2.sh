@@ -132,7 +132,7 @@ if [ ! -f "$FLAG_FILE" ]; then
 
   # Function to populate .envrc file
   function populate_envrc() {
-sudo chown 1000:0 /opt/easy-linux/.envrc
+#sudo chown 1000:0 /opt/easy-linux/.envrc
     # Add more environment variables as needed
 #    echo "export MY_VAR=my_value" >> /opt/easy-linux/.envrc
 sudo echo "export docker_installed=0" >> ${scripts_dir}/.envrc
