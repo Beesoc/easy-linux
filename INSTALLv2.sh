@@ -125,7 +125,7 @@ clear
 whoami_func() {
 # Step 7 func.
 # Capture user's username and computer name
-
+sleep 2
 FLAG_FILE=/opt/easy-linux/.envrc_populated
 
 if [ ! -f "$FLAG_FILE" ]; then
