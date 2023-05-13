@@ -3,6 +3,7 @@
 #  Script to merge wordlists, sort and eliminate duplicates
 set -e
 # Version: 0.0.2
+scripts_dir=/opt/easy-linux
 #
 #export PS4="\$LINENO: "
 #set -xv

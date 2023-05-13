@@ -20,7 +20,7 @@ printf "    ${CY}Installing dependencies. ${WT}Please wait. ${CY} This may take 
   sudo apt --fix-broken install -y > /dev/null
   printf "${OG}Install ${WT}Docker-desktop requirements QEMU${NC}\\n"
   sudo apt install -y qemu-system-x86
-  printf "${OG}Installing ${WT}kernel modules for kvm_intel ${OG}and add kvm to your Groups.${NC}\n"
+  printf "${OG}Installing ${WT}kernel modules for kvm_intel ${OG}and add kvm to your Groups.${NC}\\n"
   sudo modprobe kvm_intel
   sudo usermod -aG kvm $USER 
   sudo usermod -aG kvm root
@@ -51,7 +51,7 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
   curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-  printf "  ${CY}Performing an apt update and then installing ${WT}Docker Desktop.${CY}"
+  printf "  ${CY}Performing an apt update and then installing ${WT}Docker Desktop.${CY}\\n"
   sudo apt-get update > /dev/null
   sudo apt-get install docker-ce docker-ce-cli containerd.io pass > /dev/null
   printf  "  ${CY}Install Docker Desktop${NC}\\n"

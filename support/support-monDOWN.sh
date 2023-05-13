@@ -1,6 +1,7 @@
 #!/bin/bash
 # script to start wifi adapter in MANAGED mode.
 set -e
+scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 #
 source "${scripts_dir}/support/support-Banner_func.sh"
