@@ -12,7 +12,7 @@ if [[ $1 == "-h" || $1 == "--help" ]]; then
   help
   exit 0
 elif [[ $1 == "-v" || $1 == "--version" ]]; then
-  echo "The script is version 1.0."
+  echo "The script is version 0.0.2."
   exit 0
 fi
 #
@@ -24,46 +24,66 @@ fi
 # * Displays a main menu with four options: Hacking, Customize, Downloads, and Pwnagotchi. The user can select an option 
 #   by typing the corresponding number.
 #
-#printf "${BG}"
-scripts_dir="/opt/easy-linux"
-# shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
-# shellcheck source=${scripts_dir}/.envrc
-# shellcheck source=${scripts_dir}/support/support-Banner_func.sh
-# Version: 0.0.2
-source ${scripts_dir}/.envrc
-set -e
-
-export WM_CLASS="/usr/bin/menu-master.sh"
-export WM_NAME="Beesoc's Easy Linux Loader"
-
-determine_mac_func() {
-
-if [ $wlan_count == 1 ]; then
-   wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
-elif [ $wlan_count == 2 ]; then
-   wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
-   wlan1_mac=$(ip address show wlan1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export wlan1_mac=$(ip address show wlan1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
-fi
-
-if [ $usb_count == 1 ]; then
-   usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
-elif [ $usb_count == 2 ]; then
-   usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
-   usb1_mac=$(ip address show usb1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-   echo "export usb1_mac=$(ip address show usb1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)" >> ${scripts_dir}/.envrc
-fi
-
-}
-
 main() {
 # Display the main menu
 determine_mac_func
   clear
+
+FLAG_FILE=/opt/easy-linux/.envrc_populated
+
+if [ ! -f "$FLAG_FILE" ]; then
+
+  # Function to populate .envrc file
+  function populate_envrc() {
+if [ $wlan_count == 1 ]; then
+   wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+elif [ $wlan_count == 2 ]; then
+   wlan0_mac=$(ip address show wlan0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+   wlan1_mac=$(ip address show wlan1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+fi
+
+if [ $usb_count == 1 ]; then
+   usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+elif [ $usb_count == 2 ]; then
+   usb0_mac=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+   usb1_mac=$(ip address show usb1 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+fi
+
+    # Add more environment variables as needed
+#    echo "export MY_VAR=my_value" >> /opt/easy-linux/.envrc
+sudo echo "export usb0mac=$usb0mac" >> ${scripts_dir}/.envrc
+sudo echo "export usb1mac=$usb1mac" >> ${scripts_dir}/.envrc
+sudo echo "export wlan0_mac=$wlan0_mac" >> ${scripts_dir}/.envrc
+sudo echo "export wlan1_mac=$wlan1_mac" >> ${scripts_dir}/.envrc
+sudo echo "export docker_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export fatrat_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export hacktool_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export hcxdump_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export nano_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export webmin_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export wifite_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export stand_install=0" >> ${scripts_dir}/.envrc 
+sudo echo "export airc_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export airc_deps_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export airg_deps_inst=0" >> ${scripts_dir}/.envrc
+sudo echo "export airg_installed=0" >> ${scripts_dir}/.envrc
+sudo echo "export user=$USER" >> ${scripts_dir}/.envrc
+sudo echo "export username=$(whoami)" >> ${scripts_dir}/.envrc
+sudo echo "export useraccount=$(getent passwd 1000 | cut -d ":" -f 1))" >> ${scripts_dir}/.envrc
+sudo echo "export computername=$HOST" >> ${scripts_dir}/.envrc
+sudo echo "export hostname=$HOST" >> ${scripts_dir}/.envrc
+sudo echo "export arch=$(uname -m)" >> ${scripts_dir}/.envrc
+sudo echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" >> ${scripts_dir}/.envrc
+sudo echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" >> ${scripts_dir}/.envrc
+}
+
+# Populate the envrc table
+populate_envrc
+
+# Update flag to indicate function has ran.
+touch "$FLAG_FILE"
+fi
+  
   source "${scripts_dir}/support/support-Banner_func.sh"
   printf "                  ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}        ${RED}[✘] Exit tool [✘] \\n \\n"
   printf "  ${OG}1] ${GN}Hacking${OG}                             3] ${GN}Apps \\n${WT}\\n"

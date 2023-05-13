@@ -4,13 +4,8 @@ set -e
 scripts_dir=/opt/easy-linux
 #
 clear
-source ${scripts_dir}/.envrc
-
-  if [ ! -d ${scripts_dir} ]; then
-        printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${NC}"
-  fi
-
 #
+source ${scripts_dir}/.envrc
 
 install_apps_func() {
 clear
@@ -18,21 +13,21 @@ clear
 options=("All" "Aircrack-NG" "Airgeddon" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "System Info" "Webmin" "WiFite" "Exit")
 
 source "${scripts_dir}/support/support-Banner_func.sh"
-printf "\\n           ${OG}Select which app you would like to install.${GN}\\n\\n" 
+printf "\\n                ${OG}Select which app you would like to install.${GN}\\n\\n" 
 
 select option in "${options[@]}"; do
     case ${option} in
 
            "Airgeddon")
                clear
-
                  source ${scripts_dir}/support/support-Banner_func.sh
-                 read -p "Do you want to continue? [Y/n] " choiceairged
+                 printf "${GN}  You've selected ${WT}Airgeddon${CY}.\\n    "
+                 read -n 1 -p "Do you want to continue? [Y/n] " choiceairged
                  choiceairged=${choiceairged:-Y}
                    if [[ "$choiceairged" =~ ^[Yy]$ ]]; then
-                      printf "${GN}  Continuing..."
+                      printf "${GN}  Continuing...\\n"
                    else
-                   printf "${RED}  Exiting."
+                   printf "${RED}  Exiting.\\n"
                    exit 0
                    fi
 
@@ -158,8 +153,6 @@ select option in "${options[@]}"; do
 done
 }
 
-
-
 personal_func() {
 if [[ $USER = "beesoc" ]] && [[ $HOST = "updates" ]]; then
   source ${scripts_dir}/support/support-updates.sh
@@ -169,6 +162,18 @@ fi
 }
 
 main() {
+
+#  if [ ! -d ${scripts_dir} ]; then
+#        printf "${RED}   ERROR: ${scripts_dir} is not found.  Please reinstall Easy Linux${GN}\\n"
+#        read -n 1 -p "Would you like to reinstall Easy Linux now? [Y/n] " reinstallall
+#        reinstallall=${reinstallall:-Y}
+#           if [[ $reinstallall = "Y" ]] || [[ $reinstallall = "y" ]]; then
+#           curl -sfL https://raw.githubusercontent.com/Beesoc/easy-linux/main/INSTALLv2.sh >> $HOME/INSTALLv2.sh && chmod a+x $HOME/INSTALLv2.sh && $HOME/INSTALLv2.sh
+#           elif [[ $reinstallall = "N" ]] || [[ $reinstallall = "n" ]]; then
+#           printf "${RED}  $USER decided not to reinstall.\\n"
+#           exit 0
+#           fi
+#  fi
 
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
@@ -180,6 +185,7 @@ printf "\\n         ${RED}[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P $
 printf "\\n      ${WT}[P]${GN}wnagotchi ${CY}or ${WT}[C]${GN}ontinue ${CY}with ANY other Linux distro? ----> "
 read -n 1 -r installchoice
   if [[ ${installchoice} = "c" ]] || [[ ${installchoice} = "C" ]]; then
+installchoice=${installchoice:-P}
     sudo apt update
        updates=$(sudo apt list --upgradable | wc -l)
        security_updates=$(sudo apt list --upgradable 2>/dev/null | grep -E '\[security|critical\]' | wc -l)
@@ -203,47 +209,9 @@ read -n 1 -r installchoice
       install_apps_func
   fi
 
-FLAG_FILE=/opt/easy-linux/.envrc_populated
-
-if [ ! -f "$FLAG_FILE" ]; then
-
-  # Function to populate .envrc file
-  function populate_envrc() {
-    # Add more environment variables as needed
-#    echo "export MY_VAR=my_value" >> /opt/easy-linux/.envrc
-sudo echo "export docker-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export fatrat-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export hacktool-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export hcxdump-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export nano-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export webmin-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export wifite-installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export stand-install=0" >> ${scripts_dir}/.envrc 
-sudo echo "export amiPwn=0" >> ${scripts_dir}/.envrc
-sudo echo "export airc_installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export airc__deps_installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export airg_deps_inst=0" >> ${scripts_dir}/.envrc
-sudo echo "export airg_installed=0" >> ${scripts_dir}/.envrc
-sudo echo "export user=$USER" >> ${scripts_dir}/.envrc
-sudo echo "export username=$(whoami)" >> ${scripts_dir}/.envrc
-sudo echo "export useraccount=$(getent passwd 1000 | cut -d ":" -f 1))" >> ${scripts_dir}/.envrc
-sudo echo "export computername=$HOST" >> ${scripts_dir}/.envrc
-sudo echo "export hostname=$HOST" >> ${scripts_dir}/.envrc
-sudo echo "export arch=$(uname -m)" >> ${scripts_dir}/.envrc
-sudo echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" >> ${scripts_dir}/.envrc
-sudo echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" >> ${scripts_dir}/.envrc
-}
-
-# Populate the envrc table
-populate_envrc
-
-# Update flag to indicate function has ran.
-touch "$FLAG_FILE"
-fi
-
   clear
   source "${scripts_dir}/support/support-Banner_func.sh"
-  printf "\\n                        ${CY}Summary of changes made by this script.${WT}   \\n  " 
+  printf "\\n                        ${CY}Summary of changes made by this script.${WT}   \\n" 
   printf "                   [ Update/Upgrade all packages ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
   printf "                           [ Install HackingTool ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
   printf "                   [ Docker Desktop Dependencies ].....${GN}[✔] Successfully Installed [✔]${WT}\\n"; sleep 1
@@ -264,3 +232,4 @@ read -n 1 -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
           printf " ${RED}  Invalid Selection"
 fi
 }
+main
