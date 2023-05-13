@@ -16,6 +16,7 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
   exit 0
 fi
 sudo chown -vR 1000:0 /opt/easy-linux
+source /opt/easy-linux
 #
 # 1st release of Beesoc's Easy Linux Loader
 # * Defines a series of color codes for printing output in different colors.
@@ -25,13 +26,19 @@ sudo chown -vR 1000:0 /opt/easy-linux
 # * Displays a main menu with four options: Hacking, Customize, Downloads, and Pwnagotchi. The user can select an option 
 #   by typing the corresponding number.
 #
+set -e
 main() {
 # Display the main menu
   clear
+sleep .5  
 if [[ -f "$HOME/INSTALLv2.sh" ]]; then
     sudo rm $HOME/INSTALLv2.sh
 fi
-  
+sleep .5
+if [[ -f ${scripts_dir}/INSTALLv2.sh ]]; then
+    sudo rm ${scripts_dir}/INSTALLv2.sh
+fi
+sleep .5  
 source ${scripts_dir}/support/.whoami.sh 
   source "${scripts_dir}/support/support-Banner_func.sh"
   printf "                  ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}        ${RED}[✘] Exit tool [✘] \\n \\n"
