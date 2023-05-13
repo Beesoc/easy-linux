@@ -100,14 +100,14 @@ main() {
 clear
 Banner_func
 
-printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
+printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n    " 
 
 read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ $install =~ ^[Yy]$ ]]; then
-  printf "\\n ${WT} [*] ${GN}Loading...Please Wait..."
+  printf "\\n ${WT} [*] ${GN}Loading...Please Wait...\\n"
 else
-  printf "  ${RED}   Exiting."
+  printf "  ${RED}   Exiting.\\n"
   exit 0
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
@@ -194,7 +194,7 @@ git_files_func() {
   sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
-sudo chown -v 1000:1000 /opt/easy-linux
+sudo chown -v 1000:0 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/support/*.sh
 sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 sudo mv -t /opt/easy-linux /opt/easy-linux/install/*
