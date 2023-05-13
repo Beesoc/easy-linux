@@ -57,6 +57,10 @@ if [ $username != $userid ] && [ $userid != $useraccount ]; then
   printf "${OG}  Warning: Username does not match $USER" >&2
 fi
 
-cd /opt/easy-linux || exit
+cd /opt/easy-linux
+direnv allow
+sudo direnv allow
+
+cd /opt/easy-linux/support
 direnv allow
 sudo direnv allow
