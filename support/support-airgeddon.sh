@@ -6,16 +6,16 @@ source /opt/easy-linux/.envrc
 run_airg_func() {
 if [[ $(command -v airgeddon >/dev/null 2>&1) ]] && [[ $airg_installed = 1 ]]; then
 airg_deps_inst=1
-airg_installed=1
+export airg_installed=1
 
     sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
-    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "${scripts_dir}/.envrc"
-
+    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "/opt/easy-linux/.envrc"
 sudo /bin/bash airgeddon
 fi
-printf "${CY}end.  Press ${WT}any ${CY}"
+printf "${CY}  Press ${WT}any ${CY}"
 
-read -n 1 -s -t 300 -p "key to continue."
+read -n 1 -s -t 300 -p "key to continue "
+printf "${CY}to the ${WT}Main Menu."
 source /opt/easy-linux/menu-master.sh
 exit 0
 }
@@ -43,7 +43,7 @@ run_airg_func
 }
 
 deps_airg_option() {
-       optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4 / mdk3" "hashcat" "hostapd" "dhcpd / isc-dhcp-server / dhcp-server / dhcp" "nft / nftables / iptables" "ettercap / ettercap-text-only / ettercap-graphical" "etterlog" "lighttpd" "dnsmasq" "wash / reaver" "reaver / wash" "bully" "pixiewps" "bettercap" "beef /beef-xss / beef-project" "packetforge-ng" "hostapd-wpe" "asleap / asleep" "john" "openssl" "hcxpcapngtool / hcxtools" "hcxdumptool" "tshark / wireshaek-cli")
+       optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4 / mdk3" "hashcat" "hostapd" "dhcpd / isc-dhcp-server / dhcp-server / dhcp" "nft / nftables / iptables" "ettercap / ettercap-text-only / ettercap-graphical" "hashcat-utils" "etterlog" "lighttpd" "dnsmasq" "wash / reaver" "reaver / wash" "bully" "pixiewps" "bettercap" "beef / beef-xss / beef-project" "packetforge-ng" "hostapd-wpe" "asleap / asleep" "john" "openssl" "hcxpcapngtool / hcxtools" "hcxdumptool" "tshark / wireshaek-cli" "xml2")
 
 for optpackage in "${optpackages[@]}"
 do
@@ -97,32 +97,40 @@ deps_airg_check() {
 
 main() {
 # Check for aircrack-ng installation
+clear
 source ${scripts_dir}/support/support-Banner_func.sh
+
+# Check for airgeddon installation
+if [[ -d $HOME/Downloads/airgeddon ]] && [[ $airg_installed -eq 1 ]]; then
+    printf "Airgeddon is already installed. Launching...\n"
+    run_airg_func
+fi
+
+if [[ $airg_deps_inst = 1 ]]; then
+    airg_install_func
+elif [[ $airg_deps_inst = 0 ]]; then
+    deps_airg_install
+fi
+
 if [[ -f /opt/easy-linux/.envrc ]]; then
     airc_installed=$(grep "airc_installed" /opt/easy-linux/.envrc | cut -d "=" -f 2)
     if [[ $airc_installed -eq 1 ]]; then
         printf "Aircrack-NG is already installed. Skipping installation.\\n"
     else
         printf "Aircrack-NG dependencies not installed. Installing...\\n"
-        source /opt/easy-linux/support/support-aircrack2.sh
+        source /opt/easy-linux/support/support-aircrack2.sh     
     fi
-else
-    printf "Aircrack-ng dependencies not installed. Installing...\\n"
-    source /opt/easy-linux/support/support-aircrack2.sh
 fi
 
-# Check for airgeddon installation
-if [[ $(command -v airgeddon >/dev/null 2>&1) ]] && [[ $airg_installed -eq 1 ]]; then
-    printf "Airgeddon is already installed. Launching...\n"
-    run_airg_func
-else
-    printf "Airgeddon dependencies not installed. Installing...\n"
-       if [[ $airc_installed -eq 1 ]]; then
-        printf "Aircrack-ng is already installed. Skipping installation.\n"
-        deps_airg_check
+if [[ -d $HOME/Downloads/airgeddon ]]; then
+    printf "Airgeddon download folder not found. Cloning...\\n"
+       if [[ $airg_installed -eq 1 ]]; then
+#        printf "Aircrack-ng is already installed. Skipping installation.\\n"
+        run_airg_func
     else
-        printf "Airgeddon dependencies not installed. Installing...\n"
-        source /opt/easy-linux/support/support-aircrack2.sh
+        printf "Airgeddon dependencies not installed. Installing...\\n"
+
+        #source /opt/easy-linux/support/support-aircrack2.sh
     fi 
     deps_airg_check
     

@@ -6,28 +6,6 @@ scripts_dir=/opt/easy-linux
 source "${scripts_dir}/.envrc"
 set -e
 
-deps_install_func() {
-# Install dependencies and Aircrack-ng
-# function 3
-    for packagedeps in build-essential autoconf automake libtool pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev ethtool shtool rfkill zlib1g-dev libpcap-dev libsqlite3-dev libpcre3-dev libhwloc-dev libcmocka-dev hostapd wpasupplicant tcpdump screen iw usbutils;   do
-        if ! dpkg -s "$packagedeps" >/dev/null 2>&1; then
-            airc_deps_installed=0
-            printf "${CY}  $packagedeps is not installed.\\n"
-            printf "${WT}  Installing $packagedeps...\\n"
-            sudo apt-get update
-            sudo apt-get install -y "$packagedeps"
-        else
-            printf "${GN} $packagedeps is installed.\\n"
-            airc_deps_installed=1
-        fi
-    done
-
-airc_deps_installed=1
-sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
-
-app_install_func
-}
-
 aircrack_run_func() {
 # Run Aircrack-ng
 # Function 1
@@ -51,6 +29,25 @@ fi
 
 }
 
+
+envrc_func() {
+# Update the .envrc file with the new values
+sudo sed -i "s/air_installed=.*/air_installed=$air_installed/g" "${scripts_dir}/.envrc"
+sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
+
+cd "${scripts_dir}/support" && direnv allow
+
+if [[ $airc_installed = 1 && $airc_deps_installed = 1 ]]; then 
+    printf "\\n${GN}  ${WT}Aircrack-ng ${CY}has been installed successfully.\\n"
+elif [[ $airc_installed = 0 && $airc_deps_installed = 1 ]]; then 
+    printf "\\n${GN}  ${WT}Aircrack-ng ${CY}is not reporting a successful install.\\n"
+elif [[ $airc_installed = 1 && $airc_deps_installed = 0 ]]; then 
+    printf "\\n${GN}  ${WT}Dependancies ${CY}are not reporting a successful install.\\n"
+else
+    printf "\\n${GN}  ${WT}Can't determine installation status"
+fi
+}
+
 app_install_func() {
 wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P "$HOME/Downloads"
 cd $HOME/Downloads
@@ -68,6 +65,29 @@ aircrack_run_func
 
 }
 
+
+deps_install_func() {
+# Install dependencies and Aircrack-ng
+# function 3
+    for packagedeps in build-essential autoconf automake libtool pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev ethtool shtool rfkill zlib1g-dev libpcap-dev libsqlite3-dev libpcre3-dev libhwloc-dev libcmocka-dev hostapd wpasupplicant tcpdump screen iw usbutils;   do
+        if ! dpkg -s "$packagedeps" >/dev/null 2>&1; then
+            airc_deps_installed=0
+            printf "${CY}  $packagedeps is not installed.\\n"
+            printf "${WT}  Installing $packagedeps...\\n"
+            sudo apt-get update
+            sudo apt-get install -y "$packagedeps"
+        else
+            printf "${GN} $packagedeps is installed.\\n"
+            airc_deps_installed=1
+        fi
+    done
+
+airc_deps_installed=1
+sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
+
+app_install_func
+}
+
 # function 4
 aircrack_check_func() {
 if [[ $airc_installed -eq 0 && $airc_deps_installed -eq 0 ]]; then
@@ -82,43 +102,6 @@ fi
 if [[ $airc_installed -eq 1 && $airc_deps_installed -eq 0 ]]; then
 deps_install_func
 fi
-}
-
-aircrack_run_func() {
-# Check if Aircrack-ng is already installed
-# Function 1
-if [[ $airc_installed -eq 1 && $airc_deps_installed -eq 1 ]]; then
-    printf "\\n${GN}  Aircrack-ng is already installed.${CY}\\n"
-    sudo aircrack-ng --help
-    sudo aircrack-ng -u
-    read -n 1 -s -r -p "Press any key to continue" 
-    clear
-    envrc_func
-    source ${scripts_dir}/support/support-airgeddon.sh
-    exit 0
-else
-    printf "\\n${GN} Checking dependencies...\\n"
-    airc_deps_installed=0
-    sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
-
-    for package in build-essential autoconf automake libtool pkg-config libnl-3-dev libnl-genl-3-dev libssl-dev ethtool shtool rfkill zlib1g-dev libpcap-dev libsqlite3-dev libpcre3-dev libhwloc-dev libcmocka-dev hostapd wpasupplicant tcpdump screen iw usbutils; do
-        if ! dpkg -s "$package" >/dev/null 2>&1; then
-            airc_deps_installed=0
-            sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
-            printf "${CY}  $package is not installed.\\n"
-            printf "${WT}  Installing $package...\\n"
-            sudo apt-get update
-            sudo apt-get install -y "$package"
-        else
-            printf "${GN} $package is installed.\\n"
-            airc_deps_installed=1
-            sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
-
-        fi
-    done
-fi
-envrc_func
-
 }
 
 main() {
@@ -141,24 +124,6 @@ printf "${WT}\\n    This script requires ${WT}superuser privileges.\\n"
 printf "${WT}    Please enter your password if prompted.\\n"
 
 aircrack_check_func
-fi
-}
-
-envrc_func() {
-# Update the .envrc file with the new values
-sudo sed -i "s/air_installed=.*/air_installed=$air_installed/g" "${scripts_dir}/.envrc"
-sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
-
-cd "${scripts_dir}/support" && direnv allow
-
-if [[ $airc_installed = 1 && $airc_deps_installed = 1 ]]; then 
-    printf "\\n${GN}  ${WT}Aircrack-ng ${CY}has been installed successfully.\\n"
-elif [[ $airc_installed = 0 && $airc_deps_installed = 1 ]]; then 
-    printf "\\n${GN}  ${WT}Aircrack-ng ${CY}is not reporting a successful install.\\n"
-elif [[ $airc_installed = 1 && $airc_deps_installed = 0 ]]; then 
-    printf "\\n${GN}  ${WT}Dependancies ${CY}are not reporting a successful install.\\n"
-else
-    printf "\\n${GN}  ${WT}Can't determine installation status"
 fi
 }
 
