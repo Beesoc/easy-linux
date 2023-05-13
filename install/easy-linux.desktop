@@ -1,8 +1,10 @@
 [Desktop Entry]
 Name=Beesoc's Easy Linux Loader
+GenericName=Easy Menu
 Comment=Bash menu system to easily launch apps and services
 Exec=bash /opt/easy-linux/menu-master.sh
 Icon=terminal
 Terminal=true
 Type=Application
 Categories=Network;Utilities
+Keywords=bash;menu;easy-linux
