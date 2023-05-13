@@ -43,7 +43,7 @@ run_airg_func
 }
 
 deps_airg_option() {
-       optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4" "hashcat" "hostapd" "dhcpd" "nft" "ettercap" "etterlog" "lighttpd" "dnsmasq" "wash" "reaver" "bully" "pixiewps" "bettercap" "beef" "packetforge-ng" "hostapd-wpe" "asleep" "john" "openssl" "hcxpcapngtool" "hcxdumptool" "tshark")
+       optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4 / mdk3" "hashcat" "hostapd" "dhcpd / isc-dhcp-server / dhcp-server / dhcp" "nft / nftables / iptables" "ettercap / ettercap-text-only / ettercap-graphical" "etterlog" "lighttpd" "dnsmasq" "wash / reaver" "reaver / wash" "bully" "pixiewps" "bettercap" "beef /beef-xss / beef-project" "packetforge-ng" "hostapd-wpe" "asleap / asleep" "john" "openssl" "hcxpcapngtool / hcxtools" "hcxdumptool" "tshark / wireshaek-cli")
 
 for optpackage in "${optpackages[@]}"
 do
