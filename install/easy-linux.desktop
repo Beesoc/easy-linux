@@ -5,4 +5,4 @@ Exec=bash /opt/easy-linux/menu-master.sh
 Icon=terminal
 Terminal=true
 Type=Application
-
+Categories=Network;Utilities
