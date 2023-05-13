@@ -1,12 +1,9 @@
 #!/bin/bash
-#
-#
 # Version: 0.0.2
 set -e
 scripts_dir=/opt/easy-linux
 #
 clear
-#
 source ${scripts_dir}/.envrc
 
   if [ ! -d ${scripts_dir} ]; then
@@ -235,6 +232,7 @@ sudo echo "export hostname=$HOST" >> ${scripts_dir}/.envrc
 sudo echo "export arch=$(uname -m)" >> ${scripts_dir}/.envrc
 sudo echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" >> ${scripts_dir}/.envrc
 sudo echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" >> ${scripts_dir}/.envrc
+}
 
 # Populate the envrc table
 populate_envrc
