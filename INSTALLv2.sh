@@ -35,150 +35,8 @@ printf "${NC}${CY}"
 
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
   #
-}                                
+}  
 
-Banner_func
-
-direnv_func() {
-# Step 3 or skip function.
-               read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
-        choicedirenv=${choicedirenv:-Y}
-                if [[ $choicedirenv =~ ^[Yy]$ ]]; then
-                    printf "${GN}  Continuing..." 
-                    sleep 1
-                    printf "  This step may take a few minutes..."
-                    sleep 1
-                    printf "  Please wait."
-                    sudo apt update
-                    sudo apt install -y direnv
-                else
-                   printf "${GN} Not Needed.  Continuing."
-                
-                fi
-       check_directories_func
-}
-
-install_func() {
-# Step 5 function.
-printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "
-sleep 1
-read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
-          choiceez=${choiceez:-Y}
-            if [[ $choiceez =~ ^[Yy]$ ]]; then
-          #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-              printf "\\n${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
-              sleep 1
-            elif [[ $choiceez =~ ^[Nn]$ ]]; then
-            #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
-              printf "\\n${RED}  [*] ${OG}Installation rejected..."
-              sleep 1 
-              printf "..Please wait.."
-              exit 0
-            else
-              printf "\\n${RED}  [*]  Invalid Selection. Exiting."
-              exit 0
-            fi
-     git_files_func
-}
-
-check_directories_func() {
-# Step 2 or 4 function.
-if [[ -d /opt/easy-linux ]]; then
-    printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
-    printf "  ${WT}[*] ${GN}Removing and recloning repository." 
-    sleep 1
-    sudo rm -fr /opt/easy-linux
-elif [[ ! -d /opt/easy-linux ]]; then
-#    sudo chown -v 1000:1000 /opt
-    printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
-fi  
-install_func
-
-}
-main() {
-# 1.  script starts executing here.
-clear
-Banner_func
-
-printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
-
-read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
-install=${install:-Y}
-if [[ $install =~ ^[Yy]$ ]]; then
-  printf "\\n ${WT} [*] ${GN}Loading...Please Wait..."
-else
-  printf "  ${RED}   Exiting."
-  exit 0
-fi
-sudo apt install -y bc lm-sensors curl > /dev/null
-
-username=$(whoami)
-userid=${USER}
-useraccount=$(getent passwd 1000 | cut -d ":" -f 1)
-computername=$(hostname)
-
-clear
-   Banner_func
-# check for requirements.
-    if command -v /usr/bin/direnv >/dev/null 2>&1; then
-       check_directories_func
-    else
-    direnv_func
-    fi
-}
-
-whoami_func() {
-# Step 7 func.
-# Capture user's username and computer name
-
-# Verify the user and computer name in three different ways
-VERIFY_HOST=$(hostname)
-VERIFY_ETC_HOSTNAME=$(cat /etc/hostname)
-
-# Verify computer name using three different methods
-if [ $computername != $(echo $HOST) ]; then
-  printf "${OG}  Warning: computer name does not match \$HOST" >&2
-fi
-if [ $computername != $(cat /etc/hostname) ]; then
-  printf "${OG}  Warning: computer name does not match /etc/hostname" >&2
-fi
-if [ $computername != $(uname -n) ]; then
-  printf "${OG}  Warning: computer name does not match uname -n" >&2
-fi
-if [ $username != $userid ] && [ $userid != $useraccount ]; then
-  printf "${OG}  Warning: Username does not match $USER" >&2
-fi
-
-# Check if user is using Pwnagotchi
-amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)
-
-sudo chown 1000:0 /opt/easy-linux/.envrc
-# Write information to file
-echo "export username=$username" >> /opt/easy-linux/.envrc
-echo "export computername=$computername" >> /opt/easy-linux/.envrc
-echo "export amiPwn=$amiPwn" >> /opt/easy-linux/.envrc
-cd /opt/easy-linux || exit
-direnv allow
-sudo direnv allow
-
-}
-
-git_files_func() {
-# step 6 function.
-  printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n  "
-  sleep 1
-  sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
-
-sudo chown -v 1000:1000 /opt/easy-linux
-sudo chmod +x /opt/easy-linux/support/*.sh
-sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
-sudo mv -t /opt/easy-linux /opt/easy-linux/install/*
-sudo chmod +x /opt/easy-linux/*.sh
-sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
-
-whoami_func
-
-}
 
 cleanup_func() {
 # Step 7 function. End.
@@ -203,5 +61,104 @@ else
 fi
 }
 
-main
+git_files_func() {
+# step 6 function.
+  printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n  "
+  sleep 1
+  sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
+
+sudo chown -v 1000:1000 /opt/easy-linux
+sudo chmod +x /opt/easy-linux/support/*.sh
+sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
+sudo mv -t /opt/easy-linux /opt/easy-linux/install/*
+sudo chmod +x /opt/easy-linux/*.sh
+sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
+
 cleanup_func
+}
+
+install_func() {
+# Step 5 function.
+Banner_func
+printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "
+sleep 1
+read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
+          choiceez=${choiceez:-Y}
+            if [[ $choiceez =~ ^[Yy]$ ]]; then
+          #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
+              printf "\\n${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
+              sleep 1
+            elif [[ $choiceez =~ ^[Nn]$ ]]; then
+            #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
+              printf "\\n${RED}  [*] ${OG}Installation rejected..."
+              sleep 1 
+              printf "..Please wait.."
+              exit 0
+            else
+              printf "\\n${RED}  [*]  Invalid Selection. Exiting."
+              exit 0
+            fi
+     git_files_func
+}
+check_directories_func() {
+# Step 2 or 4 function.
+if [[ -d /opt/easy-linux ]]; then
+    printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
+    printf "  ${WT}[*] ${GN}Removing and recloning repository." 
+    sleep 1
+    sudo rm -fr /opt/easy-linux
+elif [[ ! -d /opt/easy-linux ]]; then
+#    sudo chown -v 1000:1000 /opt
+    printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
+fi  
+install_func
+}
+
+direnv_func() {
+# Step 3 or skip function.
+               read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
+        choicedirenv=${choicedirenv:-Y}
+                if [[ $choicedirenv =~ ^[Yy]$ ]]; then
+                    printf "${GN}  Continuing..." 
+                    sleep 1
+                    printf "  This step may take a few minutes..."
+                    sleep 1
+                    printf "  Please wait."
+                    sudo apt update
+                    sudo apt install -y direnv
+                else
+                   printf "${GN} Not Needed.  Continuing."
+                
+                fi
+       check_directories_func
+}
+
+main() {
+# 1.  script starts executing here.
+clear
+Banner_func
+
+printf "\\n${OG}    Welcome to the Installer for Beesoc's Easy Linux    Press ${RED}[ctrl+c] ${OG}to cancel\\n${CY}\\n" 
+
+read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
+install=${install:-Y}
+if [[ $install =~ ^[Yy]$ ]]; then
+  printf "\\n ${WT} [*] ${GN}Loading...Please Wait..."
+else
+  printf "  ${RED}   Exiting."
+  exit 0
+fi
+sudo apt install -y bc lm-sensors curl > /dev/null
+
+clear
+   Banner_func
+# check for requirements.
+    if $(command -v /usr/bin/direnv >/dev/null 2>&1); then
+       check_directories_func
+    else
+    direnv_func
+    fi
+}
+
+main
+
