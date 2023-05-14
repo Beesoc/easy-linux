@@ -1,4 +1,5 @@
 #!/bin/bash
+# Version: 0.0.3
 # Capture user's username and computer name
 # shellcheck source .envrc
 set -e
