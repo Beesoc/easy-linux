@@ -1,4 +1,5 @@
 #!/bin/bash
+# Version: 0.0.2
 # script to start wifi adapter in MANAGED mode.
 set -e
 scripts_dir=/opt/easy-linux
