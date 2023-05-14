@@ -1,4 +1,5 @@
 #!/bin/bash
+# Version: 0.0.2
 function help {
   echo 
   echo "Usage: $0 [options]"
@@ -12,7 +13,7 @@ if [[ $1 == "-h" || $1 == "--help" ]]; then
   help
   exit 0
 elif [[ $1 == "-v" || $1 == "--version" ]]; then
-  echo "The script is version 0.0.2."
+  echo "The script is ersion 0.0.2."
   exit 0
 fi
 sudo chown -vR 1000:0 /opt/easy-linux
