@@ -1,7 +1,7 @@
 #!/bin/bash
 # script to start wifi adapter in MONITOR mode.
 set -e
-#
+# Version: 0.0.2
 #
 clear
 source ${scripts_dir}/.envrc
