@@ -6,7 +6,7 @@ clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 source ${scripts_dir}/.envrc
 # shellcheck source=support-Banner_func.sh
-sudo apt install -y bc > /dev/null
+sudo apt install -y bc acpi > /dev/null
 
 # Display hostname and username
 printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')            ${CY}Time: ${WT}$(date +%I:%M:%S\ ${GN}%p)        ${CY}Username: ${GN}$(whoami)""${WT}@""${GN}$(hostname)${NC}\\n"
