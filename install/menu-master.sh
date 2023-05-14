@@ -16,7 +16,8 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
   exit 0
 fi
 sudo chown -vR 1000:0 /opt/easy-linux
-source /opt/easy-linux
+scripts_dir=/opt/easy-linux
+source /opt/easy-linux/.envrc
 #
 # 1st release of Beesoc's Easy Linux Loader
 # * Defines a series of color codes for printing output in different colors.
