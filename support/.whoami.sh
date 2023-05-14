@@ -3,23 +3,13 @@
 # shellcheck source .envrc
 set -e
 scripts_dir=/opt/easy-linux
-# Version: 0.0.2
 clear
 source ${scripts_dir}/.envrc
-pwnagotchi=""
+
+get_vars_func() {
 computername=$(cat /etc/hostname)
-
-if [[ $pwnagotchi != "Gotcha" ]] && [[ $pwnagotchi != "Sniffer" ]]; then 
-    pwnagotchi="Unknown"
-
-    if [[ "$USER" == "$cwb_username" && "$HOST" == "$cwb_computername" ]]; then
-        pwnagotchi="Gotcha"
-        sed -i 's/^pwnagotchi=.*/pwnagotchi=Gotcha/' ${scripts_dir}/.envrc
-    elif [[ "$USER" == "$ldb_username" && "$HOST" == "$ldb_computername" ]]; then
-        pwnagotchi="Sniffer"
-        sed -i 's/^pwnagotchi=.*/pwnagotchi=Sniffer/' ${scripts_dir}/.envrc
-    fi
-fi
+user=$USER
+username=$USER
 
 FLAG_FILE=/opt/easy-linux/.envrc_populated
 
@@ -48,11 +38,9 @@ echo "export useraccount=$(getent passwd 1000 | cut -d ":" -f 1)" | sudo tee -a 
 echo "export computername=$(cat /etc/hostname)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export hostname=$(cat /etc/hostname)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export computername=$(cat /etc/hostname)" | sudo tee -a ${scripts_dir}/.envrc
-echo "export TERM=xterm-color" | sudo tee -a ${scripts_dir}/.envrc
 echo "export arch=$(uname -m)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" | sudo tee -a ${scripts_dir}/.envrc
-echo "export amiPwn=$(if [ -e "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
-echo "export pwnagotchi=Unknown" | sudo tee -a ${scripts_dir}/.envrc  
+echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
 }
 
 # Populate the envrc table
@@ -61,6 +49,31 @@ clear
 # Update flag to indicate function has ran.
 touch "$FLAG_FILE"
 fi
+}
+
+function coloredEcho(){
+    local exp=$1;
+    local color=$2;
+    if ! [[ $color =~ '^[0-9]$' ]] ; then
+       case $(echo $color | tr '[:upper:]' '[:lower:]') in
+        black) color=0 ;;
+        red) color=1 ;;
+        green) color=2 ;;
+        yellow) color=3 ;;
+        blue) color=4 ;;
+        magenta) color=5 ;;
+        cyan) color=6 ;;
+        white|*) color=7 ;; # white or invalid color
+       esac
+    fi
+    tput setaf $color;
+    echo $exp;
+    tput sgr0;
+}
+
+main() {
+get_vars_func
+coloredEcho
 
 cd /opt/easy-linux
 direnv allow
@@ -69,3 +82,5 @@ sudo direnv allow
 cd /opt/easy-linux/support
 direnv allow
 sudo direnv allow
+}
+main
