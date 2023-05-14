@@ -5,7 +5,7 @@
 #
 #set -euo pipefail
 # Version: 0.0.2
-
+scripts_dir=/opt/easy-linux
 #################################################  Begin User Options  #########
 set -e
 
@@ -14,55 +14,7 @@ set -e
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
 source ${scripts_dir}/.envrc
-source ${scripts_dir}/support/support-Banner_func.sh
-source ${scripts_dir}/support/support-Prompt_func.sh
-clear
-printf "\\n${WT}\\n\\n                               IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
-printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
-      read -r -n1 -s -t 300
-clear
-options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
 
-printf "${CY}"
-
-select_pwn_func() {
-# display a list of pwnagotchis
-
-if [[ ${mac_address} == "${gotcha_mac}" ]]; then
-    # Gotcha is connected, run backup for Gotcha
-    pwnagotchi="Gotcha"
-elif [[ ${mac_address} == "${sniffer_mac}" ]]; then
-    # Sniffer is connected, run backup for Sniffer
-    pwnagotchi="Sniffer"
-elif [[ ${mac_address} == "${FuckThatSh1t_mac}" ]]; then
-    # FuckThatSh1t is connected, run backup for FuckThatSh1t
-    pwnagotchi="FuckThatSh1t"
-fi
-
-if [[ $HOSTNAME = "updates" ]] || [[ $USER = "beesoc" ]]; then
-   pwnagotchi="Gotcha"
-  elif [[ $HOSTNAME = "lepotato" ]] || [[ $USER = "larry" ]]; then
-   pwnagotchi="Sniffer"
-  elif [[ $HOSTNAME = "${mike_host}" ]]; then
-   pwnagotchi="FuckThatSh1t"
-  else
-    printf "\\n${CY}Unable to determine Pwnagotchi.automatically.  Press ${WT}any ${CY}key to override.\\n"
-              read -r -n1 -s -t 300  
-    # Unknown device connected, Override or setup new 
-              read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
-              printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
-fi
-printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOSTNAME${CY}.\\n"
-}
-#if [[ ${pwnagotchi_mac} != ${pwnagotchi_host} ]]; then
-#    printf "${RED} [!!!] Automatic Pwnagotchi detection failed! Fatal Error.\\n "
-#    printf "${RED}  To debug, see files in support folder: pwnagotchi_mac & pwnagotchi_host to see what \\n"
-#    printf "  I determined values to be.  Press ${WT}any ${RED}key to exit [!!!]\\n"
-#    echo $pwnagotchi_mac > ./support/pwnagotchi_mac
-#    echo $pwnagotchi_host > ./support/pwnagotchi_host
-#  exit 1
-#fi
-#}
 ssh_func() {
 # function to control SSH options.  check for key, create key, copy key to pwn.
 clear
@@ -101,6 +53,7 @@ udev_func() {
   if [[ -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
      printf "${GN}Udev rule is there.  yeah."
   fi 
+
 }
 backup_func() {
 
@@ -121,7 +74,7 @@ backup_func() {
 	pi@10.0.0.2:/etc/shadow              pi@10.0.0.2:/etc/network                  pi@10.0.0.2:/etc/passwd \
 	"${backup_dir}/test/${pwnagotchi}"
 
-    sudo chown -vR 1000:1000 /opt/backup
+    sudo chown -vR 1000:0 /opt/backup
     printf "    Your Pwnagotchi is backed up!\\n "
     
 }
@@ -162,32 +115,11 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
 "${backup_dir}/network" pi@10.0.0.2:/etc/ \
 "${backup_dir}/passwd" pi@10.0.0.2:/etc/
 
+    sudo chown -vR 1000:0 /opt/backup
+    printf "    Your Pwnagotchi has been restored!\\n "
+
 }
-
- usb_func() {
- usb_count=$(sudo ifconfig | grep -c "usb")
-
-if [[ "${usb_count}" -eq 0 ]]; then
-    printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
-    printf "    Please connect the USB cable to your Pwnagotchi and try again."
-    exit 1
-else
-    # Continue if usb0 adapter is detected.
-    printf "   \\n" 
-    mac_address=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
-# $(ifconfig usb0 | grep -oE '([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}')
-    printf "${OG}    USB network adapter detected.  Continuing... \\n" 
-fi
-}
-
-#
-main() {
-clear
-source "${scripts_dir}/support/support-Banner_func.sh"
-source "${scripts_dir}/support/support-Prompt_func.sh"
-printf " ${CY}\\n                    Welcome to the Pwnagotchi hub\\n"
-usb_func
-select_pwn_func
+pwn_menu_func() {
 select option in "${options[@]}"; do
     case ${option} in
         "Backup")
@@ -201,7 +133,7 @@ select option in "${options[@]}"; do
                 printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
             fi
             ssh_func
-			backup_func
+         backup_func
             udev_func
             return
             ;;
@@ -231,19 +163,15 @@ select option in "${options[@]}"; do
       read -r -n1 -s -t 60
       clear
       source "${scripts_dir}/support/support-Banner_func.sh"
-            if [[ ${pwnagotchi} == "" ]]; then
-                select_pwn_func
-            else
-                printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
-            fi
+            
             ssh_func
-			maint_func
+	   maint_func
             udev_func
             return
             ;;
          "Main Menu")
             clear
-			bash "${scripts_dir}/menu-master.sh"
+        	source "${scripts_dir}/menu-master.sh"
             printf "${CY}You selected Main Menu\\n${CY}"
             ;;
           "Exit")
@@ -257,4 +185,64 @@ select option in "${options[@]}"; do
     esac
 done
 }
+
+select_pwn_func() {
+# display a list of pwnagotchis
+
+if [[ ${mac_address} == "${gotcha_mac}" ]]; then
+    # Gotcha is connected, run backup for Gotcha
+    pwnagotchi="Gotcha"
+elif [[ ${mac_address} == "${sniffer_mac}" ]]; then
+    # Sniffer is connected, run backup for Sniffer
+    pwnagotchi="Sniffer"
+elif [[ ${mac_address} == "${FuckThatSh1t_mac}" ]]; then
+    # FuckThatSh1t is connected, run backup for FuckThatSh1t
+    pwnagotchi="FuckThatSh1t"
+fi
+
+if [[ $HOST = "updates" ]] && [[ $USER = "beesoc" ]]; then
+   pwnagotchi="Gotcha"
+  elif [[ $HOST = "larry-linux" ]] || [[ $USER = "larry" ]]; then
+   pwnagotchi="Sniffer"
+  elif [[ $HOST = "${mike_host}" ]]; then
+   pwnagotchi="FuckThatSh1t"
+  else
+    printf "\\n${CY}Unable to determine Pwnagotchi automatically.  Press ${WT}any ${CY}key to override.\\n"
+              read -n 1 -r -s -t 300  
+    # Unknown device connected, Override or setup new 
+              read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
+              printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
+fi
+printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOST${CY}.\\n"
+pwn_menu_func
+}
+
+main() {
+clear
+source ${scripts_dir}/support/support-Banner_func.sh
+source ${scripts_dir}/support/support-Prompt_func.sh
+echo; echo; echo echo
+printf "\\n${WT}\\n\\n                       IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
+printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
+      read -r -n1 -s -t 300
+clear
+usb_count=$(sudo ifconfig | grep -c "usb")
+options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
+udev_func
+
+if [[ "${usb_count}" == 0 ]]; then
+    printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
+    printf "    Please connect the USB cable to your Pwnagotchi's data port and try again."
+    exit 0
+else
+    # Continue if usb0 adapter is detected.
+    printf "   \\n" 
+    mac_address=$(ip address show usb0 | grep -oE '(([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}){1}' | head -n 1)
+# $(ifconfig usb0 | grep -oE '([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}')
+    printf "${OG}    USB network adapter detected.  Continuing... \\n" 
+fi
+select_pwn_func
+}
+
 main
+source ${scripts_dir}/menu-master.sh
