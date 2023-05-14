@@ -11,10 +11,24 @@ get_vars_func() {
 computername=$(cat /etc/hostname)
 user=$USER
 username=$USER
+pwnagotchi="Unknown"
+
+if [[ $pwnagotchi != "Gotcha" ]] && [[ $pwnagotchi != "Sniffer" ]]; then 
+    pwnagotchi="Unknown"
+
+    if [[ "$USER" == "$cwb_username" && "$HOST" == "$cwb_computername" ]]; then
+        pwnagotchi="Gotcha"
+        sed -i 's/^pwnagotchi=.*/pwnagotchi=Gotcha/' .envrc
+    elif [[ "$USER" == "$ldb_username" && "$HOST" == "$ldb_computername" ]]; then
+        pwnagotchi="Sniffer"
+        sed -i 's/^pwnagotchi=.*/pwnagotchi=Sniffer/' .envrc
+    fi
+sed -i 's/^pwnagotchi=.*/pwnagotchi=Unknown/' .envrc
+fi
 
 FLAG_FILE=/opt/easy-linux/.envrc_populated
 
-if [ ! -f "$FLAG_FILE" ]; then
+if [ ! -e "$FLAG_FILE" ]; then
 
   # Function to populate .envrc file
   function populate_envrc() {
@@ -42,6 +56,7 @@ echo "export computername=$(cat /etc/hostname)" | sudo tee -a ${scripts_dir}/.en
 echo "export arch=$(uname -m)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" | sudo tee -a ${scripts_dir}/.envrc
 echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
+echo "export pwnagotchi="" | sudo tee -a ${scripts_dir}/.envrc
 }
 
 # Populate the envrc table
