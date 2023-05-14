@@ -34,8 +34,9 @@ declare -A required_versions=(
   ["support/support-webmin.sh"]="0.0.2"
   ["support/support-wifite.sh"]="0.0.2"
   ["support/support-wpaUP.sh"]="0.0.2"
-  ["support/support-wpaDOWN"]="0.0.2"
-)
+  ["support/support-wpaDOWN.sh"]="0.0.2"
+  ["support/version-support.sh"]="0.0.2"
+  )
 
 function check_version {
   script_path=$1
