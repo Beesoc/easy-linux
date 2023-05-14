@@ -33,23 +33,15 @@ upload_func() {
 
 permissions_func() {
     # make sure permissions are ok.
-    if [[ $HOST -eq $cwb_computername ]] && [[ $USER -eq $cwb_username]]; then
+    if [[ $HOST -eq $cwb_computername ]] && [[ $USER -eq $cwb_username ]]; then
         pwnagotchi=Gotcha
         line=$(grep -n "pwnagotchi=" .envrc | cut -d: -f1)
-        sed -i "${line}s/.*/pwnagotchi=${pwnagotchi}/" .envrc
-        
+        sed -i "${line}s/.*/pwnagotchi=${pwnagotchi}/" .envrc  
         sudo chown -vR beesoc:beesoc /opt/backup/root/*
-        elif [[ $HOST == "larry-linux" ]]; then
-        pwnagotchi2=Sniffer
+    elif [[ $HOST == "larry-linux" ]]; then
+        pwnagotchi=Sniffer
         line=$(grep -n "pwnagotchi=" .envrc | cut -d: -f1)
         sed -i "${line}s/.*/pwnagotchi=${pwnagotchi2}/" .envrc
-        
-        original_user2=larry
-        line=$(grep -n "ORIGINAL_USER=" .envrc | cut -d: -f1)
-        sed -i "${line}s/.*/original_user=${original_user2}/" .envrc
-        
-        sudo chown -vR larry:larry /opt/backup/root/*
-        
     else
         sudo chown -vR root:root /opt/backup/root/*
     fi
