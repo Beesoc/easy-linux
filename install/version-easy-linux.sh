@@ -93,4 +93,4 @@ for script_path in $(find . -type f -name "*.zip"); do
   update_script "$script_name" "$script_path"
 done
 
-printf "    ${GN}All scripts are up to date."
+printf "    ${GN}All scripts are up to date.\\n"
