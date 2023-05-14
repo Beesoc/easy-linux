@@ -31,6 +31,7 @@ set -e
 main() {
 # Display the main menu
   clear
+  export TERM=xterm-color
 sleep .5  
 if [[ -f "$HOME/INSTALLv2.sh" ]]; then
     sudo rm $HOME/INSTALLv2.sh
