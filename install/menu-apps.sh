@@ -14,7 +14,7 @@ install_apps_func() {
 	source "${scripts_dir}/support/support-Banner_func.sh"
 	printf "\\n                ${OG}Select which app you would like to install.${GN}\\n\\n"
 
-	coloredEcho "Green ECHO" green
+	#coloredEcho "Green ECHO" green
 
 	select option in "${options[@]}"; do
 		case ${option} in
@@ -196,7 +196,7 @@ personal_func() {
 
 deps_install_func() {
 	# List of package names to install
-	packages=("ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "iproute2 / ip" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb / usbutils" "wget" "ethtool" "loginctl / systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff")
+	packages=("ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "acpi" "ip" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb / usbutils" "wget" "ethtool" "loginctl / systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff")
 
 	# Loop through the list of package names
 	for package in "${packages[@]}"; do
