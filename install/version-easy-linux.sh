@@ -1,4 +1,5 @@
 #!/bin/bash
+# Version: 0.0.2
 set -e
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
@@ -43,6 +44,7 @@ declare -A required_versions=(
   ["support/support-trap-wifi.sh"]="0.0.2"
   ["support/support-troubleshooting.sh"]="0.0.2"
   ["support/support-updates.sh"]="0.0.2"
+  ["support/version-support"]="0.0.2"
   ["support/support-webmin.sh"]="0.0.2"
   ["support/support-wifite.sh"]="0.0.2"
   ["support/support-wpaUP.sh"]="0.0.2"
