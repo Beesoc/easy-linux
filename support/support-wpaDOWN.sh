@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# Version: 0.0.2
 source "${scripts_dir}/.envrc"
 source "${scripts_dir}/support/support-Banner_func.sh"
 #
