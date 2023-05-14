@@ -3,6 +3,7 @@
 # shellcheck source .envrc
 set -e
 scripts_dir=/opt/easy-linux
+# Version: 0.0.2
 clear
 source ${scripts_dir}/.envrc
 
