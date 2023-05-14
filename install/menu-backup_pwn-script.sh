@@ -13,8 +13,26 @@ set -e
 #shellcheck source=${scripts_dir}/.envrc 
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
+#shellcheck source=${scripts_dir}/support/.whoami.sh
 source ${scripts_dir}/.envrc
+source ${scripts_dir}/support/.whoami.sh
 
+pwn_connect_func() {
+printf "${CY} Would you like to connect to ${WT}${pwnagotchi} \\n"
+read -r -p "? [Y/n] " connect_pwn
+connect_pwn=${connect_pwn:-Y}
+if [[ "$connect_pwn" =~ ^[Yy]$ ]]; then 
+   ssh -p 22 pi@10.0.0.2
+   source ${scripts_dir}/supp
+elif [[ "$connect_pwn" =~ ^[Nn]$ ]]; then 
+   printf "${WT}  $USER ${RED}selected to NOT connect to ${WT}${pwnagotchi}.  Exiting"
+   exit 0
+
+else 
+
+   printf "${RED}  Invalid Selection"
+fi
+}
 ssh_func() {
 # function to control SSH options.  check for key, create key, copy key to pwn.
 clear
@@ -34,7 +52,7 @@ ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
   else
       printf "${RED}Unknown Error. Can't determine SSH key status."
   fi
-  
+
   printf "  ${CY}Now I will copy SSH key to Pwnagotchi. \\n"
   printf "  If new, password is ${WT}[raspberry]${CY}.\\n"
   printf "  You may be prompted to accept fingerprint next & will \\n"
@@ -44,7 +62,9 @@ ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
     ssh-copy-id -p 22 -i ~/.ssh/id_rsa.pub pi@10.0.0.2  
     sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2  
     ssh -p 22 pi@10.0.0.2
+pwn_connect_func
 }
+
 udev_func() {
   if [[ ! -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
      sudo echo \"ACTION=="add", SUBSYSTEM=="net", "ENV{ID_NET_NAME}"="usb*", ENV"{MAC_ADDRESS}"="${gotcha_mac}|${sniffer_mac}|${FuckThatSh1t_mac}", RUN+="/bin/bash ${scripts_dir}/menu-backup-pwn-script.sh" > /etc/udev/rules.d/99-backup-rule.rules
@@ -52,9 +72,10 @@ udev_func() {
   fi
   if [[ -e /etc/udev/rules.d/99-backup-rule.rules ]]; then
      printf "${GN}Udev rule is there.  yeah."
-  fi 
+  fi
 
 }
+
 backup_func() {
 
 # Backup files from backup server to remote computers
@@ -76,15 +97,14 @@ backup_func() {
 
     sudo chown -vR 1000:0 /opt/backup
     printf "    Your Pwnagotchi is backed up!\\n "
-    
+
 }
+
 restore_func() {
 # Restore files from backup server to remote computers
 
 printf "\\n  ${CY}You are about to restore ${WT}${pwnagotchi}:\\n"
   printf "  ${CY}Common files [all Pwnagotchis share them]: ${OG}\\n"
-
-# Define the backup directory where the files were saved
 
 # Restore files to their original locations
 rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --sparse --itemize-changes --executability --copy-links --progress --verbose --relative \
@@ -117,6 +137,39 @@ rsync -avz --rsync-path="sudo rsync" -e ssh --human-readable --mkpath --super --
 
     sudo chown -vR 1000:0 /opt/backup
     printf "    Your Pwnagotchi has been restored!\\n "
+}
+
+select_pwn_func() {
+# display a list of pwnagotchis
+
+if [[ ${pwnagotchi} -ne "Gotcha" ]] && [[ $pwnagotchi -ne "Sniffer" ]]; then
+    source ${scripts_dir}/support/whoami.sh
+
+    if [[ ${mac_address} == "${gotcha_mac}" ]]; then
+        # Gotcha is connected, run backup for Gotcha
+        pwnagotchi="Gotcha"
+    elif [[ ${mac_address} == "${sniffer_mac}" ]]; then
+        # Sniffer is connected, run backup for Sniffer
+        pwnagotchi="Sniffer"
+    elif [[ ${mac_address} == "${FuckThatSh1t_mac}" ]]; then
+        # FuckThatSh1t is connected, run backup for FuckThatSh1t
+        pwnagotchi="FuckThatSh1t"
+    fi
+elif [[ ${pwnagotchi} == "Unknown" ]]; then
+    source ${scripts_dir}/support/whoami.sh
+
+else
+    printf "\\n${CY}Unable to determine Pwnagotchi automatically.  Press ${WT}any ${CY}key to override.\\n"
+              read -n 1 -r -s -t 300  
+    # Unknown device connected, Override or setup new 
+              read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
+              printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
+fi
+
+printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOST${CY}.\\n"
+pwn_menu_func
+}
+
 
 }
 pwn_menu_func() {
@@ -127,14 +180,13 @@ select option in "${options[@]}"; do
             source "${scripts_dir}/support/support-Banner_func.sh"
             printf " ${CY}\\nWelcome to the Pwnagotchi hub\\n"
             printf "You selected Backup\\n"
-            if [[ ${pwnagotchi} == "" ]]; then
+            if [[ ${pwnagotchi} == "Unknown" ]]; then
                 select_pwn_func
             else
                 printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
             fi
             ssh_func
          backup_func
-            udev_func
             return
             ;;
         "Restore")
@@ -142,14 +194,13 @@ select option in "${options[@]}"; do
             source "${scripts_dir}/support/support-Banner_func.sh"
             printf " ${CY}\\nWelcome to the Pwnagotchi hub\\n"
             printf "You selected Restore\\n"
-            if [[ ${pwnagotchi} == "" ]]; then
+            if [[ ${pwnagotchi} == "Unknown" ]]; then
                 select_pwn_func
             else
                 printf "${WT}${pwnagotchi}${CY}: Proceeding\\n"
             fi
             ssh_func
 			restore_func
-            udev_func
             return
             ;;
         "Maintenance")
@@ -160,13 +211,12 @@ select option in "${options[@]}"; do
         printf "\\n   but know that you may experience bugs or other weird shit.  ${GN}You\\n"
         printf "\\n   have been warned. ${YW}[!!!]\\n" 
         printf "\\n${CY}            Press ${WT}any key ${CY}to continue.\\n"
-      read -r -n1 -s -t 60
+      read -n 1 -r -s -t 300
       clear
       source "${scripts_dir}/support/support-Banner_func.sh"
             
             ssh_func
 	   maint_func
-            udev_func
             return
             ;;
          "Main Menu")
@@ -177,7 +227,7 @@ select option in "${options[@]}"; do
           "Exit")
           clear
             printf "    ${RED}You selected Exit${OG}\\n"
-			exit 1
+			exit 0
             ;;
         *)
             printf "     ${RED}Invalid option\\n${CY}"
@@ -186,49 +236,18 @@ select option in "${options[@]}"; do
 done
 }
 
-select_pwn_func() {
-# display a list of pwnagotchis
-
-if [[ ${mac_address} == "${gotcha_mac}" ]]; then
-    # Gotcha is connected, run backup for Gotcha
-    pwnagotchi="Gotcha"
-elif [[ ${mac_address} == "${sniffer_mac}" ]]; then
-    # Sniffer is connected, run backup for Sniffer
-    pwnagotchi="Sniffer"
-elif [[ ${mac_address} == "${FuckThatSh1t_mac}" ]]; then
-    # FuckThatSh1t is connected, run backup for FuckThatSh1t
-    pwnagotchi="FuckThatSh1t"
-fi
-
-if [[ $HOST = "updates" ]] && [[ $USER = "beesoc" ]]; then
-   pwnagotchi="Gotcha"
-  elif [[ $HOST = "larry-linux" ]] || [[ $USER = "larry" ]]; then
-   pwnagotchi="Sniffer"
-  elif [[ $HOST = "${mike_host}" ]]; then
-   pwnagotchi="FuckThatSh1t"
-  else
-    printf "\\n${CY}Unable to determine Pwnagotchi automatically.  Press ${WT}any ${CY}key to override.\\n"
-              read -n 1 -r -s -t 300  
-    # Unknown device connected, Override or setup new 
-              read -p "What is the name of the Pwnagotchi you want to work on?" pwnagotchi
-              printf "${CY}    You entered ${WT}${pwnagotchi}${CY}."
-fi
-printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}, plugged into ${WT}$HOST${CY}.\\n"
-pwn_menu_func
-}
-
 main() {
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
 source ${scripts_dir}/support/support-Prompt_func.sh
 echo; echo; echo echo
-printf "\\n${WT}\\n\\n                       IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
+printf "\\n${WT}\\n\\n                 IMPORTANT: \\n ${GN}      Make sure you plug in your Pwnagotchi ${WT}BEFORE ${GN}continuing. \\n"
 printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n  "
       read -r -n1 -s -t 300
 clear
+source ${scripts_dir}/support/.whoami.sh
 usb_count=$(sudo ifconfig | grep -c "usb")
 options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
-udev_func
 
 if [[ "${usb_count}" == 0 ]]; then
     printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
@@ -245,4 +264,5 @@ select_pwn_func
 }
 
 main
+udev_func
 source ${scripts_dir}/menu-master.sh
