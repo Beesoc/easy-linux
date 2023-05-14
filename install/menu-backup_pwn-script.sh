@@ -205,7 +205,7 @@ select option in "${options[@]}"; do
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
         printf "       ${CY}\\nWelcome to the Pwnagotchi hub\\n"
-        printf "   ${GN}You selected Maintenance.  ${YW}[!!!] ${}CYThis menu is coming soon. You can continue\\n"
+        printf "   ${GN}You selected Maintenance.  ${YW}[!!!] ${CY}This menu is coming soon. You can continue\\n"
         printf "\\n   but know that you may experience bugs or other weird shit.  ${GN}You\\n"
         printf "\\n   have been warned. ${YW}[!!!]\\n" 
         printf "\\n${CY}            Press ${WT}any key ${CY}to continue.\\n"
