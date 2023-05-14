@@ -42,6 +42,7 @@ echo "export TERM=xterm-color" | sudo tee -a ${scripts_dir}/.envrc
 echo "export arch=$(uname -m)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" | sudo tee -a ${scripts_dir}/.envrc
 echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
+echo "export pwnagotchi=$(if $USER -eq $cwb_username && $HOST -eq $cwb_computername; then echo "Gotcho"; else 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
 }
 
 # Populate the envrc table
