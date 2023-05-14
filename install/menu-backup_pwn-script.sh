@@ -170,8 +170,6 @@ printf  "    ${CY}Your info:  ${WT}$USER ${CY}working on ${WT}${pwnagotchi}${CY}
 pwn_menu_func
 }
 
-
-}
 pwn_menu_func() {
 select option in "${options[@]}"; do
     case ${option} in
