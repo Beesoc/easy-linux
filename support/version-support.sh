@@ -1,4 +1,5 @@
 #!/bin/bash
+# Version: 0.0.2
 set -e
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
@@ -6,24 +7,11 @@ source ${scripts_dir}/.envrc
 source "${scripts_dir}/support/support-Banner_func.sh"
 # Define the minimum required version for each script
 declare -A required_versions=(
-  ["menu-master.sh"]="0.0.2"
-  ["menu-hacking.sh"]="0.0.2"
-  ["menu-customize.sh"]="0.0.2"
-  ["menu-apps.sh"]="0.0.2"
-  ["menu-backup_pwn-script.sh"]="0.0.2"
-  ["menu-upload-hashes.sh"]="0.0.2"
-  [".envrc"]="0.0.2"
-  ["README.md"]="0.0.2"
-  ["version-support.sh"]="0.0.2"
-  ["menu-troubleshooting.sh"]="0.0.2"
-  ["version-easy-linux.sh"]="0.0.2"
-  ["INSTALLv2.sh"]="0.0.2"
-  [".shellcheckrc"]="0.0.2"
-  ["support/.whoami.sh"]="0.0.2"
+  ["support/.whoami.sh"]="0.0.3"
   ["support/support-aircrack2.sh"]="0.0.2"
   ["support/support-airgeddon.sh"]="0.0.2"
   ["support/support-Banner_func.sh"]="0.0.2"
-  ["support/support-docker.sh"]="0.0.2"
+  ["support/support-docker.sh"]="0.0.3"
   ["support/support-fatrat.sh"]="0.0.2"
   ["support/support-fix-my-perm.sh"]="0.0.2"
   ["support/support-getvars.sh"]="0.0.2"
@@ -64,11 +52,11 @@ function check_version {
 function update_script {
   script_name=$1
   script_path=$2
-  latest_version=$(curl -s https://raw.githubusercontent.com/Beesoc/beesoc-menu/0.1/"$script_name" | grep '^# Version:' | awk '{print $3}')
+  latest_version=$(curl -s https://raw.githubusercontent.com/Beesoc/easy-linux/main/support/"$script_name" | grep '^# Version:' | awk '{print $3}')
 
   if [[ "$(printf '%s\n' "$latest_version" "${required_versions[$script_name]}" | sort -V | head -n1)" == "$latest_version" ]]; then
     echo "Updating $script_name to version $latest_version"
-    curl -s https://raw.githubusercontent.com/Beesoc/easy-linux/0.1/"$script_name" > "$script_path"
+    curl -s https://raw.githubusercontent.com/Beesoc/easy-linux/main/support/"$script_name" > "$script_path"
     chmod +x "$script_path"
   fi
 }
