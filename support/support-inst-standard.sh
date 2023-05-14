@@ -7,12 +7,6 @@ source "${scripts_dir}/.envrc"
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 
-#!/bin/bash
-#
-#
-# Version: 0.0.2
-set -e
-
 nano_lints_func() {
       printf "${OG}  Installing additional nano lints.${NC}\\n"
   if [[ -d ${compiled_dir} ]]; then
@@ -38,7 +32,7 @@ nano_lints_func() {
 
 pack_sel_func() {
 # List of package names to install
-     packages=("ip" "ps" "gawk" "xterm" "lspci" "aptitude" "autoconf" "automake" "bc" "libtool" "pkg-config" "libssl-dev" "ethtool" "geany" "geany-plugins" " htop" "shtool" "rfkill" "libpcap-dev" "libsqlite3-dev" "libhwloc-dev" "ncdu" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "procps" "procps-ng" "iproute2" "pciutils" "groff")
+     packages=("ip" "ps" "gawk" "xterm" "lspci" "aptitude" "autoconf" "automake" "bc" "libtool" "pkg-config" "libssl-dev" "ethtool" "geany" "geany-plugins" " htop" "shtool" "rfkill" "libpcap-dev" "libsqlite3-dev" "libhwloc-dev" "ncdu" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "procps" "procps-ng" "acpi" "pciutils" "groff")
 
 # Loop through the list of package names
 for package in "${packages[@]}"
