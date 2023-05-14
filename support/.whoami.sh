@@ -6,10 +6,20 @@ scripts_dir=/opt/easy-linux
 # Version: 0.0.2
 clear
 source ${scripts_dir}/.envrc
-
+pwnagotchi=""
 computername=$(cat /etc/hostname)
-user=$USER
-username=$USER
+
+if [[ $pwnagotchi != "Gotcha" ]] && [[ $pwnagotchi != "Sniffer" ]]; then 
+    pwnagotchi="Unknown"
+
+    if [[ "$USER" == "$cwb_username" && "$HOST" == "$cwb_computername" ]]; then
+        pwnagotchi="Gotcha"
+        sed -i 's/^pwnagotchi=.*/pwnagotchi=Gotcha/' ${scripts_dir}/.envrc
+    elif [[ "$USER" == "$ldb_username" && "$HOST" == "$ldb_computername" ]]; then
+        pwnagotchi="Sniffer"
+        sed -i 's/^pwnagotchi=.*/pwnagotchi=Sniffer/' ${scripts_dir}/.envrc
+    fi
+fi
 
 FLAG_FILE=/opt/easy-linux/.envrc_populated
 
@@ -41,8 +51,8 @@ echo "export computername=$(cat /etc/hostname)" | sudo tee -a ${scripts_dir}/.en
 echo "export TERM=xterm-color" | sudo tee -a ${scripts_dir}/.envrc
 echo "export arch=$(uname -m)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" | sudo tee -a ${scripts_dir}/.envrc
-echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
-echo "export pwnagotchi=$(if $USER -eq $cwb_username && $HOST -eq $cwb_computername; then echo "Gotcho"; else 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
+echo "export amiPwn=$(if [ -e "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
+echo "export pwnagotchi=Unknown" | sudo tee -a ${scripts_dir}/.envrc  
 }
 
 # Populate the envrc table
@@ -51,8 +61,6 @@ clear
 # Update flag to indicate function has ran.
 touch "$FLAG_FILE"
 fi
-
-# Verify the user and computer name in three different ways
 
 cd /opt/easy-linux
 direnv allow
