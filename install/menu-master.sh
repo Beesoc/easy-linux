@@ -41,7 +41,7 @@ if [[ -f ${scripts_dir}/INSTALLv2.sh ]]; then
     sudo rm ${scripts_dir}/INSTALLv2.sh
 fi
 sleep .5  
-source ${scripts_dir}/support/.whoami.sh 
+source /opt/easy-linux/support/.whoami.sh 
   source "${scripts_dir}/support/support-Banner_func.sh"
   printf "                  ${OG}[???]${CY} Please select an option: ${OG}[???]${CY}        ${RED}[✘] Exit tool [✘] \\n \\n"
   printf "  ${OG}1] ${GN}Hacking${OG}                             3] ${GN}Apps \\n${WT}\\n"
