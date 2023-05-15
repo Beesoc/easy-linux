@@ -70,8 +70,8 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
-printf "\\n${CY}  Hey ${CY}$username, "
-read -n 1 -p "would you like to launch Easy Linux now? [Y/n] " launchnow
+printf "\\n${CY}  Hey ${CY}$USER${CY}, would you like uo launch \\n${WT}"
+read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
   printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
@@ -84,8 +84,7 @@ fi
 
 git_files_func() {
 # step 6 function.
-  printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n  "
-  sleep 1
+  printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n  "; sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
 sudo chown -vR 1000:0 /opt/easy-linux
@@ -100,23 +99,19 @@ cleanup_func
 
 install_func() {
 # Step 5 function.
-Banner_func
-printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "
-sleep 1
+# Banner_func
+printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "; sleep 1
 read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
           choiceez=${choiceez:-Y}
             if [[ "$choiceez" =~ ^[Yy]$ ]]; then
           #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-              printf "\\n${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait.."
-              sleep 1
+              printf "\\n${WT}  [*] ${CY}Installation confirmed..."; sleep 1; printf "..Please wait..\\n";  sleep 1
             elif [[ "$choiceez" =~ ^[Nn]$ ]]; then
             #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
-              printf "\\n${RED}  [*] ${OG}Installation rejected..."
-              sleep 1 
-              printf "${CY}..Please wait.."
+              printf "\\n${RED}  [*] ${OG}Installation rejected...\\n"; sleep 1; printf "${CY}..Please wait...\\n"
               exit 0
             else
-              printf "\\n${WT}  [*]  ${RED}Invalid Selection. Exiting."
+              printf "\\n${WT}  [*]  ${RED}Invalid Selection. Exiting.\\n"
               exit 0
             fi
      git_files_func
@@ -125,12 +120,12 @@ check_directories_func() {
 # Step 2 or 4 function.
 if [[ -d /opt/easy-linux ]]; then
     printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
-    printf "  ${WT}[*] ${GN}Removing and recloning repository." 
+    printf "  ${WT}[*] ${GN}Removing and recloning repository.\\n" 
     sleep 1
     sudo rm -fr /opt/easy-linux
 elif [[ ! -d /opt/easy-linux ]]; then
 #    sudo chown -v 1000:1000 /opt
-    printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder."; sleep 1
+    printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder.\\n"; sleep 1
 fi  
 install_func
 }
@@ -140,15 +135,15 @@ direnv_func() {
                read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
-                    printf "${GN}  Continuing..." 
+                    printf "${GN}  Continuing...\\n" 
                     sleep 1
-                    printf "  This step may take a few minutes..."
+                    printf "  ${OG}This step may take a few minutes...\\n"
                     sleep 1
-                    printf "  Please wait."
+                    printf "  ${OG}Please wait.\\n"
                     sudo apt update
                     sudo apt install -y direnv
                 else
-                   printf "${GN} Not Needed.  Continuing."
+                   printf "${GN} Not Needed.  Continuing.\\n"
                 
                 fi
        check_directories_func
@@ -171,8 +166,6 @@ else
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
 
-clear
-   Banner_func
 # check for requirements.
     if $(command -v /usr/bin/direnv >/dev/null 2>&1); then
        check_directories_func
