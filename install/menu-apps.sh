@@ -125,6 +125,7 @@ install_apps_func() {
                         # else
                         bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
                         #fi
+                        source #{scripts_dir}/menu-master.sh
                         ;;              
                "System Info")
                         clear
