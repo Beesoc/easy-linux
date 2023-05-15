@@ -23,13 +23,12 @@ read -r -p "? [Y/n] " connect_pwn
 connect_pwn=${connect_pwn:-Y}
 if [[ "$connect_pwn" =~ ^[Yy]$ ]]; then 
    ssh -p 22 pi@10.0.0.2
-   source ${scripts_dir}/supp
+   source ${scripts_dir}/menu-master.sh
+   pwn_installed=1
 elif [[ "$connect_pwn" =~ ^[Nn]$ ]]; then 
    printf "${WT}  $USER ${RED}selected to NOT connect to ${WT}${pwnagotchi}.  Exiting"
    exit 0
-
 else 
-
    printf "${RED}  Invalid Selection"
 fi
 }
@@ -58,7 +57,7 @@ ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
   printf "  You may be prompted to accept fingerprint next & will \\n"
   printf "  be asked for $(WT)${pwnagotchi} ${CY}password.\\n"
   printf "  Press ${WT}any ${CY}key to continue.\\n"
-        read -r -n1 -s -t 60
+        read -n 1 -r -t 300
     ssh-copy-id -p 22 -i ~/.ssh/id_rsa.pub pi@10.0.0.2  
     sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2  
     ssh -p 22 pi@10.0.0.2
@@ -173,7 +172,11 @@ pwn_menu_func
 pwn_menu_func() {
 select option in "${options[@]}"; do
     case ${option} in
-        "Backup")
+        "Connect")
+	    clear
+	    
+	
+	"Backup")
             clear
             source "${scripts_dir}/support/support-Banner_func.sh"
             printf " ${CY}\\nWelcome to the Pwnagotchi hub\\n"
@@ -245,7 +248,7 @@ printf "                  ${CY}    Press ${WT}any key ${CY}to continue ----> \\n
 clear
 source ${scripts_dir}/support/.whoami.sh
 usb_count=$(sudo ifconfig | grep -c "usb")
-options=("Backup" "Restore" "Maintenance" "Main Menu" "Exit")
+options=("Connect" "Backup" "Restore" "Maintenance" "Main Menu" "Exit")
 
 if [[ "${usb_count}" == 0 ]]; then
     printf "    ${RED}[!!!] ${CY}Pwnagotchi not detected. ${RED}[!!!]${CY} \\n"
