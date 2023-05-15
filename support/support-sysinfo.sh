@@ -41,8 +41,8 @@ security_updates_age=$(sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i sec
 printf " \\n"
 printf "${CY}# Updates Available: ${WT}$updates       |      ${CY}Non-Critical Percent: ${GN}$total_pct \\n${YW}"
 
-printf "# Critical Updates: ${RED}$security_updates        |   ${YW}   Critical Update Percent:${RED}$security_pct"
-
+printf "# Critical Updates: ${RED}$security_updates        |   ${YW}   Critical Update Percent:${RED}$security_pct\\n"
+printf "Uptime: $uptime
 	lsb_dist=""
 	if [ -r /etc/os-release ]; then
 		lsb_dist="$(. /etc/os-release && echo "$ID")"
