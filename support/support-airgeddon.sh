@@ -63,7 +63,7 @@ airg_install_func
 
 deps_airg_install() {
 # List of package names to install
-       packages=("iw" "iproute2 / ip" "ps / procps / procps-ng" "awk / gawk" "xterm / tmux" "lspci / pciutils" "autoconf" "automake" "libtool pkg-config" "libnl-3-dev" "libnl-genl-3-dev" "libssl-dev" "ethtool" "shtool" "rfkill" "zlib1g-dev" "libpcap-dev" "libsqlite3-dev" "libpcre3-dev" "libhwloc-dev" "libcmocka-dev" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "airodump-ng" "groff")
+       packages=("iw" "ps / procps / procps-ng" "awk / gawk" "xterm / tmux" "lspci / pciutils" "autoconf" "automake" "libtool pkg-config" "libnl-3-dev" "libnl-genl-3-dev" "libssl-dev" "ethtool" "shtool" "rfkill" "zlib1g-dev" "libpcap-dev" "libsqlite3-dev" "libpcre3-dev" "libhwloc-dev" "libcmocka-dev" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "airodump-ng" "groff")
 
 # Loop through the list of package names
 for package in "${packages[@]}"
