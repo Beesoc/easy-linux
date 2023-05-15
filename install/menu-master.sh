@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version: 0.0.2
+# Version: 0.0.3
 function help {
   echo 
   echo "Usage: $0 [options]"
@@ -16,6 +16,7 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
   echo "The script is ersion 0.0.2."
   exit 0
 fi
+#  this is an update test.
 sudo chown -vR 1000:0 /opt/easy-linux
 scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
