@@ -72,7 +72,7 @@ fi
 pkg_info_func() {
 
 sudo dpkg --get-selections > ${scripts_dir}/support/my_installed_apps.list
-
+cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c
 }
 function coloredEcho(){
     local exp=$1;
@@ -97,7 +97,7 @@ function coloredEcho(){
 main() {
 get_vars_func
 coloredEcho
-pkg_info
+pkg_info_func
 }
 
 main
