@@ -29,12 +29,11 @@ elif [[ $airg_deps_inst = 1 ]]; then
    printf "  ${CY}Dependencies all installed.  Continuing.\\n"
 fi
 if [[ -d $HOME/Downloads/airgeddon ]]; then
-        rm -rf $HOME/Downloads/airgeddon
-        mkdir $HOME/Downloads/airgeddon
+     printf "   #{WT}Airgeddon ${GN}folder found."
 elif [[ ! -d $HOME/Downloads/airgeddon ]]; then
         mkdir $HOME/Downloads/airgeddon
+        git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git $HOME/Downloads/airgeddon
 fi
-git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git $HOME/Downloads/airgeddon
 
 # Airgeddon must be run with BASH shell, not SH
 cd $HOME/Downloads/airgeddon
