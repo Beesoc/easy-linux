@@ -114,63 +114,9 @@ install_apps_func() {
                 "Oh My...")
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
-                        my_shell=$(echo $SHELL)
-                        printf "  ${CY}Here you can easily install the Oh My BASH and Oh My ZSH projects\\n"
-                        printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
-                        printf "  ${CY}Your current shell is ${WT}$my_shell."
-                        read -n 1 -s -p "Do you want Oh My [B]ASH, or Oh My [Z]SH? [B/z] " shellchoice
-                        shellchoice=${shellchoice:-B}
-                        if [[ $shellchoice == "B" ]]; then
-                                if [[ $my_shell != "/usr/bin/bash" ]]; then
-                                read -p "BASH is not your default shell. Should I make it so? [Y/n] " bash_default
-                                bash_default=$(bash_default:-Y)
-                                        if [[ $bash_default =~ ^[Yy] ]]; then
-                                        sudo chsh -s $(which bash)
-                                        elif [[ $bash_default =~ ^[Nn] ]]; then
-                                        printf "${WT}$USER ${CY}has selected to NOT change the default shell.\\n"
-                                        fi
-                                elif [[ $my_shell = "/usr/bin/bash" ]]; then 
-                                        if [[ -d $HOME/.oh-my-bash ]]; then
-                                        printf "  ${CY}You have already installed Oh My BASH!\\n"
-                                        printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
-                                        read -n 1 -t 300
-                                        source ${scripts_dir}/menu-master.sh
-                                        elif  [[ ! -d $HOME/.oh-my-bash ]]; then
-                                               bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
-                                        fi
-                                 fi
-                         fi
-                     if [[ $shellchoice == "Z" ]]; then
-                          if [[ $(zsh --version > /dev/null  2>&1) ]]; then
-                                printf "  ${CY}ZSH not found. ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
-                                read -n 1 -t 300
-                                sudo apt install -y zsh
-                          else
-                             printf "  ZSH found.  Continuing. \\n"
-                          fi
-                          if [[ $my_shell != "/usr/bin/zsh" ]]; then
-                                read -p "ZSH is not your default shell. Should I make it so? [Y/n] " zsh_default
-                                zsh_default=$(zsh_default:-Y)
-                                        if [[ $zsh_default =~ ^[Yy] ]]; then
-                                        sudo chsh -s $(which zsh)
-                                        elif [[ $zsh_default =~ ^[Nn] ]]; then
-                                        printf "${WT}$USER ${CY}has selected to NOT change the default shell.\\n"
-                                        exit 0
-                                        fi
-                          elif [[ $my_shell = "/usr/bin/zsh" ]]; then 
-                                        if [[ -d $HOME/.oh-my-zsh ]]; then
-                                        printf "  ${CY}You have already installed Oh My ZSH!\\n"
-                                        printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
-                                        read -n 1 -t 300
-                                        source ${scripts_dir}/menu-master.sh
-                                        elif  [[ ! -d $HOME/.oh-my-zsh ]]; then
-                                        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-                                        source ${scripts_dir}/menu-master.sh
-                                        fi      
-                           fi
-                      fi        
+               
                         printf "  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue."
-                               read -n 1 -t 300
+                        read -n 1 -t 300
                         source ${scripts_dir}/menu-master.sh
                         ;;              
                "System Info")
@@ -287,24 +233,7 @@ main() {
         fi
         clear
         source "$scripts_dir/support/support-Banner_func.sh"
-        printf "\\n                   ${CY}Summary of changes made by this script.$WT   \\n"
-        printf "              [ Update/Upgrade all packages ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "                      [ Install HackingTool ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "              [ Docker Desktop Dependencies ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "                   [ Install Docker Desktop ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "                          [ Install Wifite2 ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "                         [ Install HCXTools ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "                      [ Install The Fat Rat ].....$GN[✔] Successfully Installed [✔]$WT\\n"
-        sleep 1
-        printf "            [ Install Additional Nano Lints ].....$GN[✔] Successfully Installed [✔]$CY\\n"
-        sleep 1
-        read -n 1 -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
+     read -n 1 -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
         menuchoice=${menuchoice:-M}
         if [[ $menuchoice == "m" ]] || [[ $menuchoice == "M" ]]; then
                 source $scripts_dir/menu-master.sh
