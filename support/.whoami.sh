@@ -102,5 +102,3 @@ sudo direnv allow
 cd /opt/easy-linux/support
 direnv allow
 sudo direnv allow
-}
-main
