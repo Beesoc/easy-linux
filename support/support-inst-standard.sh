@@ -69,7 +69,6 @@ clear
 
 main
 pack_sel_func
-standard_apps_func
 printf "${CY}  All apps in this script have been successfully installed. This includes all apps listed here: ${PL}\\n"
 printf "$packages\\n"
 stand_install=1
