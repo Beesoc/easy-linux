@@ -40,7 +40,7 @@ security_pct=$(echo "scale=2; ($security_updates/$updates)*100" | bc)
 total_pct=$(echo "scale=2; (($updates-$security_updates)/$updates)*100" | bc)
 security_updates_age=$(sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk '{print $4}' | sort -u | head -n1)
 printf " \\n"
-printf "${CY}# Updates Available: ${WT}$updates    |    ${CY}Non-Critical Percent: ${GN}$total_pct    ${CY}Grand Tot: ${WT}$total_pkgs"
+printf "${CY}# Updates Available: ${WT}$updates    |    ${CY}Non-Critical Percent: ${GN}$total_pct    ${CY}Grand Tot: ${WT}$tot_pkgs"
 
 printf "# Critical Updates: ${RED}$security_updates     |     ${YW}   Critical Update Percent-${RED}$security_pct\\n"
 printf "Uptime: $uptime"
