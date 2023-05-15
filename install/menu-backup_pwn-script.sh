@@ -25,6 +25,7 @@ if [[ "$connect_pwn" =~ ^[Yy]$ ]]; then
    ssh -p 22 pi@10.0.0.2
    source ${scripts_dir}/menu-master.sh
    pwn_installed=1
+   sed -i 's/^pwn_installed=.*/pwn_installed=1/' .envrc
 elif [[ "$connect_pwn" =~ ^[Nn]$ ]]; then 
    printf "${WT}  $USER ${RED}selected to NOT connect to ${WT}${pwnagotchi}.  Exiting"
    exit 0
@@ -61,6 +62,8 @@ ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
     ssh-copy-id -p 22 -i ~/.ssh/id_rsa.pub pi@10.0.0.2  
     sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2  
     ssh -p 22 pi@10.0.0.2
+    pwn_installed=1
+    sed -i 's/^pwn_installed=.*/pwn_installed=1/' .envrc
 pwn_connect_func
 }
 
