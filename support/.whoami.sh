@@ -10,8 +10,6 @@ source ${scripts_dir}/.envrc
 
 get_vars_func() {
 computername=$(cat /etc/hostname)
-OS=""
-VER""
 user=$USER
 username=$USER
 pwnagotchi="Unknown"
