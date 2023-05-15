@@ -139,6 +139,7 @@ install_apps_func() {
                                                bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
                                         fi
                                  fi
+                         fi
                      if [[ $shellchoice == "Z" ]]; then
                           if [[ $(zsh --version > /dev/null  2>&1) ]]; then
                                 printf "  ${CY}ZSH not found. ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
