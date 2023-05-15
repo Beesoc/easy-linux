@@ -4,13 +4,14 @@ set -e
 scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
 
+trap ${scripts_dir}/support/trap-master.sh EXIT
 run_airg_func() {
-if [[ $(command -v airgeddon >/dev/null 2>&1) ]] && [[ $airg_installed = 1 ]]; then
+if [[ $airg_installed = 1 ]]; then
 airg_deps_inst=1
 export airg_installed=1
 
     sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
-    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "/opt/easy-linux/.envrc"
+    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "${scripts_dir}/.envrc"
 sudo /bin/bash airgeddon
 fi
 printf "${CY}  Press ${WT}any ${CY}"
@@ -102,7 +103,7 @@ clear
 source ${scripts_dir}/support/support-Banner_func.sh
 
 # Check for airgeddon installation
-if [[ -d $HOME/Downloads/airgeddon ]] && [[ $airg_installed -eq 1 ]]; then
+if [[ $airg_installed -eq 1 ]]; then
     printf "Airgeddon is already installed. Launching...\n"
     run_airg_func
 fi
