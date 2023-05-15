@@ -69,6 +69,11 @@ touch "$FLAG_FILE"
 fi
 }
 
+pkg_info_func() {
+
+sudo dpkg --get-selections > ${scripts_dir}/support/my_installed_apps.list
+
+}
 function coloredEcho(){
     local exp=$1;
     local color=$2;
@@ -92,6 +97,7 @@ function coloredEcho(){
 main() {
 get_vars_func
 coloredEcho
+pkg_info
 }
 
 main
