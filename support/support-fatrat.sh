@@ -12,7 +12,7 @@ source "${scripts_dir}/support/support-Banner_func.sh"
   if [[ ! -d "$HOME/compiled/TheFatRat/" ]]; then
       read -n 1 -r -p "Would you like to install The Fat Rat? (Y/n) " install_fatrat
       install_fatrat={$install_fatrat:-Y}
-      if [[ "$install_fatrat" ~= ^[Yy]$ ]]; then
+      if [[ "$install_fatrat" =~ ^[Yy]$ ]]; then
         sudo git clone https://github.com/Screetsec/TheFatRat.git &&
           cd TheFatRat &&
           sudo chmod +x setup.sh &&
