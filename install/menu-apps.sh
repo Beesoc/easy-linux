@@ -36,7 +36,7 @@ install_apps_func() {
                         source $scripts_dir/support/support-airgeddon.sh
                         ;;
                 "Aircrack-NG")
-                        if [[ $(which nano > /dev/null 2>&1) ]] && [[ $airc_installed == 1 ]]; then
+                        if [[ $airc_installed == 1 ]]; then
                                 printf "${GN}Aircrack-NG is already installed\\n"
                                 sudo aircrack-ng --help
                                 airc_installed=1
