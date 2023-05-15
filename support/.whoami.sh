@@ -77,7 +77,7 @@ fi
 pkg_info_func() {
 
 sudo dpkg --get-selections > ${scripts_dir}/support/my_installed_apps.list
-cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c
+tot_pkgs=$(cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c)
 
 if [ -f /etc/os-release ]; then
     . /etc/os-release
