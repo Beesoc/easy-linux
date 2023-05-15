@@ -1,9 +1,13 @@
+#!/bin/bash
+#Version: 0.0.2
+scripts_dir=/opt/easy-linux
+source ${scripts_dir}/.envrc
                         my_shell=$(echo $SHELL)
-                        printf "  ${CY}Here you can easily install the ${WT}Oh My BASH ${CY}and ${WT}Oh My ZSH ${CY}projects\\n"
+                        printf "  ${CY}Here you can easily install the Oh My BASH and Oh My ZSH projects\\n"
                         printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
-                        printf "  ${CY}Your current shell is ${WT}$my_shell${CY}.\\n"
-                        echo
-                        read -n 1 -p "Do you want Oh My [B]ASH, or Oh My [Z]SH? [B/z] " shellchoice
+                        printf "  ${CY}Your current shell is ${WT}$my_shell.\\n"
+                        printf "  ${CY}Do you want Oh My [B]ASH, or Oh My [Z]SH? [B/z] "
+                        read -r -n 1 -s shellchoice
                         shellchoice=${shellchoice:-B}
                         if [[ $shellchoice == "B" ]]; then
                                 if [[ $my_shell != "/usr/bin/bash" ]]; then
