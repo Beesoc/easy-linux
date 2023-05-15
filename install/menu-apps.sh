@@ -10,7 +10,6 @@ install_apps_func() {
         options=("All" "Aircrack-NG" "Airgeddon" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My BASH" "System Info" "Webmin" "WiFite" "Exit")
         source "$scripts_dir/support/support-Banner_func.sh"
         printf "\\n                ${OG}Select which app you would like to install.$GN\\n\\n"
-        coloredEcho "Green ECHO" green
         select option in "${options[@]}"; do
                 case $option in
                 "Airgeddon")
