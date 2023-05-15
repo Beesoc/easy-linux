@@ -17,7 +17,7 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
   exit 0
 fi
 #  this is an update test.
-sudo chown -vR 1000:0 /opt/easy-linux
+sudo chown -vR 1000:0 /opt/easy-linux >/dev/null
 scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
 #
