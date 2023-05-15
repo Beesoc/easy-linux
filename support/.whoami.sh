@@ -63,6 +63,7 @@ echo "export pwnagotchi=Unknown" | sudo tee -a ${scripts_dir}/.envrc
 echo "export pwn_installed=0" | sudo tee -a ${scripts_dir}/.envrc
 echo "export OS=$OS" | sudo tee -a ${scripts_dir}/.envrc
 echo "export VER=$VER" | sudo tee -a ${scripts_dir}/.envrc
+echo "export KERN=$(uname -r)" | sudo tee -a ${scripts_dir}/.envrc
 }
 
 # Populate the envrc table
@@ -89,9 +90,12 @@ else
     OS=$(uname -s)
     VER=$(uname -r)
 fi
+
+        KERN=$(uname -r)
+
         sed -i 's/^OS=.*/OS=$OS/' ${scripts_dir}/.envrc
         sed -i 's/^VER=.*/VER=$VER/' ${scripts_dir}/.envrc
-
+        sed -i 's/^KERN=.*/KERN=$KERN/' ${scripts_dir}/.envrc
 
 }
 function coloredEcho(){
