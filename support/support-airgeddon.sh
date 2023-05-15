@@ -4,14 +4,13 @@ set -e
 scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
 
-trap ${scripts_dir}/support/trap-master.sh EXIT
 run_airg_func() {
-if [[ $airg_installed = 1 ]]; then
+if [[ $(command -v airgeddon >/dev/null 2>&1) ]] && [[ $airg_installed = 1 ]]; then
 airg_deps_inst=1
 export airg_installed=1
 
     sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
-    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "${scripts_dir}/.envrc"
+    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "/opt/easy-linux/.envrc"
 sudo /bin/bash airgeddon
 fi
 printf "${CY}  Press ${WT}any ${CY}"
@@ -63,7 +62,7 @@ airg_install_func
 
 deps_airg_install() {
 # List of package names to install
-       packages=("iw" "ip" "ps / procps / procps-ng" "awk / gawk" "xterm / tmux" "lspci / pciutils" "autoconf" "automake" "libtool pkg-config" "libnl-3-dev" "libnl-genl-3-dev" "libssl-dev" "ethtool" "shtool" "rfkill" "zlib1g-dev" "libpcap-dev" "libsqlite3-dev" "libpcre3-dev" "libhwloc-dev" "libcmocka-dev" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "airodump-ng" "groff")
+       packages=("iw" "iproute2 / ip" "ps / procps / procps-ng" "awk / gawk" "xterm / tmux" "lspci / pciutils" "autoconf" "automake" "libtool pkg-config" "libnl-3-dev" "libnl-genl-3-dev" "libssl-dev" "ethtool" "shtool" "rfkill" "zlib1g-dev" "libpcap-dev" "libsqlite3-dev" "libpcre3-dev" "libhwloc-dev" "libcmocka-dev" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "airodump-ng" "groff")
 
 # Loop through the list of package names
 for package in "${packages[@]}"
@@ -102,39 +101,41 @@ main() {
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
 
-# Check for airgeddon installation
-if [[ $airg_installed -eq 1 ]]; then
-    printf "Airgeddon is already installed. Launching...\n"
-    run_airg_func
-fi
 
-if [[ $airg_deps_inst = 1 ]]; then
-    airg_install_func
-elif [[ $airg_deps_inst = 0 ]]; then
-    deps_airg_install
-fi
+# Check for airgeddon installation
 
 if [[ -f /opt/easy-linux/.envrc ]]; then
-    airc_installed=$(grep "airc_installed" /opt/easy-linux/.envrc | cut -d "=" -f 2)
-    if [[ $airc_installed -eq 1 ]]; then
-        printf "Aircrack-NG is already installed. Skipping installation.\\n"
-    else
-        printf "Aircrack-NG dependencies not installed. Installing...\\n"
-        source /opt/easy-linux/support/support-aircrack2.sh     
-    fi
-fi
-
-if [[ ! -d $HOME/Downloads/airgeddon ]]; then
-    printf "Airgeddon download folder not found. Cloning...\\n"
-       if [[ $airg_installed -eq 1 ]]; then
-#        printf "Aircrack-ng is already installed. Skipping installation.\\n"
+    airg_installed=$(grep "airg_installed" /opt/easy-linux/.envrc | cut -d "=" -f 2)
+    if [[ $airg_installed -eq 1 ]]; then
+        printf "Airgeddon is already installed. Skipping installation.\\n"
         run_airg_func
     else
         printf "Airgeddon dependencies not installed. Installing...\\n"
+            if [[ $airg_deps_inst = 1 ]]; then
+               airg_install_func    
+            elif [[ $airg_deps_inst = 0 ]]; then
+                airc_installed=$(grep "airc_installed" /opt/easy-linux/.envrc | cut -d "=" -f 2)
+                if [[ $airc_installed -eq 1 ]]; then
+                   printf "Aircrack-NG is already installed. Skipping installation.\\n"
+                   deps_airg_install
+                elif [[ $airc_deps_inst = 0 ]]; then
+                    source ${scripts_dir}/support/support-aircrack2.sh
+                    deps_airg_install
+                fi
+            fi
+    fi
+fi
 
+if [[ -d $HOME/Downloads/airgeddon ]]; then
+    printf "Airgeddon download folder found. Continuing...\\n"
+       if [[ $airg_installed -eq 1 ]]; then
+        printf "Aircrack-ng is already installed. Skipping installation.\\n"
+        run_airg_func
+    else
+        printf "Airgeddon dependencies not installed. Installing...\\n"
+        deps_airg_check
         #source /opt/easy-linux/support/support-aircrack2.sh
     fi 
-    deps_airg_check
     
 fi
 }
