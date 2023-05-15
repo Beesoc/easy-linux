@@ -69,8 +69,7 @@ clear
 
 main
 pack_sel_func
-printf "${CY}  All apps in this script have been successfully installed. This includes all apps listed here: ${PL}\\n"
-printf "$packages\\n"
+printf "${CY}  All apps in this script have been successfully installed. ${PL}\\n"
 stand_install=1
 sudo sed -i "s/stand_install=.*/stand_install=$stand_install/g" "${scripts_dir}/.envrc"
 printf "${OG}  Press ${WT}any ${OG}key to continue."
