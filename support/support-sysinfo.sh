@@ -42,8 +42,8 @@ security_updates_age=$(sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i sec
 printf " \\n"
 printf "${CY}# Updates Available: ${WT}$updates       |      ${CY}Non-Critical Percent: ${GN}$total_pct \\n${YW}"
 
-printf "# Critical Updates: ${RED}$security_updates        |   ${YW}   Critical Update Percent:${RED}$security_pct\\n"
-printf "Uptime: $uptime
+printf "# Critical Updates: ${RED}$security_updates     |     ${YW}   Critical Update Percent-${RED}$security_pct\\n"
+printf "Uptime: $uptime"
 	lsb_dist=""
 	if [ -r /etc/os-release ]; then
 		lsb_dist="$(. /etc/os-release && echo "$ID")"
@@ -51,5 +51,5 @@ printf "Uptime: $uptime
 echo "$lsb_dist"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
-  read -r -n1 -s -t 90
+  read -r -n 1 -s -t 300
 source ${scripts_dir}/menu-master.sh
