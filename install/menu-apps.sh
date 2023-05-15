@@ -85,14 +85,12 @@ install_apps_func() {
                         fi
                         ;;
                 "My Favs")
-                        if
-                                [[ $stand_install == 0 ]]
-                        then
-                                source $scripts_dir/support/support-inst-standard.sh
+                        if [[ $stand_install == 0 ]]; then
+                        source $scripts_dir/support/support-inst-standard.sh
                         elif [[ $stand_install == 1 ]]; then
                                 printf "$OG  You have already installed all of the standard tools.\\n"
                                 stand_install=1
-                                sudo sed -i "s/stand_installed=.*/stand_installed=$stand_installed/g" "$scripts_dir/.envrc"
+                                sudo sed -i "s/stand_install=.*/stand_install=$stand_install/g" "$scripts_dir/.envrc"
                                 exit 0
                         fi
                         ;;
@@ -119,13 +117,13 @@ install_apps_func() {
                 "Oh My BASH")
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
-                        # if [[ -d $HOME/.oh-my-bash ]]; then
-                        #printf "  ${CY}You have already installed Oh My BASH!\\n"
-                        #break
-                        # else
+                        if [[ -d $HOME/.oh-my-bash ]]; then
+                        printf "  ${CY}You have already installed Oh My BASH!\\n"
+                        break
+                        else
                         bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
-                        #fi
-                        source #{scripts_dir}/menu-master.sh
+                        fi
+                        source ${scripts_dir}/menu-master.sh
                         ;;              
                "System Info")
                         clear
