@@ -6,14 +6,16 @@ scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
 
 run_airg_func() {
-if [[ $(command -v airgeddon >/dev/null 2>&1) ]] && [[ $airg_installed = 1 ]]; then
-airg_deps_inst=1
+if [[ $(which airgeddon > /dev/null 2>&1) ]] && [[ $airg_deps_inst = 1 ]]; then
+airg_installed=1
 export airg_installed=1
 
     sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
-    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "/opt/easy-linux/.envrc"
-sudo /bin/bash airgeddon
+    sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "${scripts_dir}/.envrc"
 fi
+read -n 1 -s -t 300 -p "Press any key to continue "
+sudo /bin/bash airgeddon
+
 printf "${CY}  Press ${WT}any ${CY}"
 
 read -n 1 -s -t 300 -p "key to continue "
@@ -109,7 +111,8 @@ if [[ -f /opt/easy-linux/.envrc ]]; then
     if [[ $airg_installed -eq 1 ]]; then
         printf "Airgeddon is already installed. Skipping installation.\\n"
         run_airg_func
-    else
+    fi
+      if  [[ $airg__deps_inst -eq 0 ]]; then
         printf "Airgeddon dependencies not installed. Installing...\\n"
             if [[ $airg_deps_inst = 1 ]]; then
                airg_install_func    
