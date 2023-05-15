@@ -115,7 +115,7 @@ install_apps_func() {
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
                         source "${scripts_dir}/support/ohmy.sh"
-                        printf "  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue."
+                        printf "\\n  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue."
                         read -n 1 -t 300
                         source ${scripts_dir}/menu-master.sh
                         ;;              
