@@ -7,7 +7,7 @@ source ${scripts_dir}/.envrc
 source "${scripts_dir}/support/support-Banner_func.sh"
 # Define the minimum required version for each script
 declare -A required_versions=(
-  ["install/menu-master.sh"]="0.0.2"
+  ["install/menu-master.sh"]="0.0.3"
   ["install/menu-hacking.sh"]="0.0.2"
   ["install/menu-customize.sh"]="0.0.2"
   ["install/menu-apps.sh"]="0.0.2"
