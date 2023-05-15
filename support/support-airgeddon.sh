@@ -123,7 +123,7 @@ if [[ -f /opt/easy-linux/.envrc ]]; then
     fi
 fi
 
-if [[ -d $HOME/Downloads/airgeddon ]]; then
+if [[ ! -d $HOME/Downloads/airgeddon ]]; then
     printf "Airgeddon download folder not found. Cloning...\\n"
        if [[ $airg_installed -eq 1 ]]; then
 #        printf "Aircrack-ng is already installed. Skipping installation.\\n"
