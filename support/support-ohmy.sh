@@ -1,7 +1,8 @@
                         my_shell=$(echo $SHELL)
-                        printf "  ${CY}Here you can easily install the Oh My BASH and Oh My ZSH projects\\n"
+                        printf "  ${CY}Here you can easily install the ${WT}Oh My BASH ${CY}and ${WT}Oh My ZSH ${CY}projects\\n"
                         printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
-                        printf "  ${CY}Your current shell is ${WT}$my_shell."
+                        printf "  ${CY}Your current shell is ${WT}$my_shell${CY}.\\n"
+                        echo
                         read -n 1 -s -p "Do you want Oh My [B]ASH, or Oh My [Z]SH? [B/z] " shellchoice
                         shellchoice=${shellchoice:-B}
                         if [[ $shellchoice == "B" ]]; then
