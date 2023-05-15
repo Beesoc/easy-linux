@@ -39,8 +39,7 @@ install_apps_func() {
                         if [[ $airc_installed == 1 ]]; then
                                 printf "${GN}Aircrack-NG is already installed\\n"
                                 sudo aircrack-ng --help
-                                airc_installed=1
-                                sudo sed -i "s/airc_installed=.*/airc_installed=$airc_installed/g" "$scripts_dir/.envrc"
+                                source ${scripts_dir}/menu-master.sh
                         else
                                 printf "${YW}Aircrack-NG is not installed. Installing\\n"
                                 source $scripts_dir/support/support-aircrack2.sh
