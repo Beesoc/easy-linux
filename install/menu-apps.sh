@@ -86,12 +86,12 @@ install_apps_func() {
                         ;;
                 "My Favs")
                         if
-                                [[ $stand_installed == 0 ]]
+                                [[ $stand_install == 0 ]]
                         then
                                 source $scripts_dir/support/support-inst-standard.sh
-                        elif [[ $stand_installed == 1 ]]; then
+                        elif [[ $stand_install == 1 ]]; then
                                 printf "$OG  You have already installed all of the standard tools.\\n"
-                                stand_installed=1
+                                stand_install=1
                                 sudo sed -i "s/stand_installed=.*/stand_installed=$stand_installed/g" "$scripts_dir/.envrc"
                                 exit 0
                         fi
