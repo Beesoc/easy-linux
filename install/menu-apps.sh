@@ -7,7 +7,7 @@ source $scripts_dir/.envrc
 source $scripts_dir/support/.whoami.sh
 install_apps_func() {
         clear
-        options=("All" "Aircrack-NG" "Airgeddon" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "System Info" "Webmin" "WiFite" "Exit")
+        options=("All" "Aircrack-NG" "Airgeddon" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My BASH" "System Info" "Webmin" "WiFite" "Exit")
         source "$scripts_dir/support/support-Banner_func.sh"
         printf "\\n                ${OG}Select which app you would like to install.$GN\\n\\n"
         coloredEcho "Green ECHO" green
@@ -117,7 +117,17 @@ install_apps_func() {
                                 source $scripts_dir/support/support-nano.sh
                         fi
                         ;;
-                "System Info")
+                "Oh My BASH")
+                        clear
+                        source "$scripts_dir/support/support-Banner_func.sh"
+                        # if [[ -d $HOME/.oh-my-bash ]]; then
+                        #printf "  ${CY}You have already installed Oh My BASH!\\n"
+                        #break
+                        # else
+                        bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
+                        #fi
+                        ;;              
+               "System Info")
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
                         source "$scripts_dir/support/support-sysinfo.sh"
@@ -182,7 +192,7 @@ personal_func() {
         fi
 }
 deps_install_func() {
-        packages=("ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "iproute2 / ip" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb / usbutils" "wget" "ethtool" "loginctl / systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff")
+        packages=("ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "ip / iproute2" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "usbutils / lsusb" "wget" "ethtool" "systemd / loginctl" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
         for package in "${packages[@]}"; do
                 if dpkg -s "$package" >/dev/null 2>&1; then
                         echo "$package is already installed"
