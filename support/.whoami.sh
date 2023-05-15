@@ -10,6 +10,8 @@ source ${scripts_dir}/.envrc
 
 get_vars_func() {
 computername=$(cat /etc/hostname)
+OS="?"
+VER"?"
 user=$USER
 username=$USER
 pwnagotchi="Unknown"
@@ -59,6 +61,8 @@ echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" | sud
 echo "export amiPwn=$(if [ -f "/etc/pwnagotchi/config.toml" ]; then echo 1; else echo 0; fi)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export pwnagotchi=Unknown" | sudo tee -a ${scripts_dir}/.envrc
 echo "export pwn_installed=0" | sudo tee -a ${scripts_dir}/.envrc
+echo "export OS=$OS" | sudo tee -a ${scripts_dir}/.envrc
+echo "export VER=$VER" | sudo tee -a ${scripts_dir}/.envrc
 }
 
 # Populate the envrc table
@@ -85,6 +89,9 @@ else
     OS=$(uname -s)
     VER=$(uname -r)
 fi
+        sed -i 's/^OS=.*/OS=$OS/' ${scripts_dir}/.envrc
+        sed -i 's/^VER=.*/VER=$VER/' ${scripts_dir}/.envrc
+
 
 }
 function coloredEcho(){
