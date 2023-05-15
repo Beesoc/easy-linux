@@ -1,5 +1,6 @@
 #!/bin/bash
 # Version: 0.0.2
+# shellcheck source .envrc
 set -e
 scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
