@@ -44,16 +44,28 @@ elif [[ $airc_installed = 0 && $airc_deps_installed = 1 ]]; then
 elif [[ $airc_installed = 1 && $airc_deps_installed = 0 ]]; then 
     printf "\\n${GN}  ${WT}Dependancies ${CY}are not reporting a successful install.\\n"
 else
-    printf "\\n${GN}  ${WT}Can't determine installation status"
+    printf "\\n${GN}  ${WT}Can't determine installation status\\n"
 fi
 }
 
 app_install_func() {
-wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P "$HOME/Downloads"
-cd $HOME/Downloads
-sudo tar -xvf $HOME/Downloads/aircrack-ng-1.7.tar.gz
 
-cd $HOME/Downloads/aircrack-ng-1.7
+    if [[ ! -f $HOME/Downloads/aircrack-ng-1.7.tar.gz ]] && [[ ! -d $HOME/Downloads/aircrack-ng-1.7 ]]; then
+        wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P "$HOME/Downloads"
+        sudo tar -xvf $HOME/Downloads/aircrack-ng-1.7.tar.gz
+        sudo rm $HOME/Downloads/aircrack-ng-1.7.tar.gz
+        cd $HOME/Downloads/aircrack-ng-1.7
+    elif [[ -f $HOME/Downloads/aircrack-ng-1.7.tar.gz ]] && [[ ! -d $HOME/Downloads/aircrack-ng-1.7 ]]; then
+        cd $HOME/Downloads
+        sudo tar -xvf $HOME/Downloads/aircrack-ng-1.7.tar.gz
+        sudo rm $HOME/Downloads/aircrack-ng-1.7.tar.gz
+        cd $HOME/Downloads/aircrack-ng-1.7
+    fi
+
+    if [[ -d $HOME/Downloads/aircrack-ng-1.7 ]]; then
+       cd $HOME/Downloads/aircrack-ng-1.7
+
+    fi
 
 sudo ./autogen.sh
 sudo make
@@ -64,7 +76,6 @@ sudo sed -i "s/airc_installed=.*/airc_installed=$airc_installed/g" "${scripts_di
 aircrack_run_func
 
 }
-
 
 deps_install_func() {
 # Install dependencies and Aircrack-ng
