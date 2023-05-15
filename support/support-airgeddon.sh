@@ -11,8 +11,9 @@ export airg_installed=1
 
     sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
     sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "/opt/easy-linux/.envrc"
-sudo /bin/bash airgeddon
 fi
+sudo /bin/bash airgeddon
+
 printf "${CY}  Press ${WT}any ${CY}"
 
 read -n 1 -s -t 300 -p "key to continue "
