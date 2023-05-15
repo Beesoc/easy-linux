@@ -5,6 +5,7 @@ set -e
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 source ${scripts_dir}/.envrc
+source #{scripts_dir}/support/.whoami.sh
 # shellcheck source=support-Banner_func.sh
 sudo apt install -y bc acpi > /dev/null
 
