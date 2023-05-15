@@ -129,7 +129,7 @@ fi
 
 main
 airc_installed=1
-sudo sed -i "s/airc_installed=.*/airc_installed=$airc_installed/g" "./support-airgeddon.sh"
+sudo sed -i "s/airc_installed=.*/airc_installed=$airc_installed/g" "${scripts_dir}/.envrc"
 source ${scripts_dir}/support/support-airgeddon.sh
 
 exit 0
