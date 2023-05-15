@@ -4,7 +4,8 @@
 # shellcheck source .envrc
 set -e
 scripts_dir=/opt/easy-linux
-clear
+cd ${scripts_dir}
+direnv allow && sudo direnv allow
 source ${scripts_dir}/.envrc
 
 get_vars_func() {
@@ -91,7 +92,9 @@ function coloredEcho(){
 main() {
 get_vars_func
 coloredEcho
+}
 
+main
 cd /opt/easy-linux
 direnv allow
 sudo direnv allow
