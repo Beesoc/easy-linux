@@ -19,12 +19,12 @@ if [[ $pwnagotchi != "Gotcha" ]] && [[ $pwnagotchi != "Sniffer" ]]; then
 
     if [[ "$USER" == "$cwb_username" && "$HOST" == "$cwb_computername" ]]; then
         pwnagotchi="Gotcha"
-        sed -i 's/^pwnagotchi=.*/pwnagotchi=Gotcha/' .envrc
+        sed -i 's/^pwnagotchi=.*/pwnagotchi=Gotcha/' ${scripts_dir}/.envrc
     elif [[ "$USER" == "$ldb_username" && "$HOST" == "$ldb_computername" ]]; then
         pwnagotchi="Sniffer"
-        sed -i 's/^pwnagotchi=.*/pwnagotchi=Sniffer/' .envrc
+        sed -i 's/^pwnagotchi=.*/pwnagotchi=Sniffer/' ${scripts_dir}/.envrc
     fi
-sed -i 's/^pwnagotchi=.*/pwnagotchi=Unknown/' .envrc
+sed -i 's/^pwnagotchi=.*/pwnagotchi=Unknown/' ${scripts_dir}/.envrc
 fi
 
 FLAG_FILE=/opt/easy-linux/.envrc_populated
