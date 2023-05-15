@@ -13,7 +13,7 @@ sudo apt install -y bc acpi > /dev/null
 printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')            ${CY}Time: ${WT}$(date +%I:%M:%S\ ${GN}%p)        ${CY}Username: ${GN}$(whoami)""${WT}@""${GN}$(hostname)${NC}\\n"
 
 printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date: ${WT}$(timedatectl | grep "Local time" | awk '{print $3", " $4}')\\n"
-printf "${GN}  Distro: ${WT}$OS${GN}     |     Ver: ${WT}$VER${GN}     Kernel: ${WT}$KERN"
+printf "${GN}  Distro: ${WT}$OS${GN}     |     Ver: ${WT}$VER${GN}     |     Kernel: ${WT}$KERN\\n  "
 #battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
 batt_per="$(acpi -b | awk '/Battery 0/ {gsub(/,|%/, ""); print $4}')"
 battery_state="$(acpi -b | awk '/Battery 0/ {gsub(/,$/,"",$3); print $3}')"
@@ -40,7 +40,7 @@ security_pct=$(echo "scale=2; ($security_updates/$updates)*100" | bc)
 total_pct=$(echo "scale=2; (($updates-$security_updates)/$updates)*100" | bc)
 security_updates_age=$(sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk '{print $4}' | sort -u | head -n1)
 printf " \\n"
-printf "${CY}# Updates Available: ${WT}$updates       |      ${CY}Non-Critical Percent: ${GN}$total_pct \\n${YW}"
+printf "${CY}# Updates Available: ${WT}$updates    |    ${CY}Non-Critical Percent: ${GN}$total_pct    ${CY}Grand Tot: ${WT}$total_pkgs"
 
 printf "# Critical Updates: ${RED}$security_updates     |     ${YW}   Critical Update Percent-${RED}$security_pct\\n"
 printf "Uptime: $uptime"
