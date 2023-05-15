@@ -3,7 +3,7 @@
                         printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
                         printf "  ${CY}Your current shell is ${WT}$my_shell${CY}.\\n"
                         echo
-                        read -n 1 -s -p "Do you want Oh My [B]ASH, or Oh My [Z]SH? [B/z] " shellchoice
+                        read -n 1 -p "Do you want Oh My [B]ASH, or Oh My [Z]SH? [B/z] " shellchoice
                         shellchoice=${shellchoice:-B}
                         if [[ $shellchoice == "B" ]]; then
                                 if [[ $my_shell != "/usr/bin/bash" ]]; then
