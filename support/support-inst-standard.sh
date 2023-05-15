@@ -70,8 +70,11 @@ clear
 main
 pack_sel_func
 standard_apps_func
+sudo sed -i "s/stand_install=.*/stand_install=$stand_install/g" "${scripts_dir}/.envrc"
 printf "${CY}  All apps in this script have been successfully installed. This includes all apps listed here: ${PL}\\n"
 printf "$packages\\n"
+stand_install=1
+
 printf "${OG}  Press ${WT}any ${OG}key to continue."
 read -n 1 -s -t 300
 source ${scripts_dir}/menu-apps.sh
