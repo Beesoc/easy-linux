@@ -13,7 +13,6 @@ source "${scripts_dir}/support/support-Banner_func.sh"
           cd TheFatRat &&
           sudo chmod +x setup.sh &&
           sudo ./setup.sh
-      fi
   elif [[ -d "$HOME/compiled/TheFatRat/" ]]; then 
     read -n 1 -r -p "The Fat Rat installation folder exists. Remove folder and reinstall?" reinstall
     reinstall={$reinstall:-Y}
