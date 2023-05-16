@@ -71,7 +71,7 @@ install_apps_func() {
                         ;;
                 "TheFatRat")
                         clear
-                        source $scripts_dir/support-support-Banner_func.sh
+                        source $scripts_dir/support/support-Banner_func.sh
                         if [[ $(command -v fatrat >/dev/null 2>&1) ]] && [[ $fatrat_installed == 1 ]]; then
                                 printf "\\n${GN}The Fat Rat is already installed\\n"
                                 sudo fatrat
