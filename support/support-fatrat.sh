@@ -3,7 +3,6 @@
 # Version: 0.0.2
 
 set -e
-clear
 source ${scripts_dir}/.envrc
 
 app-install_func() {
@@ -33,6 +32,7 @@ app-install_func() {
 }
 
 main() {
+clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 read -n 1 -r -p "Do you want to install the Fat Rat? [Y/n] " instfat
    instfat=${instfat:-Y}
