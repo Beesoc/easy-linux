@@ -7,7 +7,6 @@ clear
 source ${scripts_dir}/.envrc
 
 app-install_func() {
-source "${scripts_dir}/support/support-Banner_func.sh"
   if [[ ! -d "$HOME/compiled/TheFatRat/" ]]; then
         sudo git clone https://github.com/Screetsec/TheFatRat.git &&
           cd TheFatRat &&
