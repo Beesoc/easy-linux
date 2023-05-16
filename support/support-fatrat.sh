@@ -39,9 +39,9 @@ source "${scripts_dir}/support/support-Banner_func.sh"
 
 main() {
 source "${scripts_dir}/support/support-Banner_func.sh"
-read -n 1 -r -p "Do you want to install the Fat Rat? [Y/n] " inst-fat
-   inst-fat=${inst-fat:-Y}
-if [[ $inst-fat = "Y" ]] || [[ $inst-fat = "y" ]]; then
+read -n 1 -r -p "Do you want to install the Fat Rat? [Y/n] " instfat
+   instfat=${instfat:-Y}
+if [[ $instfat = "Y" ]] || [[ $instfat = "y" ]]; then
   app-install_func
   fatrat-inst=1
 else
