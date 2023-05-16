@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # shellcheck disable=SC1090 disable=SC2059 disable=SC2164 disable=SC2181
 # setup-repos.sh
 # Configures Webmin repository for RHEL and Debian systems (derivatives)
@@ -10,7 +10,7 @@ set -e
 scripts_dir=/opt/easy-linux
 read -n 1 -p "Do you want to install/launch Webmin? [Y/n] " choicewebmin
 choicewebmin=${choicewebmin:-Y}
-if [[ $choicewebmin =~ ^[Yy]$ ]]; then
+if [[ "$choicewebmin" =~ ^[Yy]$ ]]; then
     printf "${GN}  Continuing...\\n"
 else
     printf "${RED}  Exiting.\\n"
@@ -28,7 +28,7 @@ else
     printf "\\n${WT}Webmin ${YW}is not installed.  Continuing\\n"
 fi
 
-
+sudo su
 ########################################################################
 webmin_download="https://download.webmin.com"
 webmin_key="jcameron-key.asc"
