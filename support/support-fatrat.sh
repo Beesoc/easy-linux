@@ -7,7 +7,6 @@ source ${scripts_dir}/.envrc
 source ${scripts_dir}/support/support-Banner_func.sh
 
 app-install_func() {
-clear
 source "${scripts_dir}/support/support-Banner_func.sh"
   if [[ ! -d "$HOME/compiled/TheFatRat/" ]]; then
       read -n 1 -r -p "Would you like to install The Fat Rat? (Y/n) " install_fatrat
@@ -21,11 +20,11 @@ source "${scripts_dir}/support/support-Banner_func.sh"
   elif [[ -d "$HOME/compiled/TheFatRat/" ]]; then 
     read -n 1 -r -p "The Fat Rat installation folder exists. Remove folder and reinstall?" reinstall
     reinstall={$reinstall:-Y}
-      if [[ "$reinstall" ~= ^[Nn]$ ]]; then
+      if [[ "$reinstall" =~ ^[Nn]$ ]]; then
          printf "${RED} The Fat Rat will not be installed. Press ${WT}any ${RED} key to return to Hacking Menu."
          read -r -n 1 -s -t 300
            source $scripts_dir/menu-hacking.sh
-      elif [[ "$reinstall" ~= ^[Yy]$ ]]; then
+      elif [[ "$reinstall" =~ ^[Yy]$ ]]; then
          sudo rm -fR $HOME/compiled/TheFatRat
       else
          printf "${YW}    Invalid Selection."
