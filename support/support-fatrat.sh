@@ -68,4 +68,3 @@ app-install_func
 main
 clear
 source ${scripts_dir}/menu-hacking.sh
-exit 0
