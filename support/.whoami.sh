@@ -48,6 +48,7 @@ echo "export airc_installed=0" | sudo tee -a ${scripts_dir}/.envrc
 echo "export airc_deps_installed=0" | sudo tee -a ${scripts_dir}/.envrc
 echo "export airg_deps_inst=0" | sudo tee -a ${scripts_dir}/.envrc
 echo "export airg_installed=0" | sudo tee -a ${scripts_dir}/.envrc
+echo "export autoj_install=0" | sudo tee -a ${scripts_dir}/.envrc
 echo "export user=$USER" | sudo tee -a ${scripts_dir}/.envrc
 echo "export username=$(whoami)" | sudo tee -a ${scripts_dir}/.envrc
 echo "export useraccount=$(getent passwd 1000 | cut -d ":" -f 1)" | sudo tee -a ${scripts_dir}/.envrc
