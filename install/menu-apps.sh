@@ -7,7 +7,7 @@ source $scripts_dir/.envrc
 source $scripts_dir/support/.whoami.sh
 install_apps_func() {
         clear
-        options=("All" "Aircrack-NG" "Airgeddon" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
+        options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
         source "$scripts_dir/support/support-Banner_func.sh"
         printf "\\n                ${OG}Select which app you would like to install.$GN\\n\\n"
         select option in "${options[@]}"; do
@@ -43,6 +43,16 @@ install_apps_func() {
                         else
                                 printf "${YW}Aircrack-NG is not installed. Installing\\n"
                                 source $scripts_dir/support/support-aircrack2.sh
+                        fi
+                        ;;
+                     "Autojump")
+                        if [[ $autoj_install == 1 ]]; then
+                                printf "${GN}Autojump is already installed\\n"
+                                sudo autojump --help
+                                source ${scripts_dir}/menu-master.sh
+                        else
+                                printf "${YW}Autojump is not installed. Installing\\n"
+                                source $scripts_dir/support/support-autojump.sh
                         fi
                         ;;
                 "Docker Desktop")
