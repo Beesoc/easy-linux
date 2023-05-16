@@ -70,12 +70,14 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
 
+        sudo echo "export COLORTERM=truecolor" >> ~/.bashrc && sudo echo "export COLORTERM=truecolor" >> ~/.zshrc
+        sudo echo "export COLORFGBG=15;0" >> ~/.bashrc && sudo echo "export COLORFGBG=15;0" >> ~/.zshrc
 printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}       "
 read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
 if [[ $launchnow =~ ^[Yy]$ ]]; then
   printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
-  source /opt/easy-linux/menu-master.sh
+        source /opt/easy-linux/menu-master.sh
 else
   printf "    ${RED}Exiting.\\n"
   exit 0
@@ -159,9 +161,9 @@ printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}  
 read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ "$install" =~ ^[Yy]$ ]]; then
-  printf "\\n  ${WT}[*] ${CY}Loading...Please Wait..."
+  printf "\\n  ${WT}[*] ${CY}Loading...Please Wait...\\n"
 else
-  printf "  ${RED}   Exiting."
+  printf "  ${RED}   Exiting.\\n"
   exit 0
 fi
 sudo apt install -y bc lm-sensors curl > /dev/null
