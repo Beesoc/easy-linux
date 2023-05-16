@@ -13,7 +13,7 @@ sudo apt install -y zsh
  default_shell_func() {
            read -p "What do you want as your default shell, [Z]SH or [B]ASH? [Z/b] " defaultshell
 
-           defaultshell=$(defaultshell:-Z)
+           defaultshell=${defaultshell:-Z}
                    if [[ "$defaultshell" =~ ^[Zz] ]]; then
                    sudo chsh -s $(which zsh)
                    elif [[ "$defaultshell" =~ ^[Bb] ]]; then
