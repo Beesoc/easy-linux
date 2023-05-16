@@ -3,6 +3,7 @@
 # Version: 0.0.2
 
 set -e
+clear
 source ${scripts_dir}/.envrc
 source ${scripts_dir}/support/support-Banner_func.sh
 
