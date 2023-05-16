@@ -191,7 +191,7 @@ main() {
         printf "\\n                    ${RED}[!!!] ${YW}IMPORTANT CHOICE ${RED}[!!!]\\n "
         printf "\\n             ${CY}Enter the ${WT}C ${CY}key to continue for ${GN}ANYTHING EXCEPT$CY a Pwnagotchi.\\n"
         printf "     $GN---->   ${CY}If you're using a Pwnagotchi, enter P to continue.$NC\\n$CY"
-        printf "\\n         $RED[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P $RED[!!!]$NC\\n"
+        printf "\\n         ${RED}[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P ${RED}[!!!]$NC\\n"
         printf "\\n      $WT[P]${GN}wnagotchi ${CY}or $WT[C]${GN}ontinue ${CY}with ANY other Linux distro? ----> "
         read -n 1 -r installchoice
         if [[ $installchoice == "c" ]] || [[ $installchoice == "C" ]]; then
