@@ -171,7 +171,7 @@ personal_func() {
         fi
 }
 deps_install_func() {
-        packages=("ip" "iproute2" "acpi" "ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "usbutils / lsusb" "wget" "ethtool" "systemd / loginctl" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
+        packages=( "iproute2" "acpi" "ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "usbutils / lsusb" "wget" "ethtool" "systemd / loginctl" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
         for package in "${packages[@]}"; do
                 if dpkg -s "$package" >/dev/null 2>&1; then
                         echo "$package is already installed"
