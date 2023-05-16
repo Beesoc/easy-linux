@@ -7,14 +7,14 @@ source "${scripts_dir}/support/support-Banner_func.sh"
 source ${scripts_dir}/.envrc
 source ${scripts_dir}/support/.whoami.sh
 # shellcheck source=support-Banner_func.sh
-sudo apt install -y bc acpi > /dev/null
-
+cpu_info=$(lscpu | grep "Model name" | awk '{print $3 $4 $5 $6 $7 $8}')
 # Display hostname and username
 printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')            ${CY}Time: ${WT}$(date +%I:%M:%S\ ${GN}%p)        ${CY}Username: ${GN}$(whoami)""${WT}@""${GN}$(hostname)${NC}\\n"
 
 printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date: ${WT}$(timedatectl | grep "Local time" | awk '{print $3", " $4}')\\n"
 echo
 printf "${GN}  Distro: ${WT}$OS${GN}    |    Ver: ${WT}$VER${GN}     |    Kernel: ${WT}$KERN\\n  "
+printf "${GN}Proccessor: ${WT}${cpu_info}\\n" 
 #battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
 batt_per="$(acpi -b | awk '/Battery 0/ {gsub(/,|%/, ""); print $4}')"
 battery_state="$(acpi -b | awk '/Battery 0/ {gsub(/,$/,"",$3); print $3}')"
@@ -44,7 +44,7 @@ printf " \\n"
 printf "${CY}# Updates Avail: ${WT}$updates    |    ${CY}Non-Critical Percent: ${GN}$total_pct    |    ${CY}Grand Tot: ${WT}$tot_pkgs\\n"
 printf "# Critical Updates: ${RED}$security_updates     |     ${YW}   Critical Update Percent-${RED}$security_pct\\n"
 echo
-printf "Uptime: $uptime"
+printf "${GN}Uptime: ${OG}$(uptime)\\n"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
   read -r -n 1 -s -t 300
