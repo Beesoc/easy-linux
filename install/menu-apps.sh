@@ -124,7 +124,7 @@ install_apps_func() {
                                 read -n 1 -t 300
                                 source ${scripts_dir}/menu-master.sh
                         elif [[ $webmin_installed == 0 ]]; then
-                                source $script_dir/support/support-webmin.sh
+                                source $scripts_dir/support/support-webmin.sh
                         fi
                         ;;
                 "Wifite")
