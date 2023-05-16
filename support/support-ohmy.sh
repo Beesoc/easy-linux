@@ -30,16 +30,17 @@ main() {
                         printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
                         printf "  ${CY}Your current shell is ${WT}$my_shell.\\n"
                         default_shell_func
-                        printf "  ${CY}Do you want install Oh My BASH? [B/z] "
+                        
+                        printf "  ${CY}Do you want install Oh My BASH? or Oh My ZSH [Z/b] "
                         read -r -n 1 -s shellchoice
                         shellchoice=${shellchoice:-B}
-                   if [[ $shellchoice == "B" ]]; then
+                         if [[ $shellchoice == "B" ]]; then
                                if  [[ ! -d $HOME/.oh-my-bash ]]; then
                                bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
                                elif  [[ -d $HOME/.oh-my-bash ]]; then
                                printf "  Oh My BASH already installed."
                                fi
-                   elif [[ $shellchoice == "Z" ]]; then
+                         elif [[ $shellchoice == "Z" ]]; then
                          if ! command -v zsh &> /dev/null; then
                          zsh_install
                          else
