@@ -29,7 +29,8 @@ main() {
                         printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
                         printf "  ${CY}Your current shell is ${WT}$my_shell.\\n"
                         default_shell_func
-                        
+                        echo 
+                        echo
                         printf "\\n  ${CY}Do you want install Oh My BASH or Oh My ZSH? [Z/b] \\n"
                         read -r -n 1 -s shellchoice
                         shellchoice=${shellchoice:-Z}
