@@ -188,7 +188,7 @@ main() {
         clear
         source "$scripts_dir/support/support-Banner_func.sh"
         printf "\\n              ${CY}First, we will ${WT}update/upgrade ${CY}all packages.\\n"
-        printf "\\n                    $RED[!!!] ${YW}IMPORTANT CHOICE $RED[!!!]\\n "
+        printf "\\n                    ${RED}[!!!] ${YW}IMPORTANT CHOICE ${RED}[!!!]\\n "
         printf "\\n             ${CY}Enter the ${WT}C ${CY}key to continue for ${GN}ANYTHING EXCEPT$CY a Pwnagotchi.\\n"
         printf "     $GN---->   ${CY}If you're using a Pwnagotchi, enter P to continue.$NC\\n$CY"
         printf "\\n         $RED[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P $RED[!!!]$NC\\n"
