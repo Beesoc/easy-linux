@@ -58,25 +58,19 @@ install_apps_func() {
                         fi
                         ;;
                 "Hacking Tool")
-                        if
-                                [[ $hacktool-installed == 0 ]]
-                        then
+                        if [[ $hacktool-installed == 0 ]]; then
                                 source $scripts_dir/support/support-hackingtool.sh
                         elif [[ $hacktool-installed == 1 ]]; then
                                 sudo hackingtool
-                                hacktool_installed=1
-                                sudo sed -i "s/hacktool_installed=.*/hacktool_installed=$hacktool_installed/g" "$scripts_dir/.envrc"
                                 exit 0
                         fi
                         ;;
                 "TheFatRat")
                         clear
                         source $scripts_dir/support/support-Banner_func.sh
-                        if [[ $(command -v fatrat >/dev/null 2>&1) ]] && [[ $fatrat_installed == 1 ]]; then
+                        if [[ $fatrat_installed == 1 ]]; then
                                 printf "\\n${GN}The Fat Rat is already installed\\n"
                                 sudo fatrat
-                                fatrat_installed=1
-                                sudo sed -i "s/fatrat_installed=.*/fatrat_installed=$fatrat_installed/g" "$scripts_dir/.envrc"
                         else
                                 source $scripts_dir/support/support-fatrat.sh
                         fi
@@ -86,8 +80,6 @@ install_apps_func() {
                         source $scripts_dir/support/support-inst-standard.sh
                         elif [[ $stand_install == 1 ]]; then
                                 printf "$OG  You have already installed all of the standard tools.\\n"
-                                stand_install=1
-                                sudo sed -i "s/stand_install=.*/stand_install=$stand_install/g" "$scripts_dir/.envrc"
                                 exit 0
                         fi
                         ;;
@@ -100,15 +92,13 @@ install_apps_func() {
                         clear
                         if [[ $nano_installed == 1 ]]; then
                                 sudo nano -ADEGHKMPSWZacdegmpqy%_ -T 4
-                                sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" "$scripts_dir/.envrc"
+                        elif [[ $nano_installed == 0 ]]; then
+                                source $scripts_dir/support/support-nano.sh
                         fi
                         if [[ $nano_installed == 0 ]] && [[ -n $nano_exe ]]; then
                                 nano_installed=1
                                 sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" "$scripts_dir/.envrc"
                                 sudo nano -ADEGHKMPSWZacdegmpqy%_ -T 4
-                        fi
-                        if [[ $nano_installed == 0 ]]; then
-                                source $scripts_dir/support/support-nano.sh
                         fi
                         ;;
                 "Oh My...")
@@ -127,26 +117,23 @@ install_apps_func() {
                 "Webmin")
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
-                        if [[ $(command -v webmin >/dev/null 2>&1) ]] && [[ $webmin_installed == 1 ]]; then
-                                printf "$OG  Webmin already installed. Access via web browser at:\\n$WT "
-                                printf 'https://localhost:10000\n'
+                        if [[ $webmin_installed == 1 ]]; then
+                                printf "${OG}  Webmin already installed. Access via web browser at:\\n$WT "
+                                printf "https://localhost:10000\\n"
                                 printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
                                 read -n 1 -t 300
-                                webmin_installed=1
-                                sudo sed -i "s/webmin_installed=.*/webmin_installed=$webmin_installed/g" "$scripts_dir/.envrc"
-                        fi
-                        if [[ $webmin_installed == 0 ]]; then
+                                source ${scripts_dir}/menu-master.sh
+                        elif [[ $webmin_installed == 0 ]]; then
                                 source $script_dir/support/support-webmin.sh
                         fi
                         ;;
                 "Wifite")
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
-                        if [[ $(command -v wifite >/dev/null 2>&1) ]] && [[ $wifite_installed == 1 ]]; then
+                        if [[ $wifite_installed == 1 ]]; then
                                 printf "\\n${GN}Wifite is already installed\\n"
                                 sudo wifite
-                                sudo sed -i "s/wifite_installed=.*/wifite_installed=$wifite_installed/g" "$scripts_dir/.envrc"
-                        else
+                        elif [[ $wifite_installed == 0 ]]; then
                                 printf "    \\n${YW}Wifite is not installed\\n"
                                 source "$scripts_dir/support/support-wifite.sh"
                                 wifite_installed=1
@@ -169,7 +156,7 @@ install_apps_func() {
                         ;;
                 "Exit")
                         clear
-                        printf "   ${RED}You selected Exit$OG\\n"
+                        printf "   ${WT}$USER ${RED}selected Exit$OG\\n"
                         exit 0
                         ;;
                 *) printf "${RED}Invalid option entered.\\n  ${GN}Please try again.\\n$CY" ;;
@@ -184,13 +171,13 @@ personal_func() {
         fi
 }
 deps_install_func() {
-        packages=("ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "ip / iproute2" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "usbutils / lsusb" "wget" "ethtool" "systemd / loginctl" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
+        packages=("ip" "iproute2" "acpi" "ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "usbutils / lsusb" "wget" "ethtool" "systemd / loginctl" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
         for package in "${packages[@]}"; do
                 if dpkg -s "$package" >/dev/null 2>&1; then
                         echo "$package is already installed"
                 else
                         echo "Installing $package"
-                        sudo apt-get install -y "$package"
+                        sudo apt-get --ignore-missing --show-progress install -y "$package"
                 fi
                 menu_apps_deps=1
                 sudo sed -i "s/menu-apps-deps=.*/menu-apps-deps=$menu-apps-deps/g" "$scripts_dir/.envrc"
@@ -210,6 +197,7 @@ main() {
         if [[ $installchoice == "c" ]] || [[ $installchoice == "C" ]]; then
                 installchoice=${installchoice:-P}
                 sudo apt update
+                deps_install_func
                 updates=$(sudo apt list --upgradable | wc -l)
                 security_updates=$(sudo apt list --upgradable 2>/dev/null | grep -E '\[security|critical\]' | wc -l)
                 security_pct=$(echo "scale=2; ($security_updates/$updates)*100" | bc)
