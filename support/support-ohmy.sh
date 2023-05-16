@@ -30,20 +30,20 @@ main() {
                         printf "  ${CY}Your current shell is ${WT}$my_shell.\\n"
                         default_shell_func
                         
-                        printf "  ${CY}Do you want install Oh My BASH or Oh My ZSH? [Z/b] "
+                        printf "  ${CY}Do you want install Oh My BASH or Oh My ZSH? [Z/b] \\n"
                         read -r -n 1 -s shellchoice
                         shellchoice=${shellchoice:-Z}
                          if [[ $shellchoice == "B" ]]; then
                                if  [[ ! -d $HOME/.oh-my-bash ]]; then
                                bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
                                elif  [[ -d $HOME/.oh-my-bash ]]; then
-                               printf "  Oh My BASH already installed."
+                               printf "  Oh My BASH already installed.\\n"
                                fi
                          elif [[ $shellchoice == "Z" ]]; then
                          if ! command -v zsh &> /dev/null; then
                          zsh_install
                          else
-                         printf "ZSH is already installed.  Continuing"
+                         printf "ZSH is already installed.  Continuing\\n"
                               if [[ -d $HOME/.oh-my-zsh ]]; then
                                    printf "  ${CY}You have already installed Oh My ZSH!\\n"
                                    printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
