@@ -1,14 +1,25 @@
 #!/bin/bash
 # set a variable for handshakes directory so it can be changed in program
 # Version: 0.0.2
+# shellcheck source=/opt/easy-linux/.envrc
+# shellcheck source=/opt/backup/root/handshakes
+# shellcheck source=/opt/easy-linux/
+# shellcheck source=/opt/easy-linux/support/support-trap-wifi.sh
+# shellcheck source=/opt/easy-linux/support/support-Banner_func.sh
 handshakes_dir=/opt/backup/root/handshakes
 scripts_dir=/opt/easy-linux
 set -e
 # Add Color
-source ${scripts_dir}/.envrc
+source ./.envrc
 #
-trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
-source ${scripts_dir}/support/support-Banner_func.sh
+trap '${scripts_dir}/support/support-trap-wifi.sh' EXIT
+source support/support-Banner_func.sh
+pro_email=$pro_email
+wpa_api=$wpa_api
+cwb_computername=$cwb_computername
+cwb_username=$cwb_username
+ldb_computername=$ldb_computername
+ldb_username=$ldb_username
 
 upload_func() {
     printf " ${GN} [X] ${CY}Gzip is not supported on ${WT}OnlineHashCrack.\\n ${GN} [X] ${CY}Not compressing files. \\n ${GN} [*] ${CY}Uploading pcap's to OHC.${OG}\\n"
@@ -33,12 +44,12 @@ upload_func() {
 
 permissions_func() {
     # make sure permissions are ok.
-    if [[ $HOST -eq $cwb_computername ]] && [[ $USER -eq $cwb_username]]; then
+    if [[ $HOST == "$cwb_computername" ]] && [[ $USER == "$cwb_username" ]]; then
         pwnagotchi=Gotcha
         line=$(grep -n "pwnagotchi=" .envrc | cut -d: -f1)
         sed -i "${line}s/.*/pwnagotchi=${pwnagotchi}/" .envrc
         sudo chown -vR $cwb_username:$cwb_username /opt/backup/root/*
-    elif [[ $HOST == $ldb_computername ]] && [[ $USER -eq $ldb_username ]]; then
+    elif [[ $HOST == "$ldb_computername" ]] && [[ $USER -eq $ldb_username ]]; then
         pwnagotchi=Sniffer
         line=$(grep -n "pwnagotchi=" .envrc | cut -d: -f1)
         sed -i "${line}s/.*/pwnagotchi=${pwnagotchi}/" .envrc
@@ -65,8 +76,8 @@ permissions_func
 
 main() {
     clear
-    source "${scripts_dir}/support/support-Banner_func.sh"
-    printf "  ${CY}This script backs up your saved hashes from ${WT}$handshakes${CY}.\\n"
+    source support/support-Banner_func.sh
+    printf "  ${CY}This script backs up your saved hashes from ${WT}$handshakes_dir${CY}.\\n"
 
     folders_exist_func
 }
@@ -77,4 +88,4 @@ printf "${CY}All Operations completed. Cracked passwords will start appearing on
 printf "https://www.OnlineHashCrack.com and https://wpa-sec.stanev.org within 24hr.\\n"
 printf "Press ${WT}any${CY} key to return to ${WT}Main Menu.\\n "
 read -n 1 -r -t 300
-source ${scripts_dir}/menu-master.sh
+source "${scripts_dir}/menu-master.sh"
