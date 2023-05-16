@@ -33,13 +33,13 @@ main() {
                         printf "  ${CY}Do you want install Oh My BASH or Oh My ZSH? [Z/b] \\n"
                         read -r -n 1 -s shellchoice
                         shellchoice=${shellchoice:-Z}
-                         if [[ $shellchoice == "B" ]]; then
+                         if [[ "$shellchoice" =~ ^[bB]$ ]]; then
                                if  [[ ! -d $HOME/.oh-my-bash ]]; then
                                bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
                                elif  [[ -d $HOME/.oh-my-bash ]]; then
                                printf "  Oh My BASH already installed.\\n"
                                fi
-                         elif [[ $shellchoice == "Z" ]]; then
+                         elif [[ "$shellchoice" =~ ^[zZ]$ ]]; then
                          if ! command -v zsh &> /dev/null; then
                          zsh_install
                          else
