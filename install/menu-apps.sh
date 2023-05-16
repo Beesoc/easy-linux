@@ -127,14 +127,26 @@ install_apps_func() {
             "Webmin")
                 clear
                 source "$scripts_dir/support/support-Banner_func.sh"
-                if [[ $webmin_installed == 1 ]]; then
-                    printf "${OG}  Webmin already installed. Access via web browser at:\\n$WT "
-                    printf "https://localhost:10000\\n"
-                    printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
-                    read -n 1 -t 300
-                    source ${scripts_dir}/menu-master.sh
-                    elif [[ $webmin_installed == 0 ]]; then
-                    source $scripts_dir/support/support-webmin.sh
+                read -p "Do you want to install/launch Webmin? [Y/n] " instweb
+                instweb=${instweb:-Y}
+                if "$instweb" =~ ^[yY]$; then
+                    if [[ $webmin_installed == 1 ]]; then
+                        printf "${OG}  Webmin already installed. Access via web browser at:\\n$WT "
+                        printf "https://localhost:10000\\n"
+                        printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
+                        read -n 1 -t 300
+                        source ${scripts_dir}/menu-master.sh
+                        elif [[ ${webmin_installed} == 0 ]]; then
+                        source ${scripts_dir}/support/support-webmin.sh
+                        source ${scripts_dir}/main/menu-master.sh
+                    else
+                        printf "  ${RED}Invalid Selection"
+                    fi
+                    elif "$instweb" =~ ^[nN]$; then
+                    printf "  ${WT}$USER ${RED}decided not to install Webmin. Exiting\\n\\n"
+                    exit 0
+                else
+                    printf "  ${RED} Invalid Selection"
                 fi
             ;;
             "Wifite")
