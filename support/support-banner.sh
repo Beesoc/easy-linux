@@ -42,9 +42,10 @@ printf "${NC}${CY}"
 #  █ ▌▀ ▄ ╚ ╝ ╔ ╗ ═ ║  Characters used in the banner.
   #
       
-
+printf "
 ╔──────────────────────────────────────────────╗
 | Con este script podrás eliminar el contenido |
 |     que te genera KitHack en las carpetas    |
 |               tools y output.                |
 ┖──────────────────────────────────────────────┙
+"
