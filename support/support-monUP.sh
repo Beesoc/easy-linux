@@ -9,22 +9,19 @@ adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}')
 printf "${LB}"
 adapter_count=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | grep -c "wl")
 if [[ $adapter_count -gt 1 ]]; then
-source ${scripts_dir}/support/support-netadapter.sh
 adapter_choice=""
-
-source 
+adapter=$(sudo airmon-ng | awk '/wl/ {print $2}')
+source ${scripts_dir}/support/support-netadapter.sh
+fi 
 printf "${CY} -"
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 
-#
-clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 printf " \\n"
 printf "    ${OG}Randomizing MAC address & killing interfering processes \\n"
 printf "    ${WT}Bringing up monitor mode wifi adapter, ${CY}${adapter}${WT}.\\n${OG} "
 sudo rm -f ${scripts_dir}/support/adapter
-adapter=$(sudo airmon-ng | awk '  /wl/ {print $2}')
 sudo echo ${adapter} >${scripts_dir}/support/adapter
 sudo ifconfig ${adapter} down
 sudo macchanger -a ${adapter}
