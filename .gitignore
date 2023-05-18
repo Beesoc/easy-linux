@@ -1,4 +1,5 @@
 .vscode/launch.json
 .vscode/settings.json
 .devcontainer/devcontainer.json
-my_installed_apps.list
+support/misc/my_installed_apps.list
+support/misc/need-to-upload.list
