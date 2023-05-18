@@ -1,6 +1,6 @@
 #!/bin/bash
 # Version: 0.0.3
-#set -e
+set -e
 # set -euo pipefail
 function help {
 	echo
