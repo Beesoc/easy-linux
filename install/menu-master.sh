@@ -1,6 +1,7 @@
 #!/bin/bash
 # Version: 0.0.3
 set -e
+trap "source ${scripts_dir}/support/trap-master.sh" EXIT
 
 function help {
     echo
@@ -22,7 +23,6 @@ fi
 scripts_dir=/opt/easy-linux
 clear
 source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
-trap "source ${scripts_dir}/support/trap-master.sh" EXIT
 
 misc_func() {
     if [[ -f $HOME/.bashrc ]]; then
