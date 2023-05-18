@@ -8,7 +8,7 @@ source $scripts_dir/support/.whoami.sh
 # trap source "${script_dir}/support/trap-master.sh" EXIT
 install_apps_func() {
 	clear
-	options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
+	options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop" "Main Menu" "My Favs" "Glances" "TheFatRat" "Hacking Tool" "Nano" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
 	source "$scripts_dir/support/support-Banner_func.sh"
 	printf "\\n                ${OG}Select which app you would like to install.$GN\\n\\n"
 	select option in "${options[@]}"; do
@@ -93,6 +93,14 @@ install_apps_func() {
 				printf "$OG  You have already installed all of the standard tools.\\n"
 				exit 0
 			fi
+			;;
+		  "Glances")
+		        if [[ $glances_install == 0 ]]; then
+	                        curl -L https://bit.ly/glances | /bin/bash
+                                glances_install=1
+			elif [[ $glances_install == 1 ]]; then
+			        printf "  Glances is installed."
+			fi	
 			;;
 		"Main Menu")
 			printf "${OG}You selected ${WT}Main Menu\\n$CY"
