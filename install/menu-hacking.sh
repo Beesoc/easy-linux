@@ -6,19 +6,16 @@ source ${scripts_dir}/.envrc
 set -e
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 clear
-echo "export airc_installed=0" >>${scripts_dir}/.envrc
-echo "export airc_deps_installed=0" >>${scripts_dir}/.envrc
-echo "export airg_deps_inst=0" >>${scripts_dir}/.envrc
-echo "export airg_installed=0" >>${scripts_dir}/.envrc
-cd ${scripts_dir}
+
 if [[ $(command -v direnv >dev/null) ]]; then
-	direnv allow
+        cd ${scripts_dir}
+        direnv allow
 	sudo direnv allow
 fi
 source "${scripts_dir}/support/support-Banner_func.sh"
 printf "                     ${CY} Welcome to the Hacking/Security Menu.             ${OG}\\n  "
-printf "\\n  ${OG}1] ${CY}Enable wifi Monitor mode ${OG}              20] ${CY}Enable wifi and Network Manager${OG} \\n"
-printf "\\n  ${OG}2] ${CY}Disable wifi Monitor mode${OG}              21] ${CY}Disable wifi and Network Manager${OG}\\n"
+printf "\\n  ${OG}1] ${CY}Enable/Disable wifi Monitor mode ${OG}      20] ${CY}Enable wifi and Network Manager${OG} \\n"
+printf "\\n  ${OG}2] ${CY}                                            21] ${CY}Disable wifi and Network Manager${OG}\\n"
 printf "\\n  ${OG}3] ${CY}Upload all hashes to wpa-sec and OHC${OG}   22] ${CY}Capture Hashes ${OG}\\n"
 printf "\\n  ${OG}4] ${CY}Use Beesoc's wordlist or merge ${OG}        23] ${CY}Wifite: PMKID, EAPOL, WPS attacks  \\n"
 printf "    lists, sort and delete dups with 1 easy tool."
@@ -32,9 +29,9 @@ read -r choice
 source "${scripts_dir}/support/support-Banner_func.sh"
 
 if [[ ${choice} == 1 ]]; then
-	source "${scripts_dir}/support/support-monUP.sh"
+	source "${scripts_dir}/support/misc/support-monitor.sh"
 elif [[ "${choice}" == 2 ]]; then
-	source "${scripts_dir}/support/support-monDOWN.sh"
+	printf "  Nothing here....yet.\n"
 elif [[ "${choice}" == 3 ]]; then
 	source "${scripts_dir}/menu-upload-hashes.sh"
 elif [[ "${choice}" == 4 ]]; then
