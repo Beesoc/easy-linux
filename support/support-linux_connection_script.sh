@@ -16,4 +16,4 @@ iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -t nat -F POSTROUTING
 iptables -t nat -A POSTROUTING -o "$UPSTREAM_IFACE" -j MASQUERADE
 
-echo 1 > /proc/sys/net/ipv4/ip_forward
+echo 1 >/proc/sys/net/ipv4/ip_forward

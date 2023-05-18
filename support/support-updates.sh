@@ -6,20 +6,20 @@ source "${scripts_dir}/.envrc"
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 if [[ $USER != "beesoc" ]] || [[ $HOST != "updates" ]]; then
-    exit 0
+	exit 0
 elif [[ $USER = "beesoc" ]] && [[ $HOST = "updates" ]]; then
-#####  Personal  #######
-printf "${CY}  Install Storm-Breaker"
-  sudo apt install -y python3-requests python3-colorama python3-psutil > /dev/null
-  cd /opt || exit
-  sudo git clone https://github.com/ultrasecurity/Storm-Breaker.git
-  cd Storm-Breaker || exit
-  sudo bash ./install.sh
-  cd storm-web
-  sudo su
-  rm config.php
-  touch ./config.php
-  echo "<?php
+	#####  Personal  #######
+	printf "${CY}  Install Storm-Breaker"
+	sudo apt install -y python3-requests python3-colorama python3-psutil >/dev/null
+	cd /opt || exit
+	sudo git clone https://github.com/ultrasecurity/Storm-Breaker.git
+	cd Storm-Breaker || exit
+	sudo bash ./install.sh
+	cd storm-web
+	sudo su
+	rm config.php
+	touch ./config.php
+	echo "<?php
 
 \$CONFIG = array (
     \"hidden\" => [
@@ -29,14 +29,14 @@ printf "${CY}  Install Storm-Breaker"
 
 );
 
-?>" > config.php
+?>" >config.php
 
-  printf "Install ngrok"
-  cd $HOME/Downloads
-  wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
-  sudo tar xvzf $HOME/Downloads/ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
-  printf "Go signup for an ngrok account.  That's how you get the key below"
-  ngrok config add-authtoken $ngrok_token
+	printf "Install ngrok"
+	cd $HOME/Downloads
+	wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+	sudo tar xvzf $HOME/Downloads/ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
+	printf "Go signup for an ngrok account.  That's how you get the key below"
+	ngrok config add-authtoken $ngrok_token
 
 fi
 

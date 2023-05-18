@@ -10,8 +10,8 @@ source "${scripts_dir}/support/support-Banner_func.sh"
 #trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 
 run_nano_func() {
-    sudo nano -ADEGHKMPSWZacegmpqy%_ -T 4 
-    source ${scripts_dir}/menu-master.sh 
+	sudo nano -ADEGHKMPSWZacegmpqy%_ -T 4
+	source ${scripts_dir}/menu-master.sh
 }
 
 install_nano() {
@@ -62,18 +62,18 @@ nano_check_deps() {
 
 main() {
 
-EXECUTABLE=$(which nano)
-    if [[ -n $EXECUTABLE ]] && [[ $nano_installed = 1 ]]; then
-        printf "  ${CY}Nano already installed!\\n"
-        run_nano_func
-    fi
-
-    if [[ -n $EXECUTABLE ]]; then
+	EXECUTABLE=$(which nano)
+	if [[ -n $EXECUTABLE ]] && [[ $nano_installed = 1 ]]; then
 		printf "  ${CY}Nano already installed!\\n"
-        run_nano_func
-    else
-        nano_check_deps
-    fi
+		run_nano_func
+	fi
+
+	if [[ -n $EXECUTABLE ]]; then
+		printf "  ${CY}Nano already installed!\\n"
+		run_nano_func
+	else
+		nano_check_deps
+	fi
 
 	if [[ $nano_installed -ne 1 ]] && [[ $nano_installed -ne 0 ]]; then
 		nano_installed=0
@@ -97,4 +97,3 @@ EXECUTABLE=$(which nano)
 main
 source ${scripts_dir}/menu-master.sh
 exit 0
-

@@ -14,7 +14,7 @@ printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')     
 printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date: ${WT}$(timedatectl | grep "Local time" | awk '{print $3", " $4}')\\n"
 echo
 printf "${GN}  Distro: ${WT}$OS${GN}    |    Ver: ${WT}$VER${GN}     |    Kernel: ${WT}$KERN\\n  "
-printf "${GN}Proccessor: ${WT}${cpu_info}\\n" 
+printf "${GN}Proccessor: ${WT}${cpu_info}\\n"
 #battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
 batt_per="$(acpi -b | awk '/Battery 0/ {gsub(/,|%/, ""); print $4}')"
 battery_state="$(acpi -b | awk '/Battery 0/ {gsub(/,$/,"",$3); print $3}')"
@@ -33,7 +33,6 @@ ip_address=$(hostname -I | awk '{print $1}')
 cpu_load=$(uptime | awk '{print $10,$11,$12}')
 printf "${CY}Disk Usage: ${WT}${disk_usage}%   ${CY}IP:${WT} ${ip_address}    ${CY}CPU Load: ${WT}$cpu_load      ${CY}CPU Temp: ${WT}${cpu_temp} \\n"
 
-
 # Display total number of updates and security updates available
 updates=$(apt list --upgradable 2>/dev/null | wc -l)
 security_updates=$(apt list --upgradable 2>/dev/null | grep -E '\[security|critical\]' | wc -l)
@@ -47,5 +46,5 @@ echo
 printf "${GN}Uptime: ${OG}$(uptime)\\n"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
-  read -r -n 1 -s -t 300
+read -r -n 1 -s -t 300
 source ${scripts_dir}/menu-master.sh
