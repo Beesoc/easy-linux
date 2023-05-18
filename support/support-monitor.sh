@@ -6,42 +6,6 @@ set -e
 clear
 source ${scripts_dir}/.envrc
 
-select_adapt_func() {
-adapterfull=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}')
-printf "${LB}"
-if [ "${adapter_count}" -eq 1 ]; then
-        adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
-        printf "  \\n${CY}You have ${WT}$adapter_count ${CY}wireless network adapter.\\n"
-elif [[ $adapter_count -gt 1 ]]; then
-adapter_choice=""
-adapter=$(sudo airmon-ng | awk '/wl/ {print $2}')
-source ${scripts_dir}/support/support-netadapter.sh
-elif [[ $adapter_count -eq 0 ]]; then
-    printf "  ${RED}WTF. You need wireless adapters for monitor mode.\\n "
-    printf "  NOTE: Wifi devices ${WT}cannot be passed through a Virtual Machine${RED}. Wifi adapters\\n"
-    printf "  passed though from a host are identified as Ethernet Adapters. ${WT}Not Compatible${RED}."
-    exit 0
-fi 
-}
-
-execute_func() {
-printf "${CY} "
-clear
-source "${scripts_dir}/support/support-Banner_func.sh"
-printf " \\n"
-printf "    ${OG}Randomizing MAC address & killing interfering processes \\n" && sudo ifconfig ${adapter} down
-sudo macchanger -a ${adapter}
-printf "    ${WT}Bringing up monitor mode wifi adapter, ${CY}${adapter}${WT}.\\n${OG} " && adapter_choice=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | cut -d' ' -f1 | sed -n "${selection}p")
-stop_net_func
-sudo airmon-ng start ${adapter} && printf "${OG}-\\n"
-clear
-printf "\\n \\n" && printf "  ${OG}Your MAC address has been changed and your wifi adapter, ${WT}${adapter}${OG}\\n"
-printf " is in ${WT}$monitor mode. ${RED}[*!*] ${PL}Happy Hacking ${RED}[*!*]${OG}\\n"
-printf " \\n" && printf "  ${OG}When finished, ${RED}return to this menu ${OG}to set everything\\n"
-printf "  back to their original values.\\n${NC}\\n"
-source ${scripts_dir}/menu-hacking.sh
-}
-
 change_net_func() {
 sudo systemctl stop NetworkManager
 sudo systemctl stop wpa_supplicant
@@ -59,7 +23,9 @@ printf "${OG}Starting NetworkManager and wpa_supplicant now to enable ${WT}inter
 }
 
 main() {
+
 adapter_count=$(sudo airmon-ng | awk '/wl/ {print $2}' | wc -l)
+source ${scripts_dir}/support/support-netadapter.sh
 
 if [[ $adapter_count -eq 0 ]]; then
   printf "  ${WT}No wifi adapters ${RED}can be seen on your PC at this time.\\n"
@@ -137,11 +103,6 @@ elif [[ $adapter_count -ge 2 ]]; then
          fi
 fi
 done
-
-
-select_adapt_func
-execute_func
-
 }
+
 main
-source ${scripts_dir}/menu-hacking.sh
