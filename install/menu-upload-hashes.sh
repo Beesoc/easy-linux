@@ -9,13 +9,13 @@ set -e
 source ${scripts_dir}/.envrc
 #
 trap "source ${scripts_dir}/support/support-trap-wifi.sh" EXIT
-source ${scripts_dir}/support/support-Banner_func.sh
+
 allcaps=$(locate *.cap > ${scripts_dir}/support/misc/allcaps.list)
 allpcaps=$(locate *.pcap > ${scripts_dir}/support/misc/allpcaps.list)
 allhcx=$(locate *.hcxcapx > ${scripts_dir}/support/misc/allhcx.list)
-echo $allcaps >> ${scripts_dir}/support/misc/backup-list.list
-echo $allpcap >> ${scripts_dir}/support/misc/backup-list.list
-echo $allhcx >> ${scripts_dir}/support/misc/backup-list.list
+cat $allcaps >> ${scripts_dir}/support/misc/backup-list.list
+cat $allpcap >> ${scripts_dir}/support/misc/backup-list.list
+cat $allhcx >> ${scripts_dir}/support/misc/backup-list.list
 
 upload_func() {
         if [[ $(find ${handshakes_dir} -maxdepth 1 \( -name '*.cap' -o -name '*.pcap' -o -name '*.pcap-ng' \) -type f -print -quit | grep -q '.') ]]; then
@@ -54,14 +54,12 @@ permissions_func() {
         # make sure permissions are ok.
         if [[ $HOST == "$cwb_computername" && $USER == "$cwb_username" ]]; then
                 pwnagotchi=Gotcha
-                line=$(grep -n "pwnagotchi=" .envrc | cut -d: -f1)
-                sed -i "${line}s/.*/pwnagotchi=${pwnagotchi}/" .envrc
-                sudo chown -vR $cwb_username:$cwb_username ${backup_dir}/root/*
-        elif [[ $HOST == "$ldb_computername" ]] && [[ $USER == "$ldb_username" ]]; then
+                sudo sed -i "s/pwnagotchi.*/pwnagotchi=${pwnagotchi}/g" ${scripts_dir}/.envrc
+                sudo chown -vR $cwb_username:0 ${backup_dir}/root/
+        elif [[ $HOST == "$ldb_computername" && $USER == "$ldb_username" ]]; then
                 pwnagotchi=Sniffer
-                line=$(grep -n "pwnagotchi=" .envrc | cut -d: -f1)
-                sed -i "${line}s/.*/pwnagotchi=${pwnagotchi}/" .envrc
-                sudo chown -vR $ldb_username:$ldb_username ${backup_dir}/root/*
+                sed -i "s/pwnagotchi.*/pwnagotchi=${pwnagotchi}/g" ${scripts_dir}/.envrc
+                sudo chown -vR $ldb_username:0 ${backup_dir}/root/
         else
                 sudo chown -vR root:root ${backup_dir}/root/*
         fi
