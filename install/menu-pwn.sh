@@ -243,5 +243,5 @@ main() {
 		read -n 1 -r
 	done
 }
-
+clear
 main
