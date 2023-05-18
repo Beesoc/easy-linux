@@ -190,7 +190,7 @@ install_apps_func() {
                         printf "   ${WT}$USER ${RED}selected Exit$OG\\n"
                         exit 0
                         ;;
-                *) printf "${RED}Invalid option entered.\\n  ${GN}Please try again.\\n$CY" ;;
+                *) printf "${RED}Invalid option entered.\\n  ${GN}Please try again. Options are 1 - 15.\\n$CY" ;;
                 esac
         done
 }
