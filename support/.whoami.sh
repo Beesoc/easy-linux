@@ -81,7 +81,7 @@ get_vars_func() {
         # Update flag to indicate function has ran.
         touch "$FLAG_FILE"
     fi
-}
+    }
 
 main() {
     get_vars_func
