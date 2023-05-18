@@ -4,7 +4,7 @@ set -e
 scripts_dir=/opt/easy-linux
 clear
 source $scripts_dir/.envrc
-source $scripts_dir/support/.whoami.sh
+source $scripts_dir/support/.whoami.sh && trap ${script_dir}/support/trap-master.sh
 install_apps_func() {
 	clear
 	options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
@@ -186,14 +186,14 @@ install_apps_func() {
 	done
 }
 personal_func() {
-	if [[ $USER == "beesoc" ]] && [[ $HOST == "updates" ]]; then
+	if [[ $USER == "beesoc" ]] && [[ $computername == "updates" ]]; then
 		source $scripts_dir/support/support-updates.sh
 	else
 		exit 0
 	fi
 }
 deps_install_func() {
-	packages=("iproute2" "acpi" "ccze" "colorized-logs" "xrootconsole" "xdpyinfo / x11-utils / xorg-xdpyinfo" "iw" "awk / gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "usbutils / lsusb" "wget" "ethtool" "systemd / loginctl" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
+	packages=("bc" "acpi" "ccze" "colorized-logs" "xrootconsole" "x11-utils" "iw" "gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb" "wget" "ethtool" "systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
 	for package in "${packages[@]}"; do
 		if dpkg -s "$package" >/dev/null 2>&1; then
 			echo "$package is already installed"
@@ -218,6 +218,7 @@ main() {
 	read -n 1 -r installchoice
 	if [[ $installchoice == "c" ]] || [[ $installchoice == "C" ]]; then
 		installchoice=${installchoice:-P}
+		hazinternet=$(source ${scripts_dir}/support/support-i-can-haz-internet.sh)
 		sudo apt update
 		deps_install_func
 		updates=$(sudo apt list --upgradable | wc -l)
