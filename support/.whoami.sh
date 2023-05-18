@@ -4,7 +4,7 @@
 # shellcheck source=/opt/easy-linux/.envrc
 set -e
 scripts_dir=/opt/easy-linux
-trap ${scripts_dir}/support/trap-master.sh
+trap "source ${scripts_dir}/support/trap-master.sh" EXIT
 if [ $(command -v direnv) ]; then
    cd ${scripts_dir}
    direnv allow && sudo direnv allow
