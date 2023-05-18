@@ -68,7 +68,7 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   Banner_func
   printf "   ${CY}[*] ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n" 
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
-  printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader!\\n${CY}" 
+  printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${CY}!\\n${CY}" 
 
         sudo echo "export COLORTERM=truecolor" >> ~/.bashrc && sudo echo "export COLORTERM=truecolor" >> ~/.zshrc
         sudo echo "export COLORFGBG=15;0" >> ~/.bashrc && sudo echo "export COLORFGBG=15;0" >> ~/.zshrc
