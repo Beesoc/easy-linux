@@ -18,7 +18,9 @@ cat $allpcap >> ${scripts_dir}/support/misc/backup-list.list
 cat $allhcx >> ${scripts_dir}/support/misc/backup-list.list
 
 upload_func() {
-        if [[ $(find ${handshakes_dir} -maxdepth 1 \( -name '*.cap' -o -name '*.pcap' -o -name '*.pcap-ng' \) -type f -print -quit | grep -q '.') ]]; then
+clear
+source ${scripts_dir}/support/support-Banner_func.sh
+       if [[ $(find ${handshakes_dir} -maxdepth 1 \( -name '*.cap' -o -name '*.pcap' -o -name '*.pcap-ng' \) -type f -print -quit | grep -q '.') ]]; then
                 printf " ${GN} [X] ${CY}Gzip is not supported on ${WT}OnlineHashCrack.\\n ${GN} [X] ${CY}Not compressing files. \\n ${GN} [*] ${CY}Uploading pcap's to OHC.${OG}\\n"
                 wlancap2wpasec -u https://api.onlinehashcrack.com -e $pro_email ${handshakes_dir}/*.pcap
                 printf " ${GN} [*] ${CY}Send all cap's to OHC.${OG}\\n"
@@ -92,8 +94,7 @@ main() {
 }
 
 main
-clear
-source ${scripts_dir}/support/support-Banner_func.sh
+
 printf "${CY}All Operations completed. Cracked passwords will start appearing on \\n"
 printf "${WT}https://www.OnlineHashCrack.com ${CY}and ${WT}https://wpa-sec.stanev.org ${CY}within 24hr.\\n"
 printf "Press ${WT}any${CY} key to return to ${WT}Main Menu${CY}.\\n "
