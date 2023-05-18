@@ -72,7 +72,6 @@ get_vars_func() {
             echo "export pwn_installed=0" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export OS=$(uname -s)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export KERN=$(uname -r)" | sudo tee -a "${scripts_dir}/.envrc"
-            echo "export ALLINFO=$(uname -a)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export tot_pkgs=$(cat "${scripts_dir}/support/misc/my_installed_apps.list" | grep "install" -c)" | sudo tee -a "${scripts_dir}/.envrc"
         }
         
