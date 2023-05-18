@@ -3,12 +3,7 @@
 set -e
 scripts_dir=/opt/easy-linux
 
-# netadaptercount - query network adapters and select 1 for monitor mode
-adapter_count=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | grep -c "wl")
-#
-clear
-source ${scripts_dir}/support/support-Banner_func.sh
-
+wlan_sel_func() {
 if [ "${adapter_count}" -eq 1 ]; then
 	adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
 	printf "  \\n${CY}You have ${WT}$adapter_count ${CY}wireless network adapter.\\n"
@@ -26,3 +21,31 @@ else
     sudo sed -i 's/adapter=.*/adapter=$adapter/g' ${scripts_dir}/.envrc
 printf "\\n  ${OG}You have selected wireless adapter: ${adapter}."
 fi
+}
+
+how_many_func() {
+# netadaptercount - query network adapters and select 1 for monitor mode
+adapter_count=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | grep -c "wl")
+#
+clear
+source ${scripts_dir}/support/support-Banner_func.sh
+if [ "${adapter_count}" -eq 1 ]; then
+        adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
+        printf "  \\n${CY}You have ${WT}$adapter_count ${CY}wireless network adapter.\\n"
+	return
+elif [[ $adapter_count -gt 1 ]]; then
+adapter_choice=""
+adapter=$(sudo airmon-ng | awk '/wl/ {print $2}')
+wlan_sel_func
+elif [[ $adapter_count -eq 0 ]]; then
+    printf "  ${RED}WTF. You need wireless adapters for monitor mode.\\n "
+    printf "  NOTE: Wifi devices ${WT}cannot be passed through a Virtual Machine${RED}. Wifi adapters\\n"
+    printf "  passed though from a host are identified as Ethernet Adapters. ${WT}Not Compatible${RED}."
+    return
+fi 
+}
+
+main() {
+how_many_func
+}
+main
