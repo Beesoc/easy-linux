@@ -1,7 +1,7 @@
 #!/bin/bash
 # Version: 0.0.3
 #set -e
-set -euo pipefail
+# set -euo pipefail
 function help {
 	echo
 	echo "Usage: $0 [options]"
