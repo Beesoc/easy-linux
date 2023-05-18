@@ -13,10 +13,10 @@ source "${scripts_dir}/.envrc"
 source "${scripts_dir}/support/.whoami.sh"
 if [[ -f /etc/pwnagotchi/config.toml ]]; then
 	amiPwn=1
-	sudo sed -r -i 's/amiPwn=.*/amiPwn=1/g' "${scripts_dir}/.envrc"
+	sudo sed -r -i 's/amiPwn=.*/amiPwn=amiPwn=1/g' "${scripts_dir}/.envrc"
 elif [[ ! -f /etc/pwnagotchi/config.toml ]]; then
 	amiPwn=0
-	sudo sed -r -i 's/amiPwn=.*/amiPwn=0/g' "${scripts_dir}/.envrc"
+	sudo sed -r -i 's/amiPwn=.*/amiPwn=amiPwn=0/g' "${scripts_dir}/.envrc"
 fi
 
 # Function to handle Pwnagotchi connection
@@ -44,10 +44,11 @@ udev_func() {
 	if [[ ! -f /etc/udev/rules.d/20-easy-udev.rules ]]; then
 		myudev=/etc/udev/rules.d/20-easy-udev.rules
 		sudo touch ${myudev}
-		sudo echo 'ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0525", ATTR{idProduct}=="a4a2", RUN+="${scripts_dir}/menu-master.sh"' >${myudev}
-		sudo cp /opt/easy-linux/support/20-easy-udev.rules /etc/udev/rules.d/
+		sudo bash -c 'echo "ACTION==\"add\", SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0525\", ATTR{idProduct}==\"a4a2\", RUN+=\"/opt/easy-linux/menu-master.sh >> ${scripts_dir}/menu-master.log 2>&1\"" >> /etc/udev/rules.d/20-easy-udev.rules'
+                sudo cp ${scripts_dir}/support/20-easy-udev.rules /etc/udev/rules.d/
 		sudo udevadm control --reload-rules
 		sudo udevadm trigger
+		sudo systemctl reload udev
 	else
 		printf "${WT}It looks like the udev rule is already in place. Skipping this step.${CY}\n"
 	fi
@@ -141,7 +142,11 @@ ssh_func() {
 	elif [[ "$conreturn" =~ ^[rR]$ ]]; then
 		return
 	fi
+	if [[ -f /etc/udev/rules.d/20-easy-udev.rules ]]; then
+	    	printf "\\n ${OG}  Udev rule already present. Skipping.\\n${CY}"
+	elif [[ ! -f /etc/udev/rules.d/20-easy-udev.rules ]]; then
 	udev_func
+	fi
 	pwn_connect_func
 }
 
