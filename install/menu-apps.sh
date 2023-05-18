@@ -218,7 +218,7 @@ main() {
         elif [[ $hazinternet = 1 ]]; then
 	     printf "\\n         ${OG}Your PC is showing that you ${WT}ARE NOT ${OG}connected to the internet. \\n"
 	fi
-	print "
+	print " \\n"
         printf "\\n         ${RED}[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P ${RED}[!!!]$NC\\n"
 	printf "\\n      ${WT}[P]${GN}wnagotchi ${CY}or ${WT}[C]${GN}ontinue ${CY}with ANY other Linux distro? ----> "
 	read -n 1 -r installchoice
