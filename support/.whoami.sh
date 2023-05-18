@@ -71,7 +71,6 @@ get_vars_func() {
             echo "export pwnagotchi=$(if [ "$user" -eq "$cwb_username" -a "$computername" -eq "$cwb_updates" ]; then echo "Gotcha"; else echo "Unknown"; fi)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export pwn_installed=0" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export OS=$(uname -s)" | sudo tee -a "${scripts_dir}/.envrc"
-            echo "export VER=$(uname -v)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export KERN=$(uname -r)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export ALLINFO=$(uname -a)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export tot_pkgs=$(cat "${scripts_dir}/support/misc/my_installed_apps.list" | grep "install" -c)" | sudo tee -a "${scripts_dir}/.envrc"
