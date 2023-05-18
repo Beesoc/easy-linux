@@ -1,7 +1,7 @@
 #!/bin/bash
 # Version: 0.0.3
 set -e
-trap "source ${scripts_dir}/support/trap-master.sh" EXIT
+trap "source /opt/easy-linux/support/trap-master.sh" EXIT
 
 function help {
     echo
