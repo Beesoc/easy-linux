@@ -4,16 +4,15 @@
 # shellcheck source=/opt/easy-linux/.envrc
 set -e
 scripts_dir=/opt/easy-linux
-cd ${scripts_dir}
-direnv allow && sudo direnv allow
+if [ $(command -v direnv) ]; then
+   cd ${scripts_dir}
+   direnv allow && sudo direnv allow
+fi
 source /opt/easy-linux/.envrc
 
 pkg_info_func() {
     
     sudo dpkg --get-selections > ${scripts_dir}/support/my_installed_apps.list
-    tot_pkgs=$(cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c)
-    
-    KERN=$(uname -r)
     
 }
 
