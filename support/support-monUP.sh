@@ -5,13 +5,21 @@ set -e
 #
 clear
 source ${scripts_dir}/.envrc
-adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}')
+adapterfull=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}')
 printf "${LB}"
 adapter_count=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | grep -c "wl")
-if [[ $adapter_count -gt 1 ]]; then
+if [ "${adapter_count}" -eq 1 ]; then
+        adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
+        printf "  \\n${CY}You have ${WT}$adapter_count ${CY}wireless network adapter.\\n"
+elif [[ $adapter_count -gt 1 ]]; then
+
 adapter_choice=""
 adapter=$(sudo airmon-ng | awk '/wl/ {print $2}')
 source ${scripts_dir}/support/support-netadapter.sh
+elif [[ $adapter_count -eq 0 ]]; then
+    printf "  ${RED}WTF. You need wireless adapters for monitor mode.\\n 
+    printf "  NOTE: Wifi devices ${WT}can't be passed through a Virtual Machine${RED}. Wifi adapters\\n
+    printf "  passed though from a host are identified as Ethernet Adapters. ${WT}Not Compatible${RED}."
 fi 
 printf "${CY} -"
 clear
