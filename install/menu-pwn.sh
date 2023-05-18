@@ -3,7 +3,7 @@
 # Pwnagotchi backup and restore script
 
 #set -euo pipefail
-set e
+set -e
 # Version: 0.0.3
 scripts_dir=/opt/easy-linux
 backup_dir=/opt/backup
