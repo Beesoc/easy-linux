@@ -95,6 +95,10 @@ upload_func() {
 	source ${scripts_dir}/menu-upload-hashes.sh
 }
 
+main_menu_func() {
+source ${scripts_dir}/menu-master.sh
+}
+
 # Function to control SSH options
 ssh_func() {
 	# Check for SSH key and generate if not found
