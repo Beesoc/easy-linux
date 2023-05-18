@@ -26,11 +26,16 @@ trap "${scripts_dir}/support/trap-master.sh" EXIT
 
 misc_func() {
 	if [[ -f $HOME/.bashrc ]]; then
-		echo "export TERM=xterm-color" >>~/.bashrc
-	fi
+		echo "export TERM=xterm-color" >> ~/.bashrc
+		echo "export COLORTERM=truecolor" >> ~.bashrc
+                echo "export COLORFGBG=15,0" >> ~.bashrc
+        fi
 	if [[ -f $HOME/.zshrc ]]; then
-		echo "export TERM=xterm-color" >>~/.zshrc
+		echo "export TERM=xterm-color" >> ~/.zshrc
+		echo "export COLORTERM=truecolor" >> ~.zshrc
+                echo "export COLORFGBG=15,0" >> ~.zshrc
 	fi
+	
 	if [[ -f $HOME/INSTALLv2.sh ]]; then
 		rm -f $HOME/INSTALLv2.sh
 	fi
