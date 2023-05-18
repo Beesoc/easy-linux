@@ -22,7 +22,7 @@ fi
 scripts_dir=/opt/easy-linux
 clear
 source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
-trap "${scripts_dir}/support/trap-master.sh" EXIT
+trap "source ${scripts_dir}/support/trap-master.sh" EXIT
 
 misc_func() {
 	if [[ -f $HOME/.bashrc ]]; then
