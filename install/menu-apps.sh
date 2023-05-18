@@ -4,7 +4,8 @@ set -e
 scripts_dir=/opt/easy-linux
 clear
 source $scripts_dir/.envrc
-source $scripts_dir/support/.whoami.sh && trap "source ${script_dir}/support/trap-master.sh" EXIT
+source $scripts_dir/support/.whoami.sh
+trap "bash ${script_dir}/support/trap-master.sh" EXIT
 install_apps_func() {
 	clear
 	options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop" "Main Menu" "My Favs" "Nano" "TheFatRat" "Hacking Tool" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
