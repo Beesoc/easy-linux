@@ -46,14 +46,14 @@ airg_install_func() {
 }
 
 deps_airg_option() {
-	optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4 / mdk3" "hashcat" "hostapd" "dhcpd / isc-dhcp-server / dhcp-server / dhcp" "nft / nftables / iptables" "ettercap / ettercap-text-only / ettercap-graphical" "hashcat-utils" "etterlog" "lighttpd" "dnsmasq" "wash / reaver" "reaver / wash" "bully" "pixiewps" "bettercap" "beef / beef-xss / beef-project" "packetforge-ng" "hostapd-wpe" "asleap / asleep" "john" "openssl" "hcxpcapngtool / hcxtools" "hcxdumptool" "tshark / wireshaek-cli" "xml2")
+	optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4" "mdk3" "hashcat" "hostapd" "dhcpd" "isc-dhcp-server" "dhcp-server" "dhcp" "nft" "nftables" "iptables" "ettercap" "ettercap-text-only" "ettercap-graphical" "hashcat-utils" "etterlog" "lighttpd" "dnsmasq" "wash" "reaver" "bully" "pixiewps" "bettercap" "beef" "beef-xss / beef-project" "packetforge-ng" "hostapd-wpe" "asleap / asleep" "john" "openssl" "hcxpcapngtool / hcxtools" "hcxdumptool" "tshark / wireshaek-cli" "xml2")
 
 	for optpackage in "${optpackages[@]}"; do
 		if dpkg -s "$optpackages" >/dev/null 2>&1; then
 			echo "$optpackages is already installed"
 		else
 			echo "Installing $optpackages"
-			sudo apt-get install -y "$optpackages"
+			sudo apt-get install --ignore-missing -y "$optpackages"
 		fi
 		airg_deps_inst=1
 		sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
@@ -63,7 +63,7 @@ deps_airg_option() {
 
 deps_airg_install() {
 	# List of package names to install
-	packages=("iw" "ps / procps / procps-ng" "awk / gawk" "xterm / tmux" "lspci / pciutils" "autoconf" "automake" "libtool pkg-config" "libnl-3-dev" "libnl-genl-3-dev" "libssl-dev" "ethtool" "shtool" "rfkill" "zlib1g-dev" "libpcap-dev" "libsqlite3-dev" "libpcre3-dev" "libhwloc-dev" "libcmocka-dev" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "airodump-ng" "groff")
+	packages=("iw" "ps" "procps" "procps-ng" "awk" "gawk" "xterm" "tmux" "lspci" "pciutils" "autoconf" "automake" "libtool" "pkg-config" "libnl-3-dev" "libnl-genl-3-dev" "libssl-dev" "ethtool" "shtool" "rfkill" "zlib1g-dev" "libpcap-dev" "libsqlite3-dev" "libpcre3-dev" "libhwloc-dev" "libcmocka-dev" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "airodump-ng" "groff")
 
 	# Loop through the list of package names
 	for package in "${packages[@]}"; do
@@ -71,7 +71,7 @@ deps_airg_install() {
 			echo "$package is already installed"
 		else
 			echo "Installing $package"
-			sudo apt-get install -y "$package"
+			sudo apt-get install -m -y "$package"
 		fi
 		airg_deps_inst=1
 		sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
