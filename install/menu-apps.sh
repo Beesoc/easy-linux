@@ -28,7 +28,7 @@ install_apps_func() {
 				printf "$GN  Continuing...\\n"
 			elif [[ $choiceairged =~ ^[Nn]$ ]]; then
 				printf "$RED  Cancelling. Returning to ${WT}Main Menu\\n"
-				source $scripts_dir/support/support-airgeddon.sh
+				source $scripts_dir/menu-master.sh
 			else
 				printf "$RED  Exiting.\\n"
 				exit 0
