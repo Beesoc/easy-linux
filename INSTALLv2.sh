@@ -166,8 +166,6 @@ else
   printf "  ${RED}   Exiting.\\n"
   exit 0
 fi
-sudo apt install -y bc lm-sensors curl > /dev/null
-
 # check for requirements.
     if $(command -v /usr/bin/direnv >/dev/null 2>&1); then
        check_directories_func
