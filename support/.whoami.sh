@@ -28,7 +28,7 @@ get_vars_func() {
         if [[ "$USER" == "$cwb_username" && "$HOST" == "$cwb_computername" ]]; then
             pwnagotchi="Gotcha"
             sed -i 's/^pwnagotchi=.*/pwnagotchi=Gotcha/' ${scripts_dir}/.envrc
-            elif [[ "$USER" == "$ldb_username" && "$HOST" == "$ldb_computername" ]]; then
+        elif [[ "$USER" == "$ldb_username" && "$HOST" == "$ldb_computername" ]]; then
             pwnagotchi="Sniffer"
             sed -i 's/^pwnagotchi=.*/pwnagotchi=Sniffer/' ${scripts_dir}/.envrc
         fi
@@ -73,7 +73,6 @@ get_vars_func() {
             echo "export KERN=$(uname -r)" | sudo tee -a ${scripts_dir}/.envrc
             echo "export ALLINFO=$(uname -a)" | sudo tee -a ${scripts_dir}/.envrc
             echo "export tot_pkgs=$(cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c) | sudo tee -a ${scripts_dir}/.envrc
-  }
         
         # Populate the envrc table
         populate_envrc
@@ -88,8 +87,6 @@ main() {
     pkg_info_func
 }
 
-main
-
 if [ $(command -v direnv) ]; then
    cd /opt/easy-linux
    direnv allow
@@ -98,3 +95,6 @@ if [ $(command -v direnv) ]; then
    cd /opt/easy-linux/support
    direnv allow
    sudo direnv allow
+fi
+
+main
