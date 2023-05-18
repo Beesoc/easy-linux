@@ -104,8 +104,10 @@ ssh_func() {
 	# Check for SSH key and generate if not found
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
+	if [[ -e $HOME/.ssh/known_hosts ]]; then
 	ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
-	if [ -f "$HOME/.ssh/id_rsa.pub" ]; then
+        fi
+        if [ -f "$HOME/.ssh/id_rsa.pub" ]; then
 		printf "${CY}SSH key was found. Proceeding.${CY}\\n"
 	else
 		printf "${CY}No personal SSH key was found. Checking for key for root user.${CY}\\n"
@@ -123,12 +125,16 @@ ssh_func() {
 	printf "${GN}  You may be prompted to accept the fingerprint next and will be asked for ${WT}${pwnagotchi}${GN} password.${OG}\\n"
 	printf "  ${CY}Press ${WT}any ${CY}key to continue\\n${NC}"
 	read -n 1 -r -t 300
+	if [[ -f $HOME/.ssh/known_hosts ]]; then
 	ssh-keygen -f $HOME/.ssh/known_hosts -R "10.0.0.2"
+	fi
+	if [[ -f /root/.ssh/known_hosts ]]; then
 	sudo ssh-keygen -f /root/.ssh/known_hosts -R "10.0.0.2"
+	fi
 	ssh-copy-id -p 22 -i $HOME/.ssh/id_rsa.pub pi@10.0.0.2
 	sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2
 	pwn_installed=1
-	sudo sed -r -i "s/pwn_installed=.*/pwn_installed=1/g" "${scripts_dir}/.envrc"
+	sudo sed -r -i "s/pwn_installed=.*/pwn_installed=$pwn_installed/g" "${scripts_dir}/.envrc"
 	read -r -p "Do you want to [c]onnect to $pwnagotchi now, or [r]eturn to the menu? [C/r] " conreturn
 	conreturn=${conreturn:-C}
 	printf "\\n ${OG}"
