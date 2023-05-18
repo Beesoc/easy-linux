@@ -266,7 +266,7 @@ main() {
 		printf ' \n'
 		exit 0
 	else
-		printf " $RED  Invalid Selection"
+		printf " ${RED}  Invalid Selection"
 	fi
 }
 main
