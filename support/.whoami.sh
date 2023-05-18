@@ -50,13 +50,12 @@ populate_envrc() {
     fi
 }
 
-pkg_info_func() {
-    sudo dpkg --get-selections > "$installed_apps_file"
-}
+#pkg_info_func() {
+#    sudo dpkg --get-selections > "$installed_apps_file"
+#}
 
 main() {
     populate_envrc
-    pkg_info_func
 }
 
 # Capture user's username and computer name
