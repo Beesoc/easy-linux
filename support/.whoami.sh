@@ -49,6 +49,7 @@ get_vars_func() {
             echo "export docker_installed=0" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export fatrat_installed=$(if [ -x "$(command -v fatrat)" ]; then echo "1"; else echo "0"; fi)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export hacktool_installed=$(if [ -x "$(command -v hackingtool)" ]; then echo "1"; else echo "0"; fi)" | sudo tee -a "${scripts_dir}/.envrc"
+            echo "export glances_install=$(if [ -x "$(command -v glances)" ]; then echo "1"; else echo "0"; fi)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export hcxdump_installed=$(if [ -x "$(command -v hcxdumptool)" ]; then echo "1"; else echo "0"; fi)" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export nano_installed=0" | sudo tee -a "${scripts_dir}/.envrc"
             echo "export webmin_installed=$(if [ -x "$(command -v webmin)" ]; then echo "1"; else echo "0"; fi)" | sudo tee -a "${scripts_dir}/.envrc"
