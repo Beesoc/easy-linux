@@ -12,7 +12,6 @@ printf "${LB}"
 if [ "${adapter_count}" -eq 1 ]; then
         adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
         printf "  \\n${CY}You have ${WT}$adapter_count ${CY}wireless network adapter.\\n"
-        return
 elif [[ $adapter_count -gt 1 ]]; then
 adapter_choice=""
 adapter=$(sudo airmon-ng | awk '/wl/ {print $2}')
