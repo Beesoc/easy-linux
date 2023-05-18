@@ -73,7 +73,7 @@ get_vars_func() {
             echo "export VER=$(uname -v)" | sudo tee -a ${scripts_dir}/.envrc
             echo "export KERN=$(uname -r)" | sudo tee -a ${scripts_dir}/.envrc
             echo "export ALLINFO=$(uname -a)" | sudo tee -a ${scripts_dir}/.envrc
-            echo "export tot_pkgs=$(cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c) | sudo tee -a ${scripts_dir}/.envrc
+            echo "export tot_pkgs=$(cat ${scripts_dir}/support/my_installed_apps.list | grep "install" -c)" | sudo tee -a ${scripts_dir}/.envrc
         
         # Populate the envrc table
         populate_envrc
