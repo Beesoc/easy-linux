@@ -1,5 +1,5 @@
 #!/bin/bash
-# script to start wifi adapter in MONITOR mode.
+# script to switch wifi adapter between MONITOR and managed mode.
 set -e
 # Version: 0.0.2
 #
