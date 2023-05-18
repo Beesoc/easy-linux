@@ -208,17 +208,22 @@ deps_install_func() {
 }
 main() {
 	clear
-	source "$scripts_dir/support/support-Banner_func.sh"
+	hazinternet=$(source ${scripts_dir}/support/support-ican-haz-internet.sh) && source "$scripts_dir/support/support-Banner_func.sh"
 	printf "\\n              ${CY}First, we will ${WT}update/upgrade ${CY}all packages.\\n"
 	printf "\\n                    ${RED}[!!!] ${YW}IMPORTANT CHOICE ${RED}[!!!]\\n "
 	printf "\\n             ${CY}Enter the ${WT}C ${CY}key to continue for ${GN}ANYTHING EXCEPT$CY a Pwnagotchi.\\n"
 	printf "     $GN---->   ${CY}If you're using a Pwnagotchi, enter P to continue.$NC\\n$CY"
-	printf "\\n         ${RED}[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P ${RED}[!!!]$NC\\n"
+        if [[ $hazinternet = 0 ]]; then
+	     printf "\\n          ${GN}Your PC is showing that you ${WT}ARE ${GN}connected to the internet. \\n"
+        elif [[ $hazinternet = 1 ]]; then
+	     printf "\\n         ${OG}Your PC is showing that you ${WT}ARE NOT ${OG}connected to the internet. \\n"
+	fi
+	print "
+        printf "\\n         ${RED}[!!!] ${YW}DONT UPDATE/UPGRADE A PWNAGOTCHI, ENTER P ${RED}[!!!]$NC\\n"
 	printf "\\n      ${WT}[P]${GN}wnagotchi ${CY}or ${WT}[C]${GN}ontinue ${CY}with ANY other Linux distro? ----> "
 	read -n 1 -r installchoice
 	if [[ $installchoice == "c" ]] || [[ $installchoice == "C" ]]; then
 		installchoice=${installchoice:-P}
-		hazinternet=$(source ${scripts_dir}/support/support-i-can-haz-internet.sh)
 		sudo apt update
 		deps_install_func
 		updates=$(sudo apt list --upgradable | wc -l)
