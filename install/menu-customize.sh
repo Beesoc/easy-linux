@@ -5,7 +5,8 @@
 scripts_dir=/opt/easy-linux
 set -e
 source "${scripts_dir}/.envrc"
-trap bash ${scripts_dir}/support/support-trap-wifi.sh EXIT
+
+trap source ${scripts_dir}/support/support-trap-wifi.sh EXIT
 
 # Version: 0.0.3
 scripts_dir=/opt/easy-linux
