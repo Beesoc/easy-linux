@@ -5,6 +5,7 @@
 scripts_dir=/opt/easy-linux
 set -e
 source "${scripts_dir}/.envrc"
+trap bash ${scripts_dir}/support/support-trap-wifi.sh EXIT
 # Version: 0.0.2
 
 clear
@@ -16,7 +17,7 @@ printf "  ${OG} 3] ${GN}Fix your perm! ${WT}Permissions fixes${OG}              
 printf "  ${OG} 4] ${WT}Find things${GN} on your machine FAST with plocate ${NC}\\n \\n"
 printf "  ${OG}99] ${GN}Return to ${WT}main menu                           ${RED} [✘] Exit tool [✘]${NC}\\n"
 printf " \\n\\n"
-source "${scripts_dir}/support/support-Prompt_func.sh"
+printf "  ${PL}Please make a selection"
 printf "${GN}   ----->${CY} "
 # Read user input and display the appropriate submenu
 read -r choice
