@@ -167,7 +167,8 @@ Banner_func
 
 printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}    Press ${RED}[ctrl+c] ${GN}to cancel\\n${CY}\\n    " 
 
-read -n 1 -p "Do you want to check dependencies for Beesoc's Easy Linux Loader? [Y/n] " install
+printf "${CY}  Do you want to ${WT}check dependencies ${CY}"
+read -n 1 -p "for Beesoc's Easy Linux Loader? [Y/n] " install
 install=${install:-Y}
 if [[ "$install" =~ ^[Yy]$ ]]; then
   printf "\\n  ${WT}[*] ${CY}Loading...Please Wait...\\n"
