@@ -95,10 +95,11 @@ fi
 
 git_files_func() {
 # step 6 function.
+  echo 
   printf "  ${WT} \\n  [*] ${GN}Cloning remote Git repo.${OG}\\n  "; sleep 1
   sudo git clone https://github.com/Beesoc/easy-linux.git /opt/easy-linux
 
-sudo chown -vR 1000:0 /opt/easy-linux
+sudo chown -vR $USER:0 /opt/easy-linux
 sudo chmod +x /opt/easy-linux/support/*.sh
 sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
 sudo mv -t /opt/easy-linux /opt/easy-linux/install/*
@@ -146,7 +147,7 @@ direnv_func() {
                read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
                 if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
-                    printf "${GN}  Continuing...\\n" 
+                    printf "${GN}\\n  Continuing...\\n" 
                     sleep 1
                     printf "  ${OG}This step may take a few minutes...\\n"
                     sleep 1
