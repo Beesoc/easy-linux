@@ -172,9 +172,9 @@ main_menu() {
 	pwn_installed=$(echo ${scripts_dir}/.envrc | grep "pwn_installed" | awk '{print $2}')
 	sshmenu=0
 	if [[ $pwn_installed = 1 ]]; then
-		sshmenu=$(echo "    ${WT}1)${OG}  SSH key setup: This step has been COMPLETED.${CY}\n")
+		sshmenu=$(echo " ${WT}1)${OG}  SSH key setup: This step has been COMPLETED.${CY}")
 	elif [[ $pwn_installed = 0 ]]; then
-		sshmenu=$(echo "    ${WT}1)${CY}  SSH key setup: Complete first. Only required 1 time.${CY}\n")
+		sshmenu=$(echo " ${WT}1)${CY}  SSH key setup: Complete first. Only required 1 time.${CY}")
 	fi
 
 	source ${scripts_dir}/support/support-Banner_func.sh
@@ -183,7 +183,7 @@ main_menu() {
 	echo
 	printf "    ${GN}Select an option:${CY}\n"
 	echo
-	printf "$sshmenu"
+	printf "   ${sshmenu}\\n"
 	printf "    ${WT}2)${CY}  Connect to Pwnagotchi${CY}\n"
 	printf "    ${WT}3)${CY}  Customize your Pwnagotchi${CY}\n"
 	printf "    ${WT}4)${CY}  Backup Pwnagotchi${CY}\n"
