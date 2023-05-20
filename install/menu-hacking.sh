@@ -125,8 +125,7 @@ source "${scripts_dir}/support/support-Banner_func.sh"
     printf "     ${WT}8)${CY}  System Info${PL}: Various ${WT}Sys Info ${PL}about your Linux system.${CY}\n"
     printf "     ${WT}9)${CY}  Quit${PL}: Uhhh. It just ${WT}quits${PL}.${CY}\n"
     echo
-    printf "  ${WT}Selection: ${GN}  ---->  "
-    echo
+    printf "  ${WT}Selection: ${GN}----> "
     read -n 1 -r main_menu
     case "$main_menu" in
         1) monit_func ;;
