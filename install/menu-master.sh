@@ -3,6 +3,7 @@
 set -e
 scripts_dir=/opt/easy-linux
 trap "source ${scripts_dir}/support/trap-master.sh" EXIT
+source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
 
 function help {
     echo
@@ -21,8 +22,46 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
     exit 0
 fi
 
+# Update check function
+check_for_updates() {
+    local last_update_file=".last_update"
+
+    # Check if the last update file exists
+    if [[ -f "$last_update_file" ]]; then
+        # Get the last update timestamp
+        local last_update=$(cat "$last_update_file")
+
+        # Calculate the time difference in seconds
+        local current_time=$(date +%s)
+        local time_diff=$((current_time - last_update))
+
+        # Check if 24 hours have passed since the last update
+        if [[ $time_diff -ge 86400 ]]; then
+            printf "Checking for updates..."
+
+            # Run the update script
+            ./update-scripts.sh
+
+            # Update the last update timestamp
+            echo "$current_time" > "$last_update_file"
+        else
+            printf "Skipping update check. 24 hours have not passed since the last update."
+        fi
+    else
+        printf "First run. Checking for updates..."
+
+        # Run the update script
+        ./update-scripts.sh
+
+        # Create the last update file and set the timestamp
+        echo "$(date +%s)" > "$last_update_file"
+    fi
+}
+
+# Call the update check function
+check_for_updates
+
 clear
-source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
 
 misc_func() {
     if [[ -f $HOME/.bashrc ]]; then
