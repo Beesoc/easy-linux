@@ -164,6 +164,7 @@ ssh_func() {
 	udev_func
 	fi
 	pwn_connect_func
+fi
 }
 
 main_menu() {
