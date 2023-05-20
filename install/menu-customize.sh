@@ -5,8 +5,7 @@
 scripts_dir=/opt/easy-linux
 set -e
 source "${scripts_dir}/.envrc"
-
-trap source ${scripts_dir}/support/support-trap-wifi.sh EXIT
+#trap source "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 # Version: 0.0.3
 scripts_dir=/opt/easy-linux
@@ -37,7 +36,6 @@ ncdu_func(){
 		sleep 1
 		printf "${GN}...\\n"
                 sudo apt install -y ncdu >/dev/null
-		fi
 	fi
 		sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --excude delme /
 		return 0
@@ -121,3 +119,4 @@ main() {
 
 main
 source "${scripts_dir}/menu-master.sh"
+
