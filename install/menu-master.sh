@@ -25,37 +25,46 @@ fi
 # Update check function
 check_for_updates() {
     local last_update_file=".last_update"
+    local script_name="menu-master.sh"  # Name of the current script
 
-    # Check if the last update file exists
-    if [[ -f "$last_update_file" ]]; then
-        # Get the last update timestamp
-        local last_update=$(cat "$last_update_file")
+    # List of subfolders containing scripts to update
+    local subfolders=("install" "support")
 
-        # Calculate the time difference in seconds
-        local current_time=$(date +%s)
-        local time_diff=$((current_time - last_update))
+    # Iterate over each subfolder
+    for subfolder in "${subfolders[@]}"; do
+        local script_path="${subfolder}/${script_name}"
 
-        # Check if 24 hours have passed since the last update
-        if [[ $time_diff -ge 86400 ]]; then
-            printf "Checking for updates..."
+        # Check if the last update file exists for the current script
+        if [[ -f "$last_update_file" ]]; then
+            # Get the last update timestamp for the current script
+            local last_update=$(grep "$script_path" "$last_update_file" | cut -d' ' -f2)
 
-            # Run the update script
-            ./update-scripts.sh
+            # Calculate the time difference in seconds
+            local current_time=$(date +%s)
+            local time_diff=$((current_time - last_update))
 
-            # Update the last update timestamp
-            echo "$current_time" > "$last_update_file"
+            # Check if 24 hours have passed since the last update
+            if [[ $time_diff -ge 86400 ]]; then
+                echo "Checking for updates in $subfolder..."
+
+                # Run the update script for the current subfolder
+                ./"${subfolder}/update-scripts.sh"
+
+                # Update the last update timestamp for the current script
+                sed -i "s|$script_path .*|$script_path $current_time|" "$last_update_file"
+            else
+                echo "Skipping update check in $subfolder. 24 hours have not passed since the last update."
+            fi
         else
-            printf "Skipping update check. 24 hours have not passed since the last update."
+            echo "First run. Checking for updates in $subfolder..."
+
+            # Run the update script for the current subfolder
+            ./"${subfolder}/update-scripts.sh"
+
+            # Create the last update file and set the timestamp for the current script
+            echo "$script_path $(date +%s)" > "$last_update_file"
         fi
-    else
-        printf "First run. Checking for updates..."
-
-        # Run the update script
-        ./update-scripts.sh
-
-        # Create the last update file and set the timestamp
-        echo "$(date +%s)" > "$last_update_file"
-    fi
+    done
 }
 
 # Call the update check function
