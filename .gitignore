@@ -2,4 +2,5 @@
 .vscode/settings.json
 .devcontainer/devcontainer.json
 support/misc/my_installed_apps.list
+support/my_installed_apps.list
 support/misc/need-to-upload.list
