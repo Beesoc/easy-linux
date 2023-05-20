@@ -66,6 +66,8 @@ whoami_func() {
         fi
         if [[ $(ifconfig | grep "usb") -lt 1 ]]; then
             printf "${CY}  Pwnagotchi not detected. Try unplugging to reset."
+            printf "${CY}  You must connect your Pwnagotchi to continue to this menu."
+            sleep 5
         source ${scripts_dir}/menu-master.sh
         elif [[ $(ifconfig | grep "usb") -gt 0 ]]; then
                 clear
