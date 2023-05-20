@@ -10,6 +10,11 @@ source .envrc
 
 source support-Banner_func.sh
 printf "\\n "
+
+# find out what the id is.
+myuid=$(id | cut -d "=" -f 2 | cut -d "(" -f 1)
+uid=$(getent passwd $myuid | cut -d ':' -f 1) 
+
 # Get the username associated with UID 1000
 reg_user=$(getent passwd 1000 | cut -d ':' -f 1)
 
