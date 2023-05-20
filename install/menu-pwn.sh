@@ -42,10 +42,8 @@ pwn_connect_func() {
 # Function to set up udev rule
 udev_func() {
 	if [[ ! -f /etc/udev/rules.d/20-easy-udev.rules ]]; then
-		myudev=/etc/udev/rules.d/20-easy-udev.rules
-		sudo touch ${myudev}
-		sudo bash -c 'echo "ACTION==\"add\", SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0525\", ATTR{idProduct}==\"a4a2\", RUN+=\"/opt/easy-linux/menu-master.sh >> ${scripts_dir}/menu-master.log 2>&1\"" >> /etc/udev/rules.d/20-easy-udev.rules'
-                sudo cp ${scripts_dir}/support/20-easy-udev.rules /etc/udev/rules.d/
+		sudo 'echo "ACTION==\"add\", SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0525\", ATTR{idProduct}==\"a4a2\", RUN+=\"/opt/easy-linux/menu-master.sh"' >> ${scripts_dir}/support/misc/20-easy-udev.rules
+        sudo cp ${scripts_dir}/support/misc/20-easy-udev.rules /etc/udev/rules.d/
 		sudo udevadm control --reload-rules
 		sudo udevadm trigger
 		sudo systemctl reload udev
@@ -71,7 +69,7 @@ whoami_func() {
 	echo
 	printf "  ${CY}Your Pwnagotchi is ${WT}$pwnagotchi.\\n"
 
-	if [[ $pwnagotchi != "Gotcha" && $pwnagotchi != "Sniffer" ]]; then
+	if [[ $pwnagotchi != "Gotcha" || $pwnagotchi != "Sniffer" ]]; then
 		printf "${OG}Pwnagotchi name couldn't be automagically obtained.${GN}\n  "
 	fi
 
@@ -104,20 +102,25 @@ ssh_func() {
 	# Check for SSH key and generate if not found
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
-	if [[ -e $HOME/.ssh/known_hosts ]]; then
+    if [[ -f $HOME/.ssh/known_hosts ]]; then
 	ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
-        fi
-        if [ -f "$HOME/.ssh/id_rsa.pub" ]; then
+    fi
+	if [ -f "$HOME/.ssh/id_rsa.pub" ]; then
 		printf "${CY}SSH key was found. Proceeding.${CY}\\n"
 	else
 		printf "${CY}No personal SSH key was found. Checking for key for root user.${CY}\\n"
 		if [ ! -f /root/.ssh/id_rsa.pub ]; then
 			printf "${CY}SSH key was not found. Press any key to generate keys.${CY}\\n"
 			read -r -n 1 -s -t 300
-			printf "If there was an .ssh folder in your HOME directory, it has been backed up to .ssh2.${CY}\\n"
+			printf "If there was a .ssh folder in your HOME directory, it has been backed up to .ssh2.${CY}\\n"
 		fi
-		sudo cp -fr "$HOME/.ssh" .ssh2
-		ssh-keygen
+        if [[ -d $HOME/.ssh ]]; then
+		  sudo cp -fr "$HOME/.ssh" .ssh2
+        fi
+        if [[ ! -d $HOME/.ssh ]]; then
+          mkdir $HOME/.ssh
+        fi
+       	ssh-keygen
 		sudo ssh-keygen
 	fi
 
@@ -125,16 +128,19 @@ ssh_func() {
 	printf "${GN}  You may be prompted to accept the fingerprint next and will be asked for ${WT}${pwnagotchi}${GN} password.${OG}\\n"
 	printf "  ${CY}Press ${WT}any ${CY}key to continue\\n${NC}"
 	read -n 1 -r -t 300
-	if [[ -f $HOME/.ssh/known_hosts ]]; then
-	ssh-keygen -f $HOME/.ssh/known_hosts -R "10.0.0.2"
-	fi
-	if [[ -f /root/.ssh/known_hosts ]]; then
-	sudo ssh-keygen -f /root/.ssh/known_hosts -R "10.0.0.2"
-	fi
-	ssh-copy-id -p 22 -i $HOME/.ssh/id_rsa.pub pi@10.0.0.2
-	sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2
+    if [[ -f $HOME/.ssh/known_hosts ]]; then
+	   ssh-keygen -f $HOME/.ssh/known_hosts -R "10.0.0.2"
+    fi
+    if [[ -f /root/.ssh/known_hosts ]]; then 
+       sudo ssh-keygen -f /root/.ssh/known_hosts -R "10.0.0.2"
+    fi
+    if [[ -f $HOME/.ssh/id_rsa.pub ]]; then
+    	ssh-copy-id -p 22 -i $HOME/.ssh/id_rsa.pub pi@10.0.0.2
+    if [[ -f /root/.ssh/id_rsa.pub ]]; then
+    	sudo ssh-copy-id -p 22 -i /root/.ssh/id_rsa.pub pi@10.0.0.2
+    fi
 	pwn_installed=1
-	sudo sed -r -i "s/pwn_installed=.*/pwn_installed=$pwn_installed/g" "${scripts_dir}/.envrc"
+	sudo sed -r -i "s/pwn_installed=.*/pwn_installed=1/g" "${scripts_dir}/.envrc"
 	read -r -p "Do you want to [c]onnect to $pwnagotchi now, or [r]eturn to the menu? [C/r] " conreturn
 	conreturn=${conreturn:-C}
 	printf "\\n ${OG}"
@@ -162,7 +168,7 @@ ssh_func() {
 
 main_menu() {
 	clear
-	pwn_installed2=$(echo ${scripts_dir}/.envrc | grep "pwn_installed" | awk '{print $2}')
+	pwn_installed=$(echo ${scripts_dir}/.envrc | grep "pwn_installed" | awk '{print $2}')
 	sshmenu=0
 	if [[ $pwn_installed = 1 ]]; then
 		sshmenu=$(echo "    ${WT}1)${OG}  SSH key setup: This step has been COMPLETED.${CY}\n")
@@ -172,7 +178,7 @@ main_menu() {
 
 	source ${scripts_dir}/support/support-Banner_func.sh
 	echo
-	printf "${OG}          $username               Pwnagotchi Hub                 $pwnagotchi ${CY}\n"
+	printf "${OG}          $USER               Pwnagotchi Hub                 $pwnagotchi ${CY}\n"
 	echo
 	printf "    ${GN}Select an option:${CY}\n"
 	echo
@@ -205,12 +211,12 @@ backup_func() {
 	clear
 	if [[ ! -d "${backup_dir}" ]]; then
 		sudo mkdir "${backup_dir}"
-		sudo chown -vR 1000:0 ${backup_dir}
+		sudo chown -vR $USER:0 ${backup_dir}
 	fi
 
 	if [[ ! -d "${backup_dir}/${pwnagotchi}" ]]; then
 		sudo mkdir "${backup_dir}/${pwnagotchi}"
-		sudo chown -vR 1000:0 ${backup_dir}/${pwnagotchi}
+		sudo chown -vR $USER:0 ${backup_dir}/${pwnagotchi}
 	fi
 
 	source "${scripts_dir}/support/support-Banner_func.sh"
@@ -228,9 +234,11 @@ restore_func() {
 	printf "${WT}Your attached Pwnagotchi will be restored from \\n ${backup_dir}/$pwnagotchi${CY}\n"
 	if [[ ! -d ${backup_dir} ]]; then
 		printf "  ${RED}ERROR: Backup folder ${WT}$backup_dir ${RED}does not exist or you do not have permissions to access it.\\n"
+		printf "  You must make a backup before you can restore from one.\\n"
 	fi
 	if [[ ! -d ${backup_dir}/$pwnagotchi ]]; then
 		printf "  ${RED}ERROR: Backup folder ${WT}$backup_dir/$pwnagotchi ${RED}does not exist or you do not have permissions to access it.\\n"
+		printf "  You must make a backup before you can restore from one.\\n"
 	fi
 	sudo chown -vR $USER:0 ${backup_dir}/${pwnagotchi}
 	rsync -avzh --relative --no-o --no-g --super --progress --human-readable --files-from="${scripts_dir}/support/misc/backup-list.list" --rsync-path="sudo rsync" "${backup_dir}/${pwnagotchi}" pi@10.0.0.2:/
@@ -249,5 +257,5 @@ main() {
 		read -n 1 -r
 	done
 }
-clear
+
 main

@@ -85,6 +85,7 @@ folders_exist_func() {
 main() {
         clear
         source "${scripts_dir}/support/support-Banner_func.sh"
+printf "this is a test"
         printf "  ${CY}This script uploads your saved hashes from ${WT}$handshakes_dir${CY}\\n"
         printf "  to ${WT}Onlinehashcrack.com ${CY}and ${WT}www.wpa-stanev.org${CY}.\\n${NC} "
         echo

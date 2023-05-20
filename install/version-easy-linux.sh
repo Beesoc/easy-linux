@@ -3,7 +3,7 @@
 set -e
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
-
+clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 # Define the minimum required version for each script
 declare -A required_versions=(

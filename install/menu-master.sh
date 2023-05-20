@@ -1,7 +1,8 @@
 #!/bin/bash
 # Version: 0.0.3
 set -e
-trap "source /opt/easy-linux/support/trap-master.sh" EXIT
+scripts_dir=/opt/easy-linux
+trap "source ${scripts_dir}/support/trap-master.sh" EXIT
 
 function help {
     echo
@@ -20,20 +21,23 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
     exit 0
 fi
 
-scripts_dir=/opt/easy-linux
 clear
 source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
 
 misc_func() {
     if [[ -f $HOME/.bashrc ]]; then
-        echo "export TERM=xterm-color" >> ~/.bashrc
-        echo "export COLORTERM=truecolor" >> ~/.bashrc
-        echo "export COLORFGBG=15,0" >> ~/.bashrc
+        if [[ $(cat $HOME/.bashrc | grep "xterm-color" -c) -eq 0 ]]; then
+            echo "export TERM=xterm-color" >> ~/.bashrc
+            echo "export COLORTERM=truecolor" >> ~/.bashrc
+            echo "export COLORFGBG=15,0" >> ~/.bashrc
+        fi
     fi
     if [[ -f $HOME/.zshrc ]]; then
-        echo "export TERM=xterm-color" >> ~/.zshrc
-        echo "export COLORTERM=truecolor" >> ~/.zshrc
-        echo "export COLORFGBG=15,0" >> ~/.zshrc
+        if [[ $(cat $HOME/.zshrc | grep "xterm-color" -c) -eq 0 ]]; then
+            echo "export TERM=xterm-color" >> ~/.zshrc
+            echo "export COLORTERM=truecolor" >> ~/.zshrc
+            echo "export COLORFGBG=15,0" >> ~/.zshrc
+        fi
     fi
 
     if [[ -f $HOME/INSTALLv2.sh ]]; then
@@ -90,7 +94,6 @@ cust_func() {
     choicecustom=${choicecustom:-Y}
     if [[ "$choicecustom" =~ ^[Yy]$ ]]; then
         printf "${CY}Continuing...\\n"
-        clear
         source ${scripts_dir}/menu-customize.sh
     elif [[ "$choicecustom" =~ ^[Nn]$ ]]; then
         printf "${RED} [✘] Exit tool [✘]${NC} \\n"
@@ -154,7 +157,7 @@ main_menu() {
     printf "     ${WT}6)${CY}  System Info${PL}: Various Sys Info about your Linux system.${CY}\n"
     printf "     ${WT}7)${CY}  Quit${PL}: Uhhh. It just quits.${CY}\n"
     echo
-    printf "  ${WT}Selection: ${OG}\n  ---->"
+    printf "  ${WT}Selection: ${OG}\n  ----> "
     read -n 1 -r main_menu
     case "$main_menu" in
         1) hack_func ;;

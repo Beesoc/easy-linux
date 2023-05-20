@@ -5,12 +5,13 @@ scripts_dir=/opt/easy-linux
 clear
 source $scripts_dir/.envrc
 source $scripts_dir/support/.whoami.sh
-# trap source "${script_dir}/support/trap-master.sh" EXIT
+trap 'bash "/opt/easy-linux/support/trap-master.sh"' EXIT
 install_apps_func() {
         clear
-        options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop" "Main Menu" "My Favs" "Glances" "TheFatRat" "Hacking Tool" "Nano" "Oh My..." "System Info" "Webmin" "WiFite" "Exit")
+        options=("All" "Aircrack-NG" "Airgeddon" "Autojump" "Docker Desktop"  "My Favs" "Glances" "TheFatRat" "Hacking Tool" "Nano" "Oh My..." "System Info" "Webmin" "WiFite" "Main Menu" "Exit")
         source "$scripts_dir/support/support-Banner_func.sh"
-        printf "\\n                ${OG}Select which app you would like to install.$GN\\n\\n"
+        printf "\\n               ${OG}Select which app you would like to install or run.$GN\\n\\n"
+        echo
         select option in "${options[@]}"; do
                 case $option in
                 "Airgeddon")
@@ -190,7 +191,7 @@ install_apps_func() {
                         printf "   ${WT}$USER ${RED}selected Exit$OG\\n"
                         exit 0
                         ;;
-                *) printf "${RED}Invalid option entered.\\n  ${GN}Please try again. Options are 1 - 15.\\n$CY" ;;
+                *) printf "${RED}Invalid option entered.\\n ${GN}Please try again. Valid options are listed above. \n$CY" ;;
                 esac
         done
 }
@@ -202,8 +203,8 @@ personal_func() {
         fi
 }
  update_func() {
-        printf "\\n      ${WT}[P]${GN}wnagotchi ${CY}or ${WT}[C]${GN}ontinue ${CY}with ANY other Linux distro? ----> "
-        read -r installchoice
+        printf "\\n      ${WT}[P]${GN}wnagotchi ${CY}or ${WT}[C]${GN}ontinue with ANY other Linux ${CY}distro? ----> "
+        read -n 1 -r installchoice
         if [[ $installchoice == c ]] || [[ $installchoice == C ]]; then
                 installchoice=${installchoice:-P}
                 sudo apt update
@@ -269,7 +270,7 @@ main() {
         printf "\\n              ${CY}First, we will ${WT}update/upgrade ${CY}all packages.\\n"
         printf "\\n                    ${RED}[!!!] ${YW}IMPORTANT CHOICE ${RED}[!!!]\\n "
         printf "\\n             ${CY}Enter the ${WT}C ${CY}key to continue for ${GN}ANYTHING EXCEPT$CY a Pwnagotchi.\\n"
-        printf "     ${GN}---->   ${CY}If you're using a Pwnagotchi, enter P to continue.${NC}\\n${CY}"
+        printf "     ${GN}---->   ${CY}If you're using a Pwnagotchi, enter ${WT}P ${CY}to continue.${NC}\\n${CY}"
         #if [[ $hazinternet = 0 ]]; then
             # printf "\\n          ${GN}Your PC is showing that you ${WT}ARE ${GN}connected to the internet. \\n"
         #elif [[ $hazinternet = 1 ]]; then
@@ -279,5 +280,6 @@ main() {
         update_func
         
 }
+
 
 main

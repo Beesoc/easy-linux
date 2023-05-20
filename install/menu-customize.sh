@@ -2,6 +2,8 @@
 #shellcheck source=${scripts_dir}/.envrc
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
+scripts_dir=/opt/easy-linux
+set -e
 source "${scripts_dir}/.envrc"
 # Version: 0.0.2
 
