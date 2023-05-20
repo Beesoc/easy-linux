@@ -70,8 +70,17 @@ printf "${WT}..."; sleep 1; printf "...Almost done\\n"
   printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
   printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${CY}!\\n${CY}" 
 
-        sudo echo "export COLORTERM=truecolor" >> ~/.bashrc && sudo echo "export COLORTERM=truecolor" >> ~/.zshrc
-        sudo echo "export COLORFGBG=15;0" >> ~/.bashrc && sudo echo "export COLORFGBG=15;0" >> ~/.zshrc
+rc=$(cat ~/.bashrc | grep "truecolor" -c)
+zc=$(cat ~/.zshrc | grep "truecolor" -c)
+if [[ $rc > 0 ]]; then   
+        sudo echo "export COLORTERM=truecolor" >> ~/.bashrc
+        sudo echo "export COLORFGBG=15;0" >> ~/.bashrc
+fi
+if [[ $zc > 0 ]]; then   
+        sudo echo "export COLORTERM=truecolor" >> ~/.zshrc
+        sudo echo "export COLORFGBG=15;0" >> ~/.zshrc
+fi
+
 printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}       "
 read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
 launchnow=${launchnow:-Y}
