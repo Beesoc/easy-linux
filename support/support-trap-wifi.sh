@@ -1,10 +1,9 @@
 #!/bin/bash
-
 set -e
 # Version: 0.0.2
 scripts_dir=/opt/easy-linux
+clear
 source "${scripts_dir}/.envrc"
-source "${scripts_dir}/support/support-Banner_func.sh"
 
 # get a list of wireless network interfaces
 interfaces=$(iwconfig 2>/dev/null | grep -o "^[^ ]*")
@@ -23,4 +22,6 @@ for iface in $interfaces; do
 		printf "  ${GN}[*] ${CY}Interface ${WT}$iface ${CY}switched to managed mode"
 		printf "  ${GN}[*] ${CY}NetworkManager.service and wpa_supplicant.service restarted."
 	fi
+
 done
+trap "source ${scripts_dir}/support/trap-master.sh" EXIT

@@ -3,7 +3,7 @@
 set -e
 # Version: 0.0.2
 source "${scripts_dir}/.envrc"
-trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
+trap source ${scripts_dir}/support/support-trap-wifi.sh EXIT
 
 app-install_func() {
 

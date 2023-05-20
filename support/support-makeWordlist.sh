@@ -6,6 +6,7 @@ set -e
 scripts_dir=/opt/easy-linux
 #
 set -e
+trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 #export PS4="\$LINENO: "
 #set -xv
 # colors for printf

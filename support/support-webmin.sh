@@ -6,9 +6,14 @@
 #######################################################################
 #
 # Added by Cory
-
+clear
 scripts_dir=/opt/easy-linux
-read -r -p "Do you want to install/launch Webmin? [Y/n] " choicewebmin
+source ${scripts_dir}/support/support-Banner_func.sh
+trap source ${scripts_dir}/support/support-trap-wifi.sh
+
+printf "${CY}Do you want to install/lanuch Webmin? [Y/n] "
+read -n 1 -r choicewebmin
+
 #choicewebmin={$choicewebmin:-Y}
 if [[ "${choicewebmin}" -eq "Y" ]] || [[ $choicewebmin -eq "y" ]]; then
 	printf "${GN}  Continuing...\\n"
