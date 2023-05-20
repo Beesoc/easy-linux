@@ -71,6 +71,7 @@ whoami_func() {
         source ${scripts_dir}/menu-master.sh
         elif [[ $(ifconfig | grep "usb") -gt 0 ]]; then
                 clear
+        fi
         source ${scripts_dir}/support/support-Banner_func.sh
         echo
         printf "  ${CY}Your Pwnagotchi is ${WT}$pwnagotchi.\\n"
