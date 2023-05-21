@@ -18,7 +18,7 @@ fi
 
 read -n 1 -p "Do you want to install HackingTool [Y/n] " choicehacking
 choicehacking=${choicehacking:-Y}
-if [[ $choicehacking =~ ^[Yy]$ ]]; then
+if [[ "$choicehacking" =~ ^[Yy]$ ]]; then
 	printf "${GN}Continuing...\\n"
 else
 	printf "${RED}Exiting.\\n"
@@ -31,8 +31,6 @@ if [[ -d ${compiled_dir} ]]; then
 elif [[ ! -d ${compiled_dir} ]]; then
 	mkdir $HOME/compiled
 	cd $HOME/compiled || exit
-else
-	printf "${RED}Invalid Selection"
 fi
 printf " \\n${CY}"
 sudo git clone https://github.com/Z4nzu/hackingtool.git
@@ -41,4 +39,4 @@ sudo pip3 install -r requirements.txt
 source ./install.sh
 printf "${CY}  Press ${WT}any ${CY}key to continue."
 read -n 1 -s -t 300
-source ${scripts_dir}/menu-apps.sh
+source ${scripts_dir}/install/menu-apps.sh

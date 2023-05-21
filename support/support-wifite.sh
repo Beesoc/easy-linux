@@ -1,7 +1,8 @@
 #!/bin/bash
 # Wifite installer/executor
 set -e
-# Version: 0.0.2
+# Version: 0.0.3
+# This is an update test.
 source "${scripts_dir}/.envrc"
 trap source ${scripts_dir}/support/support-trap-wifi.sh EXIT
 

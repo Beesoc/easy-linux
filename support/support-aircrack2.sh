@@ -1,10 +1,30 @@
 #!/bin/bash
 # Aircrack-ng installer/runner
 # Version: 0.0.2
+trap trap-master.sh EXIT
 
 scripts_dir=/opt/easy-linux
 source "${scripts_dir}/.envrc"
 set -e
+
+envrc_func() {
+	# Update the .envrc file with the new values
+	sudo sed -i "s/air_installed=.*/air_installed=$air_installed/g" "${scripts_dir}/.envrc"
+	sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
+
+      if [[ $(command -v direnv) ]]; then
+	cd "${scripts_dir}/support" && direnv allow
+      fi
+	if [[ $airc_installed = 1 && $airc_deps_installed = 1 ]]; then
+		printf "\\n${GN}  ${WT}Aircrack-ng ${CY}has been installed successfully.\\n"
+	elif [[ $airc_installed = 0 && $airc_deps_installed = 1 ]]; then
+		printf "\\n${GN}  ${WT}Aircrack-ng ${CY}is not reporting a successful install.\\n"
+	elif [[ $airc_installed = 1 && $airc_deps_installed = 0 ]]; then
+		printf "\\n${GN}  ${WT}Dependancies ${CY}are not reporting a successful install.\\n"
+	else
+		printf "\\n${GN}  ${WT}Can't determine installation status\\n"
+	fi
+}
 
 aircrack_run_func() {
 	# Run Aircrack-ng
@@ -27,24 +47,6 @@ aircrack_run_func() {
 
 	fi
 
-}
-
-envrc_func() {
-	# Update the .envrc file with the new values
-	sudo sed -i "s/air_installed=.*/air_installed=$air_installed/g" "${scripts_dir}/.envrc"
-	sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
-
-	cd "${scripts_dir}/support" && direnv allow
-
-	if [[ $airc_installed = 1 && $airc_deps_installed = 1 ]]; then
-		printf "\\n${GN}  ${WT}Aircrack-ng ${CY}has been installed successfully.\\n"
-	elif [[ $airc_installed = 0 && $airc_deps_installed = 1 ]]; then
-		printf "\\n${GN}  ${WT}Aircrack-ng ${CY}is not reporting a successful install.\\n"
-	elif [[ $airc_installed = 1 && $airc_deps_installed = 0 ]]; then
-		printf "\\n${GN}  ${WT}Dependancies ${CY}are not reporting a successful install.\\n"
-	else
-		printf "\\n${GN}  ${WT}Can't determine installation status\\n"
-	fi
 }
 
 app_install_func() {

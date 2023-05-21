@@ -1,17 +1,13 @@
 #!/bin/bash
 scripts_dir=/opt/easy-linux
+#install and use hcxtools w hashcat and jack
 #
 set -e
 #
-trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
+trap source ${scripts_dir}/support/support-trap-wifi.sh EXIT
 source ${scripts_dir}/.envrc
 # Version: 0.0.2
 #
-# Set the path to the wordlist
-
-clear
-#
-
 Test_func() {
 	clear
 	source ${scripts_dir}/support/support-Banner_func.sh
@@ -21,7 +17,6 @@ Test_func() {
 	printf "   ${OG}2] ${CY}Driver Test - Runs several tests to determine if the driver supports all IOCTL calls. \\n"
 	printf "   \\n"
 	printf "   ${OG}99] ${CY}Return to the main menu.                       ${RED} [✘] Exit tool [✘]\"${CY}\" \\n "
-	source ${scripts_dir}/support/support-Prompt_func.sh
 	read -r -p "Which test?" test
 	if [[ ${test} = 1 ]]; then
 		clear
@@ -37,22 +32,22 @@ Test_func() {
 		sudo hcxdumptool --check_driver -i "${adapter}"
 	elif [[ ${test} = 99 ]]; then
 		clear
-		bash ${scripts_dir}/menu-master.sh
+		source ${scripts_dir}/install/menu-master.sh
 	elif [[ ${test} = "x" ]] || [[ ${test} = "X" ]]; then
 		clear
 		printf "    ${RED}0. [✘] Exit tool [✘]${NC} \\n      "
-		exit
+		exit 0
 	else
 		printf "${RED}  Invalid Selection${NC}\\n"
 	fi
 }
 
 netadaptercount_func() {
-	adapter_count=$(sudo airmon-ng | awk '  /phy/ {print $2 " - " $4 " " $5}' | grep -c "phy")
+	adapter_count=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | grep -c "wl")
 	#
 	source ${scripts_dir}/support/support-Banner_func.sh
 	if [ "${adapter_count}" -eq 1 ]; then
-		adapter=$(sudo airmon-ng | awk '  /phy/ {print $2 " - " $4, " " $5}')
+		adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
 	else
 		# If there are multiple wireless interfaces, prompt the user to select one
 		printf "   \\n"

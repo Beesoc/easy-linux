@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-# Version:0.0.2
+# Version: 0.0.2
 # shellcheck source=.envrc
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
