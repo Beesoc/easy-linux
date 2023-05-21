@@ -53,7 +53,7 @@ populate_envrc() {
         echo "export airg_deps_inst=$(if command -v airgeddon >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export airg_installed=$(if command -v airgeddon >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export autoj_install=$(if command -v autojump >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
-        echo "export all_users=$(getent passwd | grep "/home" | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
+        echo "export all_users="$(getent passwd | grep "/home" | cut -d ':' -f 1)"" | sudo tee -a "$envrc_file"
         echo "export all_user_ct=$(getent passwd | grep "/home" -c)" | sudo tee -a "$envrc_file"       
         echo "export user=$USER" | sudo tee -a "$envrc_file"
         echo "export username=$(id | awk -F'[=()]' '{print $3}')"  | sudo tee -a "$envrc_file"
