@@ -36,6 +36,8 @@ script_files=(
     ".shellcheckrc"
     "update_scripts.sh"
     "support/.whoami.sh"
+    "support/misc/pwnip.sh"
+	"support/misc/restart_all_pwn.sh"
     "support/support-aircrack2.sh"
     "support/support-airgeddon.sh"
     "support/support-autojump.sh"
