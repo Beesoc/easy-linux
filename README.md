@@ -32,4 +32,4 @@ Credit for these amazing tools go to the following creators and projects, in no 
 13. **Airjump:** https://github.com/wting/autojump
 
 
-# Version: 0.0.2
+###### Version: 0.0.2
