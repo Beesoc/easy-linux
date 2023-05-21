@@ -31,3 +31,5 @@ Credit for these amazing tools go to the following creators and projects, in no 
 12. **Airgeddon:** https://github.com/v1s1t0r1sh3r3/airgeddon
 13. **Airjump:** https://github.com/wting/autojump
 
+
+# Version: 0.0.2
