@@ -18,58 +18,39 @@ Test_func() {
 	printf "   \\n"
 	printf "   ${OG}99] ${CY}Return to the main menu.                       ${RED} [✘] Exit tool [✘]\"${CY}\" \\n "
 	read -r -p "Which test?" test
+	clear
+	source ${scripts_dir}/support/support-Banner_func.sh
+
 	if [[ ${test} = 1 ]]; then
-		clear
-		source ${scripts_dir}/support/support-Banner_func.sh
 		sudo systemctl stop NetworkManager
 		sudo systemctl stop wpa_supplicant
 		sudo hcxdumptool --check_injection -i "${adapter}"
 	elif [[ ${test} = 2 ]]; then
-		clear
-		source ${scripts_dir}/support/support-Banner_func.sh
 		sudo systemctl stop NetworkManager
 		sudo systemctl stop wpa_supplicant
 		sudo hcxdumptool --check_driver -i "${adapter}"
 	elif [[ ${test} = 99 ]]; then
-		clear
 		source ${scripts_dir}/install/menu-master.sh
 	elif [[ ${test} = "x" ]] || [[ ${test} = "X" ]]; then
 		clear
-		printf "    ${RED}0. [✘] Exit tool [✘]${NC} \\n      "
+		printf "    ${RED}0. [✘] Exit tool [✘]${NC} \\n"
 		exit 0
 	else
 		printf "${RED}  Invalid Selection${NC}\\n"
 	fi
 }
 
-netadaptercount_func() {
-	adapter_count=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | grep -c "wl")
-	#
-	source ${scripts_dir}/support/support-Banner_func.sh
-	if [ "${adapter_count}" -eq 1 ]; then
-		adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4, " " $5}')
-	else
-		# If there are multiple wireless interfaces, prompt the user to select one
-		printf "   \\n"
-		printf "${OG}    Multiple wireless interfaces available.${WT} \\n"
-		printf "${CY}    Please select one: \\n${OG}"
-		sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' 2>/dev/null | grep "wl" | nl -nln
-		printf "   \\n  ${WT}"
-		source ${scripts_dir}/support/support-Prompt_func.sh
-		read -r -p "  Enter the number of the interface you want to use in monitor mode: " selection
-		adapter=$(sudo airmon-ng | awk '  /wl/ {print $2 " - " $4 " " $5}' | cut -d' ' -f1 | sed -n "${selection}p")
-	fi
-}
 #
+clear
 printf "${OG}   \\n"
 source ${scripts_dir}/support/support-Banner_func.sh
 #
 #  These 2 commands are repeated twice!!!
 printf "  Starting...Please wait...${WT} \\n "
-printf " \\n "
+echo
 sudo systemctl restart NetworkManager
 sudo systemctl restart wpa_supplicant
-printf "   \\n"
+echo
 printf "  Continuing in${WT}"
 sleep 1
 printf " 3..${YW}"
@@ -94,24 +75,22 @@ sudo systemctl stop wpa_supplicant
 sudo systemctl stop NetworkManager
 sudo systemctl stop wpa_supplicant
 clear
-printf " \\n ${WT}"
-netadapterchoice_func
-
+echo
+source ${scripts_dir}/support/support-netadapter.sh
 printf " \\n ${WT}  "
-printf "  Press S to continue scan...Please ${RED}do not interupt for 30 sec ${OG}scan...${WT}\\n"
-printf " \\n"
+printf "  Press [S] to continue scan...Please ${RED}do not interupt for 30 sec ${OG}scan...${WT}\\n"
+echo
 printf "     Scan will stop automatically when complete...\\n${WT}   "
-printf " \\n   "
-printf "  Press ${CY}(T)est to test adapters or ${WT}(S)can to scan AP's.${WT} \\n      "
-source ${scripts_dir}/support/support-Prompt_func.sh
-read -r -p "Test or Scan" torscan
-
+echo
+printf "  Press ${CY}[T]est to test adapters or ${WT}[S]can to scan AP's.${WT} \\n      "
+read -r -p "[T]est or [S]can [t/S] ----> " torscan
+torscan=${torscan:-S}
 if [[ "${torscan}" = "T" ]] || [[ "${torscan}" = "t" ]]; then
 	Test_func
 elif [[ "${torscan}" = "S" ]] || [[ "${torscan}" = "s" ]]; then
-	printf "   \\n"
-	printf " \\n "
-	timeout -v 35s sudo hcxdumptool -i "${adapter}" --do_rcascan --enable-status --disable_client_attacks
+        echo
+	echo
+	timeout -v 32s sudo hcxdumptool -i "${adapter}" --do_rcascan -o /opt/backup/root/handshakes/hcxdumptool.pcapng
 else
 	printf "${RED}  Invalid Selection   ${NC}\\n"
 fi
@@ -126,9 +105,10 @@ printf "Choose a tool for cracking the hash:"
 printf "${OG}1] ${CY}John the Ripper"
 printf "${OG}2] ${CY}Hashcat"
 read -r ripperchoice
+ripperchoice=${ripperchoice:-2}
 
 # Capture the hashes with hcxdumptool
-sudo hcxdumptool -i "${adapter}" --do_rcascan --enable_status=5 -tot=40 --filterlist=whitelist.txt --filtermode=2 --disable_client_attacks
+sudo hcxdumptool -i "${adapter}" --do_rcascan --enable_status=5 -tot=40 --filterlist=whitelist.txt --filtermode=2
 
 sudo /usr/bin/hcxpcapngtool -o /opt/backup/root/handshakes/DanielsFam.pcapng /home/beesoc/security/handshakes/DanielsFamily_e8d2ffcaf196.pcap
 
