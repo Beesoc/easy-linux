@@ -1,6 +1,6 @@
 #!/bin/bash
 # set a variable for handshakes directory so it can be changed in program
-# Version: 0.0.2
+# Version: 0.0.3
 handshakes_dir=/opt/backup/root/handshakes
 scripts_dir=/opt/easy-linux
 backup_dir=/opt/backup
