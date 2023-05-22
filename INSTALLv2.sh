@@ -51,16 +51,17 @@ command_not_found_handle() {
         if apt-cache show git &> /dev/null; then
         read -n 1 -p "Do you want to install it now? [Y/n] " instcomm
         instcomm=${instcomm:-Y}
-        if [[ "$instcomm" =~ ^[yY]$ ]]; then
-            sudo apt-get install -y git
+            if [[ "$instcomm" =~ ^[yY]$ ]]; then
+                sudo apt-get install -y git
+            else
+                printf "%s has chosen not to install git. Exiting." "$USER"
+                exit 0
+            fi
         else
-            printf "%s has chosen not to install git. Exiting." "$USER"
-            exit 0
+            printf "Package git not found in the repositories. Cannot install."
+            exit 1
         fi
-    else
-        printf "Package git not found in the repositories. Cannot install."
-        exit 1
-    fi
+   fi
 }
 
 BK='\e[0;44;30m'
