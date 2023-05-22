@@ -60,7 +60,7 @@ main() {
 				source ${scripts_dir}/install/menu-master.sh
 			elif [[ ! -d $HOME/.oh-my-zsh ]]; then
 				sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-				git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+				git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
                                 source ${scripts_dir}/install/menu-master.sh
 			fi
 		fi
