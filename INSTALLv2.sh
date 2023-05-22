@@ -62,6 +62,8 @@ command_not_found_handle() {
             exit 1
         fi
    fi
+clear
+source ${scripts_dir}/support/support-Banner_func.sh
 }
 
 BK='\e[0;44;30m'
