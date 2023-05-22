@@ -8,6 +8,8 @@ zsh_install() {
         printf "\\n ${WT}ZSH ${CY}was not found. ${CY}Press ${WT}any ${CY}key to install it.\\n\\n"
 	read -n 1 -t 300
 	sudo apt install -y zsh
+	clear
+	source ${scripts_dir}/support/support-Banner_func.sh
 }
 
 default_shell_func() {
