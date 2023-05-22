@@ -27,6 +27,8 @@ default_shell_func() {
 
 main() {
 	my_shell=$(echo $SHELL)
+	clear
+	source ${scripts_dir}/support/support-Banner_func.sh
 	printf "  ${CY}Here you can easily install the Oh My BASH and Oh My ZSH projects\\n"
 	printf "  to greatly enhance your terminal. I LOVE these projects.\\n"
 	printf "  ${CY}Your current shell is ${WT}$my_shell.\\n"
