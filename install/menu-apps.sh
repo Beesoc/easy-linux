@@ -30,7 +30,7 @@ install_apps_func() {
                                 printf "$GN  Continuing...\\n"
                         elif [[ $choiceairged =~ ^[Nn]$ ]]; then
                                 printf "$RED  Cancelling. Returning to ${WT}Main Menu\\n"
-                                source $scripts_dir/menu-master.sh
+                                source $scripts_dir/install/menu-master.sh
                         else
                                 printf "$RED  Exiting.\\n"
                                 exit 0
@@ -41,7 +41,7 @@ install_apps_func() {
                         if [[ $airc_installed == 1 ]]; then
                                 printf "${GN}Aircrack-NG is already installed\\n"
                                 sudo aircrack-ng --help
-                                source ${scripts_dir}/menu-master.sh
+                                source ${scripts_dir}/install/menu-master.sh
                         else
                                 printf "${YW}Aircrack-NG is not installed. Installing\\n"
                                 source $scripts_dir/support/support-aircrack2.sh
@@ -51,7 +51,7 @@ install_apps_func() {
                         if [[ $autoj_install == 1 ]]; then
                                 printf "${GN}Autojump is already installed\\n"
                                 sudo autojump --help
-                                source ${scripts_dir}/menu-master.sh
+                                source ${scripts_dir}/install/menu-master.sh
                         else
                                 printf "${YW}Autojump is not installed. Installing\\n"
                                 source $scripts_dir/support/support-autojump.sh
@@ -127,7 +127,7 @@ install_apps_func() {
                         source "${scripts_dir}/support/support-ohmy.sh"
                         printf "\\n  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue."
                         read -n 1 -t 300
-                        source ${scripts_dir}/menu-master.sh
+                        source ${scripts_dir}/install/menu-master.sh
                         ;;
                 "System Info")
                         clear
@@ -145,10 +145,10 @@ install_apps_func() {
                                         printf "https://localhost:10000\\n"
                                         printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
                                         read -n 1 -t 300
-                                        source ${scripts_dir}/menu-master.sh
+                                        source ${scripts_dir}/install/menu-master.sh
                                 elif [[ ${webmin_installed} == 0 ]]; then
                                         source ${scripts_dir}/support/support-webmin.sh
-                                        source ${scripts_dir}/main/menu-master.sh
+                                        source ${scripts_dir}/install/menu-master.sh
                                 else
                                         printf "  ${RED}Invalid Selection"
                                 fi
@@ -253,7 +253,7 @@ ending_func() {
         read -n 1 -p "Press M to return to main menu or X to Exit. [M/x]" menuchoice
         menuchoice=${menuchoice:-M}
         if [[ $menuchoice == m ]] || [[ $menuchoice == M ]]; then
-                source $scripts_dir/menu-master.sh
+                source $scripts_dir/install/menu-master.sh
         elif [[ $menuchoice == x || $menuchoice == X ]]; then
                 echo
                 exit 0
