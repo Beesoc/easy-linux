@@ -52,15 +52,16 @@ main() {
 		if ! command -v zsh &>/dev/null; then
 			zsh_install
 		else
-			printf "ZSH is already installed.  Continuing\\n"
+			printf "ZSH is installed.  Continuing to install Oh My ZSH!\\n"
 			if [[ -d $HOME/.oh-my-zsh ]]; then
 				printf "  ${CY}You have already installed Oh My ZSH!\\n"
 				printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
 				read -n 1 -t 300
-				source ${scripts_dir}/menu-master.sh
+				source ${scripts_dir}/install/menu-master.sh
 			elif [[ ! -d $HOME/.oh-my-zsh ]]; then
 				sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-				source ${scripts_dir}/menu-master.sh
+				git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+                                source ${scripts_dir}/install/menu-master.sh
 			fi
 		fi
 	else
