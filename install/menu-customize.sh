@@ -72,7 +72,7 @@ x11vnc_func() {
 }
 
 main_menu_func() {
-	source ${scripts_dir}/menu-master.sh
+	source ${scripts_dir}/install/menu-master.sh
 }
 
 main_menu() {
@@ -118,4 +118,4 @@ main() {
 }
 
 main
-source "${scripts_dir}/menu-master.sh"
+source "${scripts_dir}/install/menu-master.sh"
