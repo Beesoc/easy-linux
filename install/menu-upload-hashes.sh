@@ -100,4 +100,4 @@ printf "${CY}All Operations completed. Cracked passwords will start appearing on
 printf "${WT}https://www.OnlineHashCrack.com ${CY}and ${WT}https://wpa-sec.stanev.org ${CY}within 24hr.\\n"
 printf "Press ${WT}any${CY} key to return to ${WT}Main Menu${CY}.\\n "
 read -n 1 -r -t 300
-source ${scripts_dir}/menu-master.sh
+source ${scripts_dir}/install/menu-master.sh
