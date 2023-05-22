@@ -4,7 +4,8 @@ scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 
 zsh_install() {
-	printf "ZSH was not found. ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
+
+        printf "\\n ${WT}ZSH ${CY}was not found. ${CY}Press ${WT}any ${CY}key to install it.\\n\\n"
 	read -n 1 -t 300
 	sudo apt install -y zsh
 }
