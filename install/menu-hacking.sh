@@ -13,7 +13,7 @@ function help {
     echo
 }
 
-if [[ $1 == "-h" || $1 == "--help" ]]; then
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     help
     exit 0
 elif [[ $1 == "-v" || $1 == "--version" ]]; then
@@ -76,7 +76,7 @@ cap_hash_func() {
 }
 
 up_hash_func() {
-    source ${scripts_dir}/menu-upload-hashes.sh
+    source ${scripts_dir}/install/menu-upload-hashes.sh
 }
 
 hacktool_func() {
