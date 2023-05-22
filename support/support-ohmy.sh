@@ -13,8 +13,10 @@ default_shell_func() {
 	read -n 1 -p "What do you want as your default shell, [Z]SH or [B]ASH? [Z/b] " defaultshell
 	defaultshell=${defaultshell:-Z}
 	if [[ "$defaultshell" =~ ^[Zz] ]]; then
-	        zsh_install
+             if ! command -v zsh &>/dev/null; then
+                zsh_install
 		sudo chsh -s $(which zsh)
+	     fi
 	elif [[ "$defaultshell" =~ ^[Bb] ]]; then
 		sudo chsh -s $(which bash)
 	else
