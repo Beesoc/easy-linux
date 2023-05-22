@@ -25,6 +25,44 @@ fi
 
 set -e
 
+command_not_found_handle() {
+
+    # Check if sudo is installed
+    if ! command -v sudo &> /dev/null; then
+        echo "sudo is not installed. Please install sudo to proceed."
+        if apt-cache show sudo &> /dev/null; then
+            read -n 1 -p "Do you want to install sudo now? [Y/n] " instsudo
+            instsudo=${instsudo:-Y}
+            if [[ "$instsudo" =~ ^[yY]$ ]]; then
+                apt-get install -y sudo
+            else
+                printf "%s has chosen not to install sudo. Exiting." "$USER"
+                exit 0
+            fi
+        else
+            printf "I cannot find sudo in your repositories. Exiting."
+            exit 1
+        fi
+    fi
+
+    # Check if Git is available
+    if ! command -v git &> /dev/null; then
+        echo "Git is not installed. Please install Git to proceed."
+        if apt-cache show git &> /dev/null; then
+        read -n 1 -p "Do you want to install it now? [Y/n] " instcomm
+        instcomm=${instcomm:-Y}
+        if [[ "$instcomm" =~ ^[yY]$ ]]; then
+            sudo apt-get install -y git
+        else
+            printf "%s has chosen not to install git. Exiting." "$USER"
+            exit 0
+        fi
+    else
+        printf "Package git not found in the repositories. Cannot install."
+        exit 1
+    fi
+}
+
 BK='\e[0;44;30m'
 RED='\e[1;31m'
 GN='\e[1;32m'
