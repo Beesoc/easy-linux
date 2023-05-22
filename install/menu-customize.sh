@@ -12,7 +12,7 @@ scripts_dir=/opt/easy-linux
 backup_dir=/opt/backup
 
 hosts_func() {
-        printf "${GN}20]  ${CY}Edit your local ${WT}/etc/hosts ${CY}file to keep DNS happy and ${CY} \\n "
+	printf "${GN}20]  ${CY}Edit your local ${WT}/etc/hosts ${CY}file to keep DNS happy and ${CY} \\n "
 	printf "     refer to machines by hostname instead of IP.\\n"
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
@@ -24,7 +24,7 @@ hosts_func() {
 	sudo systemctl restart wpa_supplicant.service
 }
 
-ncdu_func(){
+ncdu_func() {
 	printf "   ${OG}Searching for ${WT}ncdu${CY}. If found, I'll run ncdu. If not, I'll install it.\\n"
 	sleep 1
 	if [[ $(command -v ncdu >/dev/null 2>&1) ]]; then
@@ -35,10 +35,10 @@ ncdu_func(){
 		printf "${GN}Please wait\\n"
 		sleep 1
 		printf "${GN}...\\n"
-                sudo apt install -y ncdu >/dev/null
+		sudo apt install -y ncdu >/dev/null
 	fi
-		sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --excude delme /
-		return 0
+	sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --excude delme /
+	return 0
 }
 
 timezone_func() {
@@ -72,51 +72,50 @@ x11vnc_func() {
 }
 
 main_menu_func() {
-source ${scripts_dir}/menu-master.sh
+	source ${scripts_dir}/menu-master.sh
 }
 
 main_menu() {
-        clear
-        source ${scripts_dir}/support/support-Banner_func.sh
-        echo
-        printf "${OG}          $USER               ${GN}Customization Station${OG}                 $computername ${CY}\n"
-        echo
-        printf "    ${GN}Select an option:${CY}\n"
-        echo
-        printf "    ${WT}1)${CY}  Start x11vnc Server${PL}: \\n"
-        printf "    ${WT}2)${CY}  Fix Timezone and Time issues${PL}: ${CY}\n"
-        printf "    ${WT}3)${CY}  Fix your Perm${PL}: Permission issues in Linux\n"
-        printf "    ${WT}4)${CY}  Find things FAST with pLocate${PL}: \n"
-        printf "    ${WT}5)${CY}  Edit HOSTS file${PL}: \n"
-        printf "    ${WT}6)${CY}  Disk Space Mgmt with ${WT}ncdu${PL}: \n"
-        printf "    ${WT}7)${CY}  Return to Main Menu${PL}\n"
-        printf "    ${WT}8)${CY}  [✘] Exit tool [✘]\n"
-        echo
-        printf "    ${GN}Selection: ${CY}\n"
-        read -n 1 -r main_menu_sel
-        case "$main_menu_sel" in
-        1) x11vnc_func ;;
-        2) timezone_func ;;
-        3) perm_func ;;
-        4) locate_func ;;
-        5) hosts_func ;;
-        6) ncdu_func ;;
-        7) main_menu_func ;;
-        8) exit 0 ;;
-        *) printf "${RED}Invalid selection.${CY}\n" ;;
-        esac
+	clear
+	source ${scripts_dir}/support/support-Banner_func.sh
+	echo
+	printf "${OG}          $USER               ${GN}Customization Station${OG}                 $computername ${CY}\n"
+	echo
+	printf "    ${GN}Select an option:${CY}\n"
+	echo
+	printf "    ${WT}1)${CY}  Start x11vnc Server${PL}: \\n"
+	printf "    ${WT}2)${CY}  Fix Timezone and Time issues${PL}: ${CY}\n"
+	printf "    ${WT}3)${CY}  Fix your Perm${PL}: Permission issues in Linux\n"
+	printf "    ${WT}4)${CY}  Find things FAST with pLocate${PL}: \n"
+	printf "    ${WT}5)${CY}  Edit HOSTS file${PL}: \n"
+	printf "    ${WT}6)${CY}  Disk Space Mgmt with ${WT}ncdu${PL}: \n"
+	printf "    ${WT}7)${CY}  Return to Main Menu${PL}\n"
+	printf "    ${WT}8)${CY}  [✘] Exit tool [✘]\n"
+	echo
+	printf "    ${GN}Selection: ${CY}\n"
+	read -n 1 -r main_menu_sel
+	case "$main_menu_sel" in
+	1) x11vnc_func ;;
+	2) timezone_func ;;
+	3) perm_func ;;
+	4) locate_func ;;
+	5) hosts_func ;;
+	6) ncdu_func ;;
+	7) main_menu_func ;;
+	8) exit 0 ;;
+	*) printf "${RED}Invalid selection.${CY}\n" ;;
+	esac
 }
 
 main() {
-        # Main script logic
+	# Main script logic
 
-        while true; do
-                main_menu
+	while true; do
+		main_menu
 		printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
 		read -n 1 -r
-        done
+	done
 }
 
 main
 source "${scripts_dir}/menu-master.sh"
-

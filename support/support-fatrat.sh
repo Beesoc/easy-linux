@@ -1,9 +1,13 @@
 #!/bin/bash
-# The Fat Rat installer/executor
+# The Fat Rat installer/runner
 # Version: 0.0.2
 
 set -e
 source ${scripts_dir}/.envrc
+
+run_func() {
+	sudo gnome-terminal -t "TheFatRat 1.9.5" --geometry=600x630 -e "bash -c 'fatrat';-bash"
+}
 
 app-install_func() {
 	if [[ ! -d "$HOME/compiled/TheFatRat/" ]]; then
@@ -17,7 +21,7 @@ app-install_func() {
 		if [[ "$reinstall" =~ ^[Nn]$ ]]; then
 			printf "${RED} The Fat Rat will not be installed. Press ${WT}any ${RED} key to return to Hacking Menu."
 			read -r -n 1 -s -t 300
-			source $scripts_dir/menu-hacking.sh
+			source $scripts_dir/install/menu-hacking.sh
 		elif [[ "$reinstall" =~ ^[Yy]$ ]]; then
 			sudo rm -fR $HOME/compiled/TheFatRat
 		else
@@ -34,31 +38,24 @@ app-install_func() {
 main() {
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
-	read -n 1 -r -p "Do you want to install the Fat Rat? [Y/n] " instfat
+      if [[ $(which fatrat) ]]; then
+           printf "${GN}You already have ${WT}TheFatRat ${GN}Installed."
+           run_func
+      else
+	      read -n 1 -r -p "Do you want to install the Fat Rat? [Y/n] " instfat
 	instfat=${instfat:-Y}
-	if [[ $instfat = "Y" ]] || [[ $instfat = "y" ]]; then
-		app-install_func
-		fatrat-inst=1
-	else
-		printf "${RED}  $USER has selected to not install The Fat Rat.  Exiting"
-		exit 0
-	fi
-
-	#printf "${CY}  Your wordlist is currently set to: ${WT}${wordlist}${CY}."
-	#printf "To change your used wordlist, select ${WT}C${CY}. To keep the default, enter ${WT}W."
-
-	#read -r -p "[C]hange your wordlist or keep Default [W]ordlist?" wlchoice
-	#if [[ ${wlchoice} = "W" ]] || [[ ${wlchoice} = "w" ]]; then
-	#  printf "${CY}  Default wordlist, ${WT}${wordlist}${CY} selected."
-	#elif [[ ${wlchoice} = "c" ]] || [[ ${wlchoice} = "C" ]]; then
-	#  wordlist=""
-	#  read -r -p "Enter the FULL PATH and file name for your desired wordlist" mywordlist
-	#  wordlist=${mywordlist}
-	#fi
+		if [[ $instfat = "Y" ]] || [[ $instfat = "y" ]]; then
+			app-install_func
+			fatrat-inst=1
+		else
+			printf "${WT}  $USER ${RED}has selected to not install The Fat Rat.  Exiting\n"
+			exit 0
+		fi
+      fi
 	#sudo gnome-terminal -t "TheFatRat 1.9.5" --geometry=600x630 -e "bash -c 'fatrat';-bash"
 	app-install_func
 }
 
 main
 clear
-source ${scripts_dir}/menu-hacking.sh
+source ${scripts_dir}/install/menu-hacking.sh

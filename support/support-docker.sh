@@ -3,7 +3,6 @@
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 set -e
-clear
 
 install_run_func() {
 	wget https://desktop.docker.com/linux/main/amd64/docker-desktop-4.19.0-amd64.deb
@@ -15,12 +14,12 @@ install_run_func() {
 	systemctl --user start docker-desktop
 	docker-installed=1
 	sudo sed -i "s/docker_installed=.*/docker_installed=$docker_installed/g" "${scripts_dir}/.envrc"
-	source ${scripts_dir}/menu-master.sh
+	source ${scripts_dir}/install/menu-master.sh
 }
 
 docker_keys() {
 	printf "    ${GN}Grab docker's key and install ${WT}docker-ce${NC}.\\n"
-	sudo apt install -y ca-certificates curl gnupg lsb-release
+	sudo apt install --ignore-missing -y ca-certificates curl gnupg lsb-release
 	if [ -d $install_keyrings ]; then
 		printf " \n"
 		cd $install_keyrings || exit
@@ -41,7 +40,7 @@ docker_keys() {
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 	printf "  \\n${CY}Performing an apt update and then installing ${WT}Docker Desktop.${CY}\\n"
 	sudo apt-get update
-	sudo apt-get install docker-ce docker-ce-cli containerd.io pass
+	sudo apt-get install -y -- ignore-missing docker-ce docker-ce-cli containerd.io pass
 	printf "  ${CY}Install Docker Desktop${NC}\\n"
 	install_run_func
 }
@@ -56,9 +55,9 @@ docker_deps_func() {
 			echo "$package is already installed"
 		else
 			echo "Installing $package"
-			sudo apt-get install -y "$package"
+			sudo apt-get install --ignore missing -y "$package"
 		fi
-		printf "The first set of dependencies is complete. This set consisted of:\\n ${WT}$package."
+		printf "The first set of dependencies is complete. This set consisted of:\\n ${WT}${packages[*]}."
 		# sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
 	done
 	printf "    ${CY}Installing dependencies. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
@@ -78,17 +77,17 @@ docker_deps_func() {
 	packages2=("docker.io" "sen" "skopeo" "ruby-docker-api" "python3-dockerpycreds" "python3-ck" "podman" "podman-compose" "libnss-docker" "golang-github-opencontainers-runc-dev" "golang-github-fsouza-go-dockerclient-dev" "golang-github-docker-notary-dev" "golang-github-containers-image-dev" "golang-docker-credential-helpers" "elpa-dockerfile-mode" "due" "docker-registry" "distrobox" "crun" "catatonit" "buildah" "auto-apt-proxy")
 
 	# Loop through the list of package names
-	for packages in "${packages2[@]}"; do
+	for package in "${packages2[@]}"; do
 		if dpkg -s "$packages" >/dev/null 2>&1; then
 			echo "$packages is already installed"
 		else
 			echo "Installing $packages"
-			sudo apt-get install -y "$packages"
+			sudo apt-get install --ignore-missing -y "$packages"
 		fi
 		docker_deps=1
 		sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
 	done
-	printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}$packages.\\n"
+	printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[*]}.\\n"
 	printf " \\n "
 	printf "    ${CY}Removing old packages. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
 	sudo apt remove -y docker-desktop >/dev/null
@@ -111,6 +110,7 @@ docker_deps_func() {
 }
 
 intro() {
+	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
 	printf "  ${CY}This script will install ${WT}Docker Desktop${GN}.\\n  "
 
@@ -129,6 +129,9 @@ intro() {
 }
 
 main() {
+	if [[ $(command -v docker-desktop) ]]; then
+		install_run_func
+	fi
 	intro
 
 }

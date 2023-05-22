@@ -1,49 +1,90 @@
 #!/bin/bash
+# fix permissions issues
 set -e
 # Version: 0.0.2
 scripts_dir=/opt/easy-linux
-source .envrc
+source ${scripts_dir}/.envrc
 
 #################################################  Begin User Options  #########
 
 ###################################################  End User Options  #########
-
-source support-Banner_func.sh
+clear
+source ${scripts_dir}/support/support-Banner_func.sh
 printf "\\n "
-
-# find out what the id is.
-myuid=$(id | cut -d "=" -f 2 | cut -d "(" -f 1)
-uid=$(getent passwd $myuid | cut -d ':' -f 1) 
-
 # Get the username associated with UID 1000
-reg_user=$(getent passwd 1000 | cut -d ':' -f 1)
+trap "bash ${scripts_dir}/support/trap-master.sh" EXIT
 
-# Print the username
-printf "The user with UID 1000 is: \\n"
-printf "${GN}  Username: ${WT}$reg_user \\n    "
-
-read -n 1 -p "Is the above username correct? [Y/n] " userid
-userid=${userid:-Y}
-if [[ ${userid} =~ ^[Nn]$ ]]; then
-	printf "\\n ${RED}  FATAL ERROR: Exiting."
-	exit 1
-elif [[ ${userid} =~ ^[Yy]$ ]]; then
-
+perms_func() {
 	if [ -d /home/pi ]; then
 		sudo chown -vR pi:pi /home/pi/
 	fi
 
 	if [ -d /opt/backup ]; then
-		sudo chown -vR $reg_user:$reg_user /opt/backup/
+		sudo chown -vR $userid:0 /opt/backup/
 	fi
 
-	sudo chown -vR $reg_user:$reg_user /home/$reg_user
+	sudo chown -vR $chosen_user:$chosen_user /home/$chosen_user
 
 	if [ -d /opt/easy-linux ]; then
-		sudo chown -vR $reg_user:$reg_user /opt/easy-linux
+		sudo chown -vR $chosen_user:$0 /opt/easy-linux
 	fi
+
 else
 	printf "${RED}  Invalid selection"
 fi
+}
 
-source ${scripts_dir}/menu-master.sh
+user_sel_func() {
+# find out how many users are on the system
+num_users=$(getent passwd | grep "/home/" -c)  
+
+# Get a list of all users on the system
+user_list=$(cut -d: -f1 /etc/passwd)
+
+printf "${OG}  It looks like you are ${WT}$USER."
+	read -p "Is that your correct Linux login account? [Y/n] " userdec
+	userdec=${userdec:-Y}
+    if [[ "$userdec" =~ ^[yY]$ ]]; then
+           printf "User $USER confirmed"
+           chosen_user=$USER
+           perms_func
+    elif [[ "$userdec" =~ ^[nN]$ ]]; then
+# Present the list of users to the user
+printf "${OG}List of users:\\n"
+printf "${CY}$user_list\\n"
+echo
+     else
+        printf "${RED}Invalid Selection. Choose Y or N."
+    fi
+# Prompt the user to choose a user
+read -p "Enter the username of the user you want to use: " chosen_user
+
+# Validate the chosen user
+		if [ grep -q "^${chosen_user}:" /etc/passwd ]; then
+   			 printf "${GN}You selected user: ${WT}$chosen_user\\n"
+		else
+			    printf "${RED}FATAL error. Invalid username: $chosen_user\\n"
+		fi
+
+		read -n 1 -p "Is the above username correct? [Y/n] " userid
+userid=${userid:-Y}
+		if [[ ${userid} =~ ^[Nn]$ ]]; then
+			printf "\\n ${RED}  FATAL ERROR: Exiting.\\n"
+		exit 1
+		elif [[ ${userid} =~ ^[Yy]$ ]]; then
+			printf "User $chosen_user confirmed."
+			perms_func
+	      else
+	           printf "${RED}Invalid Selection. Choose Y or N."
+	      fi
+
+}
+
+main() { 
+
+user_sel_func
+
+}
+
+main
+source ${scripts_dir}/install/menu-master.sh
