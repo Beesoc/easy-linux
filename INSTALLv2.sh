@@ -282,6 +282,7 @@ main() {
         # 1.  script starts executing here.
         clear
         Banner_func
+        command_not_found_handle
 
         printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}    Press ${RED}[ctrl+c] ${GN}to cancel\\n${CY}\\n"
         printf "${CY}  Do you want to ${WT}check dependencies ${CY}"
