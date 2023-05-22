@@ -10,6 +10,7 @@ zsh_install() {
 }
 
 default_shell_func() {
+	echo
 	read -n 1 -p "What do you want as your default shell, [Z]SH or [B]ASH? [Z/b] " defaultshell
 	defaultshell=${defaultshell:-Z}
 	if [[ "$defaultshell" =~ ^[Zz] ]]; then
