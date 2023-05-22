@@ -60,7 +60,7 @@ hack_func() {
     if [[ "$choicehacking" =~ ^[Yy]$ ]]; then
         printf "${CY}Continuing...\\n"
         clear
-        source ${scripts_dir}/menu-hacking.sh
+        source ${scripts_dir}/install/menu-hacking.sh
     elif [[ "$choicehacking" =~ ^[Nn]$ ]]; then
         printf "${RED} [✘] Exit tool [✘]${NC} \\n"
         exit 0
@@ -77,7 +77,7 @@ apps_func() {
     choiceapps=${choiceapps:-Y}
     if [[ "$choiceapps" =~ ^[Yy]$ ]]; then
         printf "${CY}Continuing...\\n"
-        source ${scripts_dir}/menu-apps.sh
+        source ${scripts_dir}/install/menu-apps.sh
     elif [[ "$choiceapps" =~ ^[Nn]$ ]]; then
         printf "${RED} [✘] Exit tool [✘]${NC} \\n"
         exit 0
@@ -94,7 +94,7 @@ cust_func() {
     choicecustom=${choicecustom:-Y}
     if [[ "$choicecustom" =~ ^[Yy]$ ]]; then
         printf "${CY}Continuing...\\n"
-        source ${scripts_dir}/menu-customize.sh
+        source ${scripts_dir}/install/menu-customize.sh
     elif [[ "$choicecustom" =~ ^[Nn]$ ]]; then
         printf "${RED} [✘] Exit tool [✘]${NC} \\n"
         exit 0
@@ -111,7 +111,7 @@ pwn_func() {
     choicepwn=${choicepwn:-Y}
     if [[ "$choicepwn" =~ ^[Yy]$ ]]; then
         printf "${CY}Continuing...\\n"
-        source ${scripts_dir}/menu-pwn.sh
+        source ${scripts_dir}/install/menu-pwn.sh
     elif [[ "$choicepwn" =~ ^[Nn]$ ]]; then
         printf "${RED} [✘] Exit tool [✘]${NC} \\n"
         exit 0
@@ -126,7 +126,7 @@ trouble_func() {
     choicetrbl=${choicetrbl:-Y}
     if [[ "$choicetrbl" =~ ^[Yy]$ ]]; then
         printf "${CY}Continuing...\\n"
-        source ${scripts_dir}/menu-troubleshooting.sh
+        source ${scripts_dir}/install/menu-trouble.sh
     elif [[ "$choicetrbl" =~ ^[Nn]$ ]]; then
         printf "${RED} [✘] Exit tool [✘]${NC} \\n"
         exit 0
