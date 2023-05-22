@@ -28,7 +28,7 @@ pwn_connect_func() {
 	connect_pwn=${connect_pwn:-Y}
 	if [[ "$connect_pwn" =~ ^[Yy]$ ]]; then
 		ssh -p 22 pi@10.0.0.2
-		source "${scripts_dir}/menu-master.sh"
+		source "${scripts_dir}/install/menu-master.sh"
 		pwn_installed=1
 		sudo sed -i 's/pwn_installed=.*/pwn_installed=1/g' "${scripts_dir}/.envrc"
 	elif [[ "$connect_pwn" =~ ^[Nn]$ ]]; then
@@ -68,7 +68,7 @@ whoami_func() {
 		printf "${CY}  Pwnagotchi not detected. Try unplugging to reset."
 		printf "${CY}  Please connect your Pwnagotchi to access this menu."
 		sleep 5
-		source ${scripts_dir}/menu-master.sh
+		source ${scripts_dir}/install/menu-master.sh
 	elif [[ $(ifconfig | grep "usb") -gt 0 ]]; then
 		clear
 		source ${scripts_dir}/support/support-Banner_func.sh
@@ -96,11 +96,11 @@ whoami_func() {
 }
 
 upload_func() {
-	source ${scripts_dir}/menu-upload-hashes.sh
+	source ${scripts_dir}/install/menu-upload-hashes.sh
 }
 
 main_menu_func() {
-	source ${scripts_dir}/menu-master.sh
+	source ${scripts_dir}/install/menu-master.sh
 }
 
 # Function to control SSH options
