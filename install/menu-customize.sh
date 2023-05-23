@@ -81,18 +81,18 @@ main_menu() {
 	echo
 	printf "${OG}          $USER               ${GN}Customization Station${OG}                 $computername ${CY}\n"
 	echo
-	printf "    ${GN}Select an option:${CY}\n"
+	printf "  ${GN}Select an option:${CY}\n"
 	echo
-	printf "    ${WT}1)${CY}  Start x11vnc Server${PL}: \\n"
-	printf "    ${WT}2)${CY}  Fix Timezone and Time issues${PL}: ${CY}\n"
+	printf "    ${WT}1)${CY}  Start x11vnc Server${PL}: Remotely connect to/from a Linux host\\n"
+	printf "    ${WT}2)${CY}  ${PL}Wibly Wobbley, Timey Whimy problems: Fix Timezone and Time issues${CY}\n"
 	printf "    ${WT}3)${CY}  Fix your Perm${PL}: Permission issues in Linux\n"
-	printf "    ${WT}4)${CY}  Find things FAST with pLocate${PL}: \n"
-	printf "    ${WT}5)${CY}  Edit HOSTS file${PL}: \n"
-	printf "    ${WT}6)${CY}  Disk Space Mgmt with ${WT}ncdu${PL}: \n"
-	printf "    ${WT}7)${CY}  Return to Main Menu${PL}\n"
-	printf "    ${WT}8)${CY}  [✘] Exit tool [✘]\n"
+	printf "    ${WT}4)${CY}  pLocate${PL}: Find things in Linux FAST \n"
+	printf "    ${WT}5)${CY}  Edit HOSTS file${PL}: Keep up to date to find other PC's by name\n"
+	printf "    ${WT}6)${CY}  ${WT}ncdu${PL}: Super fast Disk Space Mgmt from Terminal \n"
+	printf "    ${WT}7)${GN}  Return to Main Menu${PL}\n"
+	printf "    ${WT}8)${RED}  [✘] Exit tool [✘]: Uhh, it just exits.\n"
 	echo
-	printf "    ${GN}Selection: ${CY}\n"
+	printf "  ${GN}Selection: ${CY}\n"
 	read -n 1 -r main_menu_sel
 	case "$main_menu_sel" in
 	1) x11vnc_func ;;
