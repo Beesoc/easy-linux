@@ -195,7 +195,7 @@ main_menu() {
         8) omymy_func ;;
         9) sysinfo_func ;;
         10) standard_func ;;
-        11) webmin ;;
+        11) webmin_func ;;
         12) mainmenu_func ''
         13) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
