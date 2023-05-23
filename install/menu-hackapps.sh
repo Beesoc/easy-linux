@@ -102,7 +102,7 @@ main_menu() {
         printf "    ${WT}6)${CY}  Return to Main Menu${PL}\n"
         printf "    ${WT}7)${CY}  [✘] Exit tool [✘]\n"
         echo
-        printf "  ${GN}Selection:${OG} "
+        printf "  ${GN}Selection:${OG}  "
     read -n 1 -r main_menu_sel
         case "$main_menu_sel" in
         1) aircrack_func ;;
