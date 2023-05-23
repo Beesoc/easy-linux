@@ -137,7 +137,7 @@ docker_func() {
 }
 
 personal_func() {
-        if [[ $USER == $cwb_username ]] && [[ $computername == $cwb_computername ]]; then
+        if [[ "$USER" == "$cwb_username" ]] && [[ "$computername" == "$cwb_computername" ]]; then
                 source $scripts_dir/support/support-updates.sh
         else
                 exit 0
