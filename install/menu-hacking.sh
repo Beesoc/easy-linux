@@ -59,6 +59,10 @@ misc_func() {
     fi
 }
 
+hackmenu_func() {
+    ${scripts_dir}/install/menu-hackapps.sh
+}
+
 sysinfo_func(){
 source ${scripts_dir}/support/support-sysinfo.sh
 }
@@ -120,13 +124,13 @@ source "${scripts_dir}/support/support-Banner_func.sh"
     printf "     ${WT}4)${CY}  Capture Hashes${PL}: ${WT}Capture ${PL}and"${WT}" save hashes ${PL}and Handshakes ${CY}\n"
     printf "     ${WT}5)${CY}  WiFite 2${PL}: ${WT}All in 1 ${PL}Hacking Tool ${CY}\n"
     printf "     ${WT}6)${CY}  Airgeddon${PL}: ${WT}All in 1 ${PL}Hacking Tool ${CY}\n"
-
     printf "     ${WT}7)${CY}  HackingTool${PL}: ${WT}Swiss Army knife ${PL}hacking tool. MANY tools in 1${CY}\n"
-    printf "     ${WT}8)${CY}  System Info${PL}: Various ${WT}Sys Info ${PL}about your Linux system.${CY}\n"
-    printf "     ${WT}9)${CY}  Quit${PL}: Uhhh. It just ${WT}quits${PL}.${CY}\n"
+    printf "     ${WT}8)${CY}  Hacking Apps${PL}: Install a variety of ${WT}hacking tools ${PL}${CY}\n"
+    printf "     ${WT}9)${CY}  System Info${PL}: Various ${WT}Sys Info ${PL}about your Linux system.${CY}\n"
+    printf "    ${WT}10)${CY}  Quit${PL}: Uhhh. It just ${WT}quits${PL}.${CY}\n"
     echo
     printf "  ${WT}Selection: ${GN}----> "
-    read -n 1 -r main_menu
+    read -r main_menu
     case "$main_menu" in
         1) monit_func ;;
         2) wordlist_func ;;
@@ -135,8 +139,9 @@ source "${scripts_dir}/support/support-Banner_func.sh"
         5) wifite_func ;;
         6) airg_func ;;
         7) hacktool_func ;;
-        8) sysinfo_func ;;
-        9) exit 0 ;;
+	8) hackmenu_func ;;
+        9) sysinfo_func ;;
+        10) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
     esac
 }
