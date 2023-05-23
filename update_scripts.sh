@@ -37,7 +37,7 @@ script_files=(
     "update_scripts.sh"
     "support/.whoami.sh"
     "support/misc/pwnip.sh"
-	"support/misc/restart_all_pwn.sh"
+    "support/misc/restart_all_pwn.sh"
     "support/support-aircrack2.sh"
     "support/support-airgeddon.sh"
     "support/support-autojump.sh"
@@ -67,10 +67,9 @@ script_files=(
     "support/support-wifite.sh"
     "support/support-wpaUP.sh"
     "support/support-wpaDOWN.sh"
-    "support/version-support.sh"
     "support/trap-master.sh"
     "support/update_scripts.sh"
-    "support/version-support.sh"
+    "support/version-easy-linux.sh"
 )
 
 # Associative array to store the version information
