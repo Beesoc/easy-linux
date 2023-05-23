@@ -4,7 +4,7 @@ source "${scripts_dir}/.envrc"
 source "${scripts_dir}/support/support-Banner_func.sh"
 #
 trap ${scripts_dir}/support/support-trap-wifi.sh
-printf "${CY}Starting NetworkManager and wpa_supplicant services ${WHITE}"
+printf "${CY}Starting NetworkManager and wpa_supplicant services ${WT}"
 sudo ifconfig $adapter down
 sudo systemctl stop NetworkManager
 sudo systemctl stop wpa_supplicant
