@@ -15,8 +15,9 @@ if sudo iwconfig 2>/dev/null | grep -q "Mode:Monitor"; then
         printf "  ${WT}$USER ${OG}has selected to remain in Monitor mode."
         printf "  ${CY}You can toggle Monitor mode On/Off in the Easy Linux Hacking Menu."
         echo
-else
-    clear
+    else
+        clear
+    fi
 fi
 
 echo
