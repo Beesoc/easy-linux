@@ -8,67 +8,127 @@ trap 'source "/opt/easy-linux/support/trap-master.sh"' EXIT
 #shellcheck source=${scripts_dir}/.envrc
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
-
 backup_dir=/opt/backup
 
-hosts_func() {
-        printf "${GN}20]  ${CY}Edit your local ${WT}/etc/hosts ${CY}file to keep DNS happy and ${CY} \\n "
-        printf "     refer to machines by hostname instead of IP.\\n"
-        clear
-        source "${scripts_dir}/support/support-Banner_func.sh"
-        sudo apt update >/dev/null
-        sudo apt install -y mdns nano >/dev/null
-        sudo nano /etc/hosts
-        sudo systemctl restart dnsmasq.service
-        sudo systemctl restart NetworkManager.service
-        sudo systemctl restart wpa_supplicant.service
+webmin() {
+                        clear
+                        source "$scripts_dir/support/support-Banner_func.sh"
+                        read -p "Do you want to install/launch Webmin? [Y/n] " instweb
+                        instweb=${instweb:-Y}
+                        if [[ "$instweb" =~ ^[yY]$ ]]; then
+                                if [[ $webmin_installed == 1 ]]; then
+                                        printf "${OG}  Webmin already installed. Access via web browser at:\\n$WT "
+                                        printf "https://localhost:10000\\n"
+                                        printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
+                                        read -n 1 -t 300
+                                        source ${scripts_dir}/install/menu-master.sh
+                                elif [[ ${webmin_installed} == 0 ]]; then
+                                        source ${scripts_dir}/support/support-webmin.sh
+                                fi
+                        elif [[ "$instweb" =~ ^[nN]$ ]]; then
+                                printf "  ${WT}$USER ${RED}decided not to install Webmin. Exiting\\n\\n"
+                                exit 0
+                        fi
+
+}
+
+standard_func() {
+
+}
+
+sysinfo_func() {
+                clear
+                        source "$scripts_dir/support/support-Banner_func.sh"
+                        source "$scripts_dir/support/support-sysinfo.sh"
+}
+
+ohmy_func() {
+         if [[ -d $HOME/.oh-my-bash || -d $HOME/.oh-my-zsh ]]; then
+               if [[ -d $HOME/.oh-my-bash ]]; then
+                  printf "Oh My BASH! is already installed."
+               fi
+               if [[ -d $HOME/.oh-my-zsh ]]; then
+                  printf "Oh My ZSH! is already installed."
+               fi
+        read -n 1 -p "Do you want to install/reinstall either Oh My BASH or Oh My ZSH? [Y/n] " reinohmy
+        reinohmy=${reinohmy:-Y}
+              if [[ "$reinohmy" =~ ^[nN]$ ]]; then
+                   return 0
+              elif [[ "$reinohmy" =~ ^[yY]$ ]]; then   
+                   printf "  ${CY}Install/Reinstall requested. Loading..."
+              fi
+         fi
+                        clear
+                        source "$scripts_dir/support/support-Banner_func.sh"
+                        source "${scripts_dir}/support/support-ohmy.sh"
+                        printf "\\n  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue."
+                        read -n 1 -t 300
+
+}
+
+nano_func() {
+                        nano_exe=$(which nano)
+                        if [[ $nano_installed == 1 ]]; then
+                                sudo nano -ADEGHKMPSWZacdegmpqy%_ -T 4
+                        elif [[ $nano_installed == 0 ]]; then
+                                source $scripts_dir/support/support-nano.sh
+                        fi
+                        if [[ $nano_installed == 0 ]] && [[ -n $nano_exe ]]; then
+                                nano_installed=1
+                                sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" "$scripts_dir/.envrc"
+                                sudo nano -ADEGHKMPSWZacdegmpqy%_ -T 4
+                        fi
+
 }
 
 ncdu_func() {
-        printf "   ${OG}Searching for ${WT}ncdu${CY}. If found, I'll run ncdu. If not, I'll install it.\\n"
-        sleep 1
-        if [[ $(command -v ncdu >/dev/null 2>&1) ]]; then
-                printf "${WT}ncdu ${CY}is installed\\n"
-        else
-                printf "${WT}ncdu ${CY}is not installed. Installing now.\\n"
-                sleep 1
-                printf "${GN}Please wait\\n"
-                sleep 1
-                printf "${GN}...\\n"
-                sudo apt install -y ncdu >/dev/null
-        fi
-        sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --excude delme /
-        return 0
+
+    ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache /
 }
 
-timezone_func() {
-        printf "${CY}  Fix Timezone and Time issues in Kali Linux. \\n "
-        printf "TODO \\n"
+hackingapps_func() {
+    source ${scripts_dir}/install/menu-hacking.sh
 }
 
-locate_func() {
-        clear
-        source "${scripts_dir}/support/support-Banner_func.sh"
-        printf "\\n      ${OG}[*] ${CY}pLocate: Find files and apps in an instant with pLocate.${GN} \\n\\n    "
-        read -p "What do you want to search for? ----> " search
-        clear
-        printf " ${WT}"
-        plocate $search
-        printf "${CT}  Press ${WT}any ${CT}key to continue. \\n  ${OG}"
-        read -r -n1 -s -t 120
+glances_func() {
+       if [[ $glances_install == 1 ]]; then
+                                printf "  Glances is installed."
+                                sudo glances
+       elif [[ $glances_install == 0 ]]; then
+            printf "  ${CY}Glances can be installed via an automated script or from source.\\n"
+            printf "  We should try the [a]utomated installer first, then via [s]ource if that fails.\\n" 
+
+                  read -n 1 -p "[a]utomated installer or [s]ource install? [A/s] " aglan
+                  aglan=${aglan:-A}
+                  if [[ "$aglan" =~ ^[aA]$ ]]; then
+                      curl -L https://bit.ly/glances | /bin/bash
+                      glances_install=1
+                      sudo sed -i "s/glances_install=.*/glances_install=$glances_install/g" "$scripts_dir/.envrc"
+                  elif [[ "$aglan" =~ ^[sS]$ ]]; then
+                      printf "TODO: Sorry, I haven't done this yet."
+                  else
+                      printf "${RED}  Invalid Selection. Options are A or S only."
+                  fi
+       fi
+
 }
 
-perm_func() {
-        printf "${OG}  3]  ${CY}Fix your perm - Permission probems in Linux can be a bitch.  Get help here. \\n "
-        printf "${OG}  a]  ${CY}Fix permissions problems on ${WT}/opt/backup ${CY}and your ${WT}Home folder${CY} \\n  "
-        printf "${OG}  b]  ${CY}Enter a custom folder to fix permissions on."
-        source "${scripts_dir}/support/support-fix-my-perm.sh"
+docker_func() {
+                   clear
+                        if [[ $(command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1) ]]; then
+                                docker_installed=1
+                                printf "${GN}Docker Desktop is already installed\\n"
+                                sudo /opt/docker-desktop/bin/docker-desktop
+                                sudo sed -i "s/docker_installed=.*/docker_installed=$docker_installed/g" "$scripts_dir/.envrc"
+                        else
+                                printf "${YW}Docker Desktop is not installed. Installing\\n"
+                                source $scripts_dir/support/support-docker.sh
+                        fi
+      
 }
 
-x11vnc_func() {
-        sudo apt install -y x11vnc >/dev/null
-        printf "${WT}  1]  ${CY}Start ${GN}x11vnc Server${CY} - Control PC remotely ${CY} \\n   "
-        x11vnc -noxdamage -ncache 10 -ncache_cr -rfbauth ~/.vnc/passwd
+autojump_func() {
+        
 }
 
 main_menu_func() {
