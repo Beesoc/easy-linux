@@ -61,13 +61,12 @@ Banner_func() {
 
 cleanup_func() {
         # Step 7 function. End.
-        printf "${WT} [*] ${CY}Please Wait while I cleanup some files used in the installation -${NC} \\n"
-        printf "${WT}..."
-        sleep 1
-        printf "...Almost done\\n"
-
         clear
         Banner_func
+        printf "${WT}\\n [*] ${CY}Please Wait while I cleanup some files used in the installation -${NC} \\n"
+        echo
+        printf "${WT}..."
+
         printf "   ${CY}[*] ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n"
         printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
         printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${CY}!\\n${CY}"
@@ -83,14 +82,16 @@ cleanup_func() {
                 sudo echo "export COLORFGBG=15;0" >>~/.zshrc
         fi
 
-        printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}       "
+        printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}      "
         read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
         launchnow=${launchnow:-Y}
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
-                source /opt/easy-linux/menu-master.sh
+                source /opt/easy-linux/install/menu-master.sh
         else
-                printf "    ${RED}Exiting.\\n"
+                echo
+                printf "\\n       ${RED}Exiting.\\n"
+                echo
                 exit 0
         fi
 
@@ -230,19 +231,17 @@ install_func() {
         choiceez=${choiceez:-Y}
         if [[ "$choiceez" =~ ^[Yy]$ ]]; then
                 #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-                printf "\\n${WT}  [*] ${CY}Installation confirmed...\\n"
+                printf "\\n${WT}  [*] ${CY}Installation confirmed..."
                 sleep 1
                 printf "..Please wait..\\n"
                 sleep 1
         elif [[ "$choiceez" =~ ^[Nn]$ ]]; then
                 #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
                 printf "\\n${RED}  [*] ${OG}Installation rejected...\\n"
-                sleep 1
-                printf "${CY}..Please wait...\\n"
                 exit 0
         else
                 printf "\\n${WT}  [*]  ${RED}Invalid Selection. Exiting.\\n"
-                exit 0
+                exit 1
         fi
         git_files_func
 }
@@ -254,7 +253,7 @@ check_directories_func() {
                 sleep 1
                 sudo rm -fr /opt/easy-linux
         elif [[ ! -d /opt/easy-linux ]]; then
-                printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder.\\n"
+                printf "\\n ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder.\\n"
                 sleep 1
         fi
         install_func
@@ -262,18 +261,20 @@ check_directories_func() {
 
 direnv_func() {
         # Step 3 or skip function.
+        
+        printf "\\n${CY}  [?]${OG}"
         read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
-                printf "${GN}  Continuing...\\n"
+                printf "\\n${GN}  Continuing...\\n"
                 sleep 1
                 printf "  ${OG}This step may take a few minutes...\\n"
                 sleep 1
-                printf "  ${OG}Please wait.\\n"
+                printf "  ${OG}Please wait.\\n${NC}"
                 sudo apt update
                 sudo apt install -y direnv
         else
-                printf "${GN} Not Needed.  Continuing.\\n"
+                printf "\\n${WT}  [-] Not Needed. Continuing.\\n"
 
         fi
         check_directories_func
@@ -286,13 +287,13 @@ main() {
         command_not_found_handle
 
         printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}    Press ${RED}[ctrl+c] ${GN}to cancel\\n${CY}\\n"
-        printf "${CY}  Do you want to ${WT}check dependencies ${CY}"
+        printf "${CY}  [?] Do you want to ${WT}check dependencies ${CY}"
         read -n 1 -p "for Beesoc's Easy Linux Loader? [Y/n] " install
         install=${install:-Y}
         if [[ "$install" =~ ^[Yy]$ ]]; then
                 printf "\\n  ${WT}[*] ${CY}Loading, Please Wait\\n"
         else
-                printf "  ${RED}   Exiting.\\n"
+                printf "\\n  ${RED}   Exiting.\\n"
                 exit 0
         fi
         # check for requirements.
