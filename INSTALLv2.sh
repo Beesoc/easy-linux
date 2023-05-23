@@ -83,7 +83,7 @@ cleanup_func() {
                 sudo echo "export COLORFGBG=15;0" >>~/.zshrc
         fi
 
-        printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}       "
+        printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}      "
         read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
         launchnow=${launchnow:-Y}
         if [[ $launchnow =~ ^[Yy]$ ]]; then
@@ -230,9 +230,9 @@ install_func() {
         choiceez=${choiceez:-Y}
         if [[ "$choiceez" =~ ^[Yy]$ ]]; then
                 #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-                printf "\\n${WT}  [*] ${CY}Installation confirmed...\\n"
+                printf "\\n${WT}  [*] ${CY}Installation confirmed..."
                 sleep 1
-                printf "\\n..Please wait..\\n"
+                printf "..Please wait..\\n"
                 sleep 1
         elif [[ "$choiceez" =~ ^[Nn]$ ]]; then
                 #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
