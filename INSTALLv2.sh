@@ -216,8 +216,7 @@ git_files_func() {
         sudo chmod +x /opt/easy-linux/support/*.sh
         sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
         sudo chmod +x /opt/easy-linux/install/*.sh
-        sudo cp -f /opt/easy-linux/install/* /opt/easy-linux
-        sudo cp -f /opt/easy-linux/menu-master.sh /usr/bin/
+        sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/
 
     misc_func
 }
