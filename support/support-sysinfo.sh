@@ -47,4 +47,4 @@ printf "${GN}Uptime: ${OG}$(uptime)\\n"
 
 printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
 read -r -n 1 -s -t 300
-source ${scripts_dir}/menu-master.sh
+source ${scripts_dir}/install/menu-master.sh
