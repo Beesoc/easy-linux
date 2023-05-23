@@ -82,8 +82,13 @@ nano_func() {
 }
 
 ncdu_func() {
-
-    ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache /
+  if [[ $ncdu_installed = 1 && $(command -v ncdu >/dev/null 2>$1) ]]; then
+    ncdu --color dark -x --exclude-caches --exclude-kernfs --exclude .local --confirm-quit --exclude .cache /
+  else
+    sudo apt install -y ncdu
+    ncdu_installed=1
+    sudo sed -i "s/ncdu_installed=.*/ncdu_installed=$ncdu_installed/g" "$scripts_dir/.envrc"
+  fi
 }
 
 hackingapps_func() {
@@ -128,7 +133,14 @@ docker_func() {
 }
 
 autojump_func() {
-        
+                        if [[ $autoj_install == 1 ]]; then
+                                printf "${GN}Autojump is already installed\\n"
+                                sudo autojump --help
+                        else
+                                printf "${YW}Autojump is not installed. Installing\\n"
+                                source $scripts_dir/support/support-autojump.sh
+                        fi
+ 
 }
 
 main_menu_func() {
@@ -150,37 +162,52 @@ clear
         printf "     ${WT}4)${CY}  Glances${PL}: \n"
         printf "     ${WT}5)${CY}  Hacking Apps${PL}: \n"
         printf "     ${WT}6)${CY}  Nano${PL}: \n"
-        printf "     ${WT}7)${CY}  Oh My BASH! and Oh My ZSH!${PL}: ${CY}\n"
-        printf "     ${WT}8)${CY}  SysInfo${PL}: \n"
-        printf "     ${WT}9)${CY}  Standard/Favorites${PL}: \n"
-        printf "    ${WT}10)${CY}  Webmin${PL}: \n"
-        printf "    ${WT}11)${CY}  Return to Main Menu${PL}\n"
-        printf "    ${WT}12)${CY}  [✘] Exit tool [✘]\n"
+        printf "     ${WT}7)${CY}  ncdu${PL}: \n"
+        printf "     ${WT}8)${CY}  Oh My BASH! and Oh My ZSH!${PL}: ${CY}\n"
+        printf "     ${WT}9)${CY}  SysInfo${PL}: \n"
+        printf "    ${WT}10)${CY}  Standard/Favorites${PL}: \n"
+        printf "    ${WT}11)${CY}  Webmin${PL}: \n"
+        printf "    ${WT}12)${CY}  Return to Main Menu${PL}\n"
+        printf "    ${WT}13)${CY}  [✘] Exit tool [✘]\n"
         echo
         printf "  ${GN}Selection: ${CY}\n"
           read -r main_menu_sel
         case "$main_menu_sel" in
-#options=("All" "Autojump" "Docker Desktop"  "My Favs" "Glances" "Hacking Apps" "Nano" "Oh My..." "System Info" "Webmin"  "Main Menu" "Exit")
-
         1) all_func ;;
         2) autojump_func ;;
         3) docker_func ;;
         4) glances_func ;;
         5) hacking_func ;;
         6) nano_func ;;
-        7) omymy_func ;;
-        8) sysinfo_func ;;
-        9) standard_func ;;
-        10) webmin ;;
-        11) mainmenu_func ''
-        12) exit 0 ;;
+        7) ncdu_func ;;
+        8) omymy_func ;;
+        9) sysinfo_func ;;
+        10) standard_func ;;
+        11) webmin ;;
+        12) mainmenu_func ''
+        13) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
         esac
 }
 
+deps_install_func() {
+        packages=("bc" "acpi" "ccze" "colorized-logs" "xrootconsole" "x11-utils" "iw" "gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb" "wget" "ethtool" "systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
+        for package in "${packages[@]}"; do
+                if dpkg -s "$package" >/dev/null 2>&1; then
+                        echo "$package is already installed"
+                else
+                        echo "Installing $package"
+                        sudo apt-get --ignore-missing --show-progress install -y "$package"
+                fi
+                menu_apps_deps=1
+                sudo sed -i "s/menu-apps-deps=.*/menu-apps-deps=$menu-apps-deps/g" "$scripts_dir/.envrc"
+                install_apps_func
+        done
+}
+
 main() {
         # Main script logic
-
+deps_install_func
         while true; do
                 main_menu
                 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
@@ -421,20 +448,7 @@ personal_func() {
          ending_func
  }        
 
-deps_install_func() {
-        packages=("bc" "acpi" "ccze" "colorized-logs" "xrootconsole" "x11-utils" "iw" "gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb" "wget" "ethtool" "systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
-        for package in "${packages[@]}"; do
-                if dpkg -s "$package" >/dev/null 2>&1; then
-                        echo "$package is already installed"
-                else
-                        echo "Installing $package"
-                        sudo apt-get --ignore-missing --show-progress install -y "$package"
-                fi
-                menu_apps_deps=1
-                sudo sed -i "s/menu-apps-deps=.*/menu-apps-deps=$menu-apps-deps/g" "$scripts_dir/.envrc"
-                install_apps_func
-        done
-}
+
 
 ending_func() {                
                 if [[ $installchoice == p ]] || [[ $installchoice == P ]]; then
