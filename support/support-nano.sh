@@ -11,7 +11,7 @@ source "${scripts_dir}/support/support-Banner_func.sh"
 
 run_nano_func() {
 	sudo nano -ADEGHKMPSWZacegmpqy%_ -T 4
-	source ${scripts_dir}/menu-master.sh
+	source ${scripts_dir}/install/menu-master.sh
 }
 
 install_nano() {
@@ -95,5 +95,5 @@ main() {
 }
 
 main
-source ${scripts_dir}/menu-master.sh
+source ${scripts_dir}/install/menu-master.sh
 exit 0
