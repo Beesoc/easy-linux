@@ -68,7 +68,7 @@ cleanup_func() {
         printf "${WT}..."
 
         printf "   ${CY}[*] ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n"
-        printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}menu-master.sh${CY} ]\\n"
+        printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}easy-linux.sh${CY} ]\\n"
         printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${CY}!\\n${CY}"
 
         rc=$(cat ~/.bashrc | grep "truecolor" -c)
