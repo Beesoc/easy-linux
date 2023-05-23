@@ -87,7 +87,7 @@ cleanup_func() {
         launchnow=${launchnow:-Y}
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
-                source /opt/easy-linux/menu-master.sh
+                source /opt/easy-linux/install/menu-master.sh
         else
                 echo
                 printf "\\n       ${RED}Exiting.\\n"
