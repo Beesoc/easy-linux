@@ -260,7 +260,9 @@ check_directories_func() {
 
 direnv_func() {
         # Step 3 or skip function.
-        read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
+        
+        printf "${CY}\\n  "
+        read -n 1 -p "[?] DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                 printf "\\n${GN}  Continuing...\\n"
