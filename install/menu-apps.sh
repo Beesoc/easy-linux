@@ -156,6 +156,11 @@ autojump_func() {
  
 }
 
+all_func() {
+        printf "  ${OG}This functionality is not working yet."
+        source ${scripts_dir}/install/menu-master.sh
+}
+
 main_menu_func() {
         source ${scripts_dir}/install/menu-master.sh
 }
