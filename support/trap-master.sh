@@ -9,9 +9,9 @@ if sudo iwconfig 2>/dev/null | grep -q "Mode:Monitor"; then
     printf "${CY}  At least 1 WiFi adapter is ${WT}still in monitor mode${CY}. \\n  [?] "
     read -n 1 -p "Should I reenable Managed mode?" managed 
     managed=${managed:=Y}
-    if [[ "$managed" ~= ^[yY]$ ]]; then
+    if [[ "$managed" =~ ^[yY]$ ]]; then
         source ${scripts_dir}/support/support-monitor.sh
-    elif [[ "$managed" ~= ^[nN]$ ]]; then
+    elif [[ "$managed" =~ ^[nN]$ ]]; then
         printf "  ${WT}$USER ${OG}has selected to remain in Monitor mode."
         printf "  ${CY}You can toggle Monitor mode On/Off in the Easy Linux Hacking Menu."
         echo
