@@ -182,7 +182,7 @@ main_menu() {
         printf "    ${WT}12)${CY}  Return to Main Menu${PL}\n"
         printf "    ${WT}13)${CY}  [✘] Exit tool [✘]\n"
         echo
-        printf "  ${GN}Selection: ${CY}\n"
+        printf "  ${GN}Selection: ${OG} "
           read -r main_menu
           case "$main_menu" in
         1) all_func ;;
