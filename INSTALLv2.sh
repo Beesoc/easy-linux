@@ -262,7 +262,7 @@ check_directories_func() {
 direnv_func() {
         # Step 3 or skip function.
         
-        printf "\\n${CY}  [?]${OG}"
+        printf "\\n${WT}  [?]${OG} "
         read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
@@ -287,7 +287,7 @@ main() {
         command_not_found_handle
 
         printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}    Press ${RED}[ctrl+c] ${GN}to cancel\\n${CY}\\n"
-        printf "${WT}  [?] ${CY}Do you want to ${WT}check dependencies ${CY}"
+        printf "${WT}  [?] ${OG}Do you want to ${WT}check dependencies ${OG}"
         read -n 1 -p "for Beesoc's Easy Linux Loader? [Y/n] " install
         install=${install:-Y}
         if [[ "$install" =~ ^[Yy]$ ]]; then
