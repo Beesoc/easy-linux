@@ -6,8 +6,8 @@ scripts_dir=/opt/easy-linux
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
 set -e
-source "${scripts_dir}/.envrc"
-trap source "${scripts_dir}/support/support-trap-wifi.sh" EXIT
+source ${scripts_dir}/.envrc
+trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 # Version: 0.0.2
 
@@ -90,7 +90,7 @@ main_menu() {
         clear
         source ${scripts_dir}/support/support-Banner_func.sh
         echo
-        printf "${OG}          $USER               ${GN}Install and Run Hacking Apps${OG}               $computername ${CY}\n"
+        printf "${OG}        $USER            ${GN}Install and Run Hacking Apps${OG}             $computername ${CY}\n"
         echo
         printf "  ${GN}Select an option:${CY}\n"
         echo
@@ -102,7 +102,7 @@ main_menu() {
         printf "    ${WT}6)${CY}  Return to Main Menu${PL}\n"
         printf "    ${WT}7)${CY}  [✘] Exit tool [✘]\n"
         echo
-        printf "  ${GN}Selection: ${CY}\n"
+        printf "  ${GN}Selection:${OG} "
     read -n 1 -r main_menu_sel
         case "$main_menu_sel" in
         1) aircrack_func ;;
@@ -146,4 +146,3 @@ main() {
 }
 
 main
-source "${scripts_dir}/install/menu-master.sh"
