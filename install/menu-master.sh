@@ -157,7 +157,7 @@ main_menu() {
     printf "     ${WT}6)${CY}  System Info${PL}: Various Sys Info about your Linux system.${CY}\n"
     printf "     ${WT}7)${CY}  Quit${PL}: Uhhh. It just quits.${CY}\n"
     echo
-    printf "  ${WT}Selection: ${OG}\n  ----> "
+    printf "  ${GN}Selection: ---->${OG}  "
     read -n 1 -r main_menu
     case "$main_menu" in
         1) hack_func ;;
