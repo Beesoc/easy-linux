@@ -198,7 +198,7 @@ main_menu() {
 	printf "    ${WT}7)${CY}  Return to Main Menu${CY}\n"
 	printf "    ${WT}8)${CY}  Quit${CY}\n"
 	echo
-	printf "    ${GN}Selection: ${CY}\n"
+	printf "    ${GN}Selection: ---->${OG}  "
 	read -n 1 -r main_menu_sel
 	case "$main_menu_sel" in
 	1) ssh_func ;;
