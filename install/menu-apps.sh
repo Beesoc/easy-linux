@@ -4,7 +4,7 @@ set -e
 scripts_dir=/opt/easy-linux
 source $scripts_dir/.envrc
 source $scripts_dir/support/.whoami.sh
-trap 'source "/opt/easy-linux/support/trap-master.sh"' EXIT
+# trap 'source "/opt/easy-linux/support/trap-master.sh"' EXIT
 #shellcheck source=${scripts_dir}/.envrc
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
