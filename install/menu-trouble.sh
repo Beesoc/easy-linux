@@ -4,45 +4,13 @@ set -e
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
-source ${scripts_dir}/support/support-Banner_func.sh
-echo
 
+placeholder3_func() {
 
-
-
-
-# Version: 0.0.3
-scripts_dir=/opt/easy-linux
-backup_dir=/opt/backup
-
-hosts_func() {
-	printf "${GN}20]  ${CY}Edit your local ${WT}/etc/hosts ${CY}file to keep DNS happy and ${CY} \\n "
-	printf "     refer to machines by hostname instead of IP.\\n"
-	clear
-	source "${scripts_dir}/support/support-Banner_func.sh"
-	sudo apt update >/dev/null
-	sudo apt install -y mdns nano >/dev/null
-	sudo nano /etc/hosts
-	sudo systemctl restart dnsmasq.service
-	sudo systemctl restart NetworkManager.service
-	sudo systemctl restart wpa_supplicant.service
 }
 
-ncdu_func() {
-	printf "   ${OG}Searching for ${WT}ncdu${CY}. If found, I'll run ncdu. If not, I'll install it.\\n"
-	sleep 1
-	if [[ $(command -v ncdu >/dev/null 2>&1) ]]; then
-		printf "${WT}ncdu ${CY}is installed\\n"
-	else
-		printf "${WT}ncdu ${CY}is not installed. Installing now.\\n"
-		sleep 1
-		printf "${GN}Please wait\\n"
-		sleep 1
-		printf "${GN}...\\n"
-		sudo apt install -y ncdu >/dev/null
-	fi
-	sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --excude delme /
-	return 0
+placeholder2_func() {
+
 }
 
 timezone_func() {
@@ -50,16 +18,8 @@ timezone_func() {
 	printf "TODO \\n"
 }
 
-locate_func() {
-	clear
-	source "${scripts_dir}/support/support-Banner_func.sh"
-	printf "\\n      ${OG}[*] ${CY}pLocate: Find files and apps in an instant with pLocate.${GN} \\n\\n    "
-	read -p "What do you want to search for? ----> " search
-	clear
-	printf " ${WT}"
-	plocate $search
-	printf "${CT}  Press ${WT}any ${CT}key to continue. \\n  ${OG}"
-	read -r -n1 -s -t 120
+placeholder1_func() {
+
 }
 
 perm_func() {
@@ -70,8 +30,8 @@ perm_func() {
 }
 
 wifi_func() {
-	${scripts_dir}/support/support-
-  }
+	${scripts_dir}/support/support-monitor
+}
 
 main_menu_func() {
 	source ${scripts_dir}/install/menu-master.sh
@@ -94,9 +54,9 @@ main_menu() {
 	printf "    ${WT}7)${GN}  Return to Main Menu${PL}\n"
 	printf "    ${WT}8)${RED}  [✘] Exit tool [✘]: Uhh, it just exits.\n"
 	echo
-	printf "  ${GN}Selection: ${CY}\n"
-	read -n 1 -r main_menu_sel
-	case "$main_menu_sel" in
+	printf "  ${GN}Selection: ---->  ${OG}"
+	read -n 1 -r trouble_menu
+	case "$trouble_menu" in
 	1) wifi_func ;;
 	2) timezone_func ;;
 	3) perm_func ;;
