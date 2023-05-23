@@ -90,7 +90,9 @@ cleanup_func() {
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
                 source /opt/easy-linux/menu-master.sh
         else
-                printf "\\n    ${RED}Exiting.\\n"
+                echo
+                printf "\\n       ${RED}Exiting.\\n"
+                echo
                 exit 0
         fi
 
