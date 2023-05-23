@@ -45,6 +45,7 @@ populate_envrc() {
         echo "export glances_install=$(if command -v glances >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export hcxdump_installed=$(if command -v hcxdumptool >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export nano_installed=0" | sudo tee -a "$envrc_file"
+        echo "export ncdu_installed=$(if command -v ncdu >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"        
         echo "export webmin_installed=$(if command -v webmin >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export wifite_installed=$(if command -v wifite >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export stand_install=0" | sudo tee -a "$envrc_file"
