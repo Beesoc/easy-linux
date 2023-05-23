@@ -28,7 +28,7 @@ if [[ $(which webmin >/dev/null 2>&1) ]]; then
 	printf "${CY}Use your ${WT}normal Linux account info that you use to login to this computer\\n."
 	printf "  ${CY}Press ${WT}any ${CY}key to continue\\n"
 	read -n 1 -r -s -t 300
-	support ${scripts_dir}/menu-apps.sh
+	support ${scripts_dir}/install/menu-apps.sh
 else
 	printf "\\n${WT}Webmin ${YW}is not installed.  Continuing\\n"
 fi
