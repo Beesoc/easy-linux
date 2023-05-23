@@ -192,7 +192,7 @@ main_menu() {
         5) hacking_func ;;
         6) nano_func ;;
         7) ncdu_func ;;
-        8) omymy_func ;;
+        8) ohmy_func ;;
         9) sysinfo_func ;;
         10) standard_func ;;
         11) webmin_func ;;
