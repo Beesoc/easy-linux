@@ -213,7 +213,6 @@ deps_install_func() {
                 fi
                 menu_apps_deps=1
                 sudo sed -i "s/menu-apps-deps=.*/menu-apps-deps=$menu-apps-deps/g" "$scripts_dir/.envrc"
-                install_apps_func
         done
 }
 
