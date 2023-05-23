@@ -102,9 +102,9 @@ main_menu() {
         printf "    ${WT}6)${CY}  Return to Main Menu${PL}\n"
         printf "    ${WT}7)${CY}  [✘] Exit tool [✘]\n"
         echo
-        printf "  ${GN}Selection:${OG}  "
+        printf "  ${GN}Selection: ---->${OG}  "
     read -n 1 -r main_menu_sel
-        case "$main_menu_sel" in
+        case "$main_menu_sel" in'\e[1;36m'
         1) aircrack_func ;;
         2) airgeddon_func ;;
         3) fatrat_func ;;
