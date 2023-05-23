@@ -8,7 +8,6 @@ trap 'source "/opt/easy-linux/support/trap-master.sh"' EXIT
 #shellcheck source=${scripts_dir}/.envrc
 #shellcheck source=${scripts_dir}/support/support-Banner_func.sh
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
-backup_dir=/opt/backup
 
 webmin() {
                         clear
@@ -87,7 +86,7 @@ nano_func() {
 }
 
 ncdu_func() {
-  if [[ $ncdu_installed = 1 && $(command -v ncdu >/dev/null 2>$1) ]]; then
+  if [[ $ncdu_installed = 1 && $(command -v ncdu >/dev/null) ]]; then
     ncdu --color dark -x --exclude-caches --exclude-kernfs --exclude .local --confirm-quit --exclude .cache /
   else
     sudo apt install -y ncdu
