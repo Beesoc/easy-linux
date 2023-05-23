@@ -203,7 +203,7 @@ main_menu() {
 }
 
 deps_install_func() {
-        packages=("bc" "acpi" "ccze" "colorized-logs" "xrootconsole" "x11-utils" "iw" "gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "lsusb" "wget" "ethtool" "systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
+        packages=("bc" "acpi" "ccze" "colorized-logs" "xrootconsole" "x11-utils" "iw" "gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "wget" "ethtool" "systemd" "grep" "uname" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
         for package in "${packages[@]}"; do
                 if dpkg -s "$package" >/dev/null 2>&1; then
                         echo "$package is already installed"
