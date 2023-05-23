@@ -273,7 +273,7 @@ direnv_func() {
                 sudo apt update
                 sudo apt install -y direnv
         else
-                printf "\\n${GN} Not Needed.  Continuing.\\n"
+                printf "\\n${GN}  [-] Not Needed. Continuing.\\n"
 
         fi
         check_directories_func
