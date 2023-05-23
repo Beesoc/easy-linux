@@ -44,4 +44,4 @@ printf "${CY}  All apps in this script have been successfully installed. This in
 printf "$packages\\n"
 printf "${OG}  Press ${WT}any ${OG}key to continue."
 read -n 1 -s -t 300
-source ${scripts_dir}/menu-apps.sh
+source ${scripts_dir}/install/menu-apps.sh
