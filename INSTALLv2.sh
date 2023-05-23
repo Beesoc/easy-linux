@@ -225,7 +225,7 @@ git_files_func() {
 install_func() {
         # Step 5 function.
         # Banner_func
-        printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${WT} "
+        printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${OG} "
         sleep 1
         read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
         choiceez=${choiceez:-Y}
@@ -237,7 +237,7 @@ install_func() {
                 sleep 1
         elif [[ "$choiceez" =~ ^[Nn]$ ]]; then
                 #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
-                printf "\\n${RED}  [*] ${OG}Installation rejected...\\n"
+                printf "\\n${WT}  [*] ${OG}Installation rejected...\\n"
                 exit 0
         else
                 printf "\\n${WT}  [*]  ${RED}Invalid Selection. Exiting.\\n"
@@ -248,8 +248,8 @@ install_func() {
 check_directories_func() {
         # Step 2 or 4 function.
         if [[ -d /opt/easy-linux ]]; then
-                printf "  ${WT}[*] ${GN}/opt/easy-linux ${CY}directory found.\\n"
-                printf "  ${WT}[*] ${GN}Removing and recloning repository.\\n"
+                printf "  ${WT}[*] ${CY}/opt/easy-linux ${CY}directory found.\\n"
+                printf "  ${WT}[*] ${CY}Removing and recloning repository.\\n"
                 sleep 1
                 sudo rm -fr /opt/easy-linux
         elif [[ ! -d /opt/easy-linux ]]; then
@@ -268,13 +268,13 @@ direnv_func() {
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                 printf "\\n${GN}  Continuing...\\n"
                 sleep 1
-                printf "  ${OG}This step may take a few minutes...\\n"
+                printf "  ${CY}This step may take a few minutes...\\n"
                 sleep 1
-                printf "  ${OG}Please wait.\\n${NC}"
+                printf "  ${CY}Please wait.\\n${NC}"
                 sudo apt update
                 sudo apt install -y direnv
         else
-                printf "\\n${WT}  [-] Not Needed. Continuing.\\n"
+                printf "\\n${WT}  [-] ${CY}Not Needed. Continuing.\\n"
 
         fi
         check_directories_func
