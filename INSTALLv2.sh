@@ -64,7 +64,7 @@ cleanup_func() {
         printf "${WT} [*] ${CY}Please Wait while I cleanup some files used in the installation -${NC} \\n"
         printf "${WT}..."
         sleep 1
-        printf "...Almost done\\n"
+        printf "\\n...Almost done\\n"
 
         clear
         Banner_func
@@ -90,7 +90,7 @@ cleanup_func() {
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
                 source /opt/easy-linux/menu-master.sh
         else
-                printf "    ${RED}Exiting.\\n"
+                printf "\\n    ${RED}Exiting.\\n"
                 exit 0
         fi
 
@@ -232,17 +232,15 @@ install_func() {
                 #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
                 printf "\\n${WT}  [*] ${CY}Installation confirmed...\\n"
                 sleep 1
-                printf "..Please wait..\\n"
+                printf "\\n..Please wait..\\n"
                 sleep 1
         elif [[ "$choiceez" =~ ^[Nn]$ ]]; then
                 #elif [[ $choiceez = "n" ]] || [[ $choiceez = "N" ]]; then
                 printf "\\n${RED}  [*] ${OG}Installation rejected...\\n"
-                sleep 1
-                printf "${CY}..Please wait...\\n"
                 exit 0
         else
                 printf "\\n${WT}  [*]  ${RED}Invalid Selection. Exiting.\\n"
-                exit 0
+                exit 1
         fi
         git_files_func
 }
@@ -254,7 +252,7 @@ check_directories_func() {
                 sleep 1
                 sudo rm -fr /opt/easy-linux
         elif [[ ! -d /opt/easy-linux ]]; then
-                printf " ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder.\\n"
+                printf "\\n ${WT} [*] ${WT}/opt/easy-linux ${CY}directory not found. Cloning repo into that folder.\\n"
                 sleep 1
         fi
         install_func
@@ -265,7 +263,7 @@ direnv_func() {
         read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
-                printf "${GN}  Continuing...\\n"
+                printf "\\n${GN}  Continuing...\\n"
                 sleep 1
                 printf "  ${OG}This step may take a few minutes...\\n"
                 sleep 1
@@ -273,7 +271,7 @@ direnv_func() {
                 sudo apt update
                 sudo apt install -y direnv
         else
-                printf "${GN} Not Needed.  Continuing.\\n"
+                printf "\\n${GN} Not Needed.  Continuing.\\n"
 
         fi
         check_directories_func
@@ -292,7 +290,7 @@ main() {
         if [[ "$install" =~ ^[Yy]$ ]]; then
                 printf "\\n  ${WT}[*] ${CY}Loading, Please Wait\\n"
         else
-                printf "  ${RED}   Exiting.\\n"
+                printf "\\n  ${RED}   Exiting.\\n"
                 exit 0
         fi
         # check for requirements.
