@@ -96,7 +96,7 @@ ncdu_func() {
   fi
 }
 
-hackingapps_func() {
+hacking_func() {
     source ${scripts_dir}/install/menu-hacking.sh
 }
 
@@ -183,8 +183,8 @@ main_menu() {
         printf "    ${WT}13)${CY}  [✘] Exit tool [✘]\n"
         echo
         printf "  ${GN}Selection: ${CY}\n"
-          read -r main_menu_sel
-        case "$main_menu_sel" in
+          read -r main_menu
+          case "$main_menu" in
         1) all_func ;;
         2) autojump_func ;;
         3) docker_func ;;
@@ -196,7 +196,7 @@ main_menu() {
         9) sysinfo_func ;;
         10) standard_func ;;
         11) webmin_func ;;
-        12) mainmenu_func ;;
+        12) main_menu_func ;;
         13) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
         esac
@@ -212,7 +212,7 @@ deps_install_func() {
                         sudo apt-get --ignore-missing --show-progress install -y "$package"
                 fi
                 menu_apps_deps=1
-                sudo sed -i "s/menu-apps-deps=.*/menu-apps-deps=$menu-apps-deps/g" "$scripts_dir/.envrc"
+                sudo sed -i "s/menu-apps-deps=.*/menu_apps_deps=$menu_apps_deps/g" "$scripts_dir/.envrc"
         done
 }
 
