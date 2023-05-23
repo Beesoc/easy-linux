@@ -137,11 +137,7 @@ docker_func() {
 }
 
 personal_func() {
-        if [[ "$USER" == "$cwb_username" ]] && [[ "$computername" == "$cwb_computername" ]]; then
                 source $scripts_dir/support/support-updates.sh
-        else
-                exit 0
-        fi
 }
 
 autojump_func() {
@@ -225,7 +221,9 @@ main() {
         if [[ $menu_apps_deps == 0 ]]; then
            deps_install_func
         fi
-        personal_func
+        if [[ "$USER" == "$cwb_username" ]] && [[ "$computername" == "$cwb_computername" ]]; then
+             personal_func
+        fi
         while true; do
                 main_menu
                 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
