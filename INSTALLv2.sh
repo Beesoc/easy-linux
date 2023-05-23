@@ -63,10 +63,8 @@ cleanup_func() {
         # Step 7 function. End.
         clear
         Banner_func
-        printf "${WT}\\n [*] ${CY}Please Wait while I cleanup some files used in the installation -${NC} \\n"
-        echo
-        printf "${WT}..."
-
+        printf "${WT}\\n [*] ${CY}Please Wait while I cleanup some files used in the installation. ${NC}\\n"
+        
         printf "   ${CY}[*] ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n"
         printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}easy-linux.sh${CY} ]\\n"
         printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${CY}!\\n${CY}"
