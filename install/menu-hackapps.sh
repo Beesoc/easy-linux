@@ -94,13 +94,13 @@ main_menu() {
         echo
         printf "  ${GN}Select an option:${CY}\n"
         echo
-        printf "    ${WT}1)${CY}  Aircrack-NG${PL}: \\n"
-        printf "    ${WT}2)${CY}  Airgeddon${PL}: ${CY}\n"
-        printf "    ${WT}3)${CY}  The Fat Rat${PL}: \n"
-        printf "    ${WT}4)${CY}  HackingTool${PL}: \n"
-        printf "    ${WT}5)${CY}  WiFite 2${PL}: \n"
-        printf "    ${WT}6)${CY}  Return to Main Menu${PL}\n"
-        printf "    ${WT}7)${CY}  [✘] Exit tool [✘]\n"
+        printf "    ${WT}1)${CY}  Aircrack-NG${PL}: Basically required for hacking. Used in background of MANY apps.\n"
+        printf "    ${WT}2)${CY}  Airgeddon${PL}: All in 1 hacker. Awesome and easy.\n"
+        printf "    ${WT}3)${CY}  The Fat Rat${PL}: Malware creator that bypasses most AV.\n"
+        printf "    ${WT}4)${CY}  HackingTool${PL}: Swiss army knife hacker. Contains MANY other tools.\n"
+        printf "    ${WT}5)${CY}  WiFite 2${PL}: All in 1 hacker. Awesome and easy.\n"
+        printf "    ${WT}6)${CY}  Return to Main Menu${PL}: Return to Easy Linux Main Menu\n"
+        printf "    ${WT}7)${CY}  [✘] Exit tool [✘]${PL}: Uh, it just exits.\n"
         echo
         printf "  ${GN}Selection: ---->${OG}  "
     read -n 1 -r main_menu_sel
