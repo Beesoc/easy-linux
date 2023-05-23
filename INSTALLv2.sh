@@ -263,19 +263,19 @@ check_directories_func() {
 direnv_func() {
         # Step 3 or skip function.
         
-        printf "${CY}\\n  "
-        read -n 1 -p "[?] DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
+        printf "\\n${CY}  [?]${OG}"
+        read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
         choicedirenv=${choicedirenv:-Y}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                 printf "\\n${GN}  Continuing...\\n"
                 sleep 1
                 printf "  ${OG}This step may take a few minutes...\\n"
                 sleep 1
-                printf "  ${OG}Please wait.\\n"
+                printf "  ${OG}Please wait.\\n${NC}"
                 sudo apt update
                 sudo apt install -y direnv
         else
-                printf "\\n${GN}  [-] Not Needed. Continuing.\\n"
+                printf "\\n${WT}  [-] Not Needed. Continuing.\\n"
 
         fi
         check_directories_func
