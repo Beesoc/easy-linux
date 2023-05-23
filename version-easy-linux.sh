@@ -16,7 +16,6 @@ declare -A required_versions=(
 	["install/update_scripts.sh"]="0.0.2"
 	[".envrc"]="0.0.2"
 	["README.md"]="0.0.2"
-	["support/version-support.sh"]="0.0.2"
 	["install/menu-trouble.sh"]="0.0.2"
 	["install/version-easy-linux.sh"]="0.0.2"
 	["INSTALLv2.sh"]="0.0.2"
