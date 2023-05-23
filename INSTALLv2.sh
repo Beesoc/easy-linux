@@ -63,11 +63,11 @@ cleanup_func() {
         # Step 7 function. End.
         clear
         Banner_func
-        printf "${WT}\\n [*] ${CY}Please Wait while I cleanup some files used in the installation. ${NC}\\n"
+        printf "${WT}\\n   [*] ${CY}Please Wait while I cleanup some files used in the installation. ${NC}\\n"
         
-        printf "   ${CY}[*] ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n"
-        printf "   ${CY}Use the option on your ${WT}Apps menu ${CY}or enter [ ${WT}easy-linux.sh${CY} ]\\n"
-        printf "   from ${WT}any Terminal ${CY}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${CY}!\\n${CY}"
+        printf "   ${WT}[*] ${GN}Success: ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n"
+        printf "   ${GN}Use the option on your ${WT}Apps menu ${GN}or enter [ ${WT}easy-linux.sh${GN} ]\\n"
+        printf "   from ${WT}any Terminal ${GN}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${GN}!\\n${CY}"
 
         rc=$(cat ~/.bashrc | grep "truecolor" -c)
         zc=$(cat ~/.zshrc | grep "truecolor" -c)
