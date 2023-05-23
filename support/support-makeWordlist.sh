@@ -5,7 +5,6 @@ set -e
 # Version: 0.0.2
 scripts_dir=/opt/easy-linux
 #
-set -e
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 #export PS4="\$LINENO: "
 #set -xv
