@@ -33,7 +33,12 @@ webmin() {
 }
 
 standard_func() {
-
+                 if [[ $stand_install == 0 ]]; then
+                                source $scripts_dir/support/support-inst-standard.sh
+                        elif [[ $stand_install == 1 ]]; then
+                                printf "$OG  You have already installed all of the standard tools.\\n"
+                                exit 0
+                        fi
 }
 
 sysinfo_func() {
@@ -148,8 +153,7 @@ main_menu_func() {
 }
 
 main_menu() {
-
-clear
+        clear
         source ${scripts_dir}/support/support-Banner_func.sh
         echo
         printf "${OG}          $USER               ${GN}Install or Run New Apps${OG}                $computername ${CY}\n"
@@ -207,7 +211,9 @@ deps_install_func() {
 
 main() {
         # Main script logic
-deps_install_func
+        if [[ $menu_apps_deps == 0 ]]; then
+           deps_install_func
+        fi
         while true; do
                 main_menu
                 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
