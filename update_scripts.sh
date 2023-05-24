@@ -10,13 +10,30 @@ source "${scripts_dir}/.envrc"
 
 sudo chown -vR "$USER:0" "${scripts_dir}"
 
+cd ${scripts_dir} || exit
+rm -rf tmp/
+mkdir tmp/
+mkdir tmp/support
+mkdir tmp/support/misc 
+mkdir tmp/install
+
 if [[ ! -d "${scripts_dir}/tmp" ]]; then
     mkdir "${scripts_dir}/tmp"
+    sudo chown -vR "$USER:0" "${scripts_dir}/tmp"
     if [[ ! -d "${scripts_dir}/tmp/support" ]]; then    
         mkdir "${scripts_dir}/tmp/support"
+        sudo chown -vR "$USER:0" "${scripts_dir}"/support
+          if [[ ! -d "${scripts_dir}/tmp/support/misc" ]]; then    
+               mkdir "${scripts_dir}/tmp/support/misc"
+          fi
+    fi
+    if [[ ! -d "${scripts_dir}/tmp/support/misc" ]]; then 
+        mkdir "${scripts_dir}/tmp/support/misc"
+        sudo chown -vR "$USER:0" "${scripts_dir}"/tmp/support/misc
     fi
     if [[ ! -d "${scripts_dir}/tmp/install" ]]; then
         mkdir "${scripts_dir}/tmp/install"
+        sudo chown -vR "$USER:0" "${scripts_dir}"/tmp/install
     fi 
 fi
 
@@ -24,6 +41,7 @@ fi
 script_files=(
     "install/menu-master.sh"
     "install/menu-hacking.sh"
+    "install/menu-hackapps.sh"
     "install/menu-customize.sh"
     "install/menu-apps.sh"
     "install/menu-pwn.sh"
