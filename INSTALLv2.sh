@@ -90,15 +90,9 @@ misc_func() {
 shell="$SHELL"
 rc_file=""
 
-
-if [[ "$shell" == *'"/bash"' ]]; then
-    rc_file="$HOME/.bashrc"
-elif [[ "$shell" == *'"/zsh"' ]]; then
-    rc_file="$HOME/.zshrc"
-fi
-
 # Determine the RC file based on the current shell
-if [[ -e $HOME/.bashrc ]]; then
+if [[ "$shell" == *'"/bash"' ]]; then
+        rc_file="$HOME/.bashrc"
         rc=$(cat $HOME/.bashrc | grep "truecolor" -c)
         pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckbash == 0 ];then
@@ -106,21 +100,25 @@ if [[ -e $HOME/.bashrc ]]; then
               	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.bashrc
                 return 0
         fi
-        if [[ $rc = 0 ]]; then
+        if [[ $rc == 0 ]]; then
                 sudo echo "export COLORTERM=truecolor" >> $HOME/.bashrc
                 sudo echo "export COLORFGBG=15;0" >> $HOME/.bashrc
+                return 0
         fi
 fi
-if [[ -e $HOME/.zshrc ]]; then
+if [[ "$shell" == *'"/zsh"' ]]; then
+        rc_file="$HOME/.zshrc"
         zc=$(cat $HOME/.zshrc | grep "truecolor" -c)
         pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckzsh == 0 ]; then
         	echo "export PATH=/opt/easy-linux/install:$PATH" >> $HOME/.zshrc
               	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.zshrc
+                return 0
         fi
-        if [[ $zc = 0 ]]; then
+        if [[ $zc == 0 ]]; then
                 sudo echo "export COLORTERM=truecolor" >> $HOME/.zshrc
                 sudo echo "export COLORFGBG=15;0" >> $HOME/.zshrc
+                return 0
         fi
 fi
 
