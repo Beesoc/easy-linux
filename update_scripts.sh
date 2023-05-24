@@ -86,8 +86,6 @@ script_files=(
     "support/support-wpaUP.sh"
     "support/support-wpaDOWN.sh"
     "support/trap-master.sh"
-    "support/update_scripts.sh"
-    "support/version-easy-linux.sh"
 )
 
 # Associative array to store the version information
