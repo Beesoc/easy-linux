@@ -2,7 +2,7 @@
 # Version: 0.0.2
 set -e
 scripts_dir=/opt/easy-linux
-#source ${scripts_dir}/.envrc
+source ${scripts_dir}/.envrc
 #clear
 #source "${scripts_dir}/support/support-Banner_func.sh"
 # Define the minimum required version for each script
@@ -24,7 +24,8 @@ declare -A required_versions=(
 	["update_scripts.sh"]="0.0.2"
 	["support/misc/pwnip.sh"]="0.0.2"
 	["support/misc/restart_all_pwn.sh"]="0.0.2"
-	["support/.whoami.sh"]="0.0.3"
+        ["support/misc/uninstall.sh"]="0.0.2"
+        ["support/.whoami.sh"]="0.0.3"
 	["support/support-aircrack2.sh"]="0.0.2"
 	["support/support-airgeddon.sh"]="0.0.2"
 	["support/support-autojump.sh"]="0.0.2"
@@ -49,15 +50,12 @@ declare -A required_versions=(
 	["support/support-Prompt_func.sh"]="0.0.2"
 	["support/support-sysinfo.sh"]="0.0.2"
 	["support/support-trap-wifi.sh"]="0.0.2"
-	["support/support-troubleshooting.sh"]="0.0.2"
-	["support/update_scripts.sh"]="0.0.2"
 	["support/support-updates.sh"]="0.0.2"
 	["support/support-webmin.sh"]="0.0.2"
 	["support/support-wifite.sh"]="0.0.3"
 	["support/support-wpaUP.sh"]="0.0.2"
 	["support/support-wpaDOWN.sh"]="0.0.2"
 	["support/trap-master.sh"]="0.0.2"
-	["support/version-support.sh"]="0.0.2"
 )
 
 #function check_version {
