@@ -278,8 +278,8 @@ direnv_func() {
         # Step 3 or skip function.
         
         printf "\\n${WT}  [?]${OG} "
-        read -n 1 -p "DIRENV is not installed. Do you want me to install it? [Y/n] " choicedirenv
-        choicedirenv=${choicedirenv:-Y}
+        read -n 1 -p "DIRENV is not installed. Do you want me to install it? [y/N] " choicedirenv
+        choicedirenv=${choicedirenv:-N}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                 printf "\\n${GN}  Continuing...\\n"
                 sleep 1
