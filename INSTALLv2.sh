@@ -88,14 +88,42 @@ cleanup_func() {
 misc_func() {
 # Check the user's current shell
 shell="$SHELL"
-
-# Determine the RC file based on the current shell
 rc_file=""
+
+
 if [[ "$shell" == *"/bash" ]]; then
     rc_file="$HOME/.bashrc"
 elif [[ "$shell" == *"/zsh" ]]; then
     rc_file="$HOME/.zshrc"
 fi
+
+# Determine the RC file based on the current shell
+if [[ -e $HOME/.bashrc ]]; then
+        rc=$(cat ~/.bashrc | grep "truecolor" -c)
+        pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
+        if [ $pcheckbash -eq 0 ];then
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
+        fi
+        if [[ $rc = 0 ]]; then
+                sudo echo "export COLORTERM=truecolor" >>~/.bashrc
+                sudo echo "export COLORFGBG=15;0" >>~/.bashrc
+        fi
+fi
+if [[ -e $HOME/.zshrc ]]; then
+        zc=$(cat ~/.zshrc | grep "truecolor" -c)
+        pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
+        if [ $pcheckzsh -eq 0 ];then
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
+        fi
+        if [[ $zc = 0 ]]; then
+                sudo echo "export COLORTERM=truecolor" >>~/.zshrc
+                sudo echo "export COLORFGBG=15;0" >>~/.zshrc
+        fi
+fi
+
+
 
 # Check if the RC file contains the command_not_found_handle function
 if [[ -f "$rc_file" ]]; then
@@ -144,36 +172,16 @@ command_not_found_handle() {
 }
 EOL
         printf "Added the command_not_found_handle function to $rc_file"
+        cleanup_func
+        return 0
     else
         printf "The $rc_file already contains the command_not_found_handle function."
+        cleanup_func
+        return 0  
     fi
 else
     printf "The $rc_file does not exist. Cannot insert the command_not_found_handle function."
-fi
-
-if [[ -e $HOME/.bashrc ]]; then
-        rc=$(cat ~/.bashrc | grep "truecolor" -c)
-        pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
-        if [ $pcheckbash -eq 0 ];then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
-        fi
-        if [[ $rc = 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >>~/.bashrc
-                sudo echo "export COLORFGBG=15;0" >>~/.bashrc
-        fi
-fi
-if [[ -e $HOME/.zshrc ]]; then
-        zc=$(cat ~/.zshrc | grep "truecolor" -c)
-        pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
-        if [ $pcheckzsh -eq 0 ];then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
-        fi
-        if [[ $zc = 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >>~/.zshrc
-                sudo echo "export COLORFGBG=15;0" >>~/.zshrc
-        fi
+    cleanup_func
 fi
 
 cleanup_func
