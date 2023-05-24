@@ -99,31 +99,29 @@ fi
 
 # Determine the RC file based on the current shell
 if [[ -e $HOME/.bashrc ]]; then
-        rc=$(cat ~/.bashrc | grep "truecolor" -c)
+        rc=$(cat $HOME/.bashrc | grep "truecolor" -c)
         pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
-        if [ $pcheckbash -eq 0 ];then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
+        if [ $pcheckbash == 0 ];then
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> $HOME/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.bashrc
         fi
         if [[ $rc = 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >>~/.bashrc
-                sudo echo "export COLORFGBG=15;0" >>~/.bashrc
+                sudo echo "export COLORTERM=truecolor" >> $HOME/.bashrc
+                sudo echo "export COLORFGBG=15;0" >> $HOME/.bashrc
         fi
 fi
 if [[ -e $HOME/.zshrc ]]; then
-        zc=$(cat ~/.zshrc | grep "truecolor" -c)
+        zc=$(cat $HOME/.zshrc | grep "truecolor" -c)
         pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
-        if [ $pcheckzsh -eq 0 ];then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
+        if [ $pcheckzsh == 0 ]; then
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> $HOME/.zshrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.zshrc
         fi
         if [[ $zc = 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >>~/.zshrc
-                sudo echo "export COLORFGBG=15;0" >>~/.zshrc
+                sudo echo "export COLORTERM=truecolor" >> $HOME/.zshrc
+                sudo echo "export COLORFGBG=15;0" >> $HOME/.zshrc
         fi
 fi
-
-
 
 # Check if the RC file contains the command_not_found_handle function
 if [[ -f "$rc_file" ]]; then
