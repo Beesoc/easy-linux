@@ -9,6 +9,7 @@ scripts_dir=/opt/easy-linux
 declare -A required_versions=(
 	["install/menu-master.sh"]="0.0.3"
 	["install/menu-hacking.sh"]="0.0.3"
+	["install/menu-hackapps.sh"]="0.0.3"
 	["install/menu-customize.sh"]="0.0.3"
 	["install/menu-apps.sh"]="0.0.3"
 	["install/menu-pwn.sh"]="0.0.3"
