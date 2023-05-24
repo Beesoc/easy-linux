@@ -41,7 +41,7 @@ check_for_updates() {
             echo "Checking for updates..."
 
             # Run the update script
-            ./update-scripts.sh
+            ../update_scripts.sh
 
             # Update the last update timestamp
             echo "$current_time" > "$last_update_file"
@@ -52,7 +52,7 @@ check_for_updates() {
         echo "First run. Checking for updates..."
 
         # Run the update script
-        ./update-scripts.sh
+        ../update-scripts.sh
 
         # Create the last update file and set the timestamp
         echo "$(date +%s)" > "$last_update_file"
