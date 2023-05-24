@@ -68,6 +68,7 @@ cleanup_func() {
         printf "   ${WT}[*] ${GN}Success: ${WT}Beesoc's Easy Linux Loader ${GN}has been installed.\\n\\n"
         printf "   ${GN}Use the option on your ${WT}Apps menu ${GN}or enter [ ${WT}easy-linux.sh${GN} ]\\n"
         printf "   from ${WT}any Terminal ${GN}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${GN}!\\n${CY}"
+        echo
 
         
 if [[ -e $HOME/.bashrc ]]; then
