@@ -76,12 +76,6 @@ misc_func() {
         fi
     fi
 
-    if [[ -f $HOME/INSTALLv2.sh ]]; then
-        rm -f $HOME/INSTALLv2.sh
-    fi
-    if [[ -f $HOME/Downloads/INSTALLv2.sh ]]; then
-        rm -f $HOME/Downloads/INSTALLv2.sh
-    fi
     if [[ -f ${scripts_dir}/INSTALLv2.sh ]]; then
         sudo rm ${scripts_dir}/INSTALLv2.sh
     fi
@@ -211,7 +205,16 @@ main_menu() {
 main() {
 # Call the update check function
 check_for_updates
-while true; do
+if [[ -f $HOME/INSTALLv2.sh ]]; then
+        rm -f $HOME/INSTALLv2.sh
+ fi
+    if [[ -f $HOME/Downloads/INSTALLv2.sh ]]; then
+        rm -f $HOME/Downloads/INSTALLv2.sh
+    fi
+if [[ -e $HOME/version-easy-linux.sh ]]; then
+    rm -rf $HOME/version-easy-linux.sh
+fi
+    while true; do
     main_menu
     printf "${WT}Press any key to return to the main menu.${CY}\n"
     read -n 1 -r
