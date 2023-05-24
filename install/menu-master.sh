@@ -24,6 +24,43 @@ fi
 clear
 source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
 
+check_for_updates() {
+    local last_update_file=".last_update"
+
+    # Check if the last update file exists
+    if [[ -f "$last_update_file" ]]; then
+        # Get the last update timestamp
+        local last_update=$(cat "$last_update_file")
+
+        # Calculate the time difference in seconds
+        local current_time=$(date +%s)
+        local time_diff=$((current_time - last_update))
+
+        # Check if 24 hours have passed since the last update
+        if [[ $time_diff -ge 86400 ]]; then
+            echo "Checking for updates..."
+
+            # Run the update script
+            ./update-scripts.sh
+
+            # Update the last update timestamp
+            echo "$current_time" > "$last_update_file"
+        else
+            echo "Skipping update check. 24 hours have not passed since the last update."
+        fi
+    else
+        echo "First run. Checking for updates..."
+
+        # Run the update script
+        ./update-scripts.sh
+
+        # Create the last update file and set the timestamp
+        echo "$(date +%s)" > "$last_update_file"
+    fi
+}
+
+
+
 misc_func() {
     if [[ -f $HOME/.bashrc ]]; then
         if [[ $(cat $HOME/.bashrc | grep "xterm-color" -c) -eq 0 ]]; then
@@ -172,8 +209,14 @@ main_menu() {
 }
 
 # Main script logic
+main() {
+# Call the update check function
+check_for_updates
 while true; do
     main_menu
     printf "${WT}Press any key to return to the main menu.${CY}\n"
     read -n 1 -r
 done
+}
+
+main
