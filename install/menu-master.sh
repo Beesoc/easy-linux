@@ -60,7 +60,6 @@ check_for_updates() {
 }
 
 
-
 misc_func() {
     if [[ -f $HOME/.bashrc ]]; then
         if [[ $(cat $HOME/.bashrc | grep "xterm-color" -c) -eq 0 ]]; then
