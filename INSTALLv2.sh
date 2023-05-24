@@ -91,9 +91,9 @@ shell="$SHELL"
 rc_file=""
 
 
-if [[ "$shell" == *"/bash" ]]; then
+if [[ "$shell" == *'"/bash"' ]]; then
     rc_file="$HOME/.bashrc"
-elif [[ "$shell" == *"/zsh" ]]; then
+elif [[ "$shell" == *'"/zsh"' ]]; then
     rc_file="$HOME/.zshrc"
 fi
 
@@ -104,6 +104,7 @@ if [[ -e $HOME/.bashrc ]]; then
         if [ $pcheckbash == 0 ];then
         	echo "export PATH=/opt/easy-linux/install:$PATH" >> $HOME/.bashrc
               	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.bashrc
+                return 0
         fi
         if [[ $rc = 0 ]]; then
                 sudo echo "export COLORTERM=truecolor" >> $HOME/.bashrc
