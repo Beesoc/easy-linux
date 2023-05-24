@@ -69,17 +69,31 @@ cleanup_func() {
         printf "   ${GN}Use the option on your ${WT}Apps menu ${GN}or enter [ ${WT}easy-linux.sh${GN} ]\\n"
         printf "   from ${WT}any Terminal ${GN}to access. Thanks for using ${WT}Beesoc's Easy Linux Loader${GN}!\\n${CY}"
 
+        
+if [[ -e $HOME/.bashrc ]]; then
         rc=$(cat ~/.bashrc | grep "truecolor" -c)
-        zc=$(cat ~/.zshrc | grep "truecolor" -c)
+        pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
+        if [ $pcheckbash -eq 0 ];then
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
+        fi
         if [[ $rc = 0 ]]; then
                 sudo echo "export COLORTERM=truecolor" >>~/.bashrc
                 sudo echo "export COLORFGBG=15;0" >>~/.bashrc
+        fi
+fi
+if [[ -e $HOME/.zshrc ]]; then
+        zc=$(cat ~/.zshrc | grep "truecolor" -c)
+        pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
+        if [ $pcheckzsh -eq 0 ];then
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> ~/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> ~/.bashrc
         fi
         if [[ $zc = 0 ]]; then
                 sudo echo "export COLORTERM=truecolor" >>~/.zshrc
                 sudo echo "export COLORFGBG=15;0" >>~/.zshrc
         fi
-
+fi
         printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}      "
         read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
         launchnow=${launchnow:-Y}
