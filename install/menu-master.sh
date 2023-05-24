@@ -38,7 +38,7 @@ check_for_updates() {
 
         # Check if 24 hours have passed since the last update
         if [[ $time_diff -ge 86400 ]]; then
-            echo "Checking for updates..."
+            printf "  ${OG}Checking for updates...\\n"
 
             # Run the update script
             ../update_scripts.sh
@@ -46,13 +46,13 @@ check_for_updates() {
             # Update the last update timestamp
             echo "$current_time" > "$last_update_file"
         else
-            echo "Skipping update check. 24 hours have not passed since the last update."
+            printf "${OG}  Skipping update check. 24 hours have not passed since the last update.\\n"
         fi
     else
-        echo "First run. Checking for updates..."
+        printf "${GN}  First run. Checking for updates...\\n"
 
         # Run the update script
-        ../update-scripts.sh
+        ../update_scripts.sh
 
         # Create the last update file and set the timestamp
         echo "$(date +%s)" > "$last_update_file"
