@@ -2,10 +2,10 @@
 # shellcheck disable=SC1090 disable=SC2059 disable=SC2164 disable=SC2181
 # setup-repos.sh
 # Configures Webmin repository for RHEL and Debian systems (derivatives)
-# Version: 0.0.2
+# Version: 0.0.3
 #######################################################################
 #
-# Added by Cory
+# Added by Beesoc
 clear
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/support/support-Banner_func.sh
