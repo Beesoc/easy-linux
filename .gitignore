@@ -1,6 +1,7 @@
 .vscode/launch.json
 .vscode/settings.json
 .devcontainer/devcontainer.json
+.easy-linux_reset.sh
 support/misc/my_installed_apps.list
 support/my_installed_apps.list
 support/misc/need-to-upload.list
