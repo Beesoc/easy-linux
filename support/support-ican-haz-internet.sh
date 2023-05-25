@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version: 0.0.2
+# Version: 0.0.3
 # check internet connection
 set -e
 
