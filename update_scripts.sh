@@ -115,7 +115,7 @@ update_script() {
         printf "${GN}  [*] ${CY}Script $script_name updated.\\n"
 
         # Store the version information in the associative array
-        version_info["$script_name"]="Current Ver: $current_version. New Ver: $required_version"
+        version_info["$script_name"]="Required Ver: $current_version. Your Ver: $required_version"
     else
         printf "${GN}  [*] No update needed for $script_name${GN}.\\n"
     fi
