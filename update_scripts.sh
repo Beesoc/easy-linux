@@ -72,7 +72,6 @@ script_files=(
     "support/support-linux_connection_script.sh"
     "support/support-makeWordlist.sh"
     "support/support-monitor.sh"
-    "support/support-monDOWN.sh"
     "support/support-makeWordlist.sh"
     "support/support-nano.sh"
     "support/support-netadapter.sh"
