@@ -1,6 +1,6 @@
 #!/bin/bash
 # The Fat Rat installer/runner
-# Version: 0.0.2
+# Version: 0.0.3
 
 set -e
 source ${scripts_dir}/.envrc
