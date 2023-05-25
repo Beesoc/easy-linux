@@ -1,7 +1,8 @@
 #!/bin/bash
+set -e
 # uninstaller for Easy Linux
 scripts_dir=/opt/easy-linux
-# Version:0.0.3
+# Version: 0.0.3
 
 if [[ -d ${scripts_dir} ]]; then
   sudo rm -rf /opt/easy-linux
