@@ -9,7 +9,7 @@ set -e
 source ${scripts_dir}/.envrc
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
-# Version: 0.0.2
+# Version: 0.0.3
 
 wifite_func() {
                clear
