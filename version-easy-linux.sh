@@ -40,7 +40,6 @@ declare -A required_versions=(
 	["support/support-linux_connection_script.sh"]="0.0.3"
 	["support/support-makeWordlist.sh"]="0.0.3"
 	["support/support-monitor.sh"]="0.0.4"
-	["support/support-monDOWN.sh"]="0.0.2"
 	["support/support-makeWordlist.sh"]="0.0.3"
 	["support/support-nano.sh"]="0.0.3"
 	["support/support-netadapter.sh"]="0.0.4"
