@@ -1,5 +1,5 @@
 #!/bin/sh
-# Version: 0.0.2
+# Version: 0.0.3
 # Restart all Pwnagotchi services
 set -e 
 scripts_dir=/opt/easy-linux
