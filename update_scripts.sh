@@ -2,7 +2,7 @@
 # update-scripts.sh
 scripts_dir=/opt/easy-linux
 set -e
-# Version: 0.0.2
+# Version: 0.0.3
 trap ${scripts_dir}/support/trap-master.sh EXIT
 # Read the required versions from version-easy-linux.sh
 source "${scripts_dir}/version-easy-linux.sh"
@@ -115,7 +115,7 @@ update_script() {
         printf "${GN}  [*] ${CY}Script $script_name updated.\\n"
 
         # Store the version information in the associative array
-        version_info["$script_name"]="Required Ver: $current_version. Your Ver: $required_version"
+        version_info["$script_name"]="Your Ver: $current_version. Online Ver: $required_version"
     else
         printf "${GN}  [*] No update needed for $script_name${GN}.\\n"
     fi
