@@ -6,7 +6,7 @@ set -e
 #
 trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 source ${scripts_dir}/.envrc
-# Version: 0.0.2
+# Version: 0.0.4
 #
 Test_func() {
 	clear
