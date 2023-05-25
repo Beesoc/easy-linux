@@ -1,6 +1,6 @@
 #!/bin/bash
 # Aircrack-ng installer/runner
-# Version: 0.0.2
+# Version: 0.0.3
 trap trap-master.sh EXIT
 
 scripts_dir=/opt/easy-linux
