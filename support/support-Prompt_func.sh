@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 source ${scripts_dir}/.envrc
-# Version: 0.0.2
+# Version: 0.0.3
 source ${scripts_dir}/.envrc
 prompt_symbol=㉿
 prompt_color=${GN}
