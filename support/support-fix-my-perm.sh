@@ -1,7 +1,7 @@
 #!/bin/bash
 # fix permissions issues
 set -e
-# Version: 0.0.2
+# Version: 0.0.3
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 
