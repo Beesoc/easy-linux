@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version: 0.0.2
+# Version: 0.0.3
 # Shellcheck source=/opt/easy-linux/.envrc
 scripts_dir=/opt/easy-linux
 # Shellcheck source=${scripts_dir}/.envrc
