@@ -1,7 +1,7 @@
 #!/bin/bash
 # script to switch wifi adapter between MONITOR and managed mode.
 set -e
-# Version: 0.0.2
+# Version: 0.0.4
 #
 clear
 scripts_dir=/opt/easy-linux
