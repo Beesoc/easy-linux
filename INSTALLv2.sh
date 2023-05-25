@@ -21,7 +21,7 @@ elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
         echo "The script is version 0.0.2."
         exit 0
 fi
-# Version: 0.0.2
+# Version: 0.0.4
 
 set -e
 
