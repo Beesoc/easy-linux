@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script to set a static IP address for the usb0 interface when a specific USB device is inserted
-# Version: 0.0.3 
+# Version: 0.0.4
 
 # Define the USB device identifier
 USB_DEVICE_ID=$(echo "0525:a4a2") # Replace with the actual USB device ID
