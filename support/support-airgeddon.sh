@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version: 0.0.2
+# Version: 0.0.3
 # Airgeddon installer/runner
 # shellcheck source=.envrc
 
