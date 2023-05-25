@@ -2,7 +2,7 @@
 #
 #  Script to merge wordlists, sort and eliminate duplicates
 set -e
-# Version: 0.0.2
+# Version: 0.0.3
 scripts_dir=/opt/easy-linux
 #
 trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
