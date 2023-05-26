@@ -66,7 +66,7 @@ main() {
 if [[ -e /sys/class/net/wlan1 ]]; then
 	    # Run the command for wlan1
   	    printf "${OG}  Multiple Wifi adapters detected."
-	    wlan_sel_fun
+	    wlan_sel_func
 else
     printf "${CY}  Only 1 Wifi adapter detected. Selecting wlan0"
     adapter=wlan0
