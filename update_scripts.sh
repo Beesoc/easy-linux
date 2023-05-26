@@ -168,6 +168,5 @@ printf "  ${GN}Press ${WT}any ${GN}key to continue${NC}\n"
 echo
 read -n 1 -s -r -t 300
 
-sudo cp -f ${scripts_dir}/install/menu-master.sh /usr/bin/easy-linux.sh
 # Clean up temporary files
 rm -rf "${scripts_dir}/tmp"
