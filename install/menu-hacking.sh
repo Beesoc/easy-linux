@@ -139,7 +139,7 @@ source "${scripts_dir}/support/support-Banner_func.sh"
         5) wifite_func ;;
         6) airg_func ;;
         7) hacktool_func ;;
-	8) hackmenu_func ;;
+    	8) hackmenu_func ;;
         9) sysinfo_func ;;
         10) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
