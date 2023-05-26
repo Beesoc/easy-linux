@@ -3,27 +3,30 @@
 set -e
 # Version: 0.0.3
 # This is an update test.
+scripts_dir=/opt/easy-linux
 source "${scripts_dir}/.envrc"
-trap source ${scripts_dir}/support/support-trap-wifi.sh EXIT
+trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 app-install_func() {
 
-	if [[ -d "$HOME/compiled/wifite2/" ]]; then
-		printf "${WT}Wifite ${OG}installation folder exists.\\n${CY}  "
+	if [ command -v wifite ]; then
+	    if [ -d $HOME/compiled/wifite2 ]; then
+ 		printf "${WT}Wifite ${OG}installation folder exists.\\n${CY}  "
 		read -n 1 -r -p "Remove folder and reinstall? [Y/n]" reinstall
 		reinstall=${reinstall:-Y}
-		if [[ ${reinstall} = "Y" ]] || [[ ${reinstall} = "y" ]]; then
+     		if [[ ${reinstall} = "Y" ]] || [[ ${reinstall} = "y" ]]; then
 			sudo rm -fR $HOME/compiled/wifite2/
-		elif [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
+	    	elif [[ ${reinstall} = "N" ]] || [[ ${reinstall} = "n" ]]; then
 			printf "${RED} Wifite will not be installed. Press ${WT}any ${RED} key to return to main menu."
 			source "${scripts_dir}/support/support-Prompt_func.sh"
 			read -r -n 1 -s -t 300
 			source "$scripts_dir/menu-master.sh"
-		else
+	    	else
 			printf "${YW}    Invalid Selection."
-		fi
-	else
+	    	fi
+	    else
 		printf "${CY}  Creating $HOME/compiled/wifite and cloning Wifite repo into wifite2 folder for installation."
+        fi
 	fi
 
 	cd $HOME/compiled || exit
@@ -38,7 +41,7 @@ main() {
 	clear
 	source ${scripts_dir}/support/support-Banner_func.sh
 
-	if [[ $(command -v wifite >/dev/null 2>&1) ]]; then
+	if  (command -v wifite >/dev/null 2>&1); then
 		printf "${GN}Wifite is already installed"
 		sudo wifite
 		wifite-installed=1
