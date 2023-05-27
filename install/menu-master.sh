@@ -55,7 +55,7 @@ check_for_updates() {
         /opt/easy-linux/update_scripts.sh
 
         # Create the last update file and set the timestamp
-        echo "$(date +%s)" > "$last_update_file"
+        sudo echo "$(date +%s)" > "$last_update_file"
     fi
 }
 
