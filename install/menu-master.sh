@@ -52,7 +52,7 @@ check_for_updates() {
         printf "${GN}  First run. Checking for updates...\\n"
 
         # Run the update script
-        ../update_scripts.sh
+        /opt/easy-linux/update_scripts.sh
 
         # Create the last update file and set the timestamp
         echo "$(date +%s)" > "$last_update_file"
