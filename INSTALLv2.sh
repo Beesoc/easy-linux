@@ -183,6 +183,9 @@ fi
 
 cleanup_func
 
+sudo touch ${scripts_dir}/support/.last_update
+sudo chown -vR $USER:0 ${scripts_dir}/support/.last_update
+
 }
 command_not_found_handle() {
 
