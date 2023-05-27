@@ -25,8 +25,8 @@ clear
 source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
 
 check_for_updates() {
-    local last_update_file=".last_update"
-
+   cd /opt/easy-linux/support || exit
+      local last_update_file=".last_update"
     # Check if the last update file exists
     if [[ -f "$last_update_file" ]]; then
         # Get the last update timestamp
