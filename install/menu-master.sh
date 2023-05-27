@@ -55,7 +55,7 @@ check_for_updates() {
         /opt/easy-linux/update_scripts.sh
 
         # Create the last update file and set the timestamp
-        sudo chown -vR /opt/easy-linux/support
+        sudo chown $USER:0 -vR /opt/easy-linux/support
         echo "$(date +%s)" > "$last_update_file"
     fi
 }
