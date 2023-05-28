@@ -5,9 +5,9 @@ set -e
 source "${scripts_dir}/.envrc"
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
-if [[ $USER != "beesoc" ]] || [[ $HOST != "updates" ]]; then
+if [[ $USER != "$cwb_username" ]] || [[ $HOST != "$cwb_computername" ]]; then
 	exit 0
-elif [[ $USER = "beesoc" ]] && [[ $HOST = "updates" ]]; then
+elif [[ $USER = "$cwb_username" ]] && [[ $HOST = "$cwb_computername" ]]; then
 	#####  Personal  #######
 	printf "${CY}  Install Storm-Breaker"
 	sudo apt install -y python3-requests python3-colorama python3-psutil >/dev/null
