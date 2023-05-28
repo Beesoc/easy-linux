@@ -65,7 +65,7 @@ populate_envrc() {
         echo "export arch=$(uname -m)" | sudo tee -a "$envrc_file"
         echo "export wordlist=/usr/share/wordlists/Top304Thousand-probable-v2.txt" | sudo tee -a "$envrc_file"
         echo "export amiPwn=$(if [ -f '/etc/pwnagotchi/config.toml' ]; then echo "1"; else echo "0"; fi)" | sudo tee -a "$envrc_file"
-        echo "export pwnagotchi=$(if [[ "$USER" == "$cwb_username" && "$(cat /etc/hostname)" == "$cwb_computername" ]]; then echo "Gotcha"; else echo "Unknown"; fi)" | sudo tee -a "$envrc_file"
+        echo "export pwnagotchi=$(if [[ "$USER" == "$cwb_username" && "$(cat /etc/hostname)" == "$cwb_computername" ]]; then echo "Gotcha"; fi)" | sudo tee -a "$envrc_file"
         echo "export pwn_installed=" | sudo tee -a "$envrc_file"
         echo "export OS=$(uname -s)" | sudo tee -a "$envrc_file"
 
