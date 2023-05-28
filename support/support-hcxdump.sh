@@ -4,9 +4,9 @@ set -e
 # Version: 0.0.4
 # trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 source "${scripts_dir}/.envrc"
+hcxdump_full=0
 
 ripper_func() {
-  read -n 1 -r -p "Made it another step. Any key to continue" madeit
   clear
   printf "\\n"
 
@@ -29,11 +29,32 @@ ripper_func() {
     hashcat -m 22000 -a 3 -w 4 -o /opt/backup/root/handshakes/mypots.potfile --force --opencl-device-types=1,2 "${WORDLIST}" /opt/backup/root/handshakes/hashes.22000 --increment --increment-min=8 --increment-max=13
   else
     # Invalid choice
-    printf "${RED}  Invalid choice. Exiting..."
+    printf "${RED}  Invalid choice. Exiting...\\n"
     exit 1
   fi
 
-  # ...
+}
+
+full_scan() {
+clear
+source "${scripts_dir}/support/support-Banner_func.sh"
+if [[ $hcxdump_full -ne 1 ]]; then
+  printf "${CY}  Whoop. How would you like to do a ${WT}REAL ${CY}scan.\\n"
+  printf "${OG}  The longer you wait on the next screen, the more attacks will complete, and the\\n" 
+  printf "${OG}  more hashes you will have. It will stop itself after 10 mins or you can press\\n"
+  printf "${OG}  ${WT}Ctrl${OG} + ${WT}C ${OG}to stop it early.\\n"
+  read -n 1 -r -p "Good things come...Press any key "
+  echo "export hcxdump_full=1"
+  source ${scripts_dir}/support/support-hcxdump_full.sh
+  sleep 600
+  ripper_func
+elif [[ $hcxdump_full == 1 ]]; then
+  printf "${GN}  So...you ran the full scan"; sleep 2; printf " ...I hope it paid off for you."; sleep 2; printf "You'll find out soon\\n"
+  sleep 3; printf "...ish"
+  echo "export hcxdump_full="
+  read -r -p "Press any key to continue."
+  ripper_func
+fi
 }
 
 Test_func() {
@@ -74,7 +95,7 @@ choice_func() {
   sudo systemctl stop NetworkManager && sudo systemctl stop wpa_supplicant
   echo
   printf " \\n${WT}"
-  printf "  ${CY}Press ${WT}[S] ${CY}to scan...Please ${RED}do not interrupt for 30 sec ${CY}scan...${OG}\\n"
+  printf "  ${CY}Press ${WT}[S] ${CY}to scan...Please ${RED}do not interrupt for 40 sec ${CY}scan...${OG}\\n"
   echo
   printf "  Scan will stop automatically when complete...\\n${WT}   "
   printf "${GN} \\n"
@@ -87,8 +108,8 @@ choice_func() {
     Test_func
   elif [[ "${torscan}" = "S" ]] || [[ "${torscan}" = "s" ]]; then
     printf " \\n"
-
-    if (ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
+       
+      if (ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
       cd "${scripts_dir}/support/misc" || exit
       printf "${OG}  Hcxdump files exist in your misc/ directory. Using them.\\n"
       sleep 3
@@ -96,26 +117,23 @@ choice_func() {
       sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
    #   cat 
    #   rm -f ./*pcapng*
-      read -n 1 -p "Done with hcxpcapng. Files deleted.\\n"
-      ripper_func
-    elif (! ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
+        do_rcascan="0"  
+      read -n 1 -p "Done with hcxpcapng RCAScanning. Press any key. \\n"
+      full_scan
+      elif (! ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
       # Code to execute when the files don't exist
       printf "${OG}  You have selected scan. The next step will take 30 secs.\\n"
       printf "${OG}  Do ${WT}NOT ${OG}interrupt until the scan has completed.\\n  "
       read -n 1 -r -p "Press any key to continue." anykey2
-      printf "\\n"
-      if [[ $do_rcascan == 0 ]]; then
         do_rcascan=1
-        source "${scripts_dir}/support/support-hcxdump_dorcascan.sh"
-        sleep 40
-      elif [[ $do_rcascan == 1 ]]; then
-        do_rcascan=0
-        source "${scripts_dir}/support/support-hcxdump3.sh"
-        sleep 120
+        source "${scripts_dir}/support/support-hcxdump_dorcascan.sh" & && sleep 40
+      printf "\\n"
+      sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
+      sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
       fi
-    fi
-    printf "\\n  ${GN}Success. Hcxdump files have been joined. \\n"
-  fi
+else
+      printf "${RED}  Invalid Selection.  Press ${WT}S ${RED}to scan, or ${WT}T ${RED}to test wifi adapters."
+fi
 }
 
 main() {
