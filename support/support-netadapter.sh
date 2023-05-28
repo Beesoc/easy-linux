@@ -26,6 +26,9 @@ wlan_sel_func() {
     else
         adapter="wlan0"
     fi
+sudo ifconfig $adapter down    
+sudo iwconfig $adapter power off
+sudo ifconfig $adapter up
 sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc" 
 }
 
@@ -70,6 +73,9 @@ if [[ -e /sys/class/net/wlan1 ]]; then
 else
     printf "${CY}  Only 1 Wifi adapter detected. Selecting wlan0"
     adapter=wlan0
+    sudo ifconfig $adapter down
+    sudo iwconfig $adapter power off
+    sudo ifconfig $adapter up
     sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
 fi
 
