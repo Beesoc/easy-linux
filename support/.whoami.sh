@@ -30,8 +30,9 @@ if [[ $pwnagotchi != "Gotcha" && $pwnagotchi != "Sniffer" ]]; then
     elif [[ "$user" == "$ldb_username" && "$(cat /etc/hostname)" == "$ldb_computername" ]]; then
         pwnagotchi="Sniffer"
         update_pwnagotchi "Sniffer"
+    else
+        update_pwnagotchi "Unknown"
     fi
-    update_pwnagotchi "Unknown"
 fi
 
 # Function to populate .envrc file if not already populated
