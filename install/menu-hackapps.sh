@@ -12,8 +12,7 @@ trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 # Version: 0.0.3
 
 wifite_func() {
-               clear
-                        source "$scripts_dir/support/support-Banner_func.sh"
+ 
                         if [[ $wifite_installed == 1 ]]; then
                                 printf "\\n${GN}Wifite is already installed\\n"
                                 sudo wifite
@@ -21,47 +20,39 @@ wifite_func() {
                                 printf "    \\n${YW}Wifite is not installed\\n"
                                 source "$scripts_dir/support/support-wifite.sh"
                                 wifite_installed=1
-                        fi
-       
+                        fi      
 }
 
 hackingtool_func() {
            if [[ $hacktool-installed == 0 ]]; then
                                 source $scripts_dir/support/support-hackingtool.sh
-                        elif [[ $hacktool-installed == 1 ]]; then
+           elif [[ $hacktool-installed == 1 ]]; then
                                 sudo hackingtool 
-                         fi
-      
+           fi
 }
 
 fatrat_func() {
-                      clear
-                        source $scripts_dir/support/support-Banner_func.sh
-                        if [[ $fatrat_installed == 1 ]]; then
+         if [[ $fatrat_installed == 1 ]]; then
                                 printf "\\n${GN}The Fat Rat is already installed\\n"
                                 sudo fatrat
-                        else
+         else
                                 source $scripts_dir/support/support-fatrat.sh
-                        fi
-
+         fi
 }
 
 airgeddon_func() {
-     clear
-  source "$scripts_dir/support/support-Banner_func.sh"
   printf "$GN\\n  You've selected ${WT}Airgeddon$CY.\\n    "
   if [[ $airg_installed == 1 ]]; then
        sudo airgeddon
-       sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "$scripts_dir/.envrc"
-  else
+   else
        read -n 1 -p "Do you want to continue? [Y/n] " choiceairged
        choiceairged=${choiceairged:-Y}
   
         if [[ $choiceairged =~ ^[Yy]$ ]]; then
-                                printf "\\n$GN  Continuing...\\n"
+                                printf "\\n${GN}  Continuing...\\n"
                      source $scripts_dir/support/support-airgeddon.sh
         elif [[ $choiceairged =~ ^[Nn]$ ]]; then
-                                printf "$RED  Cancelling. Returning to ${WT}Main Menu\\n"
+                                printf "${RED}  Cancelling. Returning to ${WT}Main Menu\\n"
                                 source $scripts_dir/install/menu-master.sh
         else
                                 printf "$RED  Exiting.\\n"
@@ -78,8 +69,7 @@ aircrack_func() {
          else
                                 printf "${YW}Aircrack-NG is not installed. Installing\\n"
                                 source $scripts_dir/support/support-aircrack2.sh
-         fi
-  
+         fi  
 }
 
 main_menu_func() {
@@ -90,7 +80,7 @@ main_menu() {
         clear
         source ${scripts_dir}/support/support-Banner_func.sh
         echo
-        printf "${OG}        $USER            ${GN}Install and Run Hacking Apps${OG}             $computername ${CY}\n"
+        printf "${OG}        $USER            ${GN}Install and Run Hacking Apps${OG}             ${computername} ${CY}\n"
         echo
         printf "  ${GN}Select an option:${CY}\n"
         echo
@@ -100,11 +90,11 @@ main_menu() {
         printf "    ${WT}4)${CY}  HackingTool${PL}: Swiss army knife hacker. Contains MANY other tools.\n"
         printf "    ${WT}5)${CY}  WiFite 2${PL}: All in 1 hacker. Awesome and easy.\n"
         printf "    ${WT}6)${CY}  Return to Main Menu${PL}: Return to Easy Linux Main Menu\n"
-        printf "    ${WT}7)${CY}  [✘] Exit tool [✘]${PL}: Uh, it just exits.\n"
+        printf "    ${WT}7)${CY}  [✘] Exit tool [✘]${PL}: Uhh, it just exits.\n"
         echo
-        printf "  ${GN}Selection: ---->${OG}  "
+        printf "  ${GN}Selection: ---->${OG} "
     read -n 1 -r main_menu_sel
-        case "$main_menu_sel" in'\e[1;36m'
+        case "$main_menu_sel" in
         1) aircrack_func ;;
         2) airgeddon_func ;;
         3) fatrat_func ;;
