@@ -15,6 +15,7 @@ change_net_func() {
         if [[ $mode == "monitor" ]]; then
            sudo ifconfig $adapter down
            sudo iw $adapter set type $mode
+           sudo iwconfig $adapter power on 
            sudo ifconfig $adapter up
            sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
            sudo systemctl start NetworkManager && sudo systemctl start wpa_supplicant
@@ -22,6 +23,7 @@ change_net_func() {
         elif [[ $mode == "managed" ]]; then
             sudo ifconfig $adapter down
             sudo iw $adapter set type $mode
+            sudo iwconfig $adapter power off
             sudo ifconfig $adapter up
             sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
             sudo systemctl start NetworkManager && sudo systemctl start wpa_supplicant
