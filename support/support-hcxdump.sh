@@ -94,8 +94,8 @@ choice_func() {
       sleep 3
       sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
       sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
-      cat 
-      rm -f ./*pcapng*
+   #   cat 
+   #   rm -f ./*pcapng*
       read -n 1 -p "Done with hcxpcapng. Files deleted.\\n"
       ripper_func
     elif (! ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
@@ -104,10 +104,9 @@ choice_func() {
       printf "${OG}  Do ${WT}NOT ${OG}interrupt until the scan has completed.\\n  "
       read -n 1 -r -p "Press any key to continue." anykey2
       printf "\\n"
-      do_rcascan=""
       if [[ $do_rcascan == 0 ]]; then
         do_rcascan=1
-        source "${scripts_dir}/support/support-hcxdump_dorescan.sh"
+        source "${scripts_dir}/support/support-hcxdump_dorcascan.sh"
         sleep 40
       elif [[ $do_rcascan == 1 ]]; then
         do_rcascan=0
