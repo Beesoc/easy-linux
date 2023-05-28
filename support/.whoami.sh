@@ -5,10 +5,9 @@ set -e
 # Version: 0.0.3
 
 # Paths
-scripts_dir="/opt/easy-linux"
-envrc_file="/opt/easy-linux/.envrc"
-
-flag_file="/opt/easy-linux/.envrc_populated"
+scripts_dir=/opt/easy-linux
+flag_file=/opt/easy-linux/.envrc_populated
+envrc_file=/opt/easy-linux/.envrc
 
 # Capture user's username and computer name
 computername=$(cat /etc/hostname)
@@ -25,10 +24,10 @@ update_pwnagotchi() {
 
 if [[ $pwnagotchi != "Gotcha" && $pwnagotchi != "Sniffer" ]]; then
     pwnagotchi="Unknown"
-    if [[ "$user" == "\\$cwb_username" && "$(cat /etc/hostname)" == "\\$cwb_computername" ]]; then
+    if [[ "$user" == "$cwb_username" && "$(cat /etc/hostname)" == "$cwb_computername" ]]; then
         pwnagotchi="Gotcha"
         update_pwnagotchi "Gotcha"
-    elif [[ "$user" == "\\$ldb_username" && "$(cat /etc/hostname)" == "\\$ldb_computername" ]]; then
+    elif [[ "$user" == "$ldb_username" && "$(cat /etc/hostname)" == "$ldb_computername" ]]; then
         pwnagotchi="Sniffer"
         update_pwnagotchi "Sniffer"
     fi
@@ -96,10 +95,10 @@ if [[ $pwnagotchi != "Gotcha" && $pwnagotchi != "Sniffer" ]]; then
 fi
 
 if [ -x "$(command -v direnv)" ]; then
-   cd "$scripts_dir"
+   cd /opt/easy-linux
    direnv allow && sudo direnv allow
 
-   cd "$scripts_dir/support"
+   cd /opt/easy-linux/support
    direnv allow && sudo direnv allow
 fi
 
