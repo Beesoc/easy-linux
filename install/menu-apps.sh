@@ -86,7 +86,7 @@ nano_func() {
 }
 
 ncdu_func() {
-  if [[ $ncdu_installed = 1 && $(command -v ncdu >/dev/null) ]]; then
+  if [ $ncdu_installed = 1 ] && $(command -v ncdu >/dev/null); then
     ncdu --color dark -x --exclude-caches --exclude-kernfs --exclude .local --confirm-quit --exclude .cache /
   else
     sudo apt install -y ncdu
