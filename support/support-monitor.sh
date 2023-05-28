@@ -6,104 +6,165 @@ set -e
 clear
 scripts_dir=/opt/easy-linux
 
-trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 source "${scripts_dir}/.envrc"
 
-change_net_func() {
-    sudo systemctl stop NetworkManager && sudo systemctl stop wpa_supplicant
+# Disable terminal interrupt handling temporarily
+disable_interrupts() {
+  stty -echoctl
+}
 
-        if [[ $mode == "monitor" ]]; then
-           sudo ifconfig $adapter down
-           sudo iw $adapter set type $mode
-           sudo iwconfig $adapter power on 
-           sudo ifconfig $adapter up
-           sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
-           sudo systemctl start NetworkManager && sudo systemctl start wpa_supplicant
-           return 0
-        elif [[ $mode == "managed" ]]; then
-            sudo ifconfig $adapter down
-            sudo iw $adapter set type $mode
-            sudo iwconfig $adapter power off
-            sudo ifconfig $adapter up
-            sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
-            sudo systemctl start NetworkManager && sudo systemctl start wpa_supplicant
-            return 0
+# Enable terminal interrupt handling
+enable_interrupts() {
+  stty echoctl
+}
 
-        fi
+services_func() {
 
-    printf "\\n${OG}Starting NetworkManager and wpa_supplicant${OG}.\\n"
+  sudo rfkill block wifi &
+  sudo systemctl start NetworkManager &
+  sudo systemctl start wpa_supplicant &
+  sudo rfkill unblock wifi
+  enable_interupts
 
 }
 
-main() {
-    clear
-    source "${scripts_dir}/support/support-Banner_func.sh"
-    adapter=""
-    sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
+# Trap function for abnormal script exit (ERR signal)
+err_trap_func() {
+  printf "\\n${RED}Script exited abnormally.${OG}\\n"
+  services_func
+  exit 1
+}
 
-    available_adapters=$(find /sys/class/net -type l -name 'wlan*')
-    adapter_count=$(echo "$available_adapters" | wc -l)
+# Trap function for Ctrl+C interruption (SIGINT signal)
+int_trap_func() {
+  printf "\\n${RED}Script interrupted.${OG}\\n"
+  services_func
+  exit 1
+}
 
-    if [[ $adapter_count -eq 0 ]]; then
-        printf "  No wifi adapters detected\\n"; sleep 3
-        printf "${RED}  ERROR:${WT} No wifi adapters ${RED}can be seen on your PC at this time.\\n"
-        printf "  ${OG}NOTE: At this time, wifi adapters must use the wlan? naming convention.\\n"
-        adapter="\\n"
-    elif [[ $adapter_count -eq 1 ]]; then
-        adapter=wlan0
-        printf "  Only 1 wifi adapter detected. Selecting $adapter\\n"
-        sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc" 
+# Set traps for abnormal exit and interruption
+trap err_trap_func ERR
+trap int_trap_func SIGINT
+
+change_net_func() {
+  sudo rfkill block wifi
+  sudo systemctl stop NetworkManager &
+  sudo systemctl stop wpa_supplicant &
+
+  if [[ $mode == "monitor" ]]; then
+    sudo iw $adapter set type $mode
+
+    sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
+    sudo systemctl start NetworkManager &
+    sudo systemctl start wpa_supplicant &
+    sudo rfkill unblock wifi &
+    return 0
+  elif [[ $mode == "managed" ]]; then
+    sudo iw $adapter set type $mode
+
+    sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
+    sudo systemctl start NetworkManager &
+    sudo systemctl start wpa_supplicant &
+    sudo rfkill unblock wifi &
+    return 0
+  fi
+
+  printf "\\n${OG}Starting NetworkManager and wpa_supplicant${OG}.\\n"
+}
+
+choice_func() {
+  if [[ $mode == "monitor" ]]; then
+    printf "${GN}  You are currently in ${WT}$mode Mode${GN} on ${WT}${adapter}${GN}.\\n"
+    printf "This mode is for hacking. ${WT}Wifi won't work ${GN}while it's enabled.\\n"
+    # Disable interrupt handling
+    disable_interrupts
+    read -n 1 -r -p "Do you want to change to the default mode, managed? [Y/n] ----> " choice
+    choice=${choice:-Y}
+    printf "\\n"
+    # Enable interrupt handling
+    enable_interrupts
+    if [[ $choice == "y" ]] || [[ $choice == "Y" ]]; then
+      # Code to change adapter back to managed mode
+      mode="managed"
+      change_net_func
+      sudo systemctl start NetworkManager &
+      sudo systemctl start wpa_supplicant &
+      printf "Adapter $adapter changed to $mode mode.\\n"
+      return 0
+    elif [[ $choice == "n" ]] || [[ $choice == "N" ]]; then
+      printf "  ${WT}$USER ${OG}has selected to ${WT}keep their wifi in hacking mode (monitor mode)${OG}.\\n"
+      return 0
     else
-        printf "\\n${CY}You have ${WT}$adapter_count${CY} wireless network adapters.\\n"
-        printf "${CY}  Please select one:\\n${OG}"
-
-        sudo airmon-ng | awk '/wl/ {print $2 " - " $4 " " $5}' 2>/dev/null | grep "wl" | nl -nln
-
-        printf "\\n${WT}"
-        read -n 1 -r -p "Enter the number of the interface you want to use in monitor mode: " selection
-        printf "\\n"
-        adapter=$(sudo airmon-ng | awk '/wl/ {print $2}' | cut -d' ' -f1 | sed -n "${selection}p")     
-        sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc" 
+        printf "  ${RED}Invalid Selection. Options are Y or N." 
     fi
-
-    mode="$(iw dev $adapter info | awk '/type/ {print $2}')"
-
-    if [[ $mode == "monitor" ]]; then
-        printf "${GN}  You are currently in ${WT}$mode Mode${GN} on ${WT}${adapter}${GN}.\\n"
-        printf "This mode is for hacking. ${WT}Wifi won't work ${GN}while it's enabled.\\n"
-        read -n 1 -r -p "Do you want to change to the default mode? [Y/n] ----> " choice
-        choice=${choice:-Y}
-        printf "\\n"
-        if [[ $choice == "y" ]] || [[ $choice == "Y" ]]; then
-            # Code to change adapter back to managed mode
-            mode="managed"
-            change_net_func
-            sudo systemctl restart NetworkManager
-            sudo systemctl restart wpa_supplicant
-            printf "Adapter $adapter changed to $mode mode.\n"
-        elif [[ $choice == "n" ]] || [[ $choice == "N" ]]; then
-            printf "  ${WT}$USER ${OG}has selected to ${WT}keep their wifi mode the same.${OG}.\n"
-        fi
-    elif [[ $mode == "managed" ]]; then
-        printf "${GN}  You are currently in ${WT}$mode mode${GN} on ${WT}$adapter${GN}.\\n"
-        printf "This mode is for accessing the internet. ${WT}Hacking won't work ${GN}while it's enabled.\\n"
-        read -n 1 -r -p "Do you want to change it to monitor mode? [y/N] ----> " choice2
-        choice2=${choice2:-N}
-        printf "\\n"
-        if [[ $choice2 == "y" ]] || [[ $choice2 == "Y" ]]; then
-            # Code to change adapter to monitor mode
-            mode="monitor"
-            change_net_func
-            sudo systemctl restart NetworkManager
-            sudo systemctl restart wpa_supplicant
-            printf "Adapter $adapter changed to $mode mode.\n"
-        elif [[ $choice2 == "n" ]] || [[ $choice2 == "N" ]]; then
-            printf "  ${WT}$USER ${OG}has selected to ${WT}keep their wifi mode the same.${OG}.\n"
-        else
-            printf "  ${RED}Invalid Selection. Valid options are Y or N."
-        fi
+  elif [[ $mode == "managed" ]]; then
+    printf "${GN}  You are currently in ${WT}$mode mode${GN} on ${WT}$adapter${GN}.\\n"
+    printf "This mode is for accessing the internet. ${WT}Hacking won't work ${GN}while it's enabled.\\n"
+    # Disable interrupt handling
+    disable_interrupts
+    read -n 1 -r -p "Do you want to change it to monitor mode (for hacking only)? [Y/n] ----> " choice2
+    choice2=${choice2:-y}
+    # Enable interrupt handling
+    enable_interrupts
+    printf "\\n"
+    if [[ $choice2 == "y" ]] || [[ $choice2 == "Y" ]]; then
+      # Code to change adapter to monitor mode
+      mode="monitor"
+      change_net_func
+      sudo systemctl restart NetworkManager &
+      sudo systemctl start wpa_supplicant
+      #sudo systemctl start wpa_supplicant
+      printf "Adapter $adapter changed to $mode mode.\\n"
+      return 0
+    elif [[ $choice2 == "n" ]] || [[ $choice2 == "N" ]]; then
+      printf "  ${WT}$USER ${OG}has selected to ${WT}keep their wifi in managed mode${OG}.\\n"
+      sudo systemctl start NetworkManager &
+      sudo systemctl start wpa_supplicant &
+      return 0
+    else
+      printf "  ${RED}Invalid Selection. Valid options are Y or N."
+      sudo systemctl start NetworkManager &
+      sudo systemctl start wpa_supplicant &
     fi
+  fi
+}
 
+main() {
+  clear
+  source "${scripts_dir}/support/support-Banner_func.sh"
+  sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
+
+  available_adapters=$(find /sys/class/net -type l -name 'wlan*')
+  adapter_count=$(echo "$available_adapters" | wc -l)
+
+  if [[ $adapter_count -eq 0 ]]; then
+    printf "  No wifi adapters detected\\n"
+    printf "${RED}  ERROR:${WT} No wifi adapters ${RED}can be seen on your PC at this time.\\n"
+    printf "  ${OG}NOTE: At this time, wifi adapters must use the wlan? naming convention.\\n"
+    adapter=""
+  elif [[ $adapter_count -eq 1 ]]; then
+    adapter=wlan0
+    printf "  Only 1 wifi adapter detected. Selecting $adapter\\n"
+    sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
+    choice_func
+  else
+    printf "\\n${CY}You have ${WT}$adapter_count${CY} wireless network adapters.\\n"
+    printf "${CY}  Please select one:\\n${OG}"
+
+    sudo airmon-ng | awk '/wl/ {print $2 " - " $4 " " $5}' 2>/dev/null | grep "wl" | nl -nln
+    printf "\\n${WT}"
+    # Disable interrupt handling
+    disable_interrupts
+    read -n 1 -r -p "Enter the number of the interface you want to use in monitor mode: " selection
+    # Enable interrupt handling
+    enable_interrupts
+    printf "\\n"
+    adapter=$(sudo airmon-ng | awk '/wl/ {print $2}' | cut -d' ' -f1 | sed -n "${selection}p")
+    sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
+  fi
+
+  mode="$(iw dev $adapter info | awk '/type/ {print $2}')"
+  choice_func
 }
 
 main
