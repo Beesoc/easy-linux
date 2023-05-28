@@ -24,9 +24,10 @@ placeholder1_func() {
 
 perm_func() {
         printf "${OG}  3]  ${CY}Fix your perm - Permission probems in Linux can be a bitch.  Get help here. \\n "
-        printf "${OG}  a]  ${CY}Fix permissions problems on ${WT}/opt/backup ${CY}and your ${WT}Home folder${CY} \\n  "
-        printf "${OG}  b]  ${CY}Enter a custom folder to fix permissions on."
+        printf "${OG}  ${CY}Fix permissions problems on ${WT}/opt/backup ${CY}and your ${WT}Home folder${CY} \\n  "
+        printf "${OG}  ${CY}TODO: Enter a custom folder to fix permissions on."
         source "${scripts_dir}/support/support-fix-my-perm.sh"
+        read -n 1 -r
 }
 
 wifi_func() {
@@ -41,7 +42,7 @@ main_menu() {
         clear
         source ${scripts_dir}/support/support-Banner_func.sh
         echo
-  printf "${OG}         $USER               ${GN}Troubleshooting War Room${OG}                    $computername\n"
+  printf "${OG}         $USER               ${GN}Troubleshooting War Room${OG}                    ${computername}\n"
     echo
         printf "  ${GN}Select an option:${CY}\n"
         echo
