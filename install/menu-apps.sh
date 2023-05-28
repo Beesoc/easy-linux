@@ -222,7 +222,7 @@ main() {
            deps_install_func
         fi
         pc="$(cat /etc/hostname)"
-        if [[ "$USER" == "\\$cwb_username" && "$pc" == "\\$cwb_computername" ]]; then
+        if [[ "$USER" == "$cwb_username" && "$pc" == "$cwb_computername" ]]; then
              personal_func
         fi
         while true; do
