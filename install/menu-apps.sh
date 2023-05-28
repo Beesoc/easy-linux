@@ -10,8 +10,6 @@ trap "/opt/easy-linux/support/trap-master.sh" EXIT
 #shellcheck source=${scripts_dir}/support/support-Prompt_func.sh
 
 webmin() {
-                        clear
-                        source "$scripts_dir/support/support-Banner_func.sh"
                         read -p "Do you want to install/launch Webmin? [Y/n] " instweb
                         instweb=${instweb:-Y}
                         if [[ "$instweb" =~ ^[yY]$ ]]; then
@@ -20,9 +18,11 @@ webmin() {
                                         printf "https://localhost:10000\\n"
                                         printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
                                         read -n 1 -t 300
-                                        source ${scripts_dir}/install/menu-master.sh
+                                        source ${scripts_dir}/install/menu-apps.sh
                                 elif [[ ${webmin_installed} == 0 ]]; then
                                         source ${scripts_dir}/support/support-webmin.sh
+                                else 
+                                     printf "${RED}Invalid Selection. Options are Y or N only."
                                 fi
                         elif [[ "$instweb" =~ ^[nN]$ ]]; then
                                 printf "  ${WT}$USER ${RED}decided not to install Webmin. Exiting\\n\\n"
@@ -32,7 +32,7 @@ webmin() {
 }
 
 standard_func() {
-                 if [[ $stand_install == 0 ]]; then
+                        if [[ $stand_install == 0 ]]; then
                                 source $scripts_dir/support/support-inst-standard.sh
                         elif [[ $stand_install == 1 ]]; then
                                 printf "$OG  You have already installed all of the standard tools.\\n"
@@ -42,7 +42,6 @@ standard_func() {
 
 sysinfo_func() {
                 clear
-                        source "$scripts_dir/support/support-Banner_func.sh"
                         source "$scripts_dir/support/support-sysinfo.sh"
 }
 
@@ -77,7 +76,7 @@ nano_func() {
                         elif [[ $nano_installed == 0 ]]; then
                                 source $scripts_dir/support/support-nano.sh
                         fi
-                        if [[ $nano_installed == 0 ]] && [[ -n $nano_exe ]]; then
+                        if [[ $nano_installed == 0 ]] && $(command -v $nano_exe); then
                                 nano_installed=1
                                 sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" "$scripts_dir/.envrc"
                                 sudo nano -ADEGHKMPSWZacdegmpqy%_ -T 4
@@ -124,7 +123,7 @@ glances_func() {
 
 docker_func() {
                    clear
-                        if [[ $(command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1) ]]; then
+                        if $(command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1); then
                                 docker_installed=1
                                 printf "${GN}Docker Desktop is already installed\\n"
                                 sudo /opt/docker-desktop/bin/docker-desktop
@@ -168,21 +167,21 @@ main_menu() {
         echo
         printf "  ${GN}Select an option:${CY}\n"
         echo
-        printf "     ${WT}1)${CY}  All${PL}: \\n"
-        printf "     ${WT}2)${CY}  Autojump${PL}: ${CY}\n"
-        printf "     ${WT}3)${CY}  Docker Desktop${PL}: \n"
-        printf "     ${WT}4)${CY}  Glances${PL}: \n"
-        printf "     ${WT}5)${CY}  Hacking Apps${PL}: \n"
-        printf "     ${WT}6)${CY}  Nano${PL}: \n"
-        printf "     ${WT}7)${CY}  ncdu${PL}: \n"
-        printf "     ${WT}8)${CY}  Oh My BASH! and Oh My ZSH!${PL}: ${CY}\n"
-        printf "     ${WT}9)${CY}  SysInfo${PL}: \n"
-        printf "    ${WT}10)${CY}  Standard/Favorites${PL}: \n"
-        printf "    ${WT}11)${CY}  Webmin${PL}: \n"
-        printf "    ${WT}12)${CY}  Return to Main Menu${PL}\n"
-        printf "    ${WT}13)${CY}  [✘] Exit tool [✘]\n"
+        printf "     ${WT}1)${CY}  All${PL}: TODO: NOT WORKING YET\\n"
+        printf "     ${WT}2)${CY}  Autojump${PL}: Terminal addon; improve efficiency & quickly jump around machine${CY}\n"
+        printf "     ${WT}3)${CY}  Docker Desktop${PL}: Amazing Sauce. Run apps in containers and forget about dependencies.\n"
+        printf "     ${WT}4)${CY}  Glances${PL}: Show detailed sysinfo on the terminal or access it via web browser.\n"
+        printf "     ${WT}5)${CY}  Hacking Apps${PL}: Launch the Hacking Menu. For uhhh, hacking.\n"
+        printf "     ${WT}6)${CY}  Nano${PL}: Small, efficient terminal based text editor.\n"
+        printf "     ${WT}7)${CY}  ncdu${PL}: Manage Disk space with terminal based super fast file manager.\n"
+        printf "     ${WT}8)${CY}  Oh My BASH! and Oh My ZSH!${PL}: Increase productivity and make your terminal sexy.${CY}\n"
+        printf "     ${WT}9)${CY}  SysInfo${PL}: My thrown together sysinfo page. If you like this kinda stuff, install Glances \n"
+        printf "    ${WT}10)${CY}  Standard/Favorites${PL}: Some favorites/required packages from Easy-Linux.\n"
+        printf "    ${WT}11)${CY}  Webmin${PL}: Manage almost every aspect of your system via web browser.\n"
+        printf "    ${WT}12)${CY}  Return to Main Menu${PL}: Return to the Easy Linux Main Menu\n"
+        printf "    ${WT}13)${CY}  [✘] Exit tool [✘]${PL}: Uhh, it exits.\n"
         echo
-        printf "  ${GN}Selection: ---->${OG}  "
+        printf "  ${GN}Selection: ---->${OG} "
           read -r main_menu
           case "$main_menu" in
         1) all_func ;;
