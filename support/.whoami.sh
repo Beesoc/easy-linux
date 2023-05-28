@@ -25,10 +25,10 @@ update_pwnagotchi() {
 
 if [[ $pwnagotchi != "Gotcha" && $pwnagotchi != "Sniffer" ]]; then
     pwnagotchi="Unknown"
-    if [[ "$user" == "$cwb_username" && "$(cat /etc/hostname)" == "$cwb_computername" ]]; then
+    if [[ "$user" == "\\$cwb_username" && "$(cat /etc/hostname)" == "\\$cwb_computername" ]]; then
         pwnagotchi="Gotcha"
         update_pwnagotchi "Gotcha"
-    elif [[ "$user" == "$ldb_username" && "$(cat /etc/hostname)" == "$ldb_computername" ]]; then
+    elif [[ "$user" == "\\$ldb_username" && "$(cat /etc/hostname)" == "\\$ldb_computername" ]]; then
         pwnagotchi="Sniffer"
         update_pwnagotchi "Sniffer"
     fi
