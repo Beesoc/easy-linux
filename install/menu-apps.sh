@@ -211,9 +211,9 @@ deps_install_func() {
                         echo "Installing $package"
                         sudo apt-get --ignore-missing --show-progress install -y "$package"
                 fi
-                menu_apps_deps=1
-                sudo sed -i "s/menu-apps-deps=.*/menu_apps_deps=$menu_apps_deps/g" "$scripts_dir/.envrc"
         done
+         menu_apps_deps=1
+         sudo sed -i "s/menu-apps-deps=.*/menu_apps_deps=$menu_apps_deps/g" "$scripts_dir/.envrc"
 }
 
 main() {
