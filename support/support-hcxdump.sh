@@ -128,7 +128,8 @@ choice_func() {
       printf "${OG}  Do ${WT}NOT ${OG}interrupt until the scan has completed.\\n  "
       read -n 1 -r -p "Press any key to continue." anykey2
         do_rcascan=1
-        source "${scripts_dir}/support/support-hcxdump_dorcascan.sh" & && sleep 40
+        sleep 40 $
+        source "${scripts_dir}/support/support-hcxdump_dorcascan.sh"
       printf "\\n"
       sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
       sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
