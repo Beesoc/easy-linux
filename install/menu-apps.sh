@@ -218,18 +218,21 @@ deps_install_func() {
 
 main() {
         # Main script logic
+        pc="$(cat /etc/hostname)"
+
         if [[ $menu_apps_deps == 0 ]]; then
            deps_install_func
         fi
-        pc="$(cat /etc/hostname)"
-        if [[ "$USER" == "$cwb_username" && "$pc" == "$cwb_computername" ]]; then
-             personal_func
-        fi
+
         while true; do
                 main_menu
                 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
                 read -n 1 -r
         done
+
+        if [[ "$USER" == "$cwb_username" && "$pc" == "$cwb_computername" ]]; then
+             personal_func
+        fi
 }
 
 main
