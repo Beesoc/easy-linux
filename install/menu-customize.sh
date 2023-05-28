@@ -5,17 +5,14 @@
 scripts_dir=/opt/easy-linux
 set -e
 source "${scripts_dir}/.envrc"
-#trap source "${scripts_dir}/support/support-trap-wifi.sh" EXIT
+trap source "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 # Version: 0.0.3
-scripts_dir=/opt/easy-linux
 backup_dir=/opt/backup
 
 hosts_func() {
 	printf "${GN}20]  ${CY}Edit your local ${WT}/etc/hosts ${CY}file to keep DNS happy and ${CY} \\n "
 	printf "     refer to machines by hostname instead of IP.\\n"
-	clear
-	source "${scripts_dir}/support/support-Banner_func.sh"
 	sudo apt update >/dev/null
 	sudo apt install -y mdns nano >/dev/null
 	sudo nano /etc/hosts
@@ -37,7 +34,7 @@ ncdu_func() {
 		printf "${GN}...\\n"
 		sudo apt install -y ncdu >/dev/null
 	fi
-	sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --excude delme /
+	sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --exclude delme /
 	return 0
 }
 
@@ -55,19 +52,21 @@ locate_func() {
 	printf " ${WT}"
 	plocate $search
 	printf "${CT}  Press ${WT}any ${CT}key to continue. \\n  ${OG}"
-	read -r -n1 -s -t 120
+	read -n 1 -r
 }
 
 perm_func() {
 	printf "${OG}  3]  ${CY}Fix your perm - Permission probems in Linux can be a bitch.  Get help here. \\n "
-	printf "${OG}  a]  ${CY}Fix permissions problems on ${WT}/opt/backup ${CY}and your ${WT}Home folder${CY} \\n  "
-	printf "${OG}  b]  ${CY}Enter a custom folder to fix permissions on."
+	printf "${OG}  ${CY}Fix permissions problems on ${WT}/opt/backup ${CY}and your ${WT}Home folder${CY} \\n  "
+	printf "${OG}  TODO: ${CY}Enter a custom folder to fix permissions on."
+	read -n 1 -r
 	source "${scripts_dir}/support/support-fix-my-perm.sh"
 }
 
 x11vnc_func() {
 	sudo apt install -y x11vnc >/dev/null
-	printf "${WT}  1]  ${CY}Start ${GN}x11vnc Server${CY} - Control PC remotely ${CY} \\n   "
+	printf "${WT}  ${CY}Start ${GN}x11vnc Server${CY} - Control PC remotely ${CY} \\n   "
+	read -n 1 -r
 	x11vnc -noxdamage -ncache 10 -ncache_cr -rfbauth ~/.vnc/passwd
 }
 
@@ -79,7 +78,7 @@ main_menu() {
 	clear
 	source ${scripts_dir}/support/support-Banner_func.sh
 	echo
-	printf "${OG}          $USER               ${GN}Customization Station${OG}                 $computername ${CY}\n"
+	printf "${OG}          $USER               ${GN}Customization Station${OG}                 ${computername} ${CY}\n"
 	echo
 	printf "  ${GN}Select an option:${CY}\n"
 	echo
@@ -118,4 +117,3 @@ main() {
 }
 
 main
-source "${scripts_dir}/install/menu-master.sh"
