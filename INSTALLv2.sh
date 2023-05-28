@@ -18,7 +18,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
         help
         exit 0
 elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
-        echo "The script is version 0.0.2."
+        echo "The script is version 0.0.4."
         exit 0
 fi
 # Version: 0.0.4
@@ -75,7 +75,7 @@ cleanup_func() {
         launchnow=${launchnow:-Y}
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
-                source /opt/easy-linux/install/menu-master.sh
+                bash /opt/easy-linux/install/menu-master.sh
         else
                 echo
                 printf "\\n       ${RED}Exiting.\\n"
@@ -296,8 +296,16 @@ direnv_func() {
                 printf "  ${CY}Please wait.\\n${NC}"
                 sudo apt update
                 sudo apt install -y direnv
+                if [[ -f $HOME/.bashrc ]]; then
+                echo "eval "$(direnv hook bash)"" >> $HOME/.bashrc
+                elif [[ -f $HOME/.zshrc ]]; then
+                echo "eval "$(direnv hook zsh)""
+                else
+                printf "${RED}  ERROR: I couledn't find your .bashrc or .zshrc file.\\n" 
+                printf "Please check the Direnv website for instructions on how to proceed:\\n"
+                printf "https://direnv.net/docs/hook.html"
         else
-                printf "\\n${WT}  [-] ${CY}Not Needed. Continuing.\\n"
+                printf "\\n${WT}  [-] ${CY}Direnv is nice but not required. Continuing.\\n"
 
         fi
         check_directories_func
