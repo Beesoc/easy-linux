@@ -8,6 +8,7 @@ set -e
 scripts_dir=/opt/easy-linux
 backup_dir=/opt/backup
 trap ${scripts_dir}/support/trap-master.sh EXIT
+
 # Load environment variables
 source "${scripts_dir}/.envrc"
 source "${scripts_dir}/support/.whoami.sh"
@@ -54,19 +55,19 @@ udev_func() {
 }
 
 whoami_func() {
-	cwb_username=$cwb_username
-	cwb_computername=$cwb_computername
-	ldb_username=$ldb_username
-	ldb_computername=$ldb_computername
-	if [[ $USER == $cwb_username && $computername == $cwb_computername ]]; then
+	cwb_username="$cwb_username"
+	cwb_computername="$cwb_computername"
+	ldb_username="$ldb_username"
+	ldb_computername="$ldb_computername"
+	if [[ $USER == "$cwb_username" && "$computername" == "$cwb_computername" ]]; then
 		pwnagotchi=Gotcha
 	fi
-	if [[ $USER == $ldb_username && $computername == $ldb_computername ]]; then
+	if [[ $USER == "$ldb_username" && "$computername" == "$ldb_computername" ]]; then
 		pwnagotchi=Sniffer
 	fi
 	if [[ $(ifconfig | grep "usb") -lt 1 ]]; then
-		printf "${CY}  Pwnagotchi not detected. Try unplugging to reset."
-		printf "${CY}  Please connect your Pwnagotchi to access this menu."
+		printf "${CY}  Pwnagotchi not detected. Try unplugging to reset.\\n"
+		printf "${CY}  Please connect your Pwnagotchi to access this menu.\\n"
 		sleep 5
 		source ${scripts_dir}/install/menu-master.sh
 	elif [[ $(ifconfig | grep "usb") -gt 0 ]]; then
@@ -106,8 +107,6 @@ main_menu_func() {
 # Function to control SSH options
 ssh_func() {
 	# Check for SSH key and generate if not found
-	clear
-	source "${scripts_dir}/support/support-Banner_func.sh"
 	if [[ -f $HOME/.ssh/known_hosts ]]; then
 		ssh-keygen -f "$HOME/.ssh/known_hosts" -R "10.0.0.2"
 	fi
@@ -173,46 +172,6 @@ ssh_func() {
 	fi
 }
 
-main_menu() {
-	clear
-	pwn_installed=$(echo ${scripts_dir}/.envrc | grep "pwn_installed" | awk '{print $2}')
-	sshmenu=0
-	if [[ $pwn_installed = 1 ]]; then
-		sshmenu=$(echo " ${WT}1)${OG}  SSH key setup: This step has been COMPLETED.${CY}")
-	elif [[ $pwn_installed = 0 ]]; then
-		sshmenu=$(echo " ${WT}1)${CY}  SSH key setup: Complete first. Only required 1 time.${CY}")
-	fi
-
-	source ${scripts_dir}/support/support-Banner_func.sh
-	echo
-	printf "${OG}          $USER               Pwnagotchi Hub                 $pwnagotchi ${CY}\n"
-	echo
-	printf "    ${GN}Select an option:${CY}\n"
-	echo
-	printf "   ${sshmenu}\\n"
-	printf "    ${WT}2)${CY}  Connect to Pwnagotchi${CY}\n"
-	printf "    ${WT}3)${CY}  Customize your Pwnagotchi${CY}\n"
-	printf "    ${WT}4)${CY}  Backup Pwnagotchi${CY}\n"
-	printf "    ${WT}5)${CY}  Restore Pwnagotchi${CY}\n"
-	printf "    ${WT}6)${CY}  Upload Hashes and Handshakes to cracking sites${CY}\n"
-	printf "    ${WT}7)${CY}  Return to Main Menu${CY}\n"
-	printf "    ${WT}8)${CY}  Quit${CY}\n"
-	echo
-	printf "    ${GN}Selection: ---->${OG}  "
-	read -n 1 -r main_menu_sel
-	case "$main_menu_sel" in
-	1) ssh_func ;;
-	2) pwn_connect_func ;;
-	3) cust_func ;;
-	4) backup_func ;;
-	5) restore_func ;;
-	6) upload_func ;;
-	7) main_menu_func ;;
-	8) exit 0 ;;
-	*) printf "${RED}Invalid selection.${CY}\n" ;;
-	esac
-}
-
 # Function to perform backup
 backup_func() {
 	clear
@@ -252,6 +211,46 @@ restore_func() {
 
 	printf "${GN}Restore completed successfully.${CY}\n"
 
+}
+
+main_menu() {
+	clear
+	pwn_installed=$(echo ${scripts_dir}/.envrc | grep "pwn_installed" | awk '{print $2}')
+	sshmenu=0
+	if [[ $pwn_installed = 1 ]]; then
+		sshmenu=$(echo " ${WT}1)${OG}  SSH key setup: This step has been COMPLETED.${CY}")
+	elif [[ $pwn_installed = 0 ]]; then
+		sshmenu=$(echo " ${WT}1)${CY}  SSH key setup: Complete first. Only required 1 time.${CY}")
+	fi
+
+	source ${scripts_dir}/support/support-Banner_func.sh
+	echo
+	printf "${OG}          $USER               Pwnagotchi Hub                 $pwnagotchi ${CY}\n"
+	echo
+	printf "    ${GN}Select an option:${CY}\n"
+	echo
+	printf "  ${sshmenu}\\n"
+	printf "    ${WT}2)${CY}  Connect to Pwnagotchi${CY}\n"
+	printf "    ${WT}3)${CY}  Customize your Pwnagotchi${CY}\n"
+	printf "    ${WT}4)${CY}  Backup Pwnagotchi${CY}\n"
+	printf "    ${WT}5)${CY}  Restore Pwnagotchi${CY}\n"
+	printf "    ${WT}6)${CY}  Upload Hashes and Handshakes to cracking sites${CY}\n"
+	printf "    ${WT}7)${CY}  Return to Main Menu${CY}\n"
+	printf "    ${WT}8)${CY}  Quit${CY}\n"
+	echo
+	printf "  ${GN}Selection: ---->${OG} "
+	read -n 1 -r main_menu_sel
+	case "$main_menu_sel" in
+	1) ssh_func ;;
+	2) pwn_connect_func ;;
+	3) cust_func ;;
+	4) backup_func ;;
+	5) restore_func ;;
+	6) upload_func ;;
+	7) main_menu_func ;;
+	8) exit 0 ;;
+	*) printf "${RED}Invalid selection.${CY}\n" ;;
+	esac
 }
 
 main() {
