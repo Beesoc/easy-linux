@@ -1,8 +1,18 @@
 #!/bin/bash
-# Version: 0.0.3
-scripts_dir=/opt/easy-linux
+# Version: 0.0.4
+export BK='\e[0;44;30m'
+export WT='\e[1;37m'
+export RED='\e[1;31m'
+export OGG='\e[0;32;44m'
+export OGH='\e[0;30;44m'
+export OG='\e[1;93m'
+export OGF='\e[0;33;44m'
+export GN='\e[1;32m'
+export CY='\e[1;36m'
+export PL='\e[1;35m'
+export NC='\e[0m'
 
-source ${scripts_dir}/.envrc
+
 printf "${WT}\\n"
 printf "${OGH}▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀${OGG}${RED}\\n"
 printf "    ▄████▄${BK}╗    ${RED}▄████▄${BK}╗   ${RED}▄████▄${BK}╗    ${RED}▄████▄${BK}╗     ${RED}▄███▄${BK}╗     ${RED}▄███▄${BK}╗  ${RED}██${BK}╗  ${RED}▄████▄${BK}╗    ${NC}\\n"
