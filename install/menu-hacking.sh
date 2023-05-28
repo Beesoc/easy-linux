@@ -26,7 +26,7 @@ set -e
 trap "bash ${scripts_dir}/support/support-trap-wifi.sh" EXIT
 clear
 
-if [[ $(command -v direnv >dev/null) ]]; then
+if [[ $(command -v direnv >/dev/null) ]]; then
         cd ${scripts_dir}
         direnv allow
 	sudo direnv allow
