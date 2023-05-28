@@ -47,6 +47,8 @@ if [[ $hcxdump_full -ne 1 ]]; then
   echo "export hcxdump_full=1"
   source ${scripts_dir}/support/support-hcxdump_full.sh
   sleep 600
+  sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/hcxdump_full.pcapng*"
+
   ripper_func
 elif [[ $hcxdump_full == 1 ]]; then
   printf "${GN}  So...you ran the full scan"; sleep 2; printf " ...I hope it paid off for you."; sleep 2; printf "You'll find out soon\\n"
