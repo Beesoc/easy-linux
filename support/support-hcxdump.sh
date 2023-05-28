@@ -4,7 +4,6 @@ set -e
 # Version: 0.0.4
 # trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 source "${scripts_dir}/.envrc"
-hcxdump_full=0
 
 ripper_func() {
   clear
