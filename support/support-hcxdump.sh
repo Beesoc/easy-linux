@@ -38,6 +38,7 @@ full_scan() {
 clear
 source "${scripts_dir}/support/support-Banner_func.sh"
 if [[ $hcxdump_full -ne 1 ]]; then
+  do_rcascan="0"  
   printf "${CY}  Whoop. How would you like to do a ${WT}REAL ${CY}scan.\\n"
   printf "${OG}  The longer you wait on the next screen, the more attacks will complete, and the\\n" 
   printf "${OG}  more hashes you will have. It will stop itself after 10 mins or you can press\\n"
@@ -116,22 +117,27 @@ choice_func() {
       sleep 3
       sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
       sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
+      sudo cp ${scripts_dir}/support/misc/*.pcapng ${scripts_dir}/support
+      sudo rm -f ${scripts_dir}/support/misc/*.pcapng
    #   cat 
    #   rm -f ./*pcapng*
-        do_rcascan="0"  
       read -n 1 -p "Done with hcxpcapng RCAScanning. Press any key. \\n"
       full_scan
       elif (! ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
       # Code to execute when the files don't exist
-      printf "${OG}  You have selected scan. The next step will take 30 secs.\\n"
+      printf "${OG}  You have selected scan. The next step will take 40 secs.\\n"
       printf "${OG}  Do ${WT}NOT ${OG}interrupt until the scan has completed.\\n  "
       read -n 1 -r -p "Press any key to continue." anykey2
-        do_rcascan=1
-        sleep 40 $
+        sleep 41 &
         source "${scripts_dir}/support/support-hcxdump_dorcascan.sh"
       printf "\\n"
       sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
       sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
+      sudo cp ${scripts_dir}/support/misc/*.pcapng ${scripts_dir}/support
+      sudo rm -f ${scripts_dir}/support/misc/*.pcapng
+      full_scan
+      elif $(ls "${scripts_dir}/support/hcxdump*" >/dev/null 2>&1); then
+      full_scan
       fi
 else
       printf "${RED}  Invalid Selection.  Press ${WT}S ${RED}to scan, or ${WT}T ${RED}to test wifi adapters."
