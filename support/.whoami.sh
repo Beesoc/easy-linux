@@ -6,9 +6,9 @@ set -e
 
 # Paths
 scripts_dir="/opt/easy-linux"
-envrc_file="${scripts_dir}/.envrc"
+envrc_file="/opt/easy-linux/.envrc"
 
-flag_file="${scripts_dir}/.envrc_populated"
+flag_file="/opt/easy-linux/.envrc_populated"
 
 # Capture user's username and computer name
 computername=$(cat /etc/hostname)
@@ -60,7 +60,7 @@ populate_envrc() {
         echo "export user=$USER" | sudo tee -a "$envrc_file"
         echo "export username=$(id | awk -F'[=()]' '{print $3}')"  | sudo tee -a "$envrc_file"
         echo "export userid=$(id | awk -F'[=()]' '{print $2}')"  | sudo tee -a "$envrc_file"
-        echo "export useraccount=$(getent passwd 1000 | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
+        echo "export useraccount=$(getent passwd $USER | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
         echo "export computername=$(cat /etc/hostname)" | sudo tee -a "$envrc_file"
         echo "export hostname=$(cat /etc/hostname)" | sudo tee -a "$envrc_file"
         echo "export arch=$(uname -m)" | sudo tee -a "$envrc_file"
