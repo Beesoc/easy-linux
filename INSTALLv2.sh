@@ -304,9 +304,9 @@ direnv_func() {
                 printf "${RED}  ERROR: I couledn't find your .bashrc or .zshrc file.\\n" 
                 printf "Please check the Direnv website for instructions on how to proceed:\\n"
                 printf "https://direnv.net/docs/hook.html"
-        else
-                printf "\\n${WT}  [-] ${CY}Direnv is nice but not required. Continuing.\\n"
-
+                fi
+        elif [[ "$choicedirenv" =~ ^[nN]$ ]]; then
+        printf "\\n${WT}  [-] ${CY}Direnv is nice but not required. Continuing.\\n"
         fi
         check_directories_func
 }
