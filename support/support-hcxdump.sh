@@ -1,19 +1,16 @@
 #!/bin/bash
 scripts_dir="/opt/easy-linux"
 set -e
-# ...
+# Version: 0.0.4
 # trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 source "${scripts_dir}/.envrc"
-# Version: 0.0.4
 
 ripper_func() {
   read -n 1 -r -p "Made it another step. Any key to continue" madeit
   clear
   printf "\\n"
 
-  # ...
-
-  # Prompt the user to choose between John the Ripper and Hashcat
+   # Prompt the user to choose between John the Ripper and Hashcat
   source "${scripts_dir}/support/support-Banner_func.sh"
   printf "\\n"
   printf "${OG}1] ${CY}John the Ripper\\n"
@@ -23,8 +20,6 @@ ripper_func() {
   printf "\\n"
   read -n 1 -r ripperchoice
   ripperchoice=${ripperchoice:-2}
-
-  # Capture the hashes with hcxdumptool
 
   if [[ ${ripperchoice} -eq 1 ]]; then
     # Crack the hash with John the Ripper using the OneRuleToRuleThemAll.rule
@@ -73,9 +68,8 @@ Test_func() {
 
 choice_func() {
   clear
-  printf "${OG}   \\n"
   source "${scripts_dir}/support/support-Banner_func.sh"
-
+  printf "${OG}   \\n"
 
   sudo systemctl stop NetworkManager && sudo systemctl stop wpa_supplicant
   echo
@@ -100,8 +94,8 @@ choice_func() {
       sleep 3
       sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
       sudo /usr/bin/hcxpcapngtool -o "${scripts_dir}/support/misc/*.pcapng*"
+      cat 
       rm -f ./*pcapng*
-      
       read -n 1 -p "Done with hcxpcapng. Files deleted.\\n"
       ripper_func
     elif (! ls "${scripts_dir}/support/misc/hcxdumptool*" >/dev/null 2>&1); then
@@ -113,7 +107,7 @@ choice_func() {
       do_rcascan=""
       if [[ $do_rcascan == 0 ]]; then
         do_rcascan=1
-        source "${scripts_dir}/support/support-hcxdump2.sh"
+        source "${scripts_dir}/support/support-hcxdump_dorescan.sh"
         sleep 40
       elif [[ $do_rcascan == 1 ]]; then
         do_rcascan=0
@@ -127,13 +121,14 @@ choice_func() {
 
 main() {
   source "${scripts_dir}/support/support-netadapter.sh"
+  # Capture the hashes with hcxdumptool
   choice_func
   ripper_func
 }
 
 main
 sleep 1
-printf "    ${OG}Restarting NetworkManager and wpa_supplicant..."
+printf "    ${OG}Restarting NetworkManager and wpa_supplicant...\\n"
 sudo systemctl start NetworkManager
 sudo systemctl start wpa_supplicant
 
