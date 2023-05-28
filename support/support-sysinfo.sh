@@ -14,7 +14,7 @@ printf "${CY}TZ: ${WT}$(timedatectl | grep "Time zone:" | awk '{print $3}')     
 printf "\\n${CY}System information for computer, ${WT}$(hostname) ${CY} on Date: ${WT}$(timedatectl | grep "Local time" | awk '{print $3", " $4}')\\n"
 echo
 printf "${GN}  Distro: ${WT}$OS${GN}    |    Ver: ${WT}$VER${GN}     |    Kernel: ${WT}$KERN\\n  "
-printf "${GN}Proccessor: ${WT}${cpu_info}\\n"
+printf "${GN}CPU: ${WT}${cpu_info}\\n"
 #battery="$(acpi -b | awk '/Battery 0/ {print $3 $4 $5}')"
 batt_per="$(acpi -b | awk '/Battery 0/ {gsub(/,|%/, ""); print $4}')"
 battery_state="$(acpi -b | awk '/Battery 0/ {gsub(/,$/,"",$3); print $3}')"
