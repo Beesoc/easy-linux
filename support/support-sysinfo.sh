@@ -35,16 +35,12 @@ printf "${CY}Disk Usage: ${WT}${disk_usage}%   ${CY}IP:${WT} ${ip_address}    ${
 
 # Display total number of updates and security updates available
 updates=$(apt list --upgradable 2>/dev/null | wc -l)
-security_updates=$(apt list --upgradable 2>/dev/null | grep -E '\[security|critical\]' | wc -l)
-security_pct=$(echo "scale=2; ($security_updates/$updates)*100" | bc)
-total_pct=$(echo "scale=2; (($updates-$security_updates)/$updates)*100" | bc)
-security_updates_age=$(sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk '{print $4}' | sort -u | head -n1)
+
 printf " \\n"
-printf "${CY}# Updates Avail: ${WT}$updates    |    ${CY}Non-Critical Percent: ${GN}$total_pct    |    ${CY}Grand Tot: ${WT}$tot_pkgs\\n"
-printf "# Critical Updates: ${RED}$security_updates     |     ${YW}   Critical Update Percent-${RED}$security_pct\\n"
+printf "${CY}# Updates Avail: ${WT}$updates   \\n"
 echo
 printf "${GN}Uptime: ${OG}$(uptime)\\n"
 
-printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu."
+printf "\\n\\n    ${CY}Press ${WT}any ${CY}key to return to the Main Easy Linux menu.\\n"
 read -r -n 1 -s -t 300
 source ${scripts_dir}/install/menu-master.sh
