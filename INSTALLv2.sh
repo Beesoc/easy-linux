@@ -101,8 +101,8 @@ if [[ "$shell" == *'"/bash"' ]]; then
                 return 0
         fi
         if [[ $rc == 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >> sudo tee -a $HOME/.bashrc
-                sudo echo "export COLORFGBG=15;0" >> sudo tee -a $HOME/.bashrc
+                echo "export COLORTERM=truecolor" >> sudo tee -a $HOME/.bashrc
+                echo "export COLORFGBG=15;0" >> sudo tee -a $HOME/.bashrc
                 return 0
         fi
 fi
