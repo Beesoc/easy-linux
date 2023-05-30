@@ -8,20 +8,20 @@ scripts_dir=/opt/easy-linux
 source /opt/easy-linux/.envrc
 
 run_airg_func() {
-	if [[ $(command -v airgeddon >/dev/null 2>&1) ]] && [[ $airg_deps_inst = 1 ]]; then
+	if [ command -v airgeddon >/dev/null 2>&1 ] && [[ $airg_deps_inst = 1 ]]; then
 		airg_installed=1
 		export airg_installed=1
 
 		sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
 		sudo sed -i "s/airg_installed=.*/airg_installed=$airg_installed/g" "${scripts_dir}/.envrc"
 	fi
-	read -n 1 -s -t 300 -p "Press any key to continue "
+	read -n 1 -r -t 300 -p "Press any key to continue "
 	sudo /bin/bash airgeddon
 
 	printf "${CY}  Press ${WT}any ${CY}"
 
-	read -n 1 -s -t 300 -p "key to continue "
-	printf "${CY}to the ${WT}Main Menu."
+	read -n 1 -r -t 300 -p "key to continue "
+	printf "${CY}to the ${WT}Main Menu.\\n"
 	source /opt/easy-linux/install/menu-master.sh
 	exit 0
 }
@@ -50,11 +50,11 @@ deps_airg_option() {
 	optpackages=("wpaclean" "crunch" "aireplay-ng" "mdk4" "hashcat" "hostapd" "dhcpd" "isc-dhcp-server" "dhcp-server" "dhcp" "nft" "nftables" "iptables" "ettercap" "ettercap-text-only" "ettercap-graphical" "hashcat-utils" "etterlog" "lighttpd" "dnsmasq" "reaver" "wash" "bully" "pixiewps" "bettercap" "beef" "beef-xss" "beef-project" "packetforge-ng" "hostapd-wpe" "asleap" "john" "openssl" "hcxpcapngtool" "hcxtools" "hcxdumptool" "tshark" "wireshaek-cli")
 
 	for optpackage in "${optpackages[@]}"; do
-		if dpkg -s "$optpackages" >/dev/null 2>&1; then
-			echo "$optpackages is already installed"
+		if dpkg -s "${optpackages[@]}" >/dev/null 2>&1; then
+			echo "${optpackages[@]} is already installed"
 		else
-			echo "Installing $optpackages"
-			sudo apt-get install --ignore-missing -y "$optpackages"
+			echo "Installing ${optpackages[@]}"
+			sudo apt-get install --ignore-missing -y "${optpackages[@]}"
 		fi
 		airg_deps_inst=1
 		sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
@@ -68,11 +68,11 @@ deps_airg_install() {
 
 	# Loop through the list of package names
 	for package in "${packages[@]}"; do
-		if dpkg -s "$package" >/dev/null 2>&1; then
-			echo "$package is already installed"
+		if dpkg -s "${package[@]}" >/dev/null 2>&1; then
+			echo "${package[@]} is already installed"
 		else
-			echo "Installing $package"
-			sudo apt-get install --ignore-missing -y "$package"
+			echo "Installing ${package[@]}"
+			sudo apt-get install --ignore-missing -y "${packages[@]}"
 		fi
 		airg_deps_inst=1
 		sudo sed -i "s/airg_deps_inst=.*/airg_deps_inst=$airg_deps_inst/g" "${scripts_dir}/.envrc"
@@ -83,7 +83,7 @@ deps_airg_install() {
 deps_airg_check() {
 	printf "\\n${GN} Checking dependencies...\\n"
 	if [[ "${airg_deps_inst}" = 1 ]]; then
-		printf "  ${WT}$Airgeddon dependencies ${CY}are installed.  Continuing...\\n"
+		printf "  ${WT}Airgeddon dependencies ${CY}are installed.  Continuing...\\n"
 		airg_install_func
 	elif [[ "${airg_deps_inst}" = 0 ]]; then
 		printf "  ${WT}Airgeddon dependencies ${CY}not installed.  Installing...\\n"
