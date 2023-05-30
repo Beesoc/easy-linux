@@ -95,7 +95,17 @@ Test_func() {
 }
 
 scan_func() {
-        if ls "${scripts_dir}/support/misc/hcxdump"* >/dev/null 2>&1 || ls "${scripts_dir}/support/hcxdump"* >/dev/null 2>&1; then
+        if ! ls "${scripts_dir}/support/misc/hcxdump"* >/dev/null 2>&1 || ! ls "${scripts_dir}/support/hcxdump"* >/dev/null 2>&1 || ! ls ${scripts_dir}/hcxdump_ful"*; then
+           sudo systemctl stop NetworkManager
+           sudo systemctl stop wpa_supplicant.service
+           source "${scripts_dir}/support/support-hcxdump_dorcascan.sh"
+           sudo chown -vR $USER:0 "${scripts_dir}/support/misc"
+           sudo /usr/bin/hcxpcapngtool -o /opt/easy-linux/support/hcxdump*.pcapng /opt/easy-linux/support/*.pcapng*
+           # sudo /usr/bin/hcxpcapngtool -o ${scripts_dir}/support/hcxdumptool.pcapng* 
+           sudo cp ${scripts_dir}/support/misc/hcxdump.* ${scripts_dir}/support
+           sudo rm -f ${scripts_dir}/support/misc/hcxdump*
+           full_scan
+        elif ls "${scripts_dir}/support/misc/hcxdump"* >/dev/null 2>&1 || ls "${scripts_dir}/support/hcxdump"* >/dev/null 2>&1; then
             if ls "${scripts_dir}/support/hcxdump"* >/dev/null 2>&1; then
               full_scan
             elif ! ls "${scripts_dir}/support/hcxdump"* >/dev/null 2>&1; then
@@ -118,7 +128,7 @@ scan_func() {
            printf "${GN}    Step 2]  Initial scan for targets.\\n"
            printf "${OG}  You have selected scan. The next step will take 40 secs.\\n"
            printf "${OG}  Do ${WT}NOT ${OG}interrupt until the scan has completed.\\n  "
-           read -n 1 -r -p "Press any key to continue." anykey2
+           read -n 1 -r -p "Press any key to continue " anykey2
            sudo systemctl stop NetworkManager
            sudo systemctl stop wpa_supplicant.service
            source "${scripts_dir}/support/support-hcxdump_dorcascan.sh"
@@ -130,7 +140,10 @@ scan_func() {
            sudo cp ${scripts_dir}/support/misc/hcxdump.* ${scripts_dir}/support
            sudo rm -f ${scripts_dir}/support/misc/hcxdump*
            full_scan
-        fi
+       else
+          printf "Cannot find any scan files. Loading 'scan for targets'" 
+          scan_func
+       fi
 }
 
 choice_func() {
@@ -140,15 +153,15 @@ choice_func() {
 
   printf "  ${GN}  Step 1] Test wifi adapter capabilities or Scan for targets\\n"
   printf "  ${CY}On the next screen, you may be asked to pick which wifi adapter to use.\\n"
-  printf "  ${CY}Your selected wifi adapter will be unavailable (no internet) while scanning.\\n"
+  printf "  ${CY}Your selected wifi adapter will be unavailable \(no internet\) while scanning.\\n"
   printf "  ${OG}You need to ${WT}pick Monitor mode ${OG}on the next screen to start hacking.${YW}\\n"
   #printf "  ${CY}Press ${WT}any${CY}"
   #  read -n 1 -r -p " key to continue. " pressany
   printf "\\n"
   printf " \\n${WT}"
-  printf "${CY}  Now you decide, do we do our initial ${WT}[S]${CY}can for targets or \\n"
-  printf "${WT}  [T]${CY}est your wifi adapter's monitor functions?\\n" 
-  printf "  ${GN}Press ${WT}[T]${GN}est to test adapters or ${WT}[S]${GN}can to scan AP's.${WT} \\n     "
+  printf "${CY}  Now you decide, 'do' we start our initial ${WT}[S]${CY}can for targets or \\n"
+  printf "${WT}  [T]${CY}est your wifi adapter\'s monitor functions?\\n" 
+  printf "  ${GN}Press ${WT}[T]${GN}est to test adapters or ${WT}[S]${GN}can to scan AP\'s.${WT} \\n     "
 
   read -n 1 -r -p "[T]est or [S]can [t/S] ----> " torscan
   torscan=${torscan:-S}
@@ -160,13 +173,12 @@ choice_func() {
     printf "${GN} \\n"
     scan_func
   else
-     printf "${RED}Invalid Selection.  Valid options are T or S.\\n"
+     printf "${RED}Invalid Selection.  Valid options are T or S.\n"
   fi
   }
 
 
 main() {
-#  source "${scripts_dir}/support/support-monitor.sh"
   # Capture the hashes with hcxdumptool
 
       source ${scripts_dir}/support/support-netadapter.sh
@@ -192,8 +204,7 @@ fi
 }
 
 main
-sleep 1
-printf "    ${OG}Restarting NetworkManager and wpa_supplicant...\\n"
-sudo systemctl start NetworkManager
+
+sudo systemctl start NetworkManager &
 sudo systemctl start wpa_supplicant
 

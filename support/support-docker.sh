@@ -40,7 +40,7 @@ docker_keys() {
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 	printf "  \\n${CY}Performing an apt update and then installing ${WT}Docker Desktop.${CY}\\n"
 	sudo apt-get update
-	sudo apt-get install -y --ignore-missing docker-ce docker-ce-cli containerd.io pass
+	sudo apt-get install -y -- ignore-missing docker-ce docker-ce-cli containerd.io pass
 	printf "  ${CY}Install Docker Desktop${NC}\\n"
 	install_run_func
 }
@@ -55,7 +55,7 @@ docker_deps_func() {
 			echo "$package is already installed"
 		else
 			echo "Installing $package"
-			sudo apt-get install --ignore-missing -y "$package"
+			sudo apt-get install --ignore missing -y "$package"
 		fi
 		printf "The first set of dependencies is complete. This set consisted of:\\n ${WT}${packages[*]}."
 		# sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
@@ -86,8 +86,8 @@ docker_deps_func() {
 		fi
 		docker_deps=1
 		sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
-		printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[@]}.\\n"
 	done
+	printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[*]}.\\n"
 	printf " \\n "
 	printf "    ${CY}Removing old packages. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
 	sudo apt remove -y docker-desktop >/dev/null
@@ -101,11 +101,9 @@ docker_deps_func() {
 	else
 		printf "/usr/local/bin/com.docker.cli/ not found."
 	fi
-	if [ $(which docker-desktop >/dev/null 2>&1) ]; then
 	sudo apt remove -y docker-desktop >/dev/null
 	sudo apt --fix-broken install -y
-        fi
-        sudo apt install -y gnome-terminal plocate >/dev/null 2>&1
+	sudo apt install -y gnome-terminal plocate >/dev/null
 	sudo docker completion bash
 	sudo docker completion zsh
 	docker_keys
@@ -131,7 +129,7 @@ intro() {
 }
 
 main() {
-	if [[ $(command -v docker-desktop 2>&1) ]]; then
+	if [[ $(command -v docker-desktop) ]]; then
 		install_run_func
 	fi
 	intro
