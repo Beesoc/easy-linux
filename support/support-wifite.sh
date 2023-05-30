@@ -5,11 +5,11 @@ set -e
 # This is an update test.
 scripts_dir=/opt/easy-linux
 source "${scripts_dir}/.envrc"
-trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
+trap "'${scripts_dir}'/support/support-trap-wifi.sh" EXIT
 
 app-install_func() {
 
-	if [ command -v wifite ]; then
+	if command -v wifite >/dev/null; then
 	    if [ -d $HOME/compiled/wifite2 ]; then
  		printf "${WT}Wifite ${OG}installation folder exists.\\n${CY}  "
 		read -n 1 -r -p "Remove folder and reinstall? [Y/n]" reinstall
@@ -34,7 +34,7 @@ app-install_func() {
 	cd wifite2 || exit
 	pip3 install -r requirements.txt
 	sudo python3 setup.py install
-	wifite-installed=1
+	wifite_installed=1
 }
 
 main() {
@@ -44,7 +44,7 @@ main() {
 	if  (command -v wifite >/dev/null 2>&1); then
 		printf "${GN}Wifite is already installed"
 		sudo wifite
-		wifite-installed=1
+		wifite_installed=1
 	else
 		printf "${YW}Wifite is not installed.  Installing..."
 		read -n 1 -r -p "Do you want to install Wifite? [Y/n]" install
@@ -60,7 +60,7 @@ main() {
 	printf "${CY}  To change your used wordlist, select ${WT}C${CY}.\\n"
 	printf "To keep the default, enter ${WT}W.\\n"
 
-	read -n 1 -p "[C]hange your wordlist or keep Default [W]ordlist?" wlchoice
+	read -n 1 -r -p "[C]hange your wordlist or keep Default [W]ordlist?" wlchoice
 	if [[ ${wlchoice} = "W" ]] || [[ ${wlchoice} = "w" ]]; then
 		printf "${CY}  Default wordlist, ${WT}${wordlist}${CY} selected.\\n"
 	elif [[ ${wlchoice} = "c" ]] || [[ ${wlchoice} = "C" ]]; then
