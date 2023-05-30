@@ -5,7 +5,7 @@
 scripts_dir=/opt/easy-linux
 set -e
 source "${scripts_dir}/.envrc"
-trap source "${scripts_dir}/support/support-trap-wifi.sh" EXIT
+trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 # Version: 0.0.3
 backup_dir=/opt/backup
@@ -47,7 +47,7 @@ locate_func() {
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
 	printf "\\n      ${OG}[*] ${CY}pLocate: Find files and apps in an instant with pLocate.${GN} \\n\\n    "
-	read -p "What do you want to search for? ----> " search
+	read -r -p "What do you want to search for? ----> " search
 	clear
 	printf " ${WT}"
 	plocate $search
