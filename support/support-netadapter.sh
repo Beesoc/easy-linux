@@ -5,7 +5,7 @@ set -e
 scripts_dir=/opt/easy-linux
 
 source "${scripts_dir}/.envrc"
-trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
+#trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
 
 wlan_sel_func() {
     adapter_count=$(sudo airmon-ng | awk '/wl/ {print}' | wc -l)
@@ -13,23 +13,26 @@ wlan_sel_func() {
     if [ "$adapter_count" -gt 1 ]; then
         # If there are multiple wireless interfaces, prompt the user to select one
         printf "\\n${CY}You have ${WT}$adapter_count${CY} wireless network adapters.\\n"
-        printf "\\n${OG}Multiple wireless interfaces available.${WT}\\n"
+        #printf "\\n${OG}Multiple wireless interfaces available.${WT}\\n"
         printf "${CY}Please select one:\\n${OG}"
 
         sudo airmon-ng | awk '/wl/ {print $2 " - " $4 " " $5}' 2>/dev/null | grep "wl" | nl -nln
 
         printf "\\n${WT}"
-        read -n 1 -r -p "Enter the number of the interface you want to use in monitor mode: " selection
+        read -n 1 -r -p "Enter the number of the interface you want to use: " selection
         selection=${selection:-1}
         adapter=$(sudo airmon-ng | awk '/wl/ {print $2}' | cut -d' ' -f1 | sed -n "${selection}p")     
+        sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc" 
         echo
     else
         adapter="wlan0"
+        sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc" 
     fi
-sudo ifconfig $adapter down    
-sudo iwconfig $adapter power off
-sudo ifconfig $adapter up
-sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc" 
+ #   sudo rfkill block wifi
+ #   sudo iwconfig wlan0 txpower 30
+ #   sudo iw $adapter set power_save off
+ #   sudo rfkill unblock wifi
+     
 }
 
 aircrack_func() {
@@ -64,19 +67,17 @@ main() {
     clear
     source "${scripts_dir}/support/support-Banner_func.sh"
     adapter=""
-        sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
-    
+
 if [[ -e /sys/class/net/wlan1 ]]; then
 	    # Run the command for wlan1
-  	    printf "${OG}  Multiple Wifi adapters detected."
 	    wlan_sel_func
 else
     printf "${CY}  Only 1 Wifi adapter detected. Selecting wlan0"
     adapter=wlan0
-    sudo ifconfig $adapter down
-    sudo iwconfig $adapter power off
-    sudo ifconfig $adapter up
-    sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
+#    sudo rfkill block wifi
+#    sudo iw wlan set power_save off
+#    sudo rfkill unblock wifi
+     sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
 fi
 
 aircrack_func
