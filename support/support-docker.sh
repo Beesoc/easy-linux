@@ -32,7 +32,7 @@ docker_keys() {
 	sudo chmod a+r /etc/apt/keyrings/docker.gpg
 	echo \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  "$(/etc/os-release && echo $VERSION_CODENAME)" stable" |
+  $(/etc/os-release && echo $VERSION_CODENAME) stable" |
 		sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 	echo \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
@@ -79,14 +79,14 @@ docker_deps_func() {
 	# Loop through the list of package names
 	for packages in "${packages2[@]}"; do
 		if dpkg -s "${packages[@]}" >/dev/null 2>&1; then
-			printf "${packages[@]} is already installed"
+			printf "${packages[*]} is already installed"
 		else
-			printf "Installing ${packages[@]}"
+			printf "Installing ${packages[*]}"
 			sudo apt-get install --ignore-missing -y "${packages[@]}"
 		fi
 		docker_deps=1
 		sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
-		printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[@]}.\\n"
+		printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[*]}.\\n"
 	done
 	printf " \\n "
 	printf "    ${CY}Removing old packages. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
