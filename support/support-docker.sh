@@ -12,7 +12,7 @@ install_run_func() {
 	sudo apt --fix-broken install -y >/dev/null
 	sudo apt autoremove -y >/dev/null
 	systemctl --user start docker-desktop
-	docker-installed=1
+	docker_installed=1
 	sudo sed -i "s/docker_installed=.*/docker_installed=$docker_installed/g" "${scripts_dir}/.envrc"
 	source ${scripts_dir}/install/menu-master.sh
 }
@@ -31,8 +31,8 @@ docker_keys() {
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 	sudo chmod a+r /etc/apt/keyrings/docker.gpg
 	echo \
-		"deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |
+		"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  "$(. /etc/os-release && echo $VERSION_CODENAME)" stable" |
 		sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 	echo \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
@@ -77,17 +77,17 @@ docker_deps_func() {
 	packages2=("docker.io" "sen" "skopeo" "ruby-docker-api" "python3-dockerpycreds" "python3-ck" "podman" "podman-compose" "libnss-docker" "golang-github-opencontainers-runc-dev" "golang-github-fsouza-go-dockerclient-dev" "golang-github-docker-notary-dev" "golang-github-containers-image-dev" "golang-docker-credential-helpers" "elpa-dockerfile-mode" "due" "docker-registry" "distrobox" "crun" "catatonit" "buildah" "auto-apt-proxy")
 
 	# Loop through the list of package names
-	for package in "${packages2[@]}"; do
+	for packages in "${packages2[@]}"; do
 		if dpkg -s "$packages" >/dev/null 2>&1; then
-			echo "$packages is already installed"
+			printf "$packages[@] is already installed"
 		else
-			echo "Installing $packages"
-			sudo apt-get install --ignore-missing -y "$packages"
+			printf "Installing $packages[@]"
+			sudo apt-get install --ignore-missing -y "$packages[@]"
 		fi
 		docker_deps=1
 		sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
 	done
-	printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[*]}.\\n"
+	printf "The second set of dependencies is complete. This set consisted of:\\n ${WT}${packages2[@]}.\\n"
 	printf " \\n "
 	printf "    ${CY}Removing old packages. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
 	sudo apt remove -y docker-desktop >/dev/null
@@ -114,7 +114,7 @@ intro() {
 	source "${scripts_dir}/support/support-Banner_func.sh"
 	printf "  ${CY}This script will install ${WT}Docker Desktop${GN}.\\n  "
 
-	read -n 1 -p "Do you want to continue? [Y/n] " installdocker
+	read -n 1 -r -p "Do you want to continue? [Y/n] " installdocker
 	installdocker=${installdocker:-Y}
 	if [[ "$installdocker" =~ ^[Nn]$ ]]; then
 		printf "  ${WT}$USER ${RED}chose no to install. Exiting\\n"
