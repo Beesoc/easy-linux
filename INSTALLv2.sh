@@ -22,7 +22,7 @@ elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
         exit 0
 fi
 # Version: 0.0.4
-
+scripts_dir=/opt/easy-linux
 set -e
 
 BK='\e[0;44;30m'
@@ -71,7 +71,7 @@ cleanup_func() {
         echo
         
         printf "\\n${CY}      Hey ${WT}$USER${CY}, would you like to launch \\n${WT}      "
-        read -n 1 -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
+        read -n 1 -r -p "Beesoc's Easy Linux Loader now? [Y/n] " launchnow
         launchnow=${launchnow:-Y}
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
@@ -96,13 +96,13 @@ if [[ "$shell" == *'"/bash"' ]]; then
         rc=$(cat $HOME/.bashrc | grep "truecolor" -c)
         pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckbash == 0 ];then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> $HOME/.bashrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.bashrc
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.bashrc
                 return 0
         fi
         if [[ $rc == 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >> $HOME/.bashrc
-                sudo echo "export COLORFGBG=15;0" >> $HOME/.bashrc
+                sudo echo "export COLORTERM=truecolor" >> sudo tee -a $HOME/.bashrc
+                sudo echo "export COLORFGBG=15;0" >> sudo tee -a $HOME/.bashrc
                 return 0
         fi
 fi
@@ -111,13 +111,13 @@ if [[ "$shell" == *'"/zsh"' ]]; then
         zc=$(cat $HOME/.zshrc | grep "truecolor" -c)
         pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckzsh == 0 ]; then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> $HOME/.zshrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> $HOME/.zshrc
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.zshrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.zshrc
                 return 0
         fi
         if [[ $zc == 0 ]]; then
-                sudo echo "export COLORTERM=truecolor" >> $HOME/.zshrc
-                sudo echo "export COLORFGBG=15;0" >> $HOME/.zshrc
+                echo "export COLORTERM=truecolor" >> sudo tee -a $HOME/.zshrc
+                echo "export COLORFGBG=15;0" >> sudo tee -a $HOME/.zshrc
                 return 0
         fi
 fi
@@ -193,7 +193,7 @@ command_not_found_handle() {
     if ! command -v sudo &> /dev/null; then
         echo "sudo is not installed. Please install sudo to proceed."
         if apt-cache show sudo &> /dev/null; then
-            read -n 1 -p "Do you want to install sudo now? [Y/n] " instsudo
+            read -n 1 -r -p "Do you want to install sudo now? [Y/n] " instsudo
             instsudo=${instsudo:-Y}
             if [[ "$instsudo" =~ ^[yY]$ ]]; then
                 apt-get install -y sudo
@@ -211,7 +211,7 @@ command_not_found_handle() {
     if ! command -v git &> /dev/null; then
         echo "Git is not installed. Please install Git to proceed."
         if apt-cache show git &> /dev/null; then
-        read -n 1 -p "Do you want to install it now? [Y/n] " instcomm
+        read -n 1 -r -p "Do you want to install it now? [Y/n] " instcomm
         instcomm=${instcomm:-Y}
             if [[ "$instcomm" =~ ^[yY]$ ]]; then
                 sudo apt-get install -y git
@@ -250,7 +250,7 @@ install_func() {
         # Banner_func
         printf "${WT}\\n  [*] ${GN}Dependencies satisfied.\\n\\n  ${WT}[*]${OG} "
         sleep 1
-        read -n 1 -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
+        read -n 1 -r -p "Do you want to install Easy Linux Loader? [Y/n] " choiceez
         choiceez=${choiceez:-Y}
         if [[ "$choiceez" =~ ^[Yy]$ ]]; then
                 #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
@@ -286,7 +286,7 @@ direnv_func() {
         # Step 3 or skip function.
         
         printf "\\n${WT}  [?]${OG} "
-        read -n 1 -p "DIRENV is not installed. Do you want me to install it? [y/N] " choicedirenv
+        read -n 1 -r -p "DIRENV is not installed. Do you want me to install it? [y/N] " choicedirenv
         choicedirenv=${choicedirenv:-N}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                 printf "\\n${GN}  Continuing...\\n"
@@ -297,9 +297,9 @@ direnv_func() {
                 sudo apt update
                 sudo apt install -y direnv
                 if [[ -f $HOME/.bashrc ]]; then
-                echo "eval "$(direnv hook bash)"" >> $HOME/.bashrc
+                echo "eval $(direnv hook bash)" >> sudo tee -a $HOME/.bashrc
                 elif [[ -f $HOME/.zshrc ]]; then
-                echo "eval "$(direnv hook zsh)""
+                echo "eval $(direnv hook zsh)" >> sudo tee -a $HOME/.zshrc
                 else
                 printf "${RED}  ERROR: I couledn't find your .bashrc or .zshrc file.\\n" 
                 printf "Please check the Direnv website for instructions on how to proceed:\\n"
@@ -319,7 +319,7 @@ main() {
 
         printf "\\n${GN}    Welcome to the Installer for ${WT}Beesoc's Easy Linux${GN}    Press ${RED}[ctrl+c] ${GN}to cancel\\n${CY}\\n"
         printf "${WT}  [?] ${OG}Do you want to ${WT}check dependencies ${OG}"
-        read -n 1 -p "for Beesoc's Easy Linux Loader? [Y/n] " install
+        read -n 1 -r -p "for Beesoc's Easy Linux Loader? [Y/n] " install
         install=${install:-Y}
         if [[ "$install" =~ ^[Yy]$ ]]; then
                 printf "\\n  ${WT}[*] ${CY}Loading, Please Wait\\n"
@@ -328,7 +328,7 @@ main() {
                 exit 0
         fi
         # check for requirements.
-        if $(command -v /usr/bin/direnv >/dev/null 2>&1); then
+        if command -v /usr/bin/direnv >/dev/null 2>&1; then
                 check_directories_func
         else
                 direnv_func
