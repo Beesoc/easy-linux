@@ -8,7 +8,7 @@ set -e
 # Add Color
 source "${scripts_dir}/.envrc"
 #
-trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
+trap "'${scripts_dir}/'support/support-trap-wifi.sh" EXIT
 
 # List of source directories
 source_dirs=(
