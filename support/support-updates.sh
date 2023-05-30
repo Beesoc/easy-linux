@@ -43,7 +43,6 @@ fi
 fi
 
 
-printf "${CY}  All apps in this script have been successfully installed. This includes all apps listed here: ${PL}\\n"
-printf "$packages\\n"
+printf "${CY}  All apps in this script have been successfully installed. ${PL}\\n"
 printf "${OG}  Press ${WT}any ${OG}key to continue."
-read -n 1 -s -t 300
+read -n 1 -r -s -t 300
