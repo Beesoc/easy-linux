@@ -96,7 +96,8 @@ update_script() {
     local required_version=$2
 
     # Get the current version of the script
-    local current_version=$(grep -m 1 -o -P "(?<=# Version: ).*" "$script_name")
+    local current_version
+    current_version=$(grep -m 1 -o -P "(?<=# Version: ).*" "$script_name")
 
     # Compare versions
     if [[ $current_version != "$required_version" ]]; then
