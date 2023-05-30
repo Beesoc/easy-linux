@@ -3,10 +3,10 @@
 # Version: 0.0.4
 set -e
 scripts_dir=/opt/easy-linux
-
-source "${scripts_dir}/.envrc"
+ 
+#source "${scripts_dir}/.envrc"
 #trap "${scripts_dir}/support/support-trap-wifi.sh" EXIT
-
+ 
 wlan_sel_func() {
     adapter_count=$(sudo airmon-ng | awk '/wl/ {print}' | wc -l)
 
