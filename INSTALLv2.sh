@@ -320,7 +320,7 @@ direnv_func() {
 
 install_reqs() {
 # List of package names to install
-packages=("gawk" "acpi" "yacpi" "dialog" "xterm" "nano" "autoconf" "automake" "libtool" "pkg-config" "sudo" "git" "rfkill" "wpasupplicant" "screen" "iw")
+packages=("gawk" "apt-utils" "acpi" "yacpi" "dialog" "xterm" "nano" "autoconf" "automake" "libtool" "pkg-config" "sudo" "git" "rfkill" "wpasupplicant" "screen" "iw")
 
 # Loop through the list of package names
 for package in "${packages[@]}"; do
