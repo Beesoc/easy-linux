@@ -24,14 +24,10 @@ hosts_func() {
 ncdu_func() {
 	printf "   ${OG}Searching for ${WT}ncdu${CY}. If found, I'll run ncdu. If not, I'll install it.\\n"
 	sleep 1
-	if [[ $(command -v ncdu >/dev/null 2>&1) ]]; then
+	if command -v ncdu >/dev/null 2>&1; then
 		printf "${WT}ncdu ${CY}is installed\\n"
 	else
 		printf "${WT}ncdu ${CY}is not installed. Installing now.\\n"
-		sleep 1
-		printf "${GN}Please wait\\n"
-		sleep 1
-		printf "${GN}...\\n"
 		sudo apt install -y ncdu >/dev/null
 	fi
 	sudo ncdu --color dark -ex --exclude-caches --exclude-kernfs --confirm-quit --exclude .cache --exclude os-iso --exclude delme /
@@ -46,6 +42,7 @@ timezone_func() {
 locate_func() {
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
+     if command -v plocate; then	
 	printf "\\n      ${OG}[*] ${CY}pLocate: Find files and apps in an instant with pLocate.${GN} \\n\\n    "
 	read -r -p "What do you want to search for? ----> " search
 	clear
@@ -53,6 +50,9 @@ locate_func() {
 	plocate $search
 	printf "${CT}  Press ${WT}any ${CT}key to continue. \\n  ${OG}"
 	read -n 1 -r
+     else
+        sudo apt install -y plocate >/dev/null
+     fi
 }
 
 perm_func() {
@@ -64,9 +64,15 @@ perm_func() {
 }
 
 x11vnc_func() {
-	sudo apt install -y x11vnc >/dev/null
+	if command -v x11vnc; then
 	printf "${WT}  ${CY}Start ${GN}x11vnc Server${CY} - Control PC remotely ${CY} \\n   "
-	read -n 1 -r
+        printf "${GN}  Press ${WT}any ${GN}key to continue${NC}\\n"
+        read -n 1 -r
+	x11vnc -noxdamage -ncache 10 -ncache_cr -rfbauth ~/.vnc/passwd
+        else
+	sudo apt install -y x11vnc >/dev/null
+        printf "${GN}  Press ${WT}any ${GN}key to continue${NC}\\n"
+        read -n 1 -r
 	x11vnc -noxdamage -ncache 10 -ncache_cr -rfbauth ~/.vnc/passwd
 }
 
@@ -87,9 +93,9 @@ main_menu() {
 	printf "    ${WT}3)${CY}  Fix your Perm${PL}: Permission issues in Linux\n"
 	printf "    ${WT}4)${CY}  pLocate${PL}: Find things in Linux FAST \n"
 	printf "    ${WT}5)${CY}  Edit HOSTS file${PL}: Keep up to date to find other PC's by name\n"
-	printf "    ${WT}6)${CY}  ${WT}ncdu${PL}: Super fast Disk Space Mgmt from Terminal \n"
+	printf "    ${WT}6)${CY}  ncdu${PL}: Super fast Disk Space Mgmt from Terminal \n"
 	printf "    ${WT}7)${GN}  Return to Main Menu${PL}\n"
-	printf "    ${WT}8)${RED}  [✘] Exit tool [✘]: Uhh, it just exits.\n"
+	printf "    ${WT}8)${CY}  [✘] Exit tool [✘]${PL}: Uhh, it just exits.\n"
 	echo
 	printf "  ${GN}Selection: ${CY}\n"
 	read -n 1 -r main_menu_sel
