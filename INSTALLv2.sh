@@ -76,6 +76,7 @@ cleanup_func() {
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
                 bash /opt/easy-linux/install/menu-master.sh
+                exit 0
         else
                 echo
                 printf "\\n       ${RED}Exiting.\\n"
@@ -96,8 +97,8 @@ if [[ "$shell" == *'"/bash"' ]]; then
         rc=$(cat $HOME/.bashrc | grep "truecolor" -c)
         pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckbash == 0 ];then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.bashrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.bashrc
+                echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.bashrc
+                echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.bashrc
                 return 0
         fi
         if [[ $rc == 0 ]]; then
@@ -111,8 +112,8 @@ if [[ "$shell" == *'"/zsh"' ]]; then
         zc=$(cat $HOME/.zshrc | grep "truecolor" -c)
         pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckzsh == 0 ]; then
-        	echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.zshrc
-              	echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.zshrc
+                echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.zshrc
+                echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.zshrc
                 return 0
         fi
         if [[ $zc == 0 ]]; then
@@ -317,6 +318,22 @@ direnv_func() {
         check_directories_func
 }
 
+install_reqs() {
+# List of package names to install
+packages=("gawk" "acpi" "yacpi" "lm_sensors" "dialog" "xterm" "nano" "autoconf" "automake" "libtool" "pkg-config" "sudo" "git" "rfkill" "wpasupplicant" "screen" "iw")
+
+# Loop through the list of package names
+for package in "${packages[@]}"; do
+        if dpkg -s "${package[@]}" >/dev/null 2>&1; then
+                        echo "${package[@]} is already installed"
+        else
+                        echo "Installing ${package[@]}"
+                        sudo apt-get install --ignore-missing -y "${packages[@]}"
+        fi
+done
+
+}
+
 main() {
         # 1.  script starts executing here.
         clear
@@ -329,6 +346,7 @@ main() {
         install=${install:-Y}
         if [[ "$install" =~ ^[Yy]$ ]]; then
                 printf "\\n  ${WT}[*] ${CY}Loading, Please Wait\\n"
+        install_reqs
         else
                 printf "\\n  ${RED}   Exiting.\\n"
                 exit 0
