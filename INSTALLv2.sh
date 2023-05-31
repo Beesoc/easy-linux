@@ -237,7 +237,13 @@ git_files_func() {
         sudo chown -vR $USER:0 /opt/easy-linux
         sudo chmod +x /opt/easy-linux/support/*.sh
         sudo chmod +x /opt/easy-linux/*.sh
+      
+      if [[ -d /usr/share/applications/ ]]; then
         sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
+      elif
+         printf "  Directory '/usr/share/applications' not found. Not installing shortcut icon.\\n"
+      fi
+      
         sudo chmod +x /opt/easy-linux/install/*.sh
         sudo chmod +x /opt/easy-linux/support/misc/*.sh
         sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/easy-linux.sh
