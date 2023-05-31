@@ -240,7 +240,7 @@ git_files_func() {
       
       if [[ -d /usr/share/applications/ ]]; then
         sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
-      elif
+      elif [[ ! -d /usr/share/applications/ ]]; then
          printf "  Directory '/usr/share/applications' not found. Not installing shortcut icon.\\n"
       fi
       
