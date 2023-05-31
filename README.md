@@ -4,7 +4,7 @@ Source for my custom BASH menu system.
 ## What is it
 I am not the author of ANY of the tools that this menu system is installing, configuring or running. I have just put together this BASH menu system to help some non-technical friends utilize Linux, Pwnagotchi's and some pretty sweet Linux tools.  Full credit goes to the respective tool creators.  You all rock!
 ### Prerequisites
-Package management is done via APT. DIRENV, bc, lm-sensors and curl are prerequisites for this app. This installer will download and install the newest version of all of these via apt for you. 
+Package management is done via APT. curl (sudo apt-get install curl) is the only prerequisite for the installer.  The installer will download and install the newest version of anything else needed.
 
 #### Setup
 *To install Beesoc's Easy Linux menu system, just **download via curl and run INSTALLv2.sh**
