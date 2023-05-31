@@ -53,13 +53,9 @@ populate_envrc() {
         echo "export airc_deps_installed=$(if command -v aircrack-ng >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export airg_deps_inst=$(if command -v airgeddon >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
         echo "export airg_installed=$(if command -v airgeddon >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
-        echo "export autoj_install=$(if command -v autojump >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file"
-        echo "export all_users=\"$(getent passwd | grep /home | cut -d ':' -f 1)"\" | sudo tee -a "$envrc_file"
-        echo "export all_user_ct=\"$(getent passwd | grep /home -c)"\" | sudo tee -a "$envrc_file"       
-        echo "export user=$USER" | sudo tee -a "$envrc_file"
+        echo "export autoj_install=$(if command -v autojump >/dev/null 2>&1; then echo 1; else echo 0; fi)" | sudo tee -a "$envrc_file" 
         echo "export username=$(id | awk -F'[=()]' '{print $3}')"  | sudo tee -a "$envrc_file"
         echo "export userid=$(id | awk -F'[=()]' '{print $2}')"  | sudo tee -a "$envrc_file"
-        echo "export useraccount=$(getent passwd $USER | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
         echo "export computername=$(cat /etc/hostname)" | sudo tee -a "$envrc_file"
         echo "export hostname=$(cat /etc/hostname)" | sudo tee -a "$envrc_file"
         echo "export arch=$(uname -m)" | sudo tee -a "$envrc_file"
@@ -68,6 +64,23 @@ populate_envrc() {
         echo "export pwnagotchi=$(if [[ "$USER" == "$cwb_username" && "$(cat /etc/hostname)" == "$cwb_computername" ]]; then echo "Gotcha"; fi)" | sudo tee -a "$envrc_file"
         echo "export pwn_installed=" | sudo tee -a "$envrc_file"
         echo "export OS=$(uname -s)" | sudo tee -a "$envrc_file"
+if [[ -n $DESKTOP_SESSION ]]; then
+  case $DESKTOP_SESSION in
+    "ubuntu-on-wayland" | "ubuntu" | "lxqt" | "lxde" | "openbox")
+      echo "Running in a minimized Linux environment."
+      ;;
+    *)
+      echo "export all_users=\"$(getent passwd | grep /home | cut -d ':' -f 1)"\" | sudo tee -a "$envrc_file"
+      echo "export all_user_ct=\"$(getent passwd | grep /home -c)"\" | sudo tee -a "$envrc_file"       
+      echo "export user=$USER" | sudo tee -a "$envrc_file"
+      echo "export useraccount=$(getent passwd $USER | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
+
+      ;;
+  esac
+else
+  echo "Unable to determine the desktop session."
+fi
+
 
         # Update flag to indicate the function has run
         touch "$flag_file"
