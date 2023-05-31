@@ -64,15 +64,14 @@ populate_envrc() {
         echo "export pwnagotchi=$(if [[ "$USER" == "$cwb_username" && "$(cat /etc/hostname)" == "$cwb_computername" ]]; then echo "Gotcha"; fi)" | sudo tee -a "$envrc_file"
         echo "export pwn_installed=" | sudo tee -a "$envrc_file"
         echo "export OS=$(uname -s)" | sudo tee -a "$envrc_file"
-if [[ -z $DESKTOP_SESSION || $DESKTOP_SESSION == "ubuntu-on-wayland" || $DESKTOP_SESSION == "ubuntu" || $DESKTOP_SESSION == "lxqt" || $DESKTOP_SESSION == "lxde" || $DESKTOP_SESSION == "openbox" ]]; then
-  echo "Running in a minimized Linux environment."
-else
-      echo "export all_users=\"$(getent passwd | grep /home | cut -d ':' -f 1)"\" | sudo tee -a "$envrc_file"
-      echo "export all_user_ct=\"$(getent passwd | grep /home -c)"\" | sudo tee -a "$envrc_file"       
-      echo "export user=$USER" | sudo tee -a "$envrc_file"
-      echo "export useraccount=$(getent passwd $USER | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
-
-fi
+            if [[ -z $DESKTOP_SESSION || $DESKTOP_SESSION == "ubuntu-on-wayland" || $DESKTOP_SESSION == "ubuntu" || $DESKTOP_SESSION == "lxqt" || $DESKTOP_SESSION == "lxde" || $DESKTOP_SESSION == "openbox" ]]; then
+              echo "Running in a minimized Linux environment."
+            else
+              echo "export all_users=\"$(getent passwd | grep /home | cut -d ':' -f 1)\"" | sudo tee -a "$envrc_file"
+              echo "export all_user_ct=\"$(getent passwd | grep /home -c)\"" | sudo tee -a "$envrc_file"
+            echo "export user=$USER" | sudo tee -a "$envrc_file"
+              echo "export useraccount=$(getent passwd $USER | cut -d ':' -f 1)" | sudo tee -a "$envrc_file"
+            fi
         # Update flag to indicate the function has run
         touch "$flag_file"
     fi
