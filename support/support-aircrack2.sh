@@ -1,9 +1,9 @@
 #!/bin/bash
 # Aircrack-ng installer/runner
 # Version: 0.0.3
-trap trap-master.sh EXIT
-
 scripts_dir=/opt/easy-linux
+trap ${scripts_dir}/support/trap-master.sh EXIT
+
 source "${scripts_dir}/.envrc"
 set -e
 
@@ -12,7 +12,7 @@ envrc_func() {
 	sudo sed -i "s/air_installed=.*/air_installed=$air_installed/g" "${scripts_dir}/.envrc"
 	sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
 
-      if [[ $(command -v direnv) ]]; then
+      if command -v direnv; then
 	cd "${scripts_dir}/support" && direnv allow
       fi
 	if [[ $airc_installed = 1 && $airc_deps_installed = 1 ]]; then
@@ -37,12 +37,8 @@ aircrack_run_func() {
 		read -n 1 -s -r -t 300
 		clear
 		envrc_func
-		source ${scripts_dir}/menu-master.sh
-		exit 0
 	else
 		printf "\\n${GN} Checking dependencies...\\n"
-		airc_deps_installed=0
-		sudo sed -i "s/airc_deps_installed=.*/airc_deps_installed=$airc_deps_installed/g" "${scripts_dir}/.envrc"
 		deps_install_func
 
 	fi
@@ -52,7 +48,7 @@ aircrack_run_func() {
 app_install_func() {
 
 	if [[ ! -f $HOME/Downloads/aircrack-ng-1.7.tar.gz ]] && [[ ! -d $HOME/Downloads/aircrack-ng-1.7 ]]; then
-		wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P "$HOME/Downloads"
+	        wget https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz -P "$HOME/Downloads"
 		sudo tar -xvf $HOME/Downloads/aircrack-ng-1.7.tar.gz
 		sudo rm $HOME/Downloads/aircrack-ng-1.7.tar.gz
 		cd $HOME/Downloads/aircrack-ng-1.7
@@ -118,7 +114,10 @@ aircrack_check_func() {
 
 main() {
 	# Prompt the user to install dependencies and Aircrack-ng
-	clear
+if [[ ! -d $HOME/Downloads ]]; then
+sudo mkdir $HOME/Downloads
+else
+        clear
 	source ${scripts_dir}/support/support-Banner_func.sh
 	printf "\\n "
 	printf "\\n  ${GN}  Welcome to the Aircrack-ng installer.\\n"
@@ -137,6 +136,7 @@ main() {
 
 		aircrack_check_func
 	fi
+fi
 }
 
 main
