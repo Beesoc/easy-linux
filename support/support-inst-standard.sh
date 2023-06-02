@@ -36,11 +36,11 @@ pack_sel_func() {
 
 	# Loop through the list of package names
 	for package in "${packages[@]}"; do
-		if dpkg -s "$package" >/dev/null 2>&1; then
-			printf "  ${GN}$package is already installed"
+		if dpkg -s ${package[@]} >/dev/null 2>&1; then
+			printf "  ${GN} ${package[@]} is already installed"
 		else
-			printf "  ${CY}Installing $package${WT}\\n"
-			sudo apt-get install -y "$package"
+			printf "  ${CY}Installing ${package[@]}${WT}\\n"
+			sudo apt-get install -y "${package[@]}"
 		fi
 	done
 	nano_lints_func
@@ -73,4 +73,4 @@ stand_install=1
 sudo sed -i "s/stand_install=.*/stand_install=$stand_install/g" "${scripts_dir}/.envrc"
 printf "${OG}  Press ${WT}any ${OG}key to continue."
 read -n 1 -s -t 300
-source ${scripts_dir}/install/menu-apps.sh
+
