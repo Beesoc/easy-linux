@@ -12,7 +12,7 @@ clear
 source ${scripts_dir}/support/support-Banner_func.sh
 printf "\\n "
 # Get the username associated with UID 1000
-trap "bash ${scripts_dir}/support/trap-master.sh" EXIT
+trap "${scripts_dir}/support/trap-master.sh" EXIT
 
 perms_func() {
 	if [ -d /home/pi ]; then
@@ -87,4 +87,4 @@ user_sel_func
 }
 
 main
-source ${scripts_dir}/install/menu-master.sh
+
