@@ -1,6 +1,6 @@
 #!/bin/bash
 # New app installer from Github
-function help {
+function help() {
         echo
         echo "Usage: $0 [options]"
         echo "  This is the help menu for the app installer for Beesoc's Easy Linux Loader."
