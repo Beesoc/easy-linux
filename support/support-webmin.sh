@@ -9,7 +9,7 @@
 clear
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/support/support-Banner_func.sh
-trap source ${scripts_dir}/support/support-trap-wifi.sh
+trap ${scripts_dir}/support/support-trap-wifi.sh
 
 printf "${CY}Do you want to install/lanuch Webmin? [Y/n] "
 read -n 1 -r choicewebmin
@@ -22,13 +22,13 @@ else
 	exit 0
 fi
 
-if [[ $(which webmin >/dev/null 2>&1) ]]; then
+if which webmin >/dev/null 2>&1; then
 	printf "\\n${WT}Webmin ${CY}is already installed\\n"
 	printf "${CY}Access via web browser at ${WT}https://localhost:10000/sysinfo.cgi?xnavigation=1${CY}\\n"
 	printf "${CY}Use your ${WT}normal Linux account info that you use to login to this computer\\n."
 	printf "  ${CY}Press ${WT}any ${CY}key to continue\\n"
 	read -n 1 -r -s -t 300
-	support ${scripts_dir}/install/menu-apps.sh
+	
 else
 	printf "\\n${WT}Webmin ${YW}is not installed.  Continuing\\n"
 fi
