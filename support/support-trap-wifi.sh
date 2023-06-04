@@ -8,7 +8,7 @@ source "${scripts_dir}/.envrc"
 # get a list of wireless network interfaces
 interfaces=$(iwconfig 2>/dev/null | grep -o "^[^ ]*")
 
-if iw dev | grep "monitor" -c) -ne 0; then
+if [ $(iw dev | grep "monitor" -c) -ne 0 ]; then
     printf "  ${CY}You have at least 1 wifi adapter in Monitor mode.${OG}\\n"
     read -n 1 -p "  Do you want to change back to Manage mode? [Y/n] ---->" cngmode
     cngmode=${cngmode:-y}
