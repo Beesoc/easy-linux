@@ -1,6 +1,6 @@
 #!/bin/bash
 # New app installer from Github
-function help() {
+function help {
         echo
         echo "Usage: $0 [options]"
         echo "  This is the help menu for the app installer for Beesoc's Easy Linux Loader."
@@ -76,7 +76,6 @@ cleanup_func() {
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
                 bash /opt/easy-linux/install/menu-master.sh
-                exit 0
         else
                 echo
                 printf "\\n       ${RED}Exiting.\\n"
@@ -97,13 +96,13 @@ if [[ "$shell" == *'"/bash"' ]]; then
         rc=$(cat $HOME/.bashrc | grep "truecolor" -c)
         pcheckbash=$(cat $HOME/.bashrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckbash == 0 ];then
-                echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.bashrc
-                echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.bashrc
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.bashrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.bashrc
                 return 0
         fi
         if [[ $rc == 0 ]]; then
-                echo "export COLORTERM=truecolor" >> sudo tee -a $HOME/.bashrc
-                echo "export COLORFGBG=15;0" >> sudo tee -a $HOME/.bashrc
+                sudo echo "export COLORTERM=truecolor" >> sudo tee -a $HOME/.bashrc
+                sudo echo "export COLORFGBG=15;0" >> sudo tee -a $HOME/.bashrc
                 return 0
         fi
 fi
@@ -112,8 +111,8 @@ if [[ "$shell" == *'"/zsh"' ]]; then
         zc=$(cat $HOME/.zshrc | grep "truecolor" -c)
         pcheckzsh=$(cat $HOME/.zshrc | grep "PATH=/opt/easy-l" -c)
         if [ $pcheckzsh == 0 ]; then
-                echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.zshrc
-                echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.zshrc
+        	echo "export PATH=/opt/easy-linux/install:$PATH" >> sudo tee -a $HOME/.zshrc
+              	echo "export PATH=/opt/easy-linux/support:$PATH" >> sudo tee -a $HOME/.zshrc
                 return 0
         fi
         if [[ $zc == 0 ]]; then
@@ -238,13 +237,7 @@ git_files_func() {
         sudo chown -vR $USER:0 /opt/easy-linux
         sudo chmod +x /opt/easy-linux/support/*.sh
         sudo chmod +x /opt/easy-linux/*.sh
-      
-      if [[ -d /usr/share/applications/ ]]; then
         sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
-      elif [[ ! -d /usr/share/applications/ ]]; then
-         printf "Directory '/usr/share/applications' not found. Not installing shortcut icon.\\n"
-      fi
-      
         sudo chmod +x /opt/easy-linux/install/*.sh
         sudo chmod +x /opt/easy-linux/support/misc/*.sh
         sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/easy-linux.sh
@@ -318,22 +311,6 @@ direnv_func() {
         check_directories_func
 }
 
-install_reqs() {
-# List of package names to install
-packages=("gawk" "apt-utils" "acpi" "yacpi" "ccze" "dialog" "xterm" "nano" "iw" "autoconf" "automake" "libtool" "pkg-config" "sudo" "git" "rfkill" "wpasupplicant" "screen" "wget")
-
-# Loop through the list of package names
-for package in "${packages[@]}"; do
-        if dpkg -s "${package[@]}" >/dev/null 2>&1; then
-                        echo "${package[@]} is already installed"
-        else
-                        echo "Installing ${package[@]}"
-                        sudo apt-get install --ignore-missing -y "${packages[@]}"
-        fi
-done
-
-}
-
 main() {
         # 1.  script starts executing here.
         clear
@@ -346,7 +323,6 @@ main() {
         install=${install:-Y}
         if [[ "$install" =~ ^[Yy]$ ]]; then
                 printf "\\n  ${WT}[*] ${CY}Loading, Please Wait\\n"
-        install_reqs
         else
                 printf "\\n  ${RED}   Exiting.\\n"
                 exit 0
