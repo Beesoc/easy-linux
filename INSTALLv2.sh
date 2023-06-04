@@ -237,7 +237,10 @@ git_files_func() {
         sudo chown -vR $USER:0 /opt/easy-linux
         sudo chmod +x /opt/easy-linux/support/*.sh
         sudo chmod +x /opt/easy-linux/*.sh
+  
+  if [ -d /usr/share/applications ]; then
         sudo mv /opt/easy-linux/install/easy-linux.desktop /usr/share/applications/
+  fi
         sudo chmod +x /opt/easy-linux/install/*.sh
         sudo chmod +x /opt/easy-linux/support/misc/*.sh
         sudo cp -f /opt/easy-linux/install/menu-master.sh /usr/bin/easy-linux.sh
@@ -254,7 +257,7 @@ install_func() {
         choiceez=${choiceez:-Y}
         if [[ "$choiceez" =~ ^[Yy]$ ]]; then
                 #if [[ $choiceez = "Y" ]] || [[ $choiceez = "y" ]]; then
-                printf "\\n${WT}  [*] ${CY}Installation confirmed..."
+                printf "\\n${WT}  [*] ${CY}Installation confirmed...\\n"
                 sleep 1
                 printf "..Please wait..\\n"
                 sleep 1
@@ -290,9 +293,6 @@ direnv_func() {
         choicedirenv=${choicedirenv:-N}
         if [[ "$choicedirenv" =~ ^[Yy]$ ]]; then
                 printf "\\n${GN}  Continuing...\\n"
-                sleep 1
-                printf "  ${CY}This step may take a few minutes...\\n"
-                sleep 1
                 printf "  ${CY}Please wait.\\n${NC}"
                 sudo apt update
                 sudo apt install -y direnv
@@ -303,7 +303,7 @@ direnv_func() {
                 else
                 printf "${RED}  ERROR: I couledn't find your .bashrc or .zshrc file.\\n" 
                 printf "Please check the Direnv website for instructions on how to proceed:\\n"
-                printf "https://direnv.net/docs/hook.html"
+                printf "https://direnv.net/docs/hook.html\\n"
                 fi
         elif [[ "$choicedirenv" =~ ^[nN]$ ]]; then
         printf "\\n${WT}  [-] ${CY}Direnv is nice but not required. Continuing.\\n"
