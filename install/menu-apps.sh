@@ -18,7 +18,6 @@ webmin() {
                                         printf "https://localhost:10000\\n"
                                         printf "  ${CY}Press ${WT}any ${CY}key to continue.\\n\\n"
                                         read -n 1 -t 300
-                                        source ${scripts_dir}/install/menu-apps.sh
                                 elif [[ ${webmin_installed} == 0 ]]; then
                                         source ${scripts_dir}/support/support-webmin.sh
                                 else 
@@ -32,17 +31,24 @@ webmin() {
 }
 
 standard_func() {
-                        if [[ $stand_install == 0 ]]; then
+                        if [[ ${stand_install} -eq 0 ]]; then
                                 source $scripts_dir/support/support-inst-standard.sh
-                        elif [[ $stand_install == 1 ]]; then
-                                printf "$OG  You have already installed all of the standard tools.\\n"
-                                exit 0
+                        elif [[ ${stand_install} -eq 1 ]]; then
+                                printf "${OG}  You have already installed all of the standard tools.\\n"
+                                return 0
                         fi
 }
 
-sysinfo_func() {
+duplicati_func() {
                 clear
-                        source "$scripts_dir/support/support-sysinfo.sh"
+       if [[ ${stand_install} -eq 0 ]]; then
+   			printf "${OG}  Installing dependencies...\\n"
+			source $scripts_dir/support/support-inst-standard.sh
+       elif [[ ${stand_install} -eq 1 ]]; then
+                                printf "${OG}  You have already installed Duplicati.\\n"
+                                return 0
+       fi                     
+                     
 }
 
 ohmy_func() {
@@ -76,7 +82,7 @@ nano_func() {
                         elif [[ $nano_installed == 0 ]]; then
                                 source $scripts_dir/support/support-nano.sh
                         fi
-                        if [[ $nano_installed == 0 ]] && $(command -v $nano_exe); then
+                        if [[ $nano_installed == 0 ]] && command -v $nano_exe; then
                                 nano_installed=1
                                 sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" "$scripts_dir/.envrc"
                                 sudo nano -ADEGHKMPSWZacdegmpqy%_ -T 4
@@ -85,7 +91,7 @@ nano_func() {
 }
 
 ncdu_func() {
-  if [ $ncdu_installed = 1 ] && $(command -v ncdu >/dev/null); then
+  if [ $ncdu_installed = 1 ] && command -v ncdu >/dev/null; then
     ncdu --color dark -x --exclude-caches --exclude-kernfs --exclude .local --confirm-quit --exclude .cache /
   else
     sudo apt install -y ncdu
@@ -113,9 +119,9 @@ glances_func() {
                       glances_install=1
                       sudo sed -i "s/glances_install=.*/glances_install=$glances_install/g" "$scripts_dir/.envrc"
                   elif [[ "$aglan" =~ ^[sS]$ ]]; then
-                      printf "TODO: Sorry, I haven't done this yet."
+                      printf "TODO: Sorry, I haven't done this yet.\\n"
                   else
-                      printf "${RED}  Invalid Selection. Options are A or S only."
+                      printf "${RED}  Invalid Selection. Options are A or S only.\\n"
                   fi
        fi
 
@@ -123,7 +129,7 @@ glances_func() {
 
 docker_func() {
                    clear
-                        if $(command -v /opt/docker-desktop/bin/docker-desktop >/dev/null 2>&1); then
+                        if [ -e /opt/docker-desktop/bin/docker-desktop || command -v docker >/dev/null ]; then
                                 docker_installed=1
                                 printf "${GN}Docker Desktop is already installed\\n"
                                 sudo /opt/docker-desktop/bin/docker-desktop
@@ -151,9 +157,9 @@ autojump_func() {
 }
 
 all_func() {
-        printf "  ${OG}This functionality is not working yet."
-        source ${scripts_dir}/install/menu-master.sh
-}
+        printf "  ${OG}This functionality is not working yet.\\n"
+        return 0
+ }
 
 main_menu_func() {
         source ${scripts_dir}/install/menu-master.sh
@@ -175,7 +181,7 @@ main_menu() {
         printf "     ${WT}6)${CY}  Nano${PL}: Small, efficient terminal based text editor.\n"
         printf "     ${WT}7)${CY}  ncdu${PL}: Manage Disk space with terminal based super fast file manager.\n"
         printf "     ${WT}8)${CY}  Oh My BASH! and Oh My ZSH!${PL}: Increase productivity and make your terminal sexy.${CY}\n"
-        printf "     ${WT}9)${CY}  SysInfo${PL}: My thrown together sysinfo page. If you like this kinda stuff, install Glances \n"
+        printf "     ${WT}9)${CY}  Duplicati${PL}: Data deduplicating, encrypted online backups! \n"
         printf "    ${WT}10)${CY}  Standard/Favorites${PL}: Some favorites/required packages from Easy-Linux.\n"
         printf "    ${WT}11)${CY}  Webmin${PL}: Manage almost every aspect of your system via web browser.\n"
         printf "    ${WT}12)${CY}  Return to Main Menu${PL}: Return to the Easy Linux Main Menu\n"
@@ -192,7 +198,7 @@ main_menu() {
         6) nano_func ;;
         7) ncdu_func ;;
         8) ohmy_func ;;
-        9) sysinfo_func ;;
+        9) duplicati_func ;;
         10) standard_func ;;
         11) webmin_func ;;
         12) main_menu_func ;;
@@ -204,15 +210,15 @@ main_menu() {
 deps_install_func() {
         packages=("bc" "acpi" "ccze" "colorized-logs" "xrootconsole" "x11-utils" "iw" "gawk" "autoconf" "automake" "libtool" "pkg-config" "rfkill" "libpcap-dev" "wget" "ethtool" "systemd" "grep" "sed" "hostapd" "wpasupplicant" "screen" "groff" "grc")
         for package in "${packages[@]}"; do
-                if dpkg -s "$package" >/dev/null 2>&1; then
-                        echo "$package is already installed"
+                if dpkg -s "${package[*]}" >/dev/null 2>&1; then
+                        echo "${package[*]} is already installed\\n"
                 else
-                        echo "Installing $package"
-                        sudo apt-get --ignore-missing --show-progress install -y "$package"
+                        echo "Installing ${package[*]}\n"
+                        sudo apt-get --ignore-missing --show-progress install -y "${package[*]}"
                 fi
         done
          menu_apps_deps=1
-         sudo sed -i "s/menu-apps-deps=.*/menu_apps_deps=$menu_apps_deps/g" "$scripts_dir/.envrc"
+         sudo sed -i "s/menu_apps_deps=.*/menu_apps_deps=$menu_apps_deps/g" "$scripts_dir/.envrc"
 }
 
 main() {

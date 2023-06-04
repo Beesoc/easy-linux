@@ -2,7 +2,7 @@
 # Version: 0.0.3
 set -e
 scripts_dir=/opt/easy-linux
-trap "source ${scripts_dir}/support/trap-master.sh" EXIT
+trap "${scripts_dir}/support/trap-master.sh" EXIT
 
 function help {
     echo
@@ -17,12 +17,12 @@ if [[ $1 == "-h" || $1 == "--help" ]]; then
     help
     exit 0
 elif [[ $1 == "-v" || $1 == "--version" ]]; then
-    echo "The script is version 0.0.2."
+    echo "The script is version 0.0.3"
     exit 0
 fi
 
-clear
-source /opt/easy-linux/.envrc && source /opt/easy-linux/support/.whoami.sh
+source /opt/easy-linux/.envrc 
+source /opt/easy-linux/support/.whoami.sh
 
 check_for_updates() {
    cd /opt/easy-linux/support || exit
@@ -75,10 +75,6 @@ misc_func() {
             echo "export COLORTERM=truecolor" >> ~/.zshrc
             echo "export COLORFGBG=15,0" >> ~/.zshrc
         fi
-    fi
-
-    if [[ -f ${scripts_dir}/INSTALLv2.sh ]]; then
-        sudo rm ${scripts_dir}/INSTALLv2.sh
     fi
 }
 
@@ -167,14 +163,23 @@ trouble_func() {
     fi
 }
 
-sysinfo_func() {
-    source ${scripts_dir}/support/support-sysinfo.sh
+backup_func() {
+                clear
+       if [[ ${stand_install} -eq 0 ]]; then
+   			printf "${OG}  Installing dependencies...\\n"
+			source $scripts_dir/support/support-inst-standard.sh
+       elif [[ ${stand_install} -eq 1 ]]; then
+                                printf "${OG}  You have already installed Duplicati.\\n"
+                                return 0
+       fi                     
+                     
 }
+
 
 # Function to handle menu selection
 main_menu() {
     clear
-    source "${scripts_dir}/support/support-Banner_func.sh" && sudo chown -vR 1000:0 /opt/easy-linux >/dev/null
+    source "${scripts_dir}/support/support-Banner_func.sh" && sudo chown -vR $USER:0 /opt/easy-linux >/dev/null
     echo
     printf "${BL}${BOLD}  $username                ${BOLD}${GN}Beesoc's Easy Linux Loader              ${BL} $computername ${CY}\n"
     echo
@@ -185,10 +190,10 @@ main_menu() {
     printf "     ${WT}3)${CY}  Customize${PL}: Tweak various parts of your system, network or target.${CY}\n"
     printf "     ${WT}4)${CY}  Pwnagotchi${PL}: Backup/Restore, Connect to various Pwnagotchi features.${CY}\n"
     printf "     ${WT}5)${CY}  Troubleshooting${PL}: From network issues to time sync issues.${CY}\n"
-    printf "     ${WT}6)${CY}  System Info${PL}: Various Sys Info about your Linux system.${CY}\n"
+    printf "     ${WT}6)${CY}  Backup${PL}: Various Sys Info about your Linux system.${CY}\n"
     printf "     ${WT}7)${CY}  Quit${PL}: Uhhh. It just quits.${CY}\n"
     echo
-    printf "  ${GN}Selection: ---->${OG}  "
+    printf "  ${GN}Selection: ---->${OG} "
     read -n 1 -r main_menu
     case "$main_menu" in
         1) hack_func ;;
@@ -196,7 +201,7 @@ main_menu() {
         3) cust_func ;;
         4) pwn_func ;;
         5) trouble_func ;;
-        6) sysinfo_func ;;
+        6) backup_func ;;
         7) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
     esac
@@ -206,20 +211,23 @@ main_menu() {
 main() {
 # Call the update check function
 check_for_updates
+
 if [[ -f $HOME/INSTALLv2.sh ]]; then
         rm -f $HOME/INSTALLv2.sh
- fi
-    if [[ -f $HOME/Downloads/INSTALLv2.sh ]]; then
+elif [[ -f $scripts_dir/INSTALLv2.sh ]]; then
+	  rm $scripts_dir/INSTALLv2.sh
+elif [[ -f $HOME/Downloads/INSTALLv2.sh ]]; then
         rm -f $HOME/Downloads/INSTALLv2.sh
-    fi
-if [[ -e $HOME/version-easy-linux.sh ]]; then
+elif [[ -e $HOME/version-easy-linux.sh ]]; then
     rm -rf $HOME/version-easy-linux.sh
 fi
-    while true; do
+
+misc_func
+while true; do
     main_menu
-    printf "${WT}Press any key to return to the main menu.${CY}\n"
-    read -n 1 -r
-done
+	    printf "${WT}Press any key to return to the main menu.${CY}\n"
+	    read -n 1 -r
+	done
 }
 
 main
