@@ -14,7 +14,6 @@ install_run_func() {
 	systemctl --user start docker-desktop
 	docker_installed=1
 	sudo sed -i "s/docker_installed=.*/docker_installed=$docker_installed/g" "${scripts_dir}/.envrc"
-	source ${scripts_dir}/install/menu-master.sh
 }
 
 docker_keys() {
@@ -40,7 +39,7 @@ docker_keys() {
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 	printf "  \\n${CY}Performing an apt update and then installing ${WT}Docker Desktop.${CY}\\n"
 	sudo apt-get update
-	sudo apt-get install -y -- ignore-missing docker-ce docker-ce-cli containerd.io pass
+	sudo apt-get install -y docker-ce docker-ce-cli containerd.io pass
 	printf "  ${CY}Install Docker Desktop${NC}\\n"
 	install_run_func
 }
