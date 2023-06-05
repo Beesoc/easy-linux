@@ -16,6 +16,9 @@ elif [ -d $HOME/Downloads ]; then
       fi
    sudo dpkg -i ./duplicati_2.0.7.1-1_all.deb
    sudo rm ./duplicati_2.0.7.1-1_all.deb
+   stand_install=1
+   sudo sed -i "s/stand_install=.*/stand_install=$stand_install/g" "${scripts_dir}/.envrc"
+
 fi
 }
 
