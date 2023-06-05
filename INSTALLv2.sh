@@ -36,6 +36,16 @@ OGF='\e[0;33;44m'
 OGH='\e[0;30;44m'
 NC='\e[0m'
 
+print_centered() {
+  local text="$1"
+  local terminal_width=$(tput cols)
+  local text_width=${#text}
+  local padding_width=$(( (terminal_width - text_width) / 2 ))
+  local padding=$(printf "%*s" $padding_width)
+  
+  echo "${padding}${text}"
+}
+
 Banner_func() {
         printf "${WT}\\n"
         printf "${OGH}▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀${OGG}${RED}\\n"
@@ -76,6 +86,7 @@ cleanup_func() {
         if [[ $launchnow =~ ^[Yy]$ ]]; then
                 printf "${GN}\\n   Starting Beesoc's Easy Linux now....\\n"
                 bash /opt/easy-linux/install/menu-master.sh
+                exit 0
         else
                 echo
                 printf "\\n       ${RED}Exiting.\\n"
