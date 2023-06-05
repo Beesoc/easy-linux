@@ -20,7 +20,7 @@ main() {
         # Main script logic
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
-sudo apt install -y python-dev wireless-tools
+sudo apt install -y python2-dev wireless-tools
 printf "${CY} Do you want the full install or Docker install?\\n${NC}  "
 read -n 1 -r -p "[F]ull or [D]ocker? [F/d] " fullord
 fullord=${fullord:-F}
