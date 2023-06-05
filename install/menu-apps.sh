@@ -119,7 +119,7 @@ glances_func() {
                       glances_install=1
                       sudo sed -i "s/glances_install=.*/glances_install=$glances_install/g" "$scripts_dir/.envrc"
                   elif [[ "$aglan" =~ ^[sS]$ ]]; then
-                      printf "TODO: Sorry, I haven't done this yet.\\n"
+                      source ${scripts_dir}/support/support-glances.sh
                   else
                       printf "${RED}  Invalid Selection. Options are A or S only.\\n"
                   fi
