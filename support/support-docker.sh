@@ -18,7 +18,7 @@ install_run_func() {
 
 docker_keys() {
 	printf "    ${GN}Grab docker's key and install ${WT}docker-ce${NC}.\\n"
-	sudo apt install --ignore-missing -y ca-certificates curl gnupg lsb-release
+	sudo apt install -y ca-certificates curl gnupg lsb-release
 	if [ -d $install_keyrings ]; then
 		printf " \n"
 		cd $install_keyrings || exit
@@ -54,7 +54,7 @@ docker_deps_func() {
 			echo "$package is already installed"
 		else
 			echo "Installing $package"
-			sudo apt-get install --ignore missing -y "$package"
+			sudo apt-get install -y "$package"
 		fi
 		printf "The first set of dependencies is complete. This set consisted of:\\n ${WT}${packages[*]}."
 		# sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
@@ -81,7 +81,7 @@ docker_deps_func() {
 			printf "${packages[*]} is already installed"
 		else
 			printf "Installing ${packages[*]}"
-			sudo apt-get install --ignore-missing -y "${packages[@]}"
+			sudo apt-get install -y "${packages[@]}"
 		fi
 		docker_deps=1
 		sudo sed -i "s/docker_deps=.*/docker_deps=$docker_deps/g" "${scripts_dir}/.envrc"
@@ -93,12 +93,12 @@ docker_deps_func() {
 	if [[ -f $HOME/.docker/desktop ]]; then
 		sudo rm /usr/local/bin/cow.docker.cli
 	else
-		printf "$HOME/.docker/desktop not found."
+		printf "$HOME/.docker/desktop not found.\\n"
 	fi
 	if [[ -f /usr/local/bin/com.docker.cli ]]; then
 		sudo rm /usr/local/bin/com.docker.cli
 	else
-		printf "/usr/local/bin/com.docker.cli/ not found."
+		printf "/usr/local/bin/com.docker.cli/ not found.\\n"
 	fi
 	sudo apt remove -y docker-desktop >/dev/null
 	sudo apt --fix-broken install -y
@@ -128,7 +128,7 @@ intro() {
 }
 
 main() {
-	if [[ $(command -v docker-desktop) ]]; then
+	if command -v docker-desktop; then
 		install_run_func
 	fi
 	intro
