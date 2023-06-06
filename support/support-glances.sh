@@ -24,9 +24,9 @@ sudo apt install -y python2-dev wireless-tools
 printf "${CY} Do you want the full install or Docker install?\\n${NC}  "
 read -n 1 -r -p "[F]ull or [D]ocker? [F/d] " fullord
 fullord=${fullord:-F}
-if [ "$fullord" =~ ^[fF]$ ]; then
+if [[ "$fullord" =~ ^[fF]$ ]]; then
 install_func
-elif [ "$fullord" =~ ^[dD]$ ]; then
+elif [[ "$fullord" =~ ^[dD]$ ]]; then
 ${scripts_dir}/install/menu-containerized.sh
 else
     printf "${RED}  Invalid selection.  Choices are F or D.\\n"
