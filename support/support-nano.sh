@@ -15,11 +15,10 @@ run_nano_func() {
 install_nano() {
 
 	curl https://www.nano-editor.org/dist/v7/nano-7.2.tar.xz --output $HOME/Downloads/nano-7.2.tar.xz
+    cd $HOME/Downloads || exit
 	tar -xvf $HOME/Downloads/nano-7.2.tar.xz
 	cd $HOME/Downloads/nano-7.2 || exit
-	sudo .configure
-	sudo make
-	sudo make check
+	./configure && make && sudo make install
 	nano_installed=1
 	sudo sed -i "s/nano_installed=.*/nano_installed=$nano_installed/g" ${scripts_dir}/.envrc
 }
@@ -38,9 +37,10 @@ nano_check_deps() {
 			exit 0
 		else
 			printf "  ${WT}Nano ${CY}will be upgraded or ${WT}reinstalled${CY}.\\n     "
+            install_nano
 		fi
 	else
-		printf "  ${USER}, you do not appear to have nano installed."
+		printf "  ${USER}, you do not appear to have nano installed.\\n"
 		read -n 1 -r -p "Do you want me to install it? [Y/n] " installnano
 		installnano=${installnano:-Y}
 		if [[ "$installnano" = "N" ]] || [[ $installnano = "n" ]]; then
@@ -91,5 +91,3 @@ main() {
 }
 
 main
-
-return 0
