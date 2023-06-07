@@ -46,7 +46,9 @@ duplicati_func() {
 			source $scripts_dir/support/support-inst-standard.sh
        elif [[ ${stand_install} -eq 1 ]]; then
                                 printf "${OG}  You have already installed Duplicati.\\n"
-                                return 0
+                                printf "${OG}  Press ${WT}any ${OG}key to load Duplicati in your web browser. ${NC}\\n"
+                                sudo duplicati &
+                                exit 0
        fi                     
                      
 }
@@ -54,23 +56,23 @@ duplicati_func() {
 ohmy_func() {
          if [[ -d $HOME/.oh-my-bash || -d $HOME/.oh-my-zsh ]]; then
                if [[ -d $HOME/.oh-my-bash ]]; then
-                  printf "Oh My BASH! is already installed."
+                  printf "Oh My BASH! is already installed.\\n"
                fi
                if [[ -d $HOME/.oh-my-zsh ]]; then
-                  printf "Oh My ZSH! is already installed."
+                  printf "Oh My ZSH! is already installed.\\n"
                fi
         read -n 1 -p "Do you want to install/reinstall either Oh My BASH or Oh My ZSH? [Y/n] " reinohmy
         reinohmy=${reinohmy:-Y}
               if [[ "$reinohmy" =~ ^[nN]$ ]]; then
                    return 0
               elif [[ "$reinohmy" =~ ^[yY]$ ]]; then   
-                   printf "  ${CY}Install/Reinstall requested. Loading..."
+                   printf "  ${CY}Install/Reinstall requested. Loading...\\n"
               fi
          fi
                         clear
                         source "$scripts_dir/support/support-Banner_func.sh"
                         source "${scripts_dir}/support/support-ohmy.sh"
-                        printf "\\n  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue."
+                        printf "\\n  ${CY}Installation complete.  Press ${WT}any ${CY}key to continue.\\n"
                         read -n 1 -t 300
 
 }
@@ -106,7 +108,7 @@ hacking_func() {
 
 glances_func() {
        if [[ $glances_install == 1 ]]; then
-                                printf "  Glances is installed."
+                                printf "  Glances is installed.\\n"
                                 sudo glances
        elif [[ $glances_install == 0 ]]; then
             printf "  ${CY}Glances can be installed via an automated script or from source.\\n"
@@ -173,6 +175,7 @@ main_menu() {
         echo
         printf "  ${GN}Select an option:${CY}\n"
         echo
+        printf "     ${WT}0)${CY}  Docker Apps${PL}: Containerized apps. Very awesome.\\n"
         printf "     ${WT}1)${CY}  All${PL}: TODO: NOT WORKING YET\\n"
         printf "     ${WT}2)${CY}  Autojump${PL}: Terminal addon; improve efficiency & quickly jump around machine${CY}\n"
         printf "     ${WT}3)${CY}  Docker Desktop${PL}: Amazing Sauce. Run apps in containers and forget about dependencies.\n"
@@ -190,6 +193,7 @@ main_menu() {
         printf "  ${GN}Selection: ---->${OG} "
           read -r main_menu
           case "$main_menu" in
+        0) source ${scripts_dir}/install/menu-containerized.sh ;; 
         1) all_func ;;
         2) autojump_func ;;
         3) docker_func ;;
@@ -214,7 +218,7 @@ deps_install_func() {
                         echo "${package[*]} is already installed\\n"
                 else
                         echo "Installing ${package[*]}\n"
-                        sudo apt-get --ignore-missing --show-progress install -y "${package[*]}"
+                        sudo apt-get install -y "${package[*]}"
                 fi
         done
          menu_apps_deps=1

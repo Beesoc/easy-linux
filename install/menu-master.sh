@@ -170,7 +170,9 @@ backup_func() {
 			source $scripts_dir/support/support-inst-standard.sh
        elif [[ ${stand_install} -eq 1 ]]; then
                                 printf "${OG}  You have already installed Duplicati.\\n"
-                                return 0
+                                printf "Loading...Please wait"
+                                sudo duplicati &
+                                exit 0
        fi                     
                      
 }
@@ -190,7 +192,7 @@ main_menu() {
     printf "     ${WT}3)${CY}  Customize${PL}: Tweak various parts of your system, network or target.${CY}\n"
     printf "     ${WT}4)${CY}  Pwnagotchi${PL}: Backup/Restore, Connect to various Pwnagotchi features.${CY}\n"
     printf "     ${WT}5)${CY}  Troubleshooting${PL}: From network issues to time sync issues.${CY}\n"
-    printf "     ${WT}6)${CY}  Backup${PL}: Various Sys Info about your Linux system.${CY}\n"
+    printf "     ${WT}6)${CY}  Backup${PL}: Deduplicating and cloud enabled backups.${CY}\n"
     printf "     ${WT}7)${CY}  Quit${PL}: Uhhh. It just quits.${CY}\n"
     echo
     printf "  ${GN}Selection: ---->${OG} "
