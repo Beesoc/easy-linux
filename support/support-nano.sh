@@ -3,10 +3,8 @@
 set -e
 # Version: 0.0.3
 scripts_dir=/opt/easy-linux
-clear
 #
 source "${scripts_dir}/.envrc"
-source "${scripts_dir}/support/support-Banner_func.sh"
 #trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 
 run_nano_func() {
@@ -30,8 +28,8 @@ nano_check_deps() {
 
 	if [[ -f /usr/local/bin/nano ]]; then
 		printf "  ${CY}You already have ${WT}nano ${CY}installed.\\n"
-		printf "  Would you like to install the latest version of ${WT}nano ${CY}from source?\\n  ${NC}"
-		read -n 1 -r -p "Do you want to install the newest version of nano? [Y/n] " choicenano
+		printf "  Would you like to install the latest version of ${WT}nano ${CY}"
+		read -n 1 -r -p "from source? [Y/n] ----> " choicenano
 		choicenano=${choicenano:-Y}
 		clear
 		source ${scripts_dir}/support/support-Banner_func.sh
@@ -64,12 +62,10 @@ main() {
 
 	EXECUTABLE=$(which nano)
 	if [[ -n $EXECUTABLE ]] && [[ $nano_installed = 1 ]]; then
-		printf "  ${CY}Nano already installed!\\n"
 		run_nano_func
 	fi
 
 	if [[ -n $EXECUTABLE ]]; then
-		printf "  ${CY}Nano already installed!\\n"
 		run_nano_func
 	else
 		nano_check_deps
@@ -96,4 +92,4 @@ main() {
 
 main
 
-exit
+return 0
