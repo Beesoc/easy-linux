@@ -92,6 +92,12 @@ if [[ ${stand_install} -eq 1 ]]; then
 else
 	main
 	printf "${CY}  All apps in this script have been successfully installed. ${PL}\\n"
+    printf "${CY}  Loading Duplicati Backup solution in your web browser."
+    echo
 	printf "${OG}  Press ${WT}any ${OG}key to continue.\\n"
-read -n 1 -s -t 300
+
+    
+read -n 1 -s anykey
+sudo duplicati &
+exit 0
 fi
