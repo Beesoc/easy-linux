@@ -3,7 +3,6 @@
 set -e
 # Version: 0.0.4
 #
-clear
 scripts_dir=/opt/easy-linux
 
 source "${scripts_dir}/.envrc"
@@ -91,7 +90,7 @@ choice_func() {
 
       change_net_func
       sudo systemctl restart NetworkManager &
-      sudo systemctl start wpa_supplicant
+      sudo systemctl restart wpa_supplicant
       #sudo systemctl start wpa_supplicant
       printf "Adapter $adapter changed to $mode mode.\\n"
       return 0

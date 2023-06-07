@@ -4,6 +4,12 @@ hashcat -a 0 -m 22000 ${scripts_dir}/support <dictionary_file> -r /usr/share/wor
 
 hashcat -a 9 -m 2500 /opt/easy-linux/hcxdump_full.pcapng /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/best64.rule -w 3 --deprecated-check-disable
 
+# Definitely worked
+hashcat -m 22000 -a 0 hs/pmkid_Beesomebodyisback_BC-EE-7B-7F-23-C0_2023-04-22T21-21-10.22000 /usr/share/dict/wordlist-probable.txt -w 3 --force
+
+hcxpcapngtool -o hs/handshake_DG1670A82_8C-09-F4-05-E8-80_2023-05-30T05-07-51.hccapx hs/handshake_DG1670A82_8C-09-F4-05-E8-80_2023-05-30T05-07-51.cap
+
+hashcat -m 22000 -a 0 hs/handshake_DG1670A82_8C-09-F4-05-E8-80_2023-05-30T05-07-51.cap  /usr/share/dict/wordlist-probable.txt -w 3 --force
 
 
 hashcat --stdout -a 3 --increment --increment-min 2 --increment-max 3 ?d?d?d?d

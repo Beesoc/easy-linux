@@ -29,9 +29,6 @@ perms_func() {
 		sudo chown -vR $chosen_user:$0 /opt/easy-linux
 	fi
 
-else
-	printf "${RED}  Invalid selection"
-fi
 }
 
 user_sel_func() {

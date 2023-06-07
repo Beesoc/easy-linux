@@ -11,19 +11,15 @@ install_func() {
                         pip3 install "${package[@]}"
         done
         pip install --user 'glances[all]'
-        pip install --upgrade glances
          glances_install=1
          sudo sed -i "s/glances_install=.*/glances_install=$glances_install/g" "$scripts_dir/.envrc"
-         sudo $HOME/.local/bin/glances
+         sudo glances
 }
 
 main() {
         # Main script logic
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
-if command -v $HOME/.local/bin/glances; then
-sudo $HOME/.local/bin/glances
-else
 sudo apt install -y python2-dev wireless-tools
 printf "${CY} Do you want the full install or Docker install?\\n${NC}  "
 read -n 1 -r -p "[F]ull or [D]ocker? [F/d] " fullord
@@ -34,7 +30,6 @@ elif [[ "$fullord" =~ ^[dD]$ ]]; then
 ${scripts_dir}/install/menu-containerized.sh
 else
     printf "${RED}  Invalid selection.  Choices are F or D.\\n"
-fi
 fi
 }
 
