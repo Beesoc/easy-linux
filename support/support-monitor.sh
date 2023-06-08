@@ -9,10 +9,11 @@ source "${scripts_dir}/.envrc"
 
 services_func() {
 
-  sudo rfkill block wifi &
-  sudo systemctl start NetworkManager &
-  sudo systemctl start wpa_supplicant &
+  sudo rfkill block wifi
+  sudo systemctl start NetworkManager
+  sudo systemctl start wpa_supplicant
   sudo rfkill unblock wifi
+  printf "${NC}\\n"
 
 }
 
@@ -20,6 +21,7 @@ services_func() {
 err_trap_func() {
   printf "\\n${RED}Script exited abnormally.${OG}\\n"
   services_func
+  printf "${NC}\\n"
   exit 1
 }
 
@@ -27,36 +29,41 @@ err_trap_func() {
 int_trap_func() {
   printf "\\n${RED}Script interrupted.${OG}\\n"
   services_func
+printf "${NC}\\n"
   exit 1
+}
+
+normal_end_func() {
+  services_func
+  printf "${NC}\\n"
+  return 0
+
 }
 
 # Set traps for abnormal exit and interruption
 trap err_trap_func ERR
 trap int_trap_func SIGINT
+trap normal_end_func EXIT
 
 change_net_func() {
-  sudo ifconfig $adapter down
+  sudo ifconfig "$adapter" down
   sudo airmon-ng check kill
-  
+
   if [[ $mode == "monitor" ]]; then
-    sudo airmon-ng stop ${adapter}
-    sudo ifconfig ${adapter} up
     mode="managed"
-    sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
-    sudo systemctl start NetworkManager &
-    sudo systemctl start wpa_supplicant &
-    return 0
+    sudo airmon-ng stop $adapter
   elif [[ $mode == "managed" ]]; then
-    sudo airmon-ng start $adapter
-    sudo ifconfig ${adapter} up
     mode="monitor"
-    sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
-    sudo systemctl start NetworkManager &
-    sudo systemctl start wpa_supplicant &
-    return 0
+    sudo airmon-ng start $adapter
+    sleep 2
+
   fi
 
-  printf "\\n${OG}Starting NetworkManager and wpa_supplicant${OG}.\\n"
+  sudo ifconfig "$adapter" up
+
+  sleep 1; printf "\\n3..."; sleep 1; printf "2..."; sleep 1; printf "1...\\n"
+  sudo systemctl start NetworkManager
+  sudo systemctl start wpa_supplicant
 }
 
 choice_func() {
@@ -69,15 +76,15 @@ choice_func() {
     if [[ $choice == "y" ]] || [[ $choice == "Y" ]]; then
       # Code to change adapter back to managed mode
       change_net_func
-      sudo systemctl start NetworkManager &
-      sudo systemctl start wpa_supplicant &
+      sudo systemctl start NetworkManager
+      sudo systemctl start wpa_supplicant
       printf "Adapter $adapter changed to $mode mode.\\n"
       return 0
     elif [[ $choice == "n" ]] || [[ $choice == "N" ]]; then
       printf "  ${WT}$USER ${OG}has selected to ${WT}keep their wifi in hacking mode (monitor mode)${OG}.\\n"
       return 0
     else
-        printf "  ${RED}Invalid Selection. Options are Y or N." 
+        printf "  ${RED}Invalid Selection. Options are Y or N.\\n" 
     fi
   elif [[ $mode == "managed" ]]; then
     printf "${GN}  You are currently in ${WT}$mode mode${GN} on ${WT}$adapter${GN}.\\n"
@@ -89,20 +96,20 @@ choice_func() {
       # Code to change adapter to monitor mode
 
       change_net_func
-      sudo systemctl restart NetworkManager &
-      sudo systemctl restart wpa_supplicant
+      sudo systemctl stop NetworkManager
+      sudo systemctl stop wpa_supplicant
       #sudo systemctl start wpa_supplicant
       printf "Adapter $adapter changed to $mode mode.\\n"
       return 0
     elif [[ $choice2 == "n" ]] || [[ $choice2 == "N" ]]; then
       printf "  ${WT}$USER ${OG}has selected to ${WT}keep their wifi in managed mode${OG}.\\n"
-      sudo systemctl start NetworkManager &
-      sudo systemctl start wpa_supplicant &
+      sudo systemctl restart NetworkManager
+      sudo systemctl restart wpa_supplicant
       return 0
     else
-      printf "  ${RED}Invalid Selection. Valid options are Y or N."
-      sudo systemctl start NetworkManager &
-      sudo systemctl start wpa_supplicant &
+      printf "  ${RED}Invalid Selection. Valid options are Y or N.\\n"
+      sudo systemctl start NetworkManager
+      sudo systemctl start wpa_supplicant
     fi
   fi
 }
@@ -131,11 +138,7 @@ main() {
 
     sudo airmon-ng | awk '/wl/ {print $2 " - " $4 " " $5}' 2>/dev/null | grep "wl" | nl -nln
     printf "\\n${WT}"
-    # Disable interrupt handling
-    # disable_interrupts
     read -n 1 -r -p "Enter the number of the interface you want to use in monitor mode: " selection
-    # Enable interrupt handling
-    # enable_interrupts
     printf "\\n"
     adapter=$(sudo airmon-ng | awk '/wl/ {print $2}' | cut -d' ' -f1 | sed -n "${selection}p")
     sudo sed -i "s/adapter=.*/adapter=$adapter/g" "${scripts_dir}/.envrc"
