@@ -11,6 +11,9 @@ hcxpcapngtool -o hs/handshake_DG1670A82_8C-09-F4-05-E8-80_2023-05-30T05-07-51.hc
 
 hashcat -m 22000 -a 0 hs/handshake_DG1670A82_8C-09-F4-05-E8-80_2023-05-30T05-07-51.cap  /usr/share/dict/wordlist-probable.txt -w 3 --force
 
+#crack with aircrack-ng
+aircrack-ng -a 2 -w /usr/share/wordlists/rockyou.txt --bssid A0:39:EE:47:B8:D6 -l /tmp/user/0/wifitef4pzwrss/wpakey.txt hs/handshake_MySpectrumWiFid02G_A0-39-EE-47-B8-D6_2023-06-08T04-25-07.cap
+
 
 hashcat --stdout -a 3 --increment --increment-min 2 --increment-max 3 ?d?d?d?d
 
