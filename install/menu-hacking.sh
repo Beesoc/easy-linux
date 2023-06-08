@@ -17,16 +17,16 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     help
     exit 0
 elif [[ $1 == "-v" || $1 == "--version" ]]; then
-    echo "The script is version 0.0.2."
+    echo "The script is version 0.0.3."
     exit 0
 fi
 
 set -e
 
-trap "bash ${scripts_dir}/support/support-trap-wifi.sh" EXIT
+trap ${scripts_dir}/support/support-trap-wifi.sh EXIT
 clear
 
-if [[ $(command -v direnv >/dev/null) ]]; then
+if command -v direnv >/dev/null; then
         cd ${scripts_dir}
         direnv allow
 	sudo direnv allow
@@ -103,6 +103,10 @@ wordlist_func() {
     fi
 }
 
+exit_func() {
+exit 0
+}
+
 monit_func() {
     source ${scripts_dir}/support/support-monitor.sh
 }
@@ -141,7 +145,7 @@ source "${scripts_dir}/support/support-Banner_func.sh"
         7) hacktool_func ;;
     	8) hackmenu_func ;;
         9) sysinfo_func ;;
-        10) exit 0 ;;
+        10) exit_func ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
     esac
 }
