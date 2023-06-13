@@ -15,8 +15,13 @@ _func() {
 	read -n 1 -r
 }
 
-_func() {
-
+flaresolverr_func() {
+docker run -d \
+  --name=flaresolverr \
+  -p 8191:8191 \
+  -e LOG_LEVEL=info \
+  --restart unless-stopped \
+  ghcr.io/flaresolverr/flaresolverr:latest
 	printf "${CT}  Press ${WT}any ${CT}key to continue. \\n  ${OG}"
 	read -n 1 -r
 }
@@ -69,7 +74,7 @@ main_menu() {
 	printf "   ${WT}10)${CY}  ${PL}: \n"
 	printf "   ${WT}11)${CY}  ${PL}: \n"
 	printf "   ${WT}12)${CY}  ${PL}: \n"
-	printf "   ${WT}13)${CY}  ${PL}: \n"
+	printf "   ${WT}13)${CY}  Flaresolverr${PL}: Cloudflare proxy for the arrr apps\n"
 	printf "   ${WT}14)${CY}  ${PL}: \n"
       printf "   ${WT}15)${GN}  Return to Main Menu${PL}\n"
 	printf "   ${WT}16)${RED}  [✘] Exit tool [✘]: Uhh, it just exits.\n"
@@ -89,7 +94,7 @@ main_menu() {
 	10) _func ;;
 	11) _func ;;
 	12) _func ;;
-	13) _func ;;
+	13) flaresolverr_func ;;
 	14) _func ;;
 	15) main_menu_func ;;
 	16) exit 0 ;;
