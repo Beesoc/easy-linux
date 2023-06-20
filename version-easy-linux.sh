@@ -19,6 +19,7 @@ declare -A required_versions=(
 	["support/misc/pwnip.sh"]="0.0.4"
 	["support/misc/restart_all_pwn.sh"]="0.0.3"
         ["support/misc/uninstall.sh"]="0.0.3"
+	["support/misc/lynis_check.sh"]="0.0.3"
         ["support/.whoami.sh"]="0.0.3"
 	["support/support-aircrack2.sh"]="0.0.3"
 	["support/support-airgeddon.sh"]="0.0.3"
