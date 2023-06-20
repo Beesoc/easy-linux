@@ -56,6 +56,7 @@ script_files=(
     "support/misc/pwnip.sh"
     "support/misc/restart_all_pwn.sh"
     "support/misc/uninstall.sh"
+    "support/misc/lynis_check.sh"
     "support/support-aircrack2.sh"
     "support/support-airgeddon.sh"
     "support/support-autojump.sh"
