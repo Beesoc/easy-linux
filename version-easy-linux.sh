@@ -32,6 +32,7 @@ declare -A required_versions=(
 	["support/support-fix-my-perm.sh"]="0.0.3"
 	["support/support-getvars.sh"]="0.0.3"
  	["support/support-glances.sh"]="0.0.3"
+  	["support/support-hashcat.sh"]="0.0.4"
 	["support/support-hackingtool.sh"]="0.0.3"
 	["support/support-hashcat.sh"]="0.0.4"
         ["support/support-hcxdump.sh"]="0.0.4"
@@ -40,7 +41,6 @@ declare -A required_versions=(
 	["support/support-hcxdump.sh"]="0.0.4"
 	["support/support-hcxdump-pmkid.sh"]="0.0.4"
 	["support/support-hcxdump.redo.sh"]="0.0.4"
-
         ["support/support-ican-haz-internet.sh"]="0.0.3"
 	["support/support-inst-standard.sh"]="0.0.3"
 	["support/support-linux_connection_script.sh"]="0.0.3"
@@ -56,7 +56,6 @@ declare -A required_versions=(
 	["support/support-updates.sh"]="0.0.3"
 	["support/support-webmin.sh"]="0.0.3"
 	["support/support-wifite.sh"]="0.0.3"
-	["support/support-wpaUP.sh"]="0.0.3"
-	["support/support-wpaDOWN.sh"]="0.0.3"
+	["support/support-wpa.sh"]="0.0.3"
 	["support/trap-master.sh"]="0.0.3"
 )
