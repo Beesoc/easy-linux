@@ -1,1 +1,31 @@
+---
+version: "2.1"
+services:
+  emulatorjs:
+    image: lscr.io/linuxserver/emulatorjs:latest
+    container_name: emulatorjs
+    networks:
+      - $defnet
+    environment:
+      - PUID=$pid
+      - PGID=$gid
+      - TZ=$timezone
+      - SUBFOLDER=/emulatorjs #optional
+    volumes:
+      - ${appd_dir}/emulatorjs:/config 
+      - ${appd_dir}/roms/:/data
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/uinput:/dev/uinput
+      - /dev/input:/dev/input
+      - /dev/hidraw0:/dev/hidraw0
+      - /dev/hidraw1:/dev/hidraw1
+      - /dev/hidraw2:/dev/hidraw2
+    ports:
+      - 3003:3000
+      - 83:80
+      - 4001:4001 #optional
+    restart: unless-stopped
 
+networks:
+    $defnet:
+      driver: bridge
