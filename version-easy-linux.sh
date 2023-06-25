@@ -1,6 +1,6 @@
 #!/bin/bash
 # Version: 0.0.4
-set -e
+#set -e
 # Define the minimum required version for each script
 declare -A required_versions=(
 	["install/menu-master.sh"]="0.0.3"
