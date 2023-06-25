@@ -1,1 +1,21 @@
-
+---
+version: "2.8"
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall
+    networks: 
+      - $netdef
+    container_name: heimdall
+    environment:
+      - PUID=$pid
+      - PGID=$gid
+      - DOCKER_MODS=linuxserver/mods:universal-package-install
+      - INSTALL_PACKAGES=nano
+      - TZ=$timezone
+    volumes:
+      - $appd_dir/heimdall:/config
+    restart: unless-stopped
+    
+networks:
+    $netdef:
+      driver: bridge
