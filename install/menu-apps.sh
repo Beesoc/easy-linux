@@ -193,7 +193,7 @@ main_menu() {
         printf "  ${GN}Selection: ---->${OG} "
           read -r main_menu
           case "$main_menu" in
-        0) source ${scripts_dir}/install/menu-containerized.sh ;; 
+        0) source ${scripts_dir}/support/support-docker-launcher.sh ;; 
         1) all_func ;;
         2) autojump_func ;;
         3) docker_func ;;
