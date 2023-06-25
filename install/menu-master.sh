@@ -163,6 +163,10 @@ trouble_func() {
     fi
 }
 
+docker_func() {
+   source ${scripts_dir}/support/support-docker-launcher.sh
+}
+
 backup_func() {
                 clear
        if [[ ${stand_install} -eq 0 ]]; then
@@ -193,7 +197,8 @@ main_menu() {
     printf "     ${WT}4)${CY}  Pwnagotchi${PL}: Backup/Restore, Connect to various Pwnagotchi features.${CY}\n"
     printf "     ${WT}5)${CY}  Troubleshooting${PL}: From network issues to time sync issues.${CY}\n"
     printf "     ${WT}6)${CY}  Backup${PL}: Deduplicating and cloud enabled backups.${CY}\n"
-    printf "     ${WT}7)${CY}  Quit${PL}: Uhhh. It just quits.${CY}\n"
+    printf "     ${WT}8)${CY}  Containers${PL}: Containerized Docker apps, ready to use.${CY}\n"
+    printf "     ${WT}9)${CY}  Quit${PL}: Uhhh. It just quits.${CY}\n"
     echo
     printf "  ${GN}Selection: ---->${OG} "
     read -n 1 -r main_menu
@@ -204,7 +209,8 @@ main_menu() {
         4) pwn_func ;;
         5) trouble_func ;;
         6) backup_func ;;
-        7) exit 0 ;;
+        7) docker_func ;;
+	9) exit 0 ;;
         *) printf "${RED}Invalid selection.${CY}\n" ;;
     esac
 }
