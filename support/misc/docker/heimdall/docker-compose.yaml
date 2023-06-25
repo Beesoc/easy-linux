@@ -4,7 +4,7 @@ services:
   heimdall:
     image: lscr.io/linuxserver/heimdall
     networks: 
-      - $netdef
+      - $defnet
     container_name: heimdall
     environment:
       - PUID=$pid
@@ -17,5 +17,5 @@ services:
     restart: unless-stopped
     
 networks:
-    $netdef:
+    $defnet:
       driver: bridge
