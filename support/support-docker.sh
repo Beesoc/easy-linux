@@ -111,18 +111,23 @@ docker_deps_func() {
 intro() {
 	clear
 	source "${scripts_dir}/support/support-Banner_func.sh"
-	printf "  ${CY}This script will install ${WT}Docker Desktop${GN}.\\n  "
+	printf "  ${CY}This script will install ${WT}Docker Desktop${GN} or regular Docker.\\n  "
 
-	read -n 1 -r -p "Do you want to continue? [Y/n] " installdocker
-	installdocker=${installdocker:-Y}
-	if [[ "$installdocker" =~ ^[Nn]$ ]]; then
-		printf "  ${WT}$USER ${RED}chose no to install. Exiting\\n"
-		exit 0
-	elif [[ "$installdocker" =~ ^[Yy]$ ]]; then
+	read -n 1 -r -p "Do you want Docker [D]esktop or [r]egular Docker? [d/R] " installdocker
+	installdocker=${installdocker:-R}
+	if [[ "$installdocker" =~ ^[rR]$ ]]; then
+	     curl -fsSL https://get.docker.com -o get-docker.sh
+           sudo sh get-docker.sh
+           sudo groupadd docker
+           sudo usermod -aG docker $USER
+           newgrp docker
+	elif [[ "$installdocker" =~ ^[dD]$ ]]; then
 		printf "\\n${CY}  We will first ${WT}install docker requirements${CY}.\\n"
 		printf "    ${CY}General maintenance: sudo apt --fix-broken install -y${NC}\\n"
 		sudo apt --fix-broken install -y >/dev/null
 		printf "\\n    ${CY}Installing dependencies. ${WT}Please wait. ${CY} This may take ${WT}several ${CY}minutes.\\n"
+	else 
+	      printf "  ${RED}Invalid Selection. Options are D or R.\\n${NC}"
 	fi
 	docker_deps_func
 }
