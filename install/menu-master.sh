@@ -55,7 +55,7 @@ check_for_updates() {
         /opt/easy-linux/update_scripts.sh
 
         # Create the last update file and set the timestamp
-        sudo chown $USER:0 -vR /opt/easy-linux/support
+        sudo chown $USER:0 -vR /opt/easy-linux/support >/dev/null
         sudo echo "$(date +%s)" > "$last_update_file"
     fi
 }
@@ -185,7 +185,8 @@ backup_func() {
 # Function to handle menu selection
 main_menu() {
     clear
-    source "${scripts_dir}/support/support-Banner_func.sh" && sudo chown -vR $USER:0 /opt/easy-linux >/dev/null
+    source "${scripts_dir}/support/support-Banner_func.sh" 
+    sudo chown -vR $USER:0 /opt/easy-linux >/dev/null
     echo
     printf "${BL}${BOLD}  $username                ${BOLD}${GN}Beesoc's Easy Linux Loader              ${BL} $computername ${CY}\n"
     echo
