@@ -329,7 +329,7 @@ source ${scripts_dir}/support/.whoami.sh >/dev/null
 
   valid_appdir=false
 while [[ "$valid_appdir" == false ]]; do
-  printf "\\n${GN} [3/4]  ${OG}Easy Linux base docker install folder is ${WT}[/opt/appdata]${OG}. Press Enter to accept \\n"
+  printf "\\n${GN} [3/4]  ${OG}Easy Linux base docker install folder is ${WT}[ "/opt/appdata" ]${OG}. Press Enter to accept \\n"
   read -r -p " or type in a new base location now. default: /opt/appdata ----> " appd_dir
   appd_dir="${appd_dir:-/opt/appdata}"
   if [[ ! -d $appd_dir ]]; then
