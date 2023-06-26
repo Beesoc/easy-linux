@@ -484,13 +484,14 @@ if command -v docker>/dev/null; then
         printf "    ${WT} [*] ${GN}All images installed to user defined Docker network,${WT} [$defnet]\\n"
         printf "    ${WT} [*] ${GN}All images installed to location ${WT}"${appd_dir}"/[container]\\n"
         printf "    ${WT} [*] ${GN}All images created with ${WT}PUID=$(id -u) and PGID=$(id -g) ${GN}(your PUID & PGID is currently ${WT}$(id -u) and $(id -g))\\n${CY}"
-        printf "    ${WT} [*] ${GN}All images created with ${WT}Timezone = $timezone${GN}.${OG}\\n"
+        printf "    ${WT} [*] ${GN}All images created with ${WT}Timezone = $(cat /etc/timezone)${GN}.${OG}\\n"
         echo
         read -n 1 -r -p "   Do you [A]ccept these settings or do you want to [c]hange values? [A/c] " dockopt
         printf " \\n"
         dockopt=${dockopt:-A}
         if [[ "${dockopt}" =~ ^[aA]$ ]]; then
                 printf "  ${GN}Options Accepted.  Continuing.\\n"
+		timezone=$(cat /etc/timezone)
         elif [[ "${dockopt}" =~ ^[cC]$ ]]; then
                 printf "   ${OG}The following screen will contain the editable options at the beginning \\n"
                 printf "   of the file. Change your options and rerun this script.\\n${NC}"
