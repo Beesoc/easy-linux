@@ -1,12 +1,12 @@
 #!/bin/bash
 # update-scripts.sh
 scripts_dir=/opt/easy-linux
-set -e
+#set -e
 # Version: 0.0.4
-trap ${scripts_dir}/support/trap-master.sh EXIT
+#trap ${scripts_dir}/support/trap-master.sh EXIT
 # Read the required versions from version-easy-linux.sh
 source "${scripts_dir}/version-easy-linux.sh"
-#source "${scripts_dir}/.envrc"
+source "${scripts_dir}/.envrc"
 
 sudo chown -vR "$USER:0" "${scripts_dir}"
 
