@@ -103,7 +103,7 @@ if [[ "${container}" != "diyhue" ]]; then docker_up_func; fi
 
 network_func() {
         if [[ $(docker network ls | grep "lsio" -c) -eq 0 ]]; then
-                docker network create ${network}
+                sudo docker network create ${network}
         fi
 }
 
