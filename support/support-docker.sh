@@ -121,6 +121,7 @@ intro() {
            sudo groupadd docker
            sudo usermod -aG docker $USER
            newgrp docker
+	   sudo apt install -y docker-compose
 	elif [[ "$installdocker" =~ ^[dD]$ ]]; then
 		printf "\\n${CY}  We will first ${WT}install docker requirements${CY}.\\n"
 		printf "    ${CY}General maintenance: sudo apt --fix-broken install -y${NC}\\n"
