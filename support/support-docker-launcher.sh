@@ -352,7 +352,7 @@ if docker network inspect "$defnet" >/dev/null 2>&1; then
     echo "The network '$defnet' already exists. Containers will be attached to $defnet."
 else
     echo "The network '$defnet' doesn't exist. Creating..."
-    docker network create "$defnet"
+    sudo docker network create "$defnet"
     echo "Network '$defnet' created."
 fi
 
