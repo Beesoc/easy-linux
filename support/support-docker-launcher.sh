@@ -79,7 +79,7 @@ docker_up_func() {
                 printf "  ${WT}${container} ${GN}status unknown. Starting Container.\\n"
         fi
         docker-compose up -d
-        docker network connect ${network} ${container} 
+        docker network connect ${defnet} ${container} 
         docker logs "${container}"    
         if [[ "${container}" == "emulatorjs" ]]; then emulatorjs_func; fi
 }
@@ -103,7 +103,7 @@ if [[ "${container}" != "diyhue" ]]; then docker_up_func; fi
 
 network_func() {
         if [[ $(docker network ls | grep "lsio" -c) -eq 0 ]]; then
-                sudo docker network create ${network}
+                sudo docker network create ${defnet}
         fi
 }
 
@@ -966,11 +966,12 @@ if command -v docker>/dev/null; then
         printf "   Here, you\'ll be able to pull and launch peconfigured Docker containers.\\n"
         echo
         printf "   Docker containers will be pulled and setup with these options: \\n"
-        echo
+        timezone=$(cat /etc/timezone)
+	echo
         printf "    ${WT} [*] ${GN}All images installed to user defined Docker network,${WT} [$defnet]\\n"
         printf "    ${WT} [*] ${GN}All images installed to location ${WT}"${appd_dir}"/[container]\\n"
         printf "    ${WT} [*] ${GN}All images created with ${WT}PUID=$(id -u) and PGID=$(id -g) ${GN}(your PUID & PGID is currently ${WT}$(id -u) and $(id -g))\\n${CY}"
-        printf "    ${WT} [*] ${GN}All images created with ${WT}Timezone = $(cat /etc/timezone)${GN}.${OG}\\n"
+        printf "    ${WT} [*] ${GN}All images created with ${WT}Timezone = $timezone${GN}.${OG}\\n"
         echo
         read -n 1 -r -p "   Do you [A]ccept these settings or do you want to [c]hange values? [A/c] " dockopt
         printf " \\n"
