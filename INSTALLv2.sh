@@ -192,6 +192,9 @@ else
     cleanup_func
 fi
 
+if [[ ! -d /opt/appdata ]]; then
+    sudo mkdir /opt/appdata
+fi
 cleanup_func
 
 sudo touch ${scripts_dir}/support/.last_update
