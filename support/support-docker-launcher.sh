@@ -102,7 +102,7 @@ if [[ "${container}" != "diyhue" ]]; then docker_up_func; fi
 }
 
 network_func() {
-        if [[ $(docker network ls | grep "lsio" -c) -eq 0 ]]; then
+        if [[ ! $(docker network ls | grep "lsio") >/dev/null ]]; then
                 sudo docker network create ${defnet}
         fi
 }
@@ -385,6 +385,7 @@ fi
 	sudo sed -i "s#dockeronce=.*#dockeronce=${dockeronce}#g" "${scripts_dir}/.envrc"
 
     valid_choice=true
+    main_menu
     else
       printf " ${RED}Invalid Selection. Options are Y or N.\\n"
     fi
