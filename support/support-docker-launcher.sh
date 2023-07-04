@@ -102,7 +102,7 @@ if [[ "${container}" != "diyhue" ]]; then docker_up_func; fi
 }
 
 network_func() {
-        if [[ ! $(docker network ls | grep "lsio") >/dev/null ]]; then
+        if [[ ! -d $(docker network ls | grep "lsio") >/dev/null ]]; then
                 sudo docker network create ${defnet}
         fi
 }
