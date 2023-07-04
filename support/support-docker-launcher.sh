@@ -102,9 +102,11 @@ if [[ "${container}" != "diyhue" ]]; then docker_up_func; fi
 }
 
 network_func() {
-        if [[ ! -d $(docker network ls | grep "$defnet") ]]; then
-                sudo docker network create ${defnet}
-        fi
+if ! docker network inspect "$defnet" >/dev/null 2>&1; then
+    # Execute your command here
+    echo "Executing command because $defnet network doesn't exist"
+    sudo docker network create $defnet 
+fi
 }
 
 hacktools_menu() {
@@ -350,9 +352,9 @@ done
 if docker network inspect "$defnet" >/dev/null 2>&1; then
     printf "The network '$defnet' already exists. Containers will be attached to $defnet."
 else
-    printf "The network '$defnet' doesn't exist. Creating..."
+    printf "The network '$defnet' doesn't exist. Creating...\\n"
     docker network create '$defnet'
-    printf "Network '$defnet' created."
+    printf "Network '$defnet' created.\\n"
 fi
 
 #valid_net=true
@@ -510,13 +512,13 @@ if command -v docker>/dev/null; then
                 printf " Invalid selection. Valid options are A or C.\\n"
         fi
         echo
-
-        network_func
+network_func
         while true; do
                 main_menu
                 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
                 read -n 1 -r
         done
+exists_func
 else
 	printf "  ${RED}You are in the wrong place. Come see me after installing Docker.\\n"
 	source ${scripts_dir}/support/support-docker.sh
