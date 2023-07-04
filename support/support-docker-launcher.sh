@@ -11,6 +11,7 @@ source "${scripts_dir}/support/.whoami.sh" >/dev/null
 # Version: 0.0.3
 
 dolphin_func() {
+container=dolphin-emu
 GPU_DEVICES=$( \
     echo "$( \
         find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl|-modeset)' \
@@ -66,7 +67,8 @@ emulatorjs_func() {
 }
 
 docker_up_func() {
-        if [[ $(docker ps -a | grep "${container}" -c) -eq 1 ]] && [[ $(docker ps | grep "${container}" -c) -eq 0 ]]; then
+
+	if [[ $(docker ps -a | grep "${container}" -c) -eq 1 ]] && [[ $(docker ps | grep "${container}" -c) -eq 0 ]]; then
                 printf "  "${container}" is stopped. Restarting "${container}".\\n "
                 docker-compose down
                 docker rm "${container}"
@@ -107,6 +109,7 @@ if ! docker network inspect "$defnet" >/dev/null 2>&1; then
     echo "Executing command because $defnet network doesn't exist"
     sudo docker network create $defnet 
 fi
+exists_func
 }
 
 hacktools_menu() {
@@ -238,27 +241,27 @@ mediatools_menu() {
         case "$media_menu_sel" in
         0)
                 container=prowlarr
-                exists_func
+                network_func
                 ;;
         1)
                 container=sonarr
-                exists_func
+                network_func
                 ;;
         2)
                 container=radarr
-                exists_func
+                network_func
                 ;;
         3)
                 container=lidarr
-                exists_func
+                network_func
                 ;;
         4)
                 container=readarr
-                exists_func
+                network_func
                 ;;
         5)
                 container=qbittorrent
-                exists_func
+                network_func
                 ;;
         6) main_menu_func ;;
         7) exit 0 ;;
@@ -380,7 +383,7 @@ fi
     elif [[ "${daccept}" =~ ^[yY]$ ]]; then
       dockeronce=1
 
-    sudo sed -i "s#gid=.*#gid=${gid}#g" "${scripts_dir}/.envrc"
+        sudo sed -i "s#gid=.*#gid=${gid}#g" "${scripts_dir}/.envrc"
 	sudo sed -i "s#pid=.*#pid=${pid}#g" "${scripts_dir}/.envrc"
 	sudo sed -i "s#appd_dir=.*#appd_dir=${appd_dir}#g" "${scripts_dir}/.envrc"
 	sudo sed -i "s#defnet=.*#defnet=${defnet}#g" "${scripts_dir}/.envrc"
@@ -423,19 +426,19 @@ main_menu() {
         case "$main_menu_sel" in
         0)
                 container=swag
-                exists_func
+                network_func
                 ;;
         1)
                 container=heimdall
-                exists_func
+                network_func
                 ;;
         2)
                 container=glances
-                exists_func
+                network_func
                 ;;
         3)
                 container=homeassistant
-                exists_func
+                network_func
                 ;;
         4) mediatools_func ;;
         5) gametools_func ;;
@@ -476,7 +479,7 @@ main() {
 echo 
 pre_func
 
-if command -v docker>/dev/null; then
+if command -v docker >/dev/null; then
 	  echo
         printf "   Initial Easy Linux Docker Launcher setup wizard completed.\\n"
         printf "   Here, you\'ll be able to pull and launch peconfigured Docker containers.\\n"
@@ -512,13 +515,11 @@ if command -v docker>/dev/null; then
                 printf " Invalid selection. Valid options are A or C.\\n"
         fi
         echo
-network_func
         while true; do
                 main_menu
                 printf "${CY} Press ${WT}any key ${CY}to return to ${WT}Main Menu${CY}.\\n"
                 read -n 1 -r
         done
-exists_func
 else
 	printf "  ${RED}You are in the wrong place. Come see me after installing Docker.\\n"
 	source ${scripts_dir}/support/support-docker.sh
