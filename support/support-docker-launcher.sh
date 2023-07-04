@@ -80,8 +80,13 @@ docker_up_func() {
         else
                 printf "  ${WT}${container} ${GN}status unknown. Starting Container.\\n"
         fi
+        if command -v docker-compose >/dev/null; then
+	docker-compose up -d
+        else
+	sudo apt install -y docker-compose
         docker-compose up -d
-        docker network connect ${defnet} ${container} 
+	fi
+	docker network connect ${defnet} ${container} 
         docker logs "${container}"    
         if [[ "${container}" == "emulatorjs" ]]; then emulatorjs_func; fi
 }
