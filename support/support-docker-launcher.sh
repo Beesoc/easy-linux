@@ -355,9 +355,9 @@ done
 if docker network inspect "$defnet" >/dev/null 2>&1; then
     printf "The network '$defnet' already exists. Containers will be attached to $defnet."
 else
-    printf "The network '$defnet' doesn't exist. Creating...\\n"
-    docker network create '$defnet'
-    printf "Network '$defnet' created.\\n"
+    printf "The network $defnet doesn't exist. Creating...\\n"
+    docker network create $defnet
+    printf "Network $defnet created.\\n"
 fi
 
 #valid_net=true
