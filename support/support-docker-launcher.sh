@@ -310,6 +310,7 @@ hacktools_func() {
 }
 
 dockeronce_func() {
+sudo apt-get install -y dbus-user-session >/dev/null
 defnet=lsio
 source ${scripts_dir}/support/.whoami.sh >/dev/null
   printf "  ${GN}Before you can spin up containers, a few questions...\\n"
