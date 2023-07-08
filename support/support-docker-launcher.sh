@@ -338,12 +338,12 @@ source ${scripts_dir}/support/.whoami.sh >/dev/null
       printf "${RED} Invalid Selection. Choose Y or N only.\\n${OG}"
     fi
   done
-
+  appd_dir=/opt/appdata
   valid_appdir=false
 while [[ "$valid_appdir" == false ]]; do
   printf "\\n${GN} [3/4]  ${OG}Easy Linux base docker install folder is ${WT}[ "/opt/appdata" ]${OG}. Press Enter to accept \\n"
   read -r -p " or type in a new base location now. default: /opt/appdata ----> " appd_dir
-  sudo chown -vR $USER:0 $appd_dir
+  sudo chown $USER:0 $appd_dir
   appd_dir="${appd_dir:-/opt/appdata}"
   if [[ ! -d $appd_dir ]]; then
      printf "${RED} Invalid docker base install directory. The folder must already exist.\\n"
@@ -486,7 +486,7 @@ main() {
         clear
 
 if [[ ! -d $appd_dir/emulatorjs/roms ]]; then
-	sudo mkdir $appd_dir/emulatorjs/roms
+	sudo mkdir -p $appd_dir/emulatorjs/roms
 fi
 	source ${scripts_dir}/support/support-Banner_func.sh
 echo 
