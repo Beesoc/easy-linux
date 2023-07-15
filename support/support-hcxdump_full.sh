@@ -2,7 +2,7 @@
 scripts_dir=/opt/easy-linux
 source ${scripts_dir}/.envrc
 #install and use hcxtools w hashcat and jack
-# Version: 0.0.2
+# Version: 0.0.4
 set -e
 #
 trap ${scripts_dir}/support/support-hcxdump.sh EXIT
