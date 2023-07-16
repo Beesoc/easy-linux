@@ -1,7 +1,7 @@
 #!/bin/bash
 scripts_dir=/opt/easy-linux
 #set -e
-#Version: 0.0.3
+# Version: 0.0.3
 clear
 source ${scripts_dir}/support/support-Banner_func.sh
 source ${scripts_dir}/.envrc
