@@ -47,7 +47,7 @@ nano_lints_func() {
 
 pack_sel_func() {
 	# List of package names to install
-	packages=("gawk" "libmono-2.0-1" "libappindicator3-0.1-cil" "xterm" "aptitude" "autoconf" "automake" "bc" "libtool" "pkg-config" "libssl-dev" "ethtool" "geany" "geany-plugins" "htop" "shtool" "rfkill" "libpcap-dev" "libsqlite3-dev" "libhwloc-dev" "ncdu" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "gtk-sharp2" "procps" "acpi" "pciutils" "groff")
+	packages=("gawk" "libmono-2.0-1" "libayatana-appindicator1" "xterm" "aptitude" "autoconf" "automake" "bc" "libtool" "pkg-config" "libssl-dev" "ethtool" "geany" "geany-plugins" "htop" "shtool" "rfkill" "libpcap-dev" "libsqlite3-dev" "libhwloc-dev" "ncdu" "hostapd" "wpasupplicant" "tcpdump" "screen" "iw" "usbutils" "gtk-sharp2" "procps" "acpi" "pciutils" "groff")
 
 	# Loop through the list of package names
 	for package in "${packages[@]}"; do
