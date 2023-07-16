@@ -21,6 +21,7 @@ elif [[ $1 == "-v" || $1 == "--version" ]]; then
     exit 0
 fi
 
+
 source /opt/easy-linux/.envrc 
 source /opt/easy-linux/support/.whoami.sh
 
@@ -185,6 +186,34 @@ backup_func() {
                      
 }
 
+x11auth_func() {
+XAUTH_FIX_FLAG="${scripts_dir}/support/misc/x11_auth_fix_applied"
+
+# Check if the flag file exists
+if [[ -f "$XAUTH_FIX_FLAG" ]]; then
+    # Flag file exists, skip the X11 authentication fix
+    check_for_updates
+else
+    # Flag file doesn't exist, perform the X11 authentication fix
+    XAUTH_TMP="/tmp/xauth.$USER"
+    XAUTH_COOKIE=$(xauth list | grep unix`echo $DISPLAY | cut -c10-12`)
+
+    # Store the X11 magic cookie in a temporary file
+    echo "$XAUTH_COOKIE" > "$XAUTH_TMP"
+
+    # Switch to the root user and add the X11 magic cookie
+    sudo -E su -c "xauth add $(cat "$XAUTH_TMP")" root
+
+    # Clean up the temporary file
+    rm "$XAUTH_TMP"
+
+    # Create the flag file to indicate that the fix has been applied
+    touch "$XAUTH_FIX_FLAG"
+
+    # Continue with the script logic
+    check_for_updates
+fi
+}
 
 # Function to handle menu selection
 main_menu() {
@@ -222,6 +251,8 @@ main_menu() {
 
 # Main script logic
 main() {
+x11auth_func
+
 # Call the update check function
 check_for_updates
 
