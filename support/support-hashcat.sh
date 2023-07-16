@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version: 0.0.3
+# Version: 0.0.4
 scripts_dir=/opt/easy-linux
 hashcat -a 0 -m 22000 ${scripts_dir}/support <dictionary_file> -r /usr/share/wordlists/OneRuleToRuleThemAll.rule
 
