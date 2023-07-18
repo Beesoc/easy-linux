@@ -11,7 +11,7 @@ source "${scripts_dir}/support/.whoami.sh" >/dev/null
 # Version: 0.0.3
 
 dolphin_func() {
-container=dolphin-emu
+container=dolphin-emu-x11
 GPU_DEVICES=$( \
     echo "$( \
         find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl|-modeset)' \
@@ -26,17 +26,17 @@ XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
 # create the container
 docker create \
-  --name dolphin-emu \
+  --name dolphin-emu-x11 \
   --security-opt apparmor:unconfined \
   --net host \
   --shm-size 128M \
   --device /dev/input \
   --device /dev/snd \
   $GPU_DEVICES \
-  -v $HOME/.${container}/Config:/config \
-  -v $HOME/.${container}:/data \
-  -v $HOME/Games/GameCube:/gc:ro \
-  -v $HOME/Games/Wii:/wii:ro \
+  -v ./.${container}/Config:/config \
+  -v ./.${container}:/data \
+  -v ./Games/GameCube:/gc:ro \
+  -v ./Games/Wii:/wii:ro \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -e DISPLAY=unix$DISPLAY \
