@@ -29,7 +29,7 @@ RUN ln -s /app/ /opt/easy-linux \
     && ln -s /wordlists/ /usr/share/wordlists
 
 # Install dependencies and set up the environment (you may need to customize this part)
-RUN apt update && apt install -y -qq \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
     nano \
     xauth \
     xterm \
